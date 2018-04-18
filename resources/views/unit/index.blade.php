@@ -11,14 +11,14 @@
         <table class="table table-striped table-hover " id="bootgrid" style="border-top:2px solid #ddd">
             <thead>
                 <tr>
-                    <th data-column-id="id">ID</th>
+                    <th data-column-id="id" data-width="3%">ID</th>
                     <th data-column-id="name">Name</th>
                     <th data-column-id="category">Category</th>
                     <th data-column-id="owner">Owner</th>
                     <th data-column-id="egi">EGI</th>
                     <th data-column-id="alocation">Alocation</th>
                     <th data-column-id="status">Status</th>
-                    <th data-column-id="commands"
+                    <th data-column-id="commands" data-width="8%"
                         data-formatter="commands"
                         data-sortable="false"
                         data-align="right"
@@ -111,6 +111,7 @@
         mounted: function() {
             var t = this;
             var grid = $('#bootgrid').bootgrid({
+                rowCount: [10,25,50,100],
                 ajax: true, url: '{{url('unit')}}',
                 ajaxSettings: {method: 'GET', cache: false},
                 searchSettings: { delay: 100, characters: 3 },

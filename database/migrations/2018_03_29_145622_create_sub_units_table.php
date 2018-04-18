@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateEquipmentTable extends Migration
+class CreateSubUnitsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,13 +13,10 @@ class CreateEquipmentTable extends Migration
      */
     public function up()
     {
-        Schema::create('units', function (Blueprint $table) {
+        Schema::create('sub_units', function (Blueprint $table) {
             $table->increments('id');
             $table->string('name', 30);
-            $table->integer('egi_id');
-            $table->integer('owner_id');
-            $table->integer('alocation_id');
-            $table->boolean('status')->default(1);
+            $table->string('description')->nullable();
             $table->timestamps();
         });
     }
@@ -31,6 +28,6 @@ class CreateEquipmentTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('units');
+        Schema::dropIfExists('sub_units');
     }
 }

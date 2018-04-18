@@ -13,7 +13,7 @@ class CreateEquipmentCategoriesTable extends Migration
      */
     public function up()
     {
-        Schema::create('equipment_categories', function (Blueprint $table) {
+        Schema::create('unit_categories', function (Blueprint $table) {
             $table->increments('id');
             $table->string('name', 30);
             $table->string('description')->nullable();
@@ -28,6 +28,6 @@ class CreateEquipmentCategoriesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('equipment_categories');
+        Schema::dropIfExists('unit_categories');
     }
 }

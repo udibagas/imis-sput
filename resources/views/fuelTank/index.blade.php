@@ -11,13 +11,13 @@
         <table class="table table-striped table-hover " id="bootgrid" style="border-top:2px solid #ddd">
             <thead>
                 <tr>
-                    <th data-column-id="id">ID</th>
+                    <th data-column-id="id" data-width="3%">ID</th>
                     <th data-column-id="name">Name</th>
                     <th data-column-id="description">Description</th>
                     <th data-column-id="capacity">Capacity</th>
                     <th data-column-id="stock">Stock</th>
                     <th data-column-id="last_stock_time">Last Update Stock</th>
-                    <th data-column-id="commands"
+                    <th data-column-id="commands" data-width="8%"
                         data-formatter="commands"
                         data-sortable="false"
                         data-align="right"
@@ -112,6 +112,7 @@
             var t = this;
 
             var grid = $('#bootgrid').bootgrid({
+                rowCount: [10,25,50,100],
                 ajax: true, url: '{{url('fuelTank')}}',
                 ajaxSettings: {method: 'GET', cache: false},
                 searchSettings: { delay: 100, characters: 3 },
