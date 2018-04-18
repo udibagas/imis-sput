@@ -1,0 +1,41 @@
+Phase 1 : Data master
+    - rapikan view (join table, form)
+    - test all crud
+    - seeding/populate database
+
+Phase 2 : Data trx
+    - lengkapi table database
+    - generate request (validation)
+    - generate controller
+
+Phase 3 : Report (chart)import
+    - lengkapi table database
+    - generate request (validation)
+    - generate controller
+
+Phase 4 : Export
+    - excel
+    - pdf
+
+
+PR!!!
+    - component criteria masih error
+    - tombol save harus disable kalau lagi proses submit
+    - select2 belum jalan
+    - grouping menu berdasarkan module (department)
+    - master data ada di setiap module
+    - data master harus uniqe
+
+
+Prioritas module (masing2 2 minggu):
+    - Plant (15 april)
+    - Fuel  (22 april)
+    - Operation (6 mei)
+    - Absensi (13 mei)
+
+Perkiraan
+--------------------
+BA          : 20 mei
+Invoice     : 21 mei
+Diterima    : 24 mei
+Dibayar     : 31 mei

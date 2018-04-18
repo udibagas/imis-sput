@@ -1,0 +1,97 @@
+@import url("https://fonts.googleapis.com/css?family=Roboto:300,400,500,700");
+
+body{
+	font-family: "Roboto", sans-serif;
+}
+
+a { color: #00b8ce; }
+
+.navbar-brand-padding{
+	padding-top: 10px;
+}
+
+.navbar-inverse{
+	border-bottom: none;
+	background-color: #6059EE;
+}
+
+header {
+	background-color: #eee;
+	padding: 60px 0;
+	text-align: center;
+	min-height: 200px;
+        margin-bottom: 40px;
+	
+}
+
+header p{
+	font-weight: 300 !important;
+}
+
+header .heading img{
+	padding-bottom: 20px;
+}
+
+.credit-logo{
+	margin-bottom: 30px;
+}
+
+
+.btn-primary {
+  background-color: #00b8ce;
+  border-color: #00b8ce;
+}
+.btn-primary:hover,
+.btn-primary:focus,
+.btn-primary:active,
+.btn-primary.active
+ {
+  background-color: #00afc5;
+  border-color: #00afc5;
+}
+
+.title{
+	margin-bottom: 60px;
+}
+
+footer{
+	background-color: #1d1d1d;
+	width: 100%;
+	color: #fff;
+	padding-top: 15px;
+	padding-bottom: 10px;
+	padding-right: 20px;
+	font-size: 15px;
+	font-weight: 600;
+	text-align: right;
+	position: absolute;
+}
+
+.heading h1{
+	color: #333;
+	font-weight: 600;
+	margin-top: 10px;
+}
+
+.demo {
+	text-align: center;
+	text-transform: uppercase;
+	color: #000;
+	font-weight: 600;
+	text-align: center;
+	margin: 0 0 50px;
+	height: 100%;
+	transition: 0.5s;
+}
+
+.demo img{
+	transition: 0.5s;
+}
+
+.demo img:hover{
+	-webkit-transform: scale(1.03);
+	-moz-transform: scale(1.03);
+	-ms-transform: scale(1.03);
+	transform: scale(1.03);
+}
+
