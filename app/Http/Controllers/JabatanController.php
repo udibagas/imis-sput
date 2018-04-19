@@ -37,7 +37,9 @@ class JabatanController extends Controller
 
         return view('jabatan.index', [
             'breadcrumbs' => [
-                '#' => 'Jabatan'
+                'hcgs/dashboard' => 'HCGS',
+                '#' => 'Master Data',
+                'jabatan' => 'Jabatan'
             ]
         ]);
     }

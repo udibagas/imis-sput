@@ -37,7 +37,9 @@ class OwnerController extends Controller
 
         return view('owner.index', [
             'breadcrumbs' => [
-                '#' => 'Owner'
+                'hcgs/dashboard' => 'HCGS',
+                '#' => 'Master Data',
+                'owner' => 'Owner'
             ]
         ]);
     }

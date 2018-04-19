@@ -37,7 +37,9 @@ class PlanCategoryController extends Controller
 
         return view('planCategory.index', [
             'breadcrumbs' => [
-                '#' => 'Plan Categories'
+                'operation/dashboard' => 'Operation',
+                '#' => 'Master Data',
+                'planCategory' => 'Plan Categories'
             ]
         ]);
     }

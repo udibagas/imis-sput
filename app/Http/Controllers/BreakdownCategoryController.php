@@ -38,7 +38,9 @@ class BreakdownCategoryController extends Controller
 
         return view('breakdownCategory.index', [
             'breadcrumbs' => [
-                '#' => 'Breakdown Categories'
+                'plant/dashboard' => 'Plant',
+                '#' => 'Master Data',
+                'breakdownCategory' => 'Breakdown Categories'
             ]
         ]);
     }

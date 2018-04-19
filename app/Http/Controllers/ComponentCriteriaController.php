@@ -37,7 +37,9 @@ class ComponentCriteriaController extends Controller
 
         return view('componentCriteria.index', [
             'breadcrumbs' => [
-                '#' => 'Component Criteria'
+                'plant/dashboard' => 'Plant',
+                '#' => 'Master Data',
+                'componentCriteria' => 'Component Criteria'
             ]
         ]);
     }

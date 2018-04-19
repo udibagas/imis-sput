@@ -37,7 +37,9 @@ class LocationController extends Controller
 
         return view('location.index', [
             'breadcrumbs' => [
-                '#' => 'Location'
+                'plant/dashboard' => 'Plant',
+                '#' => 'Master Data',
+                'location' => 'Location'
             ]
         ]);
     }

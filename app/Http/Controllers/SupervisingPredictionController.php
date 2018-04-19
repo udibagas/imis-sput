@@ -37,7 +37,9 @@ class SupervisingPredictionController extends Controller
 
         return view('supervisingPrediction.index', [
             'breadcrumbs' => [
-                '#' => 'Supervising Prediction'
+                'hcgs/dashboard' => 'HCGS',
+                '#' => 'Master Data',
+                'supervisingPrediction' => 'Supervising Prediction'
             ]
         ]);
     }

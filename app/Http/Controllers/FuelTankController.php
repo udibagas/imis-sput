@@ -38,7 +38,9 @@ class FuelTankController extends Controller
 
         return view('fuelTank.index', [
             'breadcrumbs' => [
-                '#' => 'Fuel Tank'
+                'plant/dashboard' => 'SM',
+                '#' => 'Master Data',
+                'fuelTank' => 'Fuel Tank'
             ]
         ]);
     }

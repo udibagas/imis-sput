@@ -52,7 +52,9 @@ class PrajobsController extends Controller
 
         return view('prajob.index', [
             'breadcrumbs' => [
-                '#' => 'Pre Jobs'
+                'hcgs/dashboard' => 'HCGS',
+                '#' => 'Master Data',
+                'praJob' => 'Pre Jobs'
             ]
         ]);
     }

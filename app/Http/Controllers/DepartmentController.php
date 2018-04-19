@@ -37,7 +37,9 @@ class DepartmentController extends Controller
 
         return view('department.index', [
             'breadcrumbs' => [
-                '#' => 'Department'
+                'hcgs/dashboard' => 'HCGS',
+                '#' => 'Master Data',
+                'department' => 'Department'
             ]
         ]);
     }

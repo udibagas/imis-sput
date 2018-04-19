@@ -51,7 +51,9 @@ class UnitController extends Controller
 
         return view('unit.index', [
             'breadcrumbs' => [
-                '#' => 'Units'
+                'plant/dashboard' => 'Plant',
+                '#' => 'Master Data',
+                'unit' => 'Units'
             ]
         ]);
     }

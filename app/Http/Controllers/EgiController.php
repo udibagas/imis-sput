@@ -37,7 +37,9 @@ class EgiController extends Controller
 
         return view('egi.index', [
             'breadcrumbs' => [
-                '#' => 'EGI'
+                'plant/dashboard' => 'Plant',
+                '#' => 'Master Data',
+                'egi' => 'EGI'
             ]
         ]);
     }

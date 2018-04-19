@@ -37,7 +37,9 @@ class MaterialController extends Controller
 
         return view('material.index', [
             'breadcrumbs' => [
-                '#' => 'Materials'
+                'plant/dashboard' => 'Plant',
+                '#' => 'Master Data',
+                'material' => 'Materials'
             ]
         ]);
     }

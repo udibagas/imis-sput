@@ -37,7 +37,9 @@ class StopWorkingPredictionController extends Controller
 
         return view('stopWorkingPrediction.index', [
             'breadcrumbs' => [
-                '#' => 'Stop Working Prediction'
+                'hcgs/dashboard' => 'HCGS',
+                '#' => 'Master Data',
+                'stopWorkingPrediction' => 'Stop Working Prediction'
             ]
         ]);
     }

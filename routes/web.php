@@ -64,6 +64,7 @@ View::composer('layouts._sidebar', function($view) {
                 'pitstop' => 'Pitstop',
                 'Master Data' => [
                     'alocation' => 'Alocation',
+                    'bagian' => 'Bagian',
                     'breakdownStatus' => 'Breakdown Status',
                     'breakdownCategory' => 'Breakdown Categories',
                     'componentCriteria' => 'Component Criteria',
@@ -105,7 +106,6 @@ View::composer('layouts._sidebar', function($view) {
                 'praJob' => 'Pra Job & Fatique',
                 'prajob/approval' => 'Fatique Approval',
                 'Master Data' => [
-                    'bagian' => 'Bagian',
                     'department' => 'Departments',
                     'employee' => 'Employees',
                     'jabatan' => 'Jabatan',
@@ -129,7 +129,8 @@ View::composer('layouts._sidebar', function($view) {
         'ADMINISTRATION' => [
             'icon' => 'sliders',
             'url'=> [
-                'user' => 'User',
+                'user' => 'Users',
+                'setting' => 'Settings',
             ]
         ]
     ];

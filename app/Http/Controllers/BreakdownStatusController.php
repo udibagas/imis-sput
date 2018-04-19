@@ -37,7 +37,9 @@ class BreakdownStatusController extends Controller
 
         return view('breakdownStatus.index', [
             'breadcrumbs' => [
-                '#' => 'Breakdown Status'
+                'plant/dashboard' => 'Plant',
+                '#' => 'Master Data',
+                'breakdownStatus' => 'Breakdown Status'
             ]
         ]);
     }

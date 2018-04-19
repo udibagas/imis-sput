@@ -37,7 +37,9 @@ class StaffCategoryController extends Controller
 
         return view('staffCategory.index', [
             'breadcrumbs' => [
-                '#' => 'Staff Categories'
+                'hcgs/dashboard' => 'HCGS',
+                '#' => 'Master Data',
+                'staffCategory' => 'Staff Categories'
             ]
         ]);
     }

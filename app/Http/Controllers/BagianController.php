@@ -37,7 +37,9 @@ class BagianController extends Controller
 
         return view('bagian.index', [
             'breadcrumbs' => [
-                '#' => 'Bagian'
+                'plant/dashboard' => 'Plant',
+                '#' => 'Master Data',
+                'bagian' => 'Bagian'
             ]
         ]);
     }

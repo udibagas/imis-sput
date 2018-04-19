@@ -37,7 +37,9 @@ class AlocationController extends Controller
 
         return view('alocation.index', [
             'breadcrumbs' => [
-                '#' => 'Alocation'
+                'plant/dashboard' => 'Plant',
+                '#' => 'Master Data',
+                'alocation' => 'Alocation'
             ]
         ]);
     }

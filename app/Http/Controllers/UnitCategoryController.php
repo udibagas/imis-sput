@@ -37,7 +37,9 @@ class UnitCategoryController extends Controller
 
         return view('unitCategory.index', [
             'breadcrumbs' => [
-                '#' => 'Unit Categories'
+                'plant/dashboard' => 'Plant',
+                '#' => 'Master Data',
+                'unitCategory' => 'Unit Categories'
             ]
         ]);
     }

@@ -37,7 +37,9 @@ class LostTimeCategoryController extends Controller
 
         return view('lostTimeCategory.index', [
             'breadcrumbs' => [
-                '#' => 'Lost Time Categories'
+                'operation/dashboard' => 'Operation',
+                '#' => 'Master Data',
+                'lostTimeCategory' => 'Lost Time Categories'
             ]
         ]);
     }

@@ -52,7 +52,9 @@ class EmployeeController extends Controller
 
         return view('employee.index', [
             'breadcrumbs' => [
-                '#' => 'Employee'
+                'hcgs/dashboard' => 'HCGS',
+                '#' => 'Master Data',
+                'employee' => 'Employee'
             ]
         ]);
     }

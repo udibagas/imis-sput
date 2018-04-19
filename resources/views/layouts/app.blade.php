@@ -37,6 +37,7 @@
   <div class="main-container">
     <div class="main-header row">
         <div class="col-md-12">
+            @if (isset($breadcrumbs))
             <ol class="breadcrumb breadcrumb-2 pull-left" style="margin-bottom:0px;">
                 <li><a href="{{url('/')}}"><i class="fa fa-home"></i>Home</a></li>
                 @foreach ($breadcrumbs as $url => $label)
@@ -47,6 +48,7 @@
                     @endif
                 @endforeach
     		</ol>
+            @endif
             <ul class="user-info pull-right">
                 <li class="profile-info dropdown"><a data-toggle="dropdown" class="dropdown-toggle" href="#" aria-expanded="false"><img style="width:35px;height:35px;" class="img-circle avatar" alt="" src="{{asset('img/user.png')}}">{{auth()->user()->name}} <span class="caret"></span></a>
                     <ul class="dropdown-menu">
@@ -101,7 +103,7 @@
     $('ul.nav > li.active')
         .parent().parent().addClass('active')
         .parent().parent().addClass('active');
-        
+
     $(document).ready(function() {
         // $('select').css('width', '100%').select2();
         $('.datetime-picker').datetimepicker();

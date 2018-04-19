@@ -37,7 +37,9 @@ class PositionController extends Controller
 
         return view('position.index', [
             'breadcrumbs' => [
-                '#' => 'Positions'
+                'hcgs/dashboard' => 'HCGS',
+                '#' => 'Master Data',
+                'position' => 'Positions'
             ]
         ]);
     }

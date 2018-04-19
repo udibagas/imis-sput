@@ -50,7 +50,8 @@ class BreakdownController extends Controller
 
         return view('breakdown.index', [
             'breadcrumbs' => [
-                '#' => 'Breakdown'
+                'plant/dashboard' => 'Plant',
+                'breakdown' => 'Workshop'
             ]
         ]);
     }

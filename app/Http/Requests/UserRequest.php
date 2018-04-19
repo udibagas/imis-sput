@@ -26,15 +26,21 @@ class UserRequest extends FormRequest
     {
         $user = $this->route('user');
 
-        return [
+        $rules = [
             'name' => 'required|max:50',
             'email' => [
-                'required',
-                'email',
+                'required', 'email',
                 Rule::unique('users')->ignore($user ? $user->id : 0)
             ],
             'password' => 'required|confirmed',
             'role' => 'required'
         ];
+
+        // kalau edit password boleh tidak diisi
+        if ($user) {
+            unset($rules['password']);
+        }
+
+        return $rules;
     }
 }

@@ -37,7 +37,9 @@ class OfficeController extends Controller
 
         return view('office.index', [
             'breadcrumbs' => [
-                '#' => 'Offices'
+                'hcgs/dashboard' => 'HCGS',
+                '#' => 'Master Data',
+                'office' => 'Offices'
             ]
         ]);
     }

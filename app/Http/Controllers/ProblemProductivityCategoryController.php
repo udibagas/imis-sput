@@ -37,7 +37,9 @@ class ProblemProductivityCategoryController extends Controller
 
         return view('problemProductivityCategory.index', [
             'breadcrumbs' => [
-                '#' => 'Problem Productivity Categories'
+                'operation/dashboard' => 'Operation',
+                '#' => 'Master Data',
+                'problemProductivityCategory' => 'Problem Productivity Categories'
             ]
         ]);
     }

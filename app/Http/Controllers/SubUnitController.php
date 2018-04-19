@@ -37,7 +37,9 @@ class SubUnitController extends Controller
 
         return view('subUnit.index', [
             'breadcrumbs' => [
-                '#' => 'Sub Unit'
+                'plant/dashboard' => 'Plant',
+                '#' => 'Master Data',
+                'subUnit' => 'Sub Unit'
             ]
         ]);
     }
