@@ -79,7 +79,7 @@
                     t.formData = r.data;
                     $('#modal-form').modal('show');
                 })
-                
+
                 .catch(function(error) {
                     if (error.response.status == 500) {
                         var error = error.response.data;
@@ -109,7 +109,11 @@
                     axios.delete('{{url("planCategory")}}/' + id)
 
                     .then(function(r) {
-                        $('#bootgrid').bootgrid('reload');
+                        if (r.data.status == true) {
+                            $('#bootgrid').bootgrid('reload');
+                        } else {
+                            alert(r.data.message);
+                        }
                     })
 
                     .catch(function(error) {

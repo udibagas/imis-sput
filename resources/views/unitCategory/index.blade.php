@@ -74,7 +74,7 @@
                 this.formTitle = "EDIT UNIT CATEGORY";
                 this.formErrors = {};
                 this.error = {};
-                
+
                 axios.get('{{url("unitCategory")}}/' + id).then(function(r) {
                     t.formData = r.data;
                     $('#modal-form').modal('show');
@@ -111,7 +111,11 @@
                     axios.delete('{{url("unitCategory")}}/' + id)
 
                     .then(function(r) {
-                        $('#bootgrid').bootgrid('reload');
+                        if (r.data.status == true) {
+                            $('#bootgrid').bootgrid('reload');
+                        } else {
+                            alert(r.data.message);
+                        }
                     })
 
                     .catch(function(error) {

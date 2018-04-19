@@ -113,7 +113,11 @@
                     axios.delete('{{url("user")}}/' + id)
 
                     .then(function(r) {
-                        $('#bootgrid').bootgrid('reload');
+                        if (r.data.status == true) {
+                            $('#bootgrid').bootgrid('reload');
+                        } else {
+                            alert(r.data.message);
+                        }
                     })
 
                     .catch(function(error) {
