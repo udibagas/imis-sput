@@ -48,6 +48,7 @@
                 this.formTitle = "ADD UNIT CATEGORY";
                 this.formData = {};
                 this.formErrors = {};
+                this.error = {};
                 // open form
                 $('#modal-form').modal('show');
             },
@@ -65,21 +66,32 @@
 
                     if (error.response.status == 500) {
                         t.error = error.response.data;
-                        console.log(error.response.data);
                     }
                 });
             },
             edit: function(id) {
                 var t = this;
                 this.formTitle = "EDIT UNIT CATEGORY";
+                this.formErrors = {};
+                this.error = {};
+                
                 axios.get('{{url("unitCategory")}}/' + id).then(function(r) {
                     t.formData = r.data;
                     $('#modal-form').modal('show');
+                })
+
+                .catch(function(error) {
+                    if (error.response.status == 500) {
+                        var error = error.response.data;
+                        alert(error.message + ". " + error.file + ":" + error.line)
+                    }
                 });
             },
             update: function() {
                 var t = this;
-                axios.put('{{url("unitCategory")}}/' + this.formData.id, this.formData).then(function(r) {
+                axios.put('{{url("unitCategory")}}/' + this.formData.id, this.formData)
+
+                .then(function(r) {
                     $('#modal-form').modal('hide');
                     $('#bootgrid').bootgrid('reload');
                 })
@@ -91,16 +103,23 @@
 
                     if (error.response.status == 500) {
                         t.error = error.response.data;
-                        console.log(error.response.data);
                     }
                 });
             },
             delete: function(id) {
                 if (confirm('Anda yakin akan menghapus data ini?')) {
                     axios.delete('{{url("unitCategory")}}/' + id)
-                        .then(function(r) {
-                            $('#bootgrid').bootgrid('reload');
-                        });
+
+                    .then(function(r) {
+                        $('#bootgrid').bootgrid('reload');
+                    })
+
+                    .catch(function(error) {
+                        if (error.response.status == 500) {
+                            var error = error.response.data;
+                            alert(error.message + ". " + error.file + ":" + error.line)
+                        }
+                    });
                 }
             },
         },

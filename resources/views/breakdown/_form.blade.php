@@ -13,24 +13,24 @@
                         @{{error.file}}:@{{error.line}}
                     </div>
 
-                    <div class="form-group" :class="formErrors.equipment_id ? 'has-error' : ''">
-                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="equipment_id">Equipment
+                    <div class="form-group" :class="formErrors.unit_id ? 'has-error' : ''">
+                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="unit_id">Unit
                         </label>
                         <div class="col-md-9 col-sm-9 col-xs-12">
-                            <select class="form-control" v-model="formData.equipment_id">
-                                @foreach (\App\Equipment::orderBy('name', 'ASC')->pluck('name', 'id') as $id => $name)
+                            <select class="form-control" v-model="formData.unit_id" data-placeholder="Unit">
+                                @foreach (\App\Unit::orderBy('name', 'ASC')->pluck('name', 'id') as $id => $name)
                                 <option value="{{$id}}">{{$name}}</option>
                                 @endforeach
                             </select>
-                            <span v-if="formErrors.equipment_id" class="help-block">@{{formErrors.equipment_id[0]}}</span>
+                            <span v-if="formErrors.unit_id" class="help-block">@{{formErrors.unit_id[0]}}</span>
                         </div>
                     </div>
 
                     <div class="form-group" :class="formErrors.breakdown_category_id ? 'has-error' : ''">
-                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="breakdown_category_id">Category
+                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="breakdown_category_id">B/D Type
                         </label>
                         <div class="col-md-9 col-sm-9 col-xs-12">
-                            <select class="form-control" v-model="formData.breakdown_category_id">
+                            <select class="form-control" v-model="formData.breakdown_category_id" data-placeholder="B/D Type">
                                 @foreach (\App\BreakdownCategory::selectRaw('id, CONCAT(name, " - ", description_en) AS code')->orderBy('code', 'ASC')->pluck('code', 'id') as $id => $code)
                                 <option value="{{$id}}">{{$code}}</option>
                                 @endforeach
@@ -40,10 +40,10 @@
                     </div>
 
                     <div class="form-group" :class="formErrors.location_id ? 'has-error' : ''">
-                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="location_id">Equipment
+                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="location_id">Location
                         </label>
                         <div class="col-md-9 col-sm-9 col-xs-12">
-                            <select class="form-control" v-model="formData.location_id">
+                            <select class="form-control" v-model="formData.location_id" data-placeholder="Location">
                                 @foreach (\App\Location::orderBy('name', 'ASC')->pluck('name', 'id') as $id => $name)
                                 <option value="{{$id}}">{{$name}}</option>
                                 @endforeach
@@ -74,7 +74,7 @@
                         <label class="control-label col-md-3 col-sm-3 col-xs-12" for="time_in">Time In
                         </label>
                         <div class="col-md-9 col-sm-9 col-xs-12">
-                            <input type="text" v-model="formData.time_in" class="form-control datetime-picker" placeholder="Time In">
+                            <input type="text" v-model="formData.time_in" class="form-control datetime-picker" placeholder="Time In" data-date-format="YYYY-MM-DD HH:mm">
                             <span v-if="formErrors.time_in" class="help-block">@{{formErrors.time_in[0]}}</span>
                         </div>
                     </div>

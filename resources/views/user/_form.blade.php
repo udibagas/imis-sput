@@ -7,7 +7,7 @@
                     <h4 class="modal-title">@{{formTitle}}</h4>
                 </div>
                 <div class="modal-body">
-                    
+
                     <div class="alert alert-danger" v-if="error.message">
                         @{{error.message}}<br>
                         @{{error.file}}:@{{error.line}}
@@ -52,7 +52,7 @@
                         <label class="control-label col-md-4 col-sm-4 col-xs-12" for="role">Role
                         </label>
                         <div class="col-md-8 col-sm-8 col-xs-12">
-                            <select class="form-control" v-model="formData.role">
+                            <select class="form-control" v-model="formData.role" data-placeholder="Role">
                                 @foreach (\App\User::getRoles() as $role)
                                 <option value="{{$role}}">{{$role}}</option>
                                 @endforeach
@@ -65,7 +65,7 @@
                         <label class="control-label col-md-4 col-sm-4 col-xs-12" for="active">Active
                         </label>
                         <div class="col-md-8 col-sm-8 col-xs-12">
-                            <select class="form-control" v-model="formData.active">
+                            <select class="form-control" v-model="formData.active" data-placeholder="Select Status">
                                 <option value="1">Yes</option>
                                 <option value="0">No</option>
                             </select>

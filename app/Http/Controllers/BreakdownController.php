@@ -21,18 +21,22 @@ class BreakdownController extends Controller
         $dir = $request->sort ? $request->sort[$sort] : 'desc';
 
         $breakdown = Breakdown::selectRaw('
-                        breakdowns.*,
-                        equipment.name AS equipment,
-                        locations.name AS location,
-                        breakdown_categories.name AS category,
-                        breakdown_statuses.code AS breakdown_status
-                    ')
-                    ->when($request->searchPhrase, function($query) use ($request) {
-                        return $query->where('equipment.name', 'LIKE', '%'.$request->searchPhrase.'%')
-                                     ->where('locations.name', 'LIKE', '%'.$request->searchPhrase.'%')
-                                     ->where('breakdown_categories.name', 'LIKE', '%'.$request->searchPhrase.'%')
-                                     ->where('breakdown_statuses.code', 'LIKE', '%'.$request->searchPhrase.'%');
-                    })->orderBy($sort, $dir)->paginate($pageSize);
+                breakdowns.*,
+                units.name AS unit,
+                locations.name AS location,
+                breakdown_categories.name AS category,
+                breakdown_statuses.code AS breakdown_status
+            ')
+            ->join('units', 'units.id', '=', 'breakdowns.unit_id')
+            ->join('locations', 'locations.id', '=', 'breakdowns.location_id')
+            ->join('breakdown_categories', 'breakdown_categories.id', '=', 'breakdowns.breakdown_category_id')
+            ->join('breakdown_statuses', 'breakdown_statuses.id', '=', 'breakdowns.breakdown_status_id', 'LEFT')
+            ->when($request->searchPhrase, function($query) use ($request) {
+                return $query->where('units.name', 'LIKE', '%'.$request->searchPhrase.'%')
+                             ->where('locations.name', 'LIKE', '%'.$request->searchPhrase.'%')
+                             ->where('breakdown_categories.name', 'LIKE', '%'.$request->searchPhrase.'%')
+                             ->where('breakdown_statuses.code', 'LIKE', '%'.$request->searchPhrase.'%');
+            })->orderBy($sort, $dir)->paginate($pageSize);
 
 
         if ($request->ajax()) {

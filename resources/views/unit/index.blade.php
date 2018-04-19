@@ -4,7 +4,7 @@
 
 <div class="panel panel-primary" id="app">
     <div class="panel-body">
-        <h3 class="pull-left text-primary">UNIT <small>Manage</small></h3>
+        <h3 class="pull-left text-primary">UNITS <small>Manage</small></h3>
         <span class="pull-right" style="margin:15px 0 15px 10px;">
             <a href="#" @click="add" class="btn btn-primary"><i class="icon-plus-circled"></i></a>
         </span>
@@ -52,6 +52,7 @@
                 this.formTitle = "ADD UNIT";
                 this.formData = {};
                 this.formErrors = {};
+                this.error = {};
                 // open form
                 $('#modal-form').modal('show');
             },
@@ -69,16 +70,25 @@
 
                     if (error.response.status == 500) {
                         t.error = error.response.data;
-                        console.log(error.response.data);
                     }
                 });
             },
             edit: function(id) {
                 var t = this;
                 this.formTitle = "EDIT UNIT";
+                this.formErrors = {};
+                this.error = {};
+
                 axios.get('{{url("unit")}}/' + id).then(function(r) {
                     t.formData = r.data;
                     $('#modal-form').modal('show');
+                })
+
+                .catch(function(error) {
+                    if (error.response.status == 500) {
+                        var error = error.response.data;
+                        alert(error.message + ". " + error.file + ":" + error.line)
+                    }
                 });
             },
             update: function() {
@@ -95,16 +105,24 @@
 
                     if (error.response.status == 500) {
                         t.error = error.response.data;
-                        console.log(error.response.data);
                     }
                 });
             },
             delete: function(id) {
                 if (confirm('Anda yakin akan menghapus data ini?')) {
+
                     axios.delete('{{url("unit")}}/' + id)
-                        .then(function(r) {
-                            $('#bootgrid').bootgrid('reload');
-                        });
+
+                    .then(function(r) {
+                        $('#bootgrid').bootgrid('reload');
+                    })
+
+                    .catch(function(error) {
+                        if (error.response.status == 500) {
+                            var error = error.response.data;
+                            alert(error.message + ". " + error.file + ":" + error.line)
+                        }
+                    });
                 }
             },
         },

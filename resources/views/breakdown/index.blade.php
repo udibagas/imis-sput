@@ -12,8 +12,19 @@
             <thead>
                 <tr>
                     <th data-column-id="id" data-width="3%">ID</th>
+                    <th data-column-id="unit">Unit</th>
+                    <th data-column-id="unit_category">Unit Category</th>
+                    <th data-column-id="breakdown_category">D/B Type</th>
+                    <th data-column-id="location">Location</th>
+                    <th data-column-id="hm">HM</th>
+                    <th data-column-id="km">KM</th>
+                    <th data-column-id="time_in">Time In</th>
+                    <th data-column-id="time_out">Time Out</th>
+                    <th data-column-id="diagnosa">Problem</th>
                     <th data-column-id="code">Code</th>
-                    <th data-column-id="description">Description</th>
+                    <th data-column-id="component_criteria">Component Criteria</th>
+                    <th data-column-id="tindakan">Tindakan</th>
+                    <th data-column-id="wo_number">WO Number</th>
                     <th data-column-id="commands" data-width="8%"
                         data-formatter="commands"
                         data-sortable="false"
@@ -48,6 +59,7 @@
                 this.formTitle = "ADD BREAKDOWN";
                 this.formData = {};
                 this.formErrors = {};
+                this.error = {};
                 // open form
                 $('#modal-form').modal('show');
             },
@@ -65,16 +77,25 @@
 
                     if (error.response.status == 500) {
                         t.error = error.response.data;
-                        console.log(error.response.data);
                     }
                 });
             },
             edit: function(id) {
                 var t = this;
                 this.formTitle = "EDIT BREAKDOWN";
+                this.formErrors = {};
+                this.error = {};
+
                 axios.get('{{url("breakdown")}}/' + id).then(function(r) {
                     t.formData = r.data;
                     $('#modal-form').modal('show');
+                })
+
+                .catch(function(error) {
+                    if (error.response.status == 500) {
+                        var error = error.response.data;
+                        alert(error.message + ". " + error.file + ":" + error.line)
+                    }
                 });
             },
             update: function() {
@@ -91,16 +112,23 @@
 
                     if (error.response.status == 500) {
                         t.error = error.response.data;
-                        console.log(error.response.data);
                     }
                 });
             },
             delete: function(id) {
                 if (confirm('Anda yakin akan menghapus data ini?')) {
                     axios.delete('{{url("breakdown")}}/' + id)
-                        .then(function(r) {
-                            $('#bootgrid').bootgrid('reload');
-                        });
+
+                    .then(function(r) {
+                        $('#bootgrid').bootgrid('reload');
+                    })
+
+                    .catch(function(error) {
+                        if (error.response.status == 500) {
+                            var error = error.response.data;
+                            alert(error.message + ". " + error.file + ":" + error.line)
+                        }
+                    });
                 }
             },
         },

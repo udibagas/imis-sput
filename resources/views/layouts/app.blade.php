@@ -89,7 +89,8 @@
 <script type="text/javascript">
     $('ul.nav > li.active').parent().parent().addClass('active');
     $(document).ready(function() {
-        $('select').css('width', '100%').select2();
+        // $('select').css('width', '100%').select2();
+        $('.datetime-picker').datetimepicker();
     });
 </script>
 

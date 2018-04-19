@@ -29,7 +29,7 @@ class UnitRequest extends FormRequest
         return [
             'name' => [
                 'required',
-                Rule::unique('unit')->ignore($unit ? $unit->id : 0)
+                Rule::unique('units')->ignore($unit ? $unit->id : 0)
             ],
             'egi_id' => 'required',
             'owner_id' => 'required',

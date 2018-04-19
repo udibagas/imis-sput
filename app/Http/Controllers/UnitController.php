@@ -25,7 +25,7 @@ class UnitController extends Controller
                         owners.name AS owner,
                         egis.name AS egi,
                         alocations.name AS alocation,
-                        unit_categories.name AS category,
+                        unit_categories.name AS category
                     ')
                     ->join('owners', 'owners.id', '=', 'units.owner_id')
                     ->join('egis', 'egis.id', '=', 'units.egi_id')

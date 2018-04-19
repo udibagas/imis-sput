@@ -24,7 +24,13 @@ class BreakdownRequest extends FormRequest
     public function rules()
     {
         return [
-            //
+            'unit_id' => 'required',
+            'breakdown_category_id' => 'required',
+            'location_id' => 'required',
+            'hm' => 'required',
+            'km' => 'required',
+            'time_in' => 'required',
+            'diagnosa' => 'required',
         ];
     }
 }
