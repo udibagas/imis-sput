@@ -35,7 +35,11 @@ class StopWorkingPredictionController extends Controller
             ];
         }
 
-        return view('stopWorkingPrediction.index');
+        return view('stopWorkingPrediction.index', [
+            'breadcrumbs' => [
+                '#' => 'Stop Working Prediction'
+            ]
+        ]);
     }
 
     /**

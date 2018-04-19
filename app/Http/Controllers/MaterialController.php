@@ -35,7 +35,11 @@ class MaterialController extends Controller
             ];
         }
 
-        return view('material.index');
+        return view('material.index', [
+            'breadcrumbs' => [
+                '#' => 'Materials'
+            ]
+        ]);
     }
 
     /**

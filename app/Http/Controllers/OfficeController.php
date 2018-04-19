@@ -35,7 +35,11 @@ class OfficeController extends Controller
             ];
         }
 
-        return view('office.index');
+        return view('office.index', [
+            'breadcrumbs' => [
+                '#' => 'Offices'
+            ]
+        ]);
     }
 
     /**

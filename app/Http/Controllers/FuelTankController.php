@@ -36,7 +36,11 @@ class FuelTankController extends Controller
             ];
         }
 
-        return view('fuelTank.index');
+        return view('fuelTank.index', [
+            'breadcrumbs' => [
+                '#' => 'Fuel Tank'
+            ]
+        ]);
     }
 
     /**
@@ -89,7 +93,11 @@ class FuelTankController extends Controller
     {
         return view('fuelTank.dashboard', [
             'fuelTanks' => FuelTank::orderBy('name', 'ASC')->get(),
-            'egi'=> Egi::orderBy('name', 'ASC')->get()
+            'egi'=> Egi::orderBy('name', 'ASC')->get(),
+            'breadcrumbs' => [
+                '0' => 'SM',
+                '#' => 'Dashboard'
+            ]
         ]);
     }
 }

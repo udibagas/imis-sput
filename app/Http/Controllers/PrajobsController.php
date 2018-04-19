@@ -50,7 +50,11 @@ class PrajobsController extends Controller
             ];
         }
 
-        return view('prajob.index');
+        return view('prajob.index', [
+            'breadcrumbs' => [
+                '#' => 'Pre Jobs'
+            ]
+        ]);
     }
 
     /**

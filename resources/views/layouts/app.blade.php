@@ -37,8 +37,18 @@
   <div class="main-container">
     <div class="main-header row">
         <div class="col-md-12">
+            <ol class="breadcrumb breadcrumb-2 pull-left" style="margin-bottom:0px;">
+                <li><a href="{{url('/')}}"><i class="fa fa-home"></i>Home</a></li>
+                @foreach ($breadcrumbs as $url => $label)
+                    @if ($loop->last)
+                    <li class="active"><strong>{{$label}}</strong></li>
+                    @else
+        			<li><a href="{{url($url)}}">{{$label}}</a></li>
+                    @endif
+                @endforeach
+    		</ol>
             <ul class="user-info pull-right">
-                <li class="profile-info dropdown"><a data-toggle="dropdown" class="dropdown-toggle" href="#" aria-expanded="false"><img width="44" class="img-circle avatar" alt="" src="{{asset('img/user.png')}}">{{auth()->user()->name}} <span class="caret"></span></a>
+                <li class="profile-info dropdown"><a data-toggle="dropdown" class="dropdown-toggle" href="#" aria-expanded="false"><img style="width:35px;height:35px;" class="img-circle avatar" alt="" src="{{asset('img/user.png')}}">{{auth()->user()->name}} <span class="caret"></span></a>
                     <ul class="dropdown-menu">
 
                         <li><a href="#/"><i class="icon-user"></i>My profile</a></li>

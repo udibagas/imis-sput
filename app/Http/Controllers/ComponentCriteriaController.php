@@ -35,7 +35,11 @@ class ComponentCriteriaController extends Controller
             ];
         }
 
-        return view('componentCriteria.index');
+        return view('componentCriteria.index', [
+            'breadcrumbs' => [
+                '#' => 'Component Criteria'
+            ]
+        ]);
     }
 
     /**

@@ -35,7 +35,11 @@ class LocationController extends Controller
             ];
         }
 
-        return view('location.index');
+        return view('location.index', [
+            'breadcrumbs' => [
+                '#' => 'Location'
+            ]
+        ]);
     }
 
     /**

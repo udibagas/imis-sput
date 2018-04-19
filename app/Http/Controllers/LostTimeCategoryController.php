@@ -35,7 +35,11 @@ class LostTimeCategoryController extends Controller
             ];
         }
 
-        return view('lostTimeCategory.index');
+        return view('lostTimeCategory.index', [
+            'breadcrumbs' => [
+                '#' => 'Lost Time Categories'
+            ]
+        ]);
     }
 
     /**

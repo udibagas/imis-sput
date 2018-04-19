@@ -35,7 +35,11 @@ class DepartmentController extends Controller
             ];
         }
 
-        return view('department.index');
+        return view('department.index', [
+            'breadcrumbs' => [
+                '#' => 'Department'
+            ]
+        ]);
     }
 
     /**

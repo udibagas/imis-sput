@@ -35,7 +35,11 @@ class JabatanController extends Controller
             ];
         }
 
-        return view('jabatan.index');
+        return view('jabatan.index', [
+            'breadcrumbs' => [
+                '#' => 'Jabatan'
+            ]
+        ]);
     }
 
     /**

@@ -34,7 +34,12 @@ class UserController extends Controller
                 'rows' => $users->items(),
             ];
         }
-        return view('user.index', ['users' => $users]);
+        return view('user.index', [
+            'breadcrumbs' => [
+                '#' => 'Auth',
+                '1' => 'Users'
+            ]
+        ]);
     }
 
     /**

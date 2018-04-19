@@ -35,7 +35,11 @@ class UnitCategoryController extends Controller
             ];
         }
 
-        return view('unitCategory.index');
+        return view('unitCategory.index', [
+            'breadcrumbs' => [
+                '#' => 'Unit Categories'
+            ]
+        ]);
     }
 
     /**

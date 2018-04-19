@@ -48,7 +48,11 @@ class BreakdownController extends Controller
             ];
         }
 
-        return view('breakdown.index');
+        return view('breakdown.index', [
+            'breadcrumbs' => [
+                '#' => 'Breakdown'
+            ]
+        ]);
     }
 
     /**

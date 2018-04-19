@@ -35,7 +35,11 @@ class ProblemProductivityCategoryController extends Controller
             ];
         }
 
-        return view('problemProductivityCategory.index');
+        return view('problemProductivityCategory.index', [
+            'breadcrumbs' => [
+                '#' => 'Problem Productivity Categories'
+            ]
+        ]);
     }
 
     /**

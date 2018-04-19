@@ -36,7 +36,11 @@ class BreakdownCategoryController extends Controller
             ];
         }
 
-        return view('breakdownCategory.index');
+        return view('breakdownCategory.index', [
+            'breadcrumbs' => [
+                '#' => 'Breakdown Categories'
+            ]
+        ]);
     }
 
     /**

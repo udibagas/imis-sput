@@ -35,7 +35,11 @@ class PlanCategoryController extends Controller
             ];
         }
 
-        return view('planCategory.index');
+        return view('planCategory.index', [
+            'breadcrumbs' => [
+                '#' => 'Plan Categories'
+            ]
+        ]);
     }
 
     /**

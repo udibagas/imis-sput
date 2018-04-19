@@ -35,7 +35,11 @@ class BagianController extends Controller
             ];
         }
 
-        return view('bagian.index');
+        return view('bagian.index', [
+            'breadcrumbs' => [
+                '#' => 'Bagian'
+            ]
+        ]);
     }
 
     /**

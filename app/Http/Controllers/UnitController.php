@@ -49,7 +49,11 @@ class UnitController extends Controller
             ];
         }
 
-        return view('unit.index');
+        return view('unit.index', [
+            'breadcrumbs' => [
+                '#' => 'Units'
+            ]
+        ]);
     }
 
     /**

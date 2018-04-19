@@ -35,7 +35,11 @@ class StaffCategoryController extends Controller
             ];
         }
 
-        return view('staffCategory.index');
+        return view('staffCategory.index', [
+            'breadcrumbs' => [
+                '#' => 'Staff Categories'
+            ]
+        ]);
     }
 
     /**

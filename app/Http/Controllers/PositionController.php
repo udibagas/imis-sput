@@ -35,7 +35,11 @@ class PositionController extends Controller
             ];
         }
 
-        return view('position.index');
+        return view('position.index', [
+            'breadcrumbs' => [
+                '#' => 'Positions'
+            ]
+        ]);
     }
 
     /**

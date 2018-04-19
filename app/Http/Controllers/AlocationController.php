@@ -35,7 +35,11 @@ class AlocationController extends Controller
             ];
         }
 
-        return view('alocation.index');
+        return view('alocation.index', [
+            'breadcrumbs' => [
+                '#' => 'Alocation'
+            ]
+        ]);
     }
 
     /**

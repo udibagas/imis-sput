@@ -35,7 +35,11 @@ class SupervisingPredictionController extends Controller
             ];
         }
 
-        return view('supervisingPrediction.index');
+        return view('supervisingPrediction.index', [
+            'breadcrumbs' => [
+                '#' => 'Supervising Prediction'
+            ]
+        ]);
     }
 
     /**

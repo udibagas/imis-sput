@@ -35,7 +35,11 @@ class EgiController extends Controller
             ];
         }
 
-        return view('egi.index');
+        return view('egi.index', [
+            'breadcrumbs' => [
+                '#' => 'EGI'
+            ]
+        ]);
     }
 
     /**

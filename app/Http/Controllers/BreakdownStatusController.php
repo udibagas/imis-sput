@@ -35,7 +35,11 @@ class BreakdownStatusController extends Controller
             ];
         }
 
-        return view('breakdownStatus.index');
+        return view('breakdownStatus.index', [
+            'breadcrumbs' => [
+                '#' => 'Breakdown Status'
+            ]
+        ]);
     }
 
     /**

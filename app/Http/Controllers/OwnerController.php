@@ -35,7 +35,11 @@ class OwnerController extends Controller
             ];
         }
 
-        return view('owner.index');
+        return view('owner.index', [
+            'breadcrumbs' => [
+                '#' => 'Owner'
+            ]
+        ]);
     }
 
     /**

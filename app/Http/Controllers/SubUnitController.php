@@ -35,7 +35,11 @@ class SubUnitController extends Controller
             ];
         }
 
-        return view('subUnit.index');
+        return view('subUnit.index', [
+            'breadcrumbs' => [
+                '#' => 'Sub Unit'
+            ]
+        ]);
     }
 
     /**
