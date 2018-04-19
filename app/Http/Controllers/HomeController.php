@@ -12,4 +12,12 @@ class HomeController extends Controller
             'breadcrumbs' => []
         ]);
     }
+
+    public function registerOk() {
+        return view('auth.register_ok');
+    }
+
+    public function registerFailed() {
+        return view('auth.register_failed');
+    }
 }

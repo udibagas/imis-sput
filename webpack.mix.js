@@ -22,7 +22,8 @@ mix.js('resources/assets/js/app.js', 'public/js')
        'resources/assets/theme/css/plugins/select2/select2.css',
        'resources/assets/theme/css/mouldifi-forms.css',
        'resources/assets/jquery.bootgrid/jquery.bootgrid.min.css',
-       'resources/assets/datetimepicker/bootstrap-datetimepicker.css'
+       'resources/assets/datetimepicker/bootstrap-datetimepicker.css',
+       'resources/assets/toastr/toastr.min.css'
    ], 'public/css/theme.css')
    .scripts([
        'resources/assets/theme/js/jquery.min.js',
@@ -37,6 +38,7 @@ mix.js('resources/assets/js/app.js', 'public/js')
        'resources/assets/datetimepicker/moment.js',
        'resources/assets/datetimepicker/bootstrap-datetimepicker.min.js',
        'resources/assets/hc/code/highcharts.js',
+       'resources/assets/toastr/toastr.min.js'
    ], 'public/js/theme.js')
    .scripts(['resources/assets/theme/js/functions.js'], 'public/js/functions.js')
    // .sass('resources/assets/sass/app.scss', 'public/css');

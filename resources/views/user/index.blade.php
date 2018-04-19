@@ -60,6 +60,7 @@
                 var t = this;
                 axios.post('{{url("user")}}', this.formData).then(function(r) {
                     $('#modal-form').modal('hide');
+                    toastr["success"]("Data berhasil ditambahkan");
                     $('#bootgrid').bootgrid('reload');
                 })
                 // validasi
@@ -87,7 +88,7 @@
                 .catch(function(error) {
                     if (error.response.status == 500) {
                         var error = error.response.data;
-                        alert(error.message + ". " + error.file + ":" + error.line)
+                        toastr["error"](error.message + ". " + error.file + ":" + error.line)
                     }
                 });
             },
@@ -95,6 +96,7 @@
                 var t = this;
                 axios.put('{{url("user")}}/' + this.formData.id, this.formData).then(function(r) {
                     $('#modal-form').modal('hide');
+                    toastr["success"]("Data berhasil diupdate");
                     $('#bootgrid').bootgrid('reload');
                 })
                 // validasi
@@ -113,17 +115,18 @@
                     axios.delete('{{url("user")}}/' + id)
 
                     .then(function(r) {
-                        if (r.data.status == true) {
+                        if (r.data.success == true) {
+                            toastr["success"]("Data berhasil dihapus");
                             $('#bootgrid').bootgrid('reload');
                         } else {
-                            alert(r.data.message);
+                            toastr["error"]("Data gagal dihapus. " + r.data.message);
                         }
                     })
 
                     .catch(function(error) {
                         if (error.response.status == 500) {
                             var error = error.response.data;
-                            alert(error.message + ". " + error.file + ":" + error.line)
+                            toastr["error"](error.message + ". " + error.file + ":" + error.line)
                         }
                     });
                 }

@@ -15,7 +15,7 @@ class AddRoleOnUser extends Migration
     {
         Schema::table('users', function (Blueprint $table) {
             $table->string('role', 30)->nullable();
-            $table->boolean('active')->default(1);
+            $table->boolean('active')->default(0);
         });
     }
 

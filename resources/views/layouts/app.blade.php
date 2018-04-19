@@ -99,15 +99,34 @@
 <script src="{{ asset('js/theme.js') }}"></script>
 
 <script type="text/javascript">
-    // buat level 1
     $('ul.nav > li.active')
         .parent().parent().addClass('active')
         .parent().parent().addClass('active');
 
     $(document).ready(function() {
-        // $('select').css('width', '100%').select2();
+        // belum jalan
+        $('select').css('width', '100%').select2();
         $('.datetime-picker').datetimepicker();
     });
+
+    toastr.options = {
+        "closeButton": true,
+        "debug": false,
+        "newestOnTop": false,
+        "progressBar": false,
+        "positionClass": "toast-top-right",
+        "preventDuplicates": false,
+        "onclick": null,
+        "showDuration": "300",
+        "hideDuration": "1000",
+        "timeOut": "5000",
+        "extendedTimeOut": "1000",
+        "showEasing": "swing",
+        "hideEasing": "linear",
+        "showMethod": "fadeIn",
+        "hideMethod": "fadeOut"
+    }
+
 </script>
 
 @stack('scripts')

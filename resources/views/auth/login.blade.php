@@ -2,11 +2,11 @@
 
 @section('content')
 <div class="login-container animated growIn slower">
-    <div class="login-branding">
-        <h1 class="text-white">IMIS - SPUT</h1>
-    </div>
     <div class="login-content">
-        <h2><strong>Welcome</strong>, please login</h3>
+        <div class="text-center">
+            <img src="{{ asset('img/logo.png')}}">
+        </div>
+        <br><br>
         <form method="POST" action="{{ route('login') }}">
             @csrf
             <div class="form-group">
