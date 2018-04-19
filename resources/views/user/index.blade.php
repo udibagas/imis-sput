@@ -16,7 +16,7 @@
                     <th data-column-id="email">Email</th>
                     <th data-column-id="role">Role</th>
                     <th data-column-id="active" data-formatter="active">Active</th>
-                    <th data-column-id="commands" data-width="8%" data-width="8%"
+                    <th data-column-id="commands" data-width="5%"
                         data-formatter="commands"
                         data-sortable="false"
                         data-align="right"

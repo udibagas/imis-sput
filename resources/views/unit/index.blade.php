@@ -18,7 +18,7 @@
                     <th data-column-id="egi">EGI</th>
                     <th data-column-id="alocation">Alocation</th>
                     <th data-column-id="status">Status</th>
-                    <th data-column-id="commands" data-width="8%"
+                    <th data-column-id="commands" data-width="5%"
                         data-formatter="commands"
                         data-sortable="false"
                         data-align="right"

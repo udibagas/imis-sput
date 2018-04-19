@@ -17,7 +17,7 @@
                     <th data-column-id="capacity">Capacity</th>
                     <th data-column-id="stock">Stock</th>
                     <th data-column-id="last_stock_time">Last Update Stock</th>
-                    <th data-column-id="commands" data-width="8%"
+                    <th data-column-id="commands" data-width="5%"
                         data-formatter="commands"
                         data-sortable="false"
                         data-align="right"

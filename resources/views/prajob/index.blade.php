@@ -19,7 +19,7 @@
                     <th data-column-id="owner">Owner</th>
                     <th data-column-id="office">Office</th>
                     <th data-column-id="status">Status</th>
-                    <th data-column-id="commands" data-width="8%"
+                    <th data-column-id="commands" data-width="5%"
                         data-formatter="commands"
                         data-sortable="false"
                         data-align="right"

@@ -15,7 +15,7 @@
                     <th data-column-id="name">Code</th>
                     <th data-column-id="description_id" data-title="description_id">Description ID</th>
                     <th data-column-id="description_en" data-title="description_en">Description EN</th>
-                    <th data-column-id="commands" data-width="8%"
+                    <th data-column-id="commands" data-width="5%"
                         data-formatter="commands"
                         data-sortable="false"
                         data-align="right"

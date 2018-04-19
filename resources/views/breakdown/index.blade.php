@@ -25,7 +25,7 @@
                     <th data-column-id="component_criteria">Component Criteria</th>
                     <th data-column-id="tindakan">Tindakan</th>
                     <th data-column-id="wo_number">WO Number</th>
-                    <th data-column-id="commands" data-width="8%"
+                    <th data-column-id="commands" data-width="5%"
                         data-formatter="commands"
                         data-sortable="false"
                         data-align="right"
