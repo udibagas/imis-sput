@@ -36,7 +36,7 @@ class UserController extends Controller
         }
         return view('user.index', [
             'breadcrumbs' => [
-                '#' => 'Auth',
+                '#' => 'Administration',
                 '1' => 'Users'
             ]
         ]);

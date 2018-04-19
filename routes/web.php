@@ -62,16 +62,17 @@ View::composer('layouts._sidebar', function($view) {
                 'breakdown' => 'Workshop',
                 'breakdown/pcr' => 'Breakdown PCR',
                 'pitstop' => 'Pitstop',
-                // master data
-                'alocation' => 'Alocation',
-                'breakdownStatus' => 'Breakdown Status',
-                'breakdownCategory' => 'Breakdown Category',
-                'componentCriteria' => 'Component Criteria',
-                'egi' => 'EGI',
-                'location' => 'Location',
-                'material' => 'Material',
-                'unit' => 'Unit',
-                'unitCategory' => 'Unit Category',
+                'Master Data' => [
+                    'alocation' => 'Alocation',
+                    'breakdownStatus' => 'Breakdown Status',
+                    'breakdownCategory' => 'Breakdown Categories',
+                    'componentCriteria' => 'Component Criteria',
+                    'egi' => 'EGI',
+                    'location' => 'Location',
+                    'material' => 'Material',
+                    'unit' => 'Unit',
+                    'unitCategory' => 'Unit Categories',
+                ]
             ]
         ],
         'SM' => [
@@ -80,18 +81,20 @@ View::composer('layouts._sidebar', function($view) {
                 'fuelTank/dashboard' => 'Dashboard',
                 'pengisianSolar' => 'Pengisian Solar',
                 'flowMeter' => 'Flow Meter',
-                // master data
-                'fuelTank' => 'Fuel Tank',
+                'Master Data' => [
+                    'fuelTank' => 'Fuel Tanks',
+                ]
             ]
         ],
         'OPERATION' => [
             'icon' => 'cogs',
             'url' => [
                 'operation/dashboard' => 'Dashboard',
-                // master data
-                'lostTimeCategory' => 'Lost Time Category',
-                'planCategory' => 'Plan Category',
-                'problemProductivityCategory' => 'Problem Productivity Category',
+                'Master Data' => [
+                    'lostTimeCategory' => 'Lost Time Categories',
+                    'planCategory' => 'Plan Category',
+                    'problemProductivityCategory' => 'Problem Productivity Categories',
+                ]
             ]
         ],
         'HCGS' => [
@@ -101,44 +104,30 @@ View::composer('layouts._sidebar', function($view) {
                 'absen' => 'Absensi',
                 'praJob' => 'Pra Job & Fatique',
                 'prajob/approval' => 'Fatique Approval',
-                // master data
-                'bagian' => 'Bagian',
-                'department' => 'Department',
-                'employee' => 'Employee',
-                'jabatan' => 'Jabatan',
-                'office' => 'Office',
-                'owner' => 'Owner',
-                'position' => 'Position',
-                'stopWorkingPrediction' => 'Stop Working Prediction',
-                'supervisingPrediction' => 'Supervising Prediction',
-                'staffCategory' => 'Staff Category',
-                'terminalAbsensi' => 'Terminal Absensi'
+                'Master Data' => [
+                    'bagian' => 'Bagian',
+                    'department' => 'Departments',
+                    'employee' => 'Employees',
+                    'jabatan' => 'Jabatan',
+                    'office' => 'Offices',
+                    'owner' => 'Owners',
+                    'position' => 'Positions',
+                    'stopWorkingPrediction' => 'Stop Working Predictions',
+                    'supervisingPrediction' => 'Supervising Predictions',
+                    'staffCategory' => 'Staff Categories',
+                    'terminalAbsensi' => 'Terminal Absensi'
+                ]
             ]
         ],
+        // Shared Master Data
         // 'MASTER DATA' => [
         //     'icon' => 'database',
-        //     'url' => '#'
-        // ],
-        // 'Equipment & Material' => [
-        //     'icon' => 'cubes',
         //     'url' => [
         //
         //     ]
         // ],
-        // 'Unit/Sections' => [
-        //     'icon' => 'bars',
-        //     'url' => [
-        //
-        //     ]
-        // ],
-        // 'Statuses & Categories' => [
-        //     'icon' => 'list',
-        //     'url' => [
-        //
-        //     ]
-        // ],
-        'Auth' => [
-            'icon' => 'lock',
+        'ADMINISTRATION' => [
+            'icon' => 'sliders',
             'url'=> [
                 'user' => 'User',
             ]

@@ -97,7 +97,11 @@
 <script src="{{ asset('js/theme.js') }}"></script>
 
 <script type="text/javascript">
-    $('ul.nav > li.active').parent().parent().addClass('active');
+    // buat level 1
+    $('ul.nav > li.active')
+        .parent().parent().addClass('active')
+        .parent().parent().addClass('active');
+        
     $(document).ready(function() {
         // $('select').css('width', '100%').select2();
         $('.datetime-picker').datetimepicker();
