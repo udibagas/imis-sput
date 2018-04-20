@@ -15,33 +15,33 @@ class EmployeeController extends Controller
      */
     public function index(Request $request)
     {
-        $pageSize = $request->rowCount > 0 ? $request->rowCount : 1000000;
-        $request['page'] = $request->current;
-        $sort = $request->sort ? key($request->sort) : 'employees.name';
-        $dir = $request->sort ? $request->sort[$sort] : 'asc';
+        if ($request->ajax())
+        {
+            $pageSize = $request->rowCount > 0 ? $request->rowCount : 1000000;
+            $request['page'] = $request->current;
+            $sort = $request->sort ? key($request->sort) : 'employees.name';
+            $dir = $request->sort ? $request->sort[$sort] : 'asc';
 
-        $employee = Employee::selectRaw('
-                        employees.*,
-                        departments.name AS department,
-                        offices.name AS office,
-                        owners.name AS owner,
-                        positions.name AS position
-                    ')
-                    ->join('departments', 'departments.id', '=', 'employees.department_id')
-                    ->join('offices', 'offices.id', '=', 'employees.office_id', 'LEFT')
-                    ->join('owners', 'owners.id', '=', 'employees.owner_id', 'LEFT')
-                    ->join('positions', 'positions.id', '=', 'employees.position_id')
-                    ->when($request->searchPhrase, function($query) use ($request) {
-                        return $query->where('employees.name', 'LIKE', '%'.$request->searchPhrase.'%')
-                                     ->orWhere('employees.nrp', 'LIKE', '%'.$request->searchPhrase.'%')
-                                     ->orWhere('departments.name', 'LIKE', '%'.$request->searchPhrase.'%')
-                                     ->orWhere('offices.name', 'LIKE', '%'.$request->searchPhrase.'%')
-                                     ->orWhere('owners.name', 'LIKE', '%'.$request->searchPhrase.'%')
-                                     ->orWhere('positions.name', 'LIKE', '%'.$request->searchPhrase.'%');
-                    })->orderBy($sort, $dir)->paginate($pageSize);
+            $employee = Employee::selectRaw('
+                    employees.*,
+                    departments.name AS department,
+                    offices.name AS office,
+                    owners.name AS owner,
+                    positions.name AS position
+                ')
+                ->join('departments', 'departments.id', '=', 'employees.department_id')
+                ->join('offices', 'offices.id', '=', 'employees.office_id', 'LEFT')
+                ->join('owners', 'owners.id', '=', 'employees.owner_id', 'LEFT')
+                ->join('positions', 'positions.id', '=', 'employees.position_id')
+                ->when($request->searchPhrase, function($query) use ($request) {
+                    return $query->where('employees.name', 'LIKE', '%'.$request->searchPhrase.'%')
+                        ->orWhere('employees.nrp', 'LIKE', '%'.$request->searchPhrase.'%')
+                        ->orWhere('departments.name', 'LIKE', '%'.$request->searchPhrase.'%')
+                        ->orWhere('offices.name', 'LIKE', '%'.$request->searchPhrase.'%')
+                        ->orWhere('owners.name', 'LIKE', '%'.$request->searchPhrase.'%')
+                        ->orWhere('positions.name', 'LIKE', '%'.$request->searchPhrase.'%');
+                })->orderBy($sort, $dir)->paginate($pageSize);
 
-
-        if ($request->ajax()) {
             return [
                 'rowCount' => $employee->perPage(),
                 'total' => $employee->total(),

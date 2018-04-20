@@ -15,18 +15,19 @@ class UserController extends Controller
      */
     public function index(Request $request)
     {
-        $pageSize = $request->rowCount > 0 ? $request->rowCount : 1000000;
-        $request['page'] = $request->current;
-        $sort = $request->sort ? key($request->sort) : 'name';
-        $dir = $request->sort ? $request->sort[$sort] : 'asc';
+        if ($request->ajax())
+        {
+            $pageSize = $request->rowCount > 0 ? $request->rowCount : 1000000;
+            $request['page'] = $request->current;
+            $sort = $request->sort ? key($request->sort) : 'name';
+            $dir = $request->sort ? $request->sort[$sort] : 'asc';
 
-        $users = User::when($request->searchPhrase, function($query) use ($request) {
-                        return $query->where('name', 'LIKE', '%'.$request->searchPhrase.'%')
-                                     ->orWhere('email', 'LIKE', '%'.$request->searchPhrase.'%')
-                                     ->orWhere('role', 'LIKE', '%'.$request->searchPhrase.'%');
-                    })->orderBy($sort, $dir)->paginate($pageSize);
+            $users = User::when($request->searchPhrase, function($query) use ($request) {
+                    return $query->where('name', 'LIKE', '%'.$request->searchPhrase.'%')
+                        ->orWhere('email', 'LIKE', '%'.$request->searchPhrase.'%')
+                        ->orWhere('role', 'LIKE', '%'.$request->searchPhrase.'%');
+                })->orderBy($sort, $dir)->paginate($pageSize);
 
-        if ($request->ajax()) {
             return [
                 'rowCount' => $users->perPage(),
                 'total' => $users->total(),
@@ -37,7 +38,7 @@ class UserController extends Controller
         return view('user.index', [
             'breadcrumbs' => [
                 '#' => 'Administration',
-                '1' => 'Users'
+                'user' => 'Users'
             ]
         ]);
     }

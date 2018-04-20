@@ -15,33 +15,33 @@ class PrajobsController extends Controller
      */
     public function index(Request $request)
     {
-        $pageSize = $request->rowCount > 0 ? $request->rowCount : 1000000;
-        $request['page'] = $request->current;
-        $sort = $request->sort ? key($request->sort) : 'prajobs.name';
-        $dir = $request->sort ? $request->sort[$sort] : 'asc';
+        if ($request->ajax())
+        {
+            $pageSize = $request->rowCount > 0 ? $request->rowCount : 1000000;
+            $request['page'] = $request->current;
+            $sort = $request->sort ? key($request->sort) : 'prajobs.name';
+            $dir = $request->sort ? $request->sort[$sort] : 'asc';
 
-        $prajob = Prajobs::selectRaw('
-                        prajobs.*,
-                        departments.name AS department,
-                        offices.name AS office,
-                        owners.name AS owner,
-                        positions.name AS position
-                    ')
-                    ->join('departments', 'departments.id', '=', 'prajobs.department_id')
-                    ->join('offices', 'offices.id', '=', 'prajobs.office_id', 'LEFT')
-                    ->join('owners', 'owners.id', '=', 'prajobs.owner_id', 'LEFT')
-                    ->join('positions', 'positions.id', '=', 'prajobs.position_id')
-                    ->when($request->searchPhrase, function($query) use ($request) {
-                        return $query->where('prajobs.name', 'LIKE', '%'.$request->searchPhrase.'%')
-                            ->orWhere('prajobs.nrp', 'LIKE', '%'.$request->searchPhrase.'%')
-                            ->orWhere('departments.name', 'LIKE', '%'.$request->searchPhrase.'%')
-                            ->orWhere('offices.name', 'LIKE', '%'.$request->searchPhrase.'%')
-                            ->orWhere('owners.name', 'LIKE', '%'.$request->searchPhrase.'%')
-                            ->orWhere('positions.name', 'LIKE', '%'.$request->searchPhrase.'%');
-                    })->orderBy($sort, $dir)->paginate($pageSize);
+            $prajob = Prajobs::selectRaw('
+                    prajobs.*,
+                    departments.name AS department,
+                    offices.name AS office,
+                    owners.name AS owner,
+                    positions.name AS position
+                ')
+                ->join('departments', 'departments.id', '=', 'prajobs.department_id')
+                ->join('offices', 'offices.id', '=', 'prajobs.office_id', 'LEFT')
+                ->join('owners', 'owners.id', '=', 'prajobs.owner_id', 'LEFT')
+                ->join('positions', 'positions.id', '=', 'prajobs.position_id')
+                ->when($request->searchPhrase, function($query) use ($request) {
+                    return $query->where('prajobs.name', 'LIKE', '%'.$request->searchPhrase.'%')
+                        ->orWhere('prajobs.nrp', 'LIKE', '%'.$request->searchPhrase.'%')
+                        ->orWhere('departments.name', 'LIKE', '%'.$request->searchPhrase.'%')
+                        ->orWhere('offices.name', 'LIKE', '%'.$request->searchPhrase.'%')
+                        ->orWhere('owners.name', 'LIKE', '%'.$request->searchPhrase.'%')
+                        ->orWhere('positions.name', 'LIKE', '%'.$request->searchPhrase.'%');
+                })->orderBy($sort, $dir)->paginate($pageSize);
 
-
-        if ($request->ajax()) {
             return [
                 'rowCount' => $prajob->perPage(),
                 'total' => $prajob->total(),

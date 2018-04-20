@@ -15,32 +15,32 @@ class UnitController extends Controller
      */
     public function index(Request $request)
     {
-        $pageSize = $request->rowCount > 0 ? $request->rowCount : 1000000;
-        $request['page'] = $request->current;
-        $sort = $request->sort ? key($request->sort) : 'units.name';
-        $dir = $request->sort ? $request->sort[$sort] : 'asc';
+        if ($request->ajax())
+        {
+            $pageSize = $request->rowCount > 0 ? $request->rowCount : 1000000;
+            $request['page'] = $request->current;
+            $sort = $request->sort ? key($request->sort) : 'units.name';
+            $dir = $request->sort ? $request->sort[$sort] : 'asc';
 
-        $units = Unit::selectRaw('
-                        units.*,
-                        owners.name AS owner,
-                        egis.name AS egi,
-                        alocations.name AS alocation,
-                        unit_categories.name AS category
-                    ')
-                    ->join('owners', 'owners.id', '=', 'units.owner_id')
-                    ->join('egis', 'egis.id', '=', 'units.egi_id')
-                    ->join('alocations', 'alocations.id', '=', 'units.alocation_id')
-                    ->join('unit_categories', 'unit_categories.id', '=', 'units.unit_category_id', 'LEFT')
-                    ->when($request->searchPhrase, function($query) use ($request) {
-                        return $query->where('units.name', 'LIKE', '%'.$request->searchPhrase.'%')
-                                     ->orWhere('owners.name', 'LIKE', '%'.$request->searchPhrase.'%')
-                                     ->orWhere('egis.name', 'LIKE', '%'.$request->searchPhrase.'%')
-                                     ->orWhere('alocations.name', 'LIKE', '%'.$request->searchPhrase.'%')
-                                     ->orWhere('unit_categories.name', 'LIKE', '%'.$request->searchPhrase.'%');
-                    })->orderBy($sort, $dir)->paginate($pageSize);
+            $units = Unit::selectRaw('
+                    units.*,
+                    owners.name AS owner,
+                    egis.name AS egi,
+                    alocations.name AS alocation,
+                    unit_categories.name AS category
+                ')
+                ->join('owners', 'owners.id', '=', 'units.owner_id')
+                ->join('egis', 'egis.id', '=', 'units.egi_id')
+                ->join('alocations', 'alocations.id', '=', 'units.alocation_id')
+                ->join('unit_categories', 'unit_categories.id', '=', 'units.unit_category_id', 'LEFT')
+                ->when($request->searchPhrase, function($query) use ($request) {
+                    return $query->where('units.name', 'LIKE', '%'.$request->searchPhrase.'%')
+                        ->orWhere('owners.name', 'LIKE', '%'.$request->searchPhrase.'%')
+                        ->orWhere('egis.name', 'LIKE', '%'.$request->searchPhrase.'%')
+                        ->orWhere('alocations.name', 'LIKE', '%'.$request->searchPhrase.'%')
+                        ->orWhere('unit_categories.name', 'LIKE', '%'.$request->searchPhrase.'%');
+                })->orderBy($sort, $dir)->paginate($pageSize);
 
-
-        if ($request->ajax()) {
             return [
                 'rowCount' => $units->perPage(),
                 'total' => $units->total(),

@@ -135,7 +135,15 @@
             var grid = $('#bootgrid').bootgrid({
                 rowCount: [10,25,50,100],
                 ajax: true, url: '{{url('alocation')}}',
-                ajaxSettings: {method: 'GET', cache: false},
+                ajaxSettings: {
+                    method: 'GET', cache: false,
+                    statusCode: {
+                        500: function(e) {
+                            var error = JSON.parse(e.responseText);
+                            toastr["error"](error.message + ". " + error.file + ":" + error.line)
+                        }
+                    }
+                },
                 searchSettings: { delay: 100, characters: 3 },
                 templates: {
                     header: '<div id="@{{ctx.id}}" class="pull-right @{{css.header}}"><div class="actionBar"><p class="@{{css.search}}"></p><p class="@{{css.actions}}"></p></div></div>'
@@ -147,7 +155,7 @@
                             '<a href="#" class="btn btn-danger btn-xs c-delete" data-id="'+row.id+'"><i class="icon-trash"></i></a>';
                     }
                 }
-            }).on("loaded.rs.jquery.bootgrid", function() {
+            }).on("loaded.rs.jquery.bootgrid", function(e) {
                 grid.find(".c-delete").on("click", function(e) {
                     t.delete($(this).data("id"));
                 });

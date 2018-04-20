@@ -15,18 +15,18 @@ class BreakdownStatusController extends Controller
      */
     public function index(Request $request)
     {
-        $pageSize = $request->rowCount > 0 ? $request->rowCount : 1000000;
-        $request['page'] = $request->current;
-        $sort = $request->sort ? key($request->sort) : 'code';
-        $dir = $request->sort ? $request->sort[$sort] : 'asc';
+        if ($request->ajax())
+        {
+            $pageSize = $request->rowCount > 0 ? $request->rowCount : 1000000;
+            $request['page'] = $request->current;
+            $sort = $request->sort ? key($request->sort) : 'code';
+            $dir = $request->sort ? $request->sort[$sort] : 'asc';
 
-        $breakdownStatus = BreakdownStatus::when($request->searchPhrase, function($query) use ($request) {
-                        return $query->where('code', 'LIKE', '%'.$request->searchPhrase.'%')
-                                     ->orWhere('description', 'LIKE', '%'.$request->searchPhrase.'%');
-                    })->orderBy($sort, $dir)->paginate($pageSize);
+            $breakdownStatus = BreakdownStatus::when($request->searchPhrase, function($query) use ($request) {
+                    return $query->where('code', 'LIKE', '%'.$request->searchPhrase.'%')
+                        ->orWhere('description', 'LIKE', '%'.$request->searchPhrase.'%');
+                })->orderBy($sort, $dir)->paginate($pageSize);
 
-
-        if ($request->ajax()) {
             return [
                 'rowCount' => $breakdownStatus->perPage(),
                 'total' => $breakdownStatus->total(),

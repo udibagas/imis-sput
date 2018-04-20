@@ -15,18 +15,18 @@ class StopWorkingPredictionController extends Controller
      */
     public function index(Request $request)
     {
-        $pageSize = $request->rowCount > 0 ? $request->rowCount : 1000000;
-        $request['page'] = $request->current;
-        $sort = $request->sort ? key($request->sort) : 'jam';
-        $dir = $request->sort ? $request->sort[$sort] : 'asc';
+        if ($request->ajax())
+        {
+            $pageSize = $request->rowCount > 0 ? $request->rowCount : 1000000;
+            $request['page'] = $request->current;
+            $sort = $request->sort ? key($request->sort) : 'jam';
+            $dir = $request->sort ? $request->sort[$sort] : 'asc';
 
-        $stopWorkingPrediction = StopWorkingPrediction::when($request->searchPhrase, function($query) use ($request) {
-                        return $query->where('jam', 'LIKE', '%'.$request->searchPhrase.'%')
-                                     ->orWhere('description', 'LIKE', '%'.$request->searchPhrase.'%');
-                    })->orderBy($sort, $dir)->paginate($pageSize);
+            $stopWorkingPrediction = StopWorkingPrediction::when($request->searchPhrase, function($query) use ($request) {
+                    return $query->where('jam', 'LIKE', '%'.$request->searchPhrase.'%')
+                        ->orWhere('description', 'LIKE', '%'.$request->searchPhrase.'%');
+                })->orderBy($sort, $dir)->paginate($pageSize);
 
-
-        if ($request->ajax()) {
             return [
                 'rowCount' => $stopWorkingPrediction->perPage(),
                 'total' => $stopWorkingPrediction->total(),

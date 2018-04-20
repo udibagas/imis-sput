@@ -15,31 +15,31 @@ class BreakdownController extends Controller
      */
     public function index(Request $request)
     {
-        $pageSize = $request->rowCount > 0 ? $request->rowCount : 1000000;
-        $request['page'] = $request->current;
-        $sort = $request->sort ? key($request->sort) : 'time_in';
-        $dir = $request->sort ? $request->sort[$sort] : 'desc';
+        if ($request->ajax())
+        {
+            $pageSize = $request->rowCount > 0 ? $request->rowCount : 1000000;
+            $request['page'] = $request->current;
+            $sort = $request->sort ? key($request->sort) : 'time_in';
+            $dir = $request->sort ? $request->sort[$sort] : 'desc';
 
-        $breakdown = Breakdown::selectRaw('
-                breakdowns.*,
-                units.name AS unit,
-                locations.name AS location,
-                breakdown_categories.name AS category,
-                breakdown_statuses.code AS breakdown_status
-            ')
-            ->join('units', 'units.id', '=', 'breakdowns.unit_id')
-            ->join('locations', 'locations.id', '=', 'breakdowns.location_id')
-            ->join('breakdown_categories', 'breakdown_categories.id', '=', 'breakdowns.breakdown_category_id')
-            ->join('breakdown_statuses', 'breakdown_statuses.id', '=', 'breakdowns.breakdown_status_id', 'LEFT')
-            ->when($request->searchPhrase, function($query) use ($request) {
-                return $query->where('units.name', 'LIKE', '%'.$request->searchPhrase.'%')
-                             ->where('locations.name', 'LIKE', '%'.$request->searchPhrase.'%')
-                             ->where('breakdown_categories.name', 'LIKE', '%'.$request->searchPhrase.'%')
-                             ->where('breakdown_statuses.code', 'LIKE', '%'.$request->searchPhrase.'%');
-            })->orderBy($sort, $dir)->paginate($pageSize);
+            $breakdown = Breakdown::selectRaw('
+                    breakdowns.*,
+                    units.name AS unit,
+                    locations.name AS location,
+                    breakdown_categories.name AS category,
+                    breakdown_statuses.code AS breakdown_status
+                ')
+                ->join('units', 'units.id', '=', 'breakdowns.unit_id')
+                ->join('locations', 'locations.id', '=', 'breakdowns.location_id')
+                ->join('breakdown_categories', 'breakdown_categories.id', '=', 'breakdowns.breakdown_category_id')
+                ->join('breakdown_statuses', 'breakdown_statuses.id', '=', 'breakdowns.breakdown_status_id', 'LEFT')
+                ->when($request->searchPhrase, function($query) use ($request) {
+                    return $query->where('units.name', 'LIKE', '%'.$request->searchPhrase.'%')
+                        ->where('locations.name', 'LIKE', '%'.$request->searchPhrase.'%')
+                        ->where('breakdown_categories.name', 'LIKE', '%'.$request->searchPhrase.'%')
+                        ->where('breakdown_statuses.code', 'LIKE', '%'.$request->searchPhrase.'%');
+                })->orderBy($sort, $dir)->paginate($pageSize);
 
-
-        if ($request->ajax()) {
             return [
                 'rowCount' => $breakdown->perPage(),
                 'total' => $breakdown->total(),

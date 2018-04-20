@@ -15,18 +15,18 @@ class UnitCategoryController extends Controller
      */
     public function index(Request $request)
     {
-        $pageSize = $request->rowCount > 0 ? $request->rowCount : 1000000;
-        $request['page'] = $request->current;
-        $sort = $request->sort ? key($request->sort) : 'name';
-        $dir = $request->sort ? $request->sort[$sort] : 'asc';
+        if ($request->ajax())
+        {
+            $pageSize = $request->rowCount > 0 ? $request->rowCount : 1000000;
+            $request['page'] = $request->current;
+            $sort = $request->sort ? key($request->sort) : 'name';
+            $dir = $request->sort ? $request->sort[$sort] : 'asc';
 
-        $unitCategory = UnitCategory::when($request->searchPhrase, function($query) use ($request) {
-                        return $query->where('name', 'LIKE', '%'.$request->searchPhrase.'%')
-                                     ->orWhere('description', 'LIKE', '%'.$request->searchPhrase.'%');
-                    })->orderBy($sort, $dir)->paginate($pageSize);
+            $unitCategory = UnitCategory::when($request->searchPhrase, function($query) use ($request) {
+                    return $query->where('name', 'LIKE', '%'.$request->searchPhrase.'%')
+                        ->orWhere('description', 'LIKE', '%'.$request->searchPhrase.'%');
+                })->orderBy($sort, $dir)->paginate($pageSize);
 
-
-        if ($request->ajax()) {
             return [
                 'rowCount' => $unitCategory->perPage(),
                 'total' => $unitCategory->total(),
