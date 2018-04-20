@@ -1,7 +1,7 @@
 <div id="modal-form" class="modal fade" tabindex="-1" role="dialog">
     <div class="modal-dialog">
         <div class="modal-content">
-            <form class="form-horizontal" role="form">
+            <form class="form-horizontal" role="form" @submit.prevent="formData.id == undefined ? store : update">
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                     <h4 class="modal-title">@{{formTitle}}</h4>
@@ -12,7 +12,7 @@
                         @{{error.message}}<br>
                         @{{error.file}}:@{{error.line}}
                     </div>
-                    
+
                     <div class="form-group" :class="formErrors.name ? 'has-error' : ''">
                         <label class="control-label col-md-4 col-sm-4 col-xs-12" for="name">Code
                         </label>
@@ -42,8 +42,8 @@
 
                 </div>
                 <div class="modal-footer">
-                    <button type="button" v-if="formData.id == undefined" class="btn btn-primary" @click="store"><i class="fa fa-floppy-o"></i> Save</button>
-                    <button type="button" v-if="formData.id != undefined" class="btn btn-primary" @click="update"><i class="fa fa-floppy-o"></i> Save</button>
+                    <button type="submit" v-if="formData.id == undefined" class="btn btn-primary" @click="store"><i class="fa fa-floppy-o"></i> Save</button>
+                    <button type="submit" v-if="formData.id != undefined" class="btn btn-primary" @click="update"><i class="fa fa-floppy-o"></i> Save</button>
                     <button type="button" class="btn btn-default" data-dismiss="modal"><i class="fa fa-close"></i> Cancel</button>
                 </div>
             </form>

@@ -54,13 +54,18 @@
             },
             store: function() {
                 var t = this;
+                block('form');
+
                 axios.post('{{url("alocation")}}', this.formData).then(function(r) {
+                    unblock('form');
                     $('#modal-form').modal('hide');
                     toastr["success"]("Data berhasil ditambahkan");
                     $('#bootgrid').bootgrid('reload');
                 })
                 // validasi
                 .catch(function(error) {
+                    unblock('form');
+
                     if (error.response.status == 422) {
                         t.formErrors = error.response.data.errors;
                     }
@@ -90,13 +95,16 @@
             },
             update: function() {
                 var t = this;
+                block('form');
                 axios.put('{{url("alocation")}}/' + this.formData.id, this.formData).then(function(r) {
+                    unblock('form');
                     $('#modal-form').modal('hide');
                     toastr["success"]("Data berhasil diupdate");
                     $('#bootgrid').bootgrid('reload');
                 })
                 // validasi
                 .catch(function(error) {
+                    unblock('form');
                     if (error.response.status == 422) {
                         t.formErrors = error.response.data.errors;
                     }

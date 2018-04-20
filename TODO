@@ -19,12 +19,15 @@ Phase 4 : Export & Import
 
 
 PR!!!
-    - component criteria masih error
     - tombol save harus disable kalau lagi proses submit, atau kasih overlay di halaman
+    - component criteria masih error
     - select2 & timepicker belum jalan
     - redirect halaman setelah register
     - role based access control
-    - display error kalau gagal load grid
+    - dashboard tampilin link ke dashboard masing2 module
+    - delete record lihat dulu kalau dia dipakai table lain
+    - alert & confirm diganti modal
+    - form diganti on submit
 
 
 Prioritas module (masing2 2 minggu):

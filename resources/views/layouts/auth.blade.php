@@ -19,9 +19,19 @@
 
 <body class="login-page">
 
+<br><br><br>
+
 <div class="login-pag-inner">
 	<div class="animatedParent animateOnce z-index-50">
-		@yield('content')
+		<div class="login-container animated growIn slower">
+		    <div class="login-content">
+				<div class="text-center">
+				    <img src="{{asset('img/logo.png')}}">
+				</div>
+				<br><br>
+				@yield('content')
+			</div>
+		</div>
 	</div>
 </div>
 

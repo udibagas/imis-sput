@@ -38,7 +38,8 @@ mix.js('resources/assets/js/app.js', 'public/js')
        'resources/assets/datetimepicker/moment.js',
        'resources/assets/datetimepicker/bootstrap-datetimepicker.min.js',
        'resources/assets/hc/code/highcharts.js',
-       'resources/assets/toastr/toastr.min.js'
+       'resources/assets/toastr/toastr.min.js',
+       'resources/assets/js/my.js'
    ], 'public/js/theme.js')
    .scripts(['resources/assets/theme/js/functions.js'], 'public/js/functions.js')
    // .sass('resources/assets/sass/app.scss', 'public/css');
