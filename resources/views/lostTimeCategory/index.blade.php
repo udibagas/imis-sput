@@ -53,14 +53,17 @@
                 $('#modal-form').modal('show');
             },
             store: function() {
+                block('form');
                 var t = this;
                 axios.post('{{url("lostTimeCategory")}}', this.formData).then(function(r) {
+                    unblock('form');
                     $('#modal-form').modal('hide');
                     toastr["success"]("Data berhasil ditambahkan");
                     $('#bootgrid').bootgrid('reload');
                 })
                 // validasi
                 .catch(function(error) {
+                    unblock('form');
                     if (error.response.status == 422) {
                         t.formErrors = error.response.data.errors;
                     }
@@ -89,14 +92,17 @@
                 });
             },
             update: function() {
+                block('form');
                 var t = this;
                 axios.put('{{url("lostTimeCategory")}}/' + this.formData.id, this.formData).then(function(r) {
+                    unblock('form');
                     $('#modal-form').modal('hide');
                     toastr["success"]("Data berhasil diupdate");
                     $('#bootgrid').bootgrid('reload');
                 })
                 // validasi
                 .catch(function(error) {
+                    unblock('form');
                     if (error.response.status == 422) {
                         t.formErrors = error.response.data.errors;
                     }

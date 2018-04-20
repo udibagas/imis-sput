@@ -53,8 +53,8 @@
                 $('#modal-form').modal('show');
             },
             store: function() {
-                var t = this;
                 block('form');
+                var t = this;
 
                 axios.post('{{url("alocation")}}', this.formData).then(function(r) {
                     unblock('form');
@@ -94,8 +94,8 @@
                 });
             },
             update: function() {
-                var t = this;
                 block('form');
+                var t = this;
                 axios.put('{{url("alocation")}}/' + this.formData.id, this.formData).then(function(r) {
                     unblock('form');
                     $('#modal-form').modal('hide');
