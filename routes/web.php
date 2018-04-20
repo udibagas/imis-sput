@@ -34,11 +34,13 @@ Route::group(['middleware' => 'auth'], function() {
     Route::resource('material', 'MaterialController');
     Route::resource('office', 'OfficeController');
     Route::resource('owner', 'OwnerController');
+    Route::resource('pitstop', 'PitstopController');
     Route::resource('planCategory', 'PlanCategoryController');
     Route::resource('position', 'PositionController');
     Route::resource('problemProductivityCategory', 'ProblemProductivityCategoryController');
     Route::resource('staffCategory', 'StaffCategoryController');
     Route::resource('stopWorkingPrediction', 'StopWorkingPredictionController');
+    Route::resource('station', 'StationController');
     Route::resource('subUnit', 'SubUnitController');
     Route::resource('supervisingPrediction', 'SupervisingPredictionController');
     Route::resource('unit', 'UnitController');
@@ -63,15 +65,16 @@ View::composer('layouts._sidebar', function($view) {
                 'breakdown/pcr' => 'Breakdown PCR',
                 'pitstop' => 'Pitstop',
                 'Master Data' => [
-                    'alocation' => 'Alocation',
+                    'alocation' => 'Alocations',
                     'bagian' => 'Bagian',
-                    'breakdownStatus' => 'Breakdown Status',
+                    'breakdownStatus' => 'Breakdown Statuses',
                     'breakdownCategory' => 'Breakdown Categories',
-                    'componentCriteria' => 'Component Criteria',
+                    'componentCriteria' => 'Component Criterias',
                     'egi' => 'EGI',
-                    'location' => 'Location',
-                    'material' => 'Material',
-                    'unit' => 'Unit',
+                    'location' => 'Locations',
+                    'material' => 'Materials',
+                    'station' => 'Stations',
+                    'unit' => 'Units',
                     'unitCategory' => 'Unit Categories',
                 ]
             ]
