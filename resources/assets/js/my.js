@@ -4,8 +4,8 @@ $('ul.nav > li.active')
 
 $(document).ready(function() {
     // belum jalan
-    $('select').css('width', '100%').select2();
-    $('.datetime-picker').datetimepicker();
+    // $('select').css('width', '100%').select2();
+    // $('.datetime-picker').datetimepicker();
 });
 
 toastr.options = {

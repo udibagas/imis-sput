@@ -19,13 +19,15 @@ Phase 4 : Export & Import
 
 
 PR!!!
-    - tombol save harus disable kalau lagi proses submit, atau kasih overlay di halaman
     - component criteria masih error
     - select2 & timepicker belum jalan
     - redirect halaman setelah register
     - role based access control
     - dashboard tampilin link ke dashboard masing2 module
-    - delete record lihat dulu kalau dia dipakai table lain
+    - delete record lihat dulu kalau dia dipakai table lain (pake foreign key)
+        - employee
+        - breakdown
+        - unit
     - alert & confirm diganti modal
 
 
