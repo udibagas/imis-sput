@@ -113,25 +113,31 @@
                 });
             },
             delete: function(id) {
-                if (confirm('Anda yakin akan menghapus data ini?')) {
-                    axios.delete('{{url("subUnit")}}/' + id)
+                bootbox.confirm({
+                    title: "Konfirmasi",
+                    message: "Anda yakin akan menghapus data ini?",
+                    callback: function(r) {
+                        if (r == true) {
+                            axios.delete('{{url("subUnit")}}/' + id)
 
-                    .then(function(r) {
-                        if (r.data.success == true) {
-                            toastr["success"]("Data berhasil dihapus");
-                            $('#bootgrid').bootgrid('reload');
-                        } else {
-                            toastr["error"]("Data gagal dihapus. " + r.data.message);
-                        }
-                    })
+                            .then(function(r) {
+                                if (r.data.success == true) {
+                                    toastr["success"]("Data berhasil dihapus");
+                                    $('#bootgrid').bootgrid('reload');
+                                } else {
+                                    toastr["error"]("Data gagal dihapus. " + r.data.message);
+                                }
+                            })
 
-                    .catch(function(error) {
-                        if (error.response.status == 500) {
-                            var error = error.response.data;
-                            toastr["error"](error.message + ". " + error.file + ":" + error.line)
+                            .catch(function(error) {
+                                if (error.response.status == 500) {
+                                    var error = error.response.data;
+                                    toastr["error"](error.message + ". " + error.file + ":" + error.line)
+                                }
+                            });
                         }
-                    });
-                }
+                    }
+                });
             },
         },
         mounted: function() {

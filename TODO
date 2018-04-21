@@ -23,7 +23,6 @@ PR!!!
     - select2 & timepicker belum jalan (URGENT)
     - redirect halaman setelah register
     - role based access control
-    - dashboard tampilin link ke dashboard masing2 module
     - delete record lihat dulu kalau dia dipakai table lain (pake foreign key)
         - employee
         - breakdown

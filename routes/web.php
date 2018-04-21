@@ -64,7 +64,7 @@ View::composer('layouts._sidebar', function($view) {
                 'breakdown' => 'Workshop',
                 'breakdown/pcr' => 'Breakdown PCR',
                 'pitstop' => 'Pitstop',
-                'Master Data' => [
+                '<i class="fa fa-database"></i> Master Data' => [
                     'alocation' => 'Alocations',
                     'bagian' => 'Bagian',
                     'breakdownStatus' => 'Breakdown Statuses',
@@ -85,7 +85,7 @@ View::composer('layouts._sidebar', function($view) {
                 'fuelTank/dashboard' => 'Dashboard',
                 'pengisianSolar' => 'Pengisian Solar',
                 'flowMeter' => 'Flow Meter',
-                'Master Data' => [
+                '<i class="fa fa-database"></i> Master Data' => [
                     'fuelTank' => 'Fuel Tanks',
                 ]
             ]
@@ -105,7 +105,7 @@ View::composer('layouts._sidebar', function($view) {
                     'resumeBargingDaily' => 'Resume Barging Daily',
                     'productivityJetty' => 'Productivity Jetty'
                 ],
-                'Master Data' => [
+                '<i class="fa fa-database"></i> Master Data' => [
                     'lostTimeCategory' => 'Lost Time Categories',
                     'planCategory' => 'Plan Category',
                     'problemProductivityCategory' => 'Problem Productivity Categories',
@@ -119,7 +119,7 @@ View::composer('layouts._sidebar', function($view) {
                 'absen' => 'Absensi',
                 'praJob' => 'Pra Job & Fatique',
                 'prajob/approval' => 'Fatique Approval',
-                'Master Data' => [
+                '<i class="fa fa-database"></i> Master Data' => [
                     'department' => 'Departments',
                     'employee' => 'Employees',
                     'jabatan' => 'Jabatan',

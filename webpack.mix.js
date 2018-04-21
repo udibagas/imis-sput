@@ -39,6 +39,7 @@ mix.js('resources/assets/js/app.js', 'public/js')
        'resources/assets/datetimepicker/bootstrap-datetimepicker.min.js',
        'resources/assets/hc/code/highcharts.js',
        'resources/assets/toastr/toastr.min.js',
+       'resources/assets/js/bootbox.min.js',
        'resources/assets/js/my.js'
    ], 'public/js/theme.js')
    .scripts(['resources/assets/theme/js/functions.js'], 'public/js/functions.js')

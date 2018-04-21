@@ -2,10 +2,84 @@
 
 @section('content')
 
-<div class="panel panel-primary panel-body" style="min-height:500px;">
+<!-- <div class="panel panel-primary panel-body" style="min-height:500px;">
     <h1>Welcome to IMIS KPP SUNGAI PUTTING</h1>
+</div> -->
+
+<div class="row text-center" style="width:1000px;margin:auto;">
+    <h1>Welcome to IMIS KPP Site Sungai Putting!</h1>
+    <br>
+    <div class="col-md-4">
+        <div class="panel panel-primary">
+            <div class="panel-body">
+                <a href="{{url('plant/dashboard')}}">
+                    <div class="stack-order">
+                        <div class="fa fa-wrench fa-3x"></div>
+                        <h1 class="no-margins">PLANT</h1>
+                    </div>
+                </a>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="panel panel-primary">
+            <div class="panel-body">
+                <a href="{{url('fuelTank/dashboard')}}">
+                    <div class="stack-order">
+                        <div class="fa fa-industry fa-3x"></div>
+                        <h1 class="no-margins">SM</h1>
+                    </div>
+                </a>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="panel panel-primary">
+            <div class="panel-body">
+                <a href="{{url('operation/dashboard')}}">
+                    <div class="stack-order">
+                        <div class="fa fa-cogs fa-3x"></div>
+                        <h1 class="no-margins">OPERATION</h1>
+                    </div>
+                </a>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="panel panel-primary">
+            <div class="panel-body">
+                <a href="{{url('hcgs/dashboard')}}">
+                    <div class="stack-order">
+                        <div class="fa fa-users fa-3x"></div>
+                        <h1 class="no-margins">HCGS</h1>
+                    </div>
+                </a>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="panel panel-primary">
+            <div class="panel-body">
+                <a href="{{url('she/dashboard')}}">
+                    <div class="stack-order">
+                        <div class="fa fa-medkit fa-3x"></div>
+                        <h1 class="no-margins">SHE</h1>
+                    </div>
+                </a>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="panel panel-primary">
+            <div class="panel-body">
+                <a href="{{url('admin/dashboard')}}">
+                    <div class="stack-order">
+                        <div class="fa fa-sliders fa-3x"></div>
+                        <h1 class="no-margins">ADMINISTRATION</h1>
+                    </div>
+                </a>
+            </div>
+        </div>
+    </div>
 </div>
-
-
-
 @endsection
