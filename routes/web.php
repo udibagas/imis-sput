@@ -19,16 +19,21 @@ Route::group(['middleware' => 'auth'], function() {
     // Master data
     Route::resource('alocation', 'AlocationController');
     Route::resource('bagian', 'BagianController');
+    Route::resource('barge', 'BargeController');
     Route::resource('breakdownCategory', 'BreakdownCategoryController');
     Route::resource('breakdownStatus', 'BreakdownStatusController');
     Route::resource('breakdown', 'BreakdownController');
+    Route::resource('buyer', 'BuyerController');
+    Route::resource('cargo', 'CargoController');
     Route::resource('componentCriteria', 'ComponentCriteriaController');
+    Route::resource('customer', 'CustomerController');
     Route::resource('department', 'DepartmentController');
     Route::resource('egi', 'EgiController');
     Route::resource('employee', 'EmployeeController');
     Route::get('fuelTank/dashboard', 'FuelTankController@dashboard');
     Route::resource('fuelTank', 'FuelTankController');
     Route::resource('jabatan', 'JabatanController');
+    Route::resource('jetty', 'JettyController');
     Route::resource('location', 'LocationController');
     Route::resource('lostTimeCategory', 'LostTimeCategoryController');
     Route::resource('material', 'MaterialController');
@@ -47,6 +52,8 @@ Route::group(['middleware' => 'auth'], function() {
     Route::resource('unitCategory', 'UnitCategoryController');
     Route::resource('user', 'UserController');
     // end of master data
+    Route::get('pasangSurut', 'OperationController@pasangSurut');
+    Route::get('productivityJetty', 'OperationController@productivityJetty');
 });
 
 View::composer('layouts._sidebar', function($view) {
@@ -106,6 +113,11 @@ View::composer('layouts._sidebar', function($view) {
                     'productivityJetty' => 'Productivity Jetty'
                 ],
                 '<i class="fa fa-database"></i> Master Data' => [
+                    'barge' => 'Barges',
+                    'buyer' => 'Buyers',
+                    'cargo' => 'Cargos',
+                    'customer' => 'Customers',
+                    'jetty' => 'Jetties',
                     'lostTimeCategory' => 'Lost Time Categories',
                     'planCategory' => 'Plan Category',
                     'problemProductivityCategory' => 'Problem Productivity Categories',
