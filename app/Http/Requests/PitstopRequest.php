@@ -24,6 +24,8 @@ class PitstopRequest extends FormRequest
      */
     public function rules()
     {
+        $pitstop = $this->route('pitstop');
+
         return [
             'unit_id' => 'required',
             'station_id' => 'required',

@@ -30,7 +30,7 @@ class CreatePitstopsTable extends Migration
             $table->string('description')->nullable();
             $table->integer('hm');
             $table->integer('user_id')->unsigned();
-            $table->boolean('status');
+            $table->boolean('status')->default(0);
             $table->timestamps();
         });
 

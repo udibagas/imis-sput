@@ -4,8 +4,8 @@ $('ul.nav > li.active')
 
 $(document).ready(function() {
     // belum jalan
-    // $('select').css('width', '100%').select2();
-    // $('.datetime-picker').datetimepicker();
+    $('select').css('width', '100%').select2();
+    $('.datetime-picker').datetimepicker();
 });
 
 toastr.options = {
@@ -46,3 +46,15 @@ var unblock = function(el) {
         $(el).removeClass('reloading');
     }, 100);
 };
+
+Vue.directive('selecttwo', {
+    twoWay: true,
+    bind: function () {
+        $(this.el).select2().on("select2:select", function(e) {
+            this.set($(this.el).val());
+        }.bind(this));
+    },
+    update: function(nv, ov) {
+        $(this.el).trigger("change");
+    }
+});

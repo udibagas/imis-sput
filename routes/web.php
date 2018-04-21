@@ -94,6 +94,17 @@ View::composer('layouts._sidebar', function($view) {
             'icon' => 'cogs',
             'url' => [
                 'operation/dashboard' => 'Dashboard',
+                'Hourly Monitoring Barging' => [
+                    'stockBalanced' => 'Stock Balanced',
+                    'anchoredBarge' => 'Anchored Barge',
+                    'pasangSurut' => 'Prediksi Pasang Surut',
+
+                ],
+                'Status Jetty' => [
+                    'dwellingTime' => 'Dwelling Time',
+                    'resumeBargingDaily' => 'Resume Barging Daily',
+                    'productivityJetty' => 'Productivity Jetty'
+                ],
                 'Master Data' => [
                     'lostTimeCategory' => 'Lost Time Categories',
                     'planCategory' => 'Plan Category',
@@ -120,6 +131,12 @@ View::composer('layouts._sidebar', function($view) {
                     'staffCategory' => 'Staff Categories',
                     'terminalAbsensi' => 'Terminal Absensi'
                 ]
+            ]
+        ],
+        'SHE' => [
+            'icon' => 'medkit',
+            'url' => [
+                'operatorPerformance' => 'Operator Performance'
             ]
         ],
         // Shared Master Data

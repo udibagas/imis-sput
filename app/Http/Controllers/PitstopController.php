@@ -19,12 +19,20 @@ class PitstopController extends Controller
         {
             $pageSize = $request->rowCount > 0 ? $request->rowCount : 1000000;
             $request['page'] = $request->current;
-            $sort = $request->sort ? key($request->sort) : 'name';
-            $dir = $request->sort ? $request->sort[$sort] : 'asc';
+            $sort = $request->sort ? key($request->sort) : 'pitstops.time_in';
+            $dir = $request->sort ? $request->sort[$sort] : 'desc';
 
-            $pitstop = Pitstop::when($request->searchPhrase, function($query) use ($request) {
-                    return $query->where('name', 'LIKE', '%'.$request->searchPhrase.'%')
-                        ->orWhere('description', 'LIKE', '%'.$request->searchPhrase.'%');
+            $pitstop = Pitstop::selectRaw('
+                    pitstops.*,
+                    units.name AS unit,
+                    stations.name AS station
+                ')
+                ->join('units', 'units.id', '=', 'pitstops.unit_id')
+                ->join('stations', 'stations.id', '=', 'pitstops.station_id')
+                ->when($request->searchPhrase, function($query) use ($request) {
+                    return $query->where('stations.name', 'LIKE', '%'.$request->searchPhrase.'%')
+                        ->orWhere('units.name', 'LIKE', '%'.$request->searchPhrase.'%')
+                        ->orWhere('pitstop.description', 'LIKE', '%'.$request->searchPhrase.'%');
                 })->orderBy($sort, $dir)->paginate($pageSize);
 
             return [
@@ -51,7 +59,9 @@ class PitstopController extends Controller
      */
     public function store(PitstopRequest $request)
     {
-        return Pitstop::create($request->all());
+        $input = $request->all();
+        $input['user_id'] = auth()->user()->id;
+        return Pitstop::create($input);
     }
 
     /**

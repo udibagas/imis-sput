@@ -20,7 +20,7 @@ Phase 4 : Export & Import
 
 PR!!!
     - component criteria masih error
-    - select2 & timepicker belum jalan
+    - select2 & timepicker belum jalan (URGENT)
     - redirect halaman setelah register
     - role based access control
     - dashboard tampilin link ke dashboard masing2 module
@@ -29,14 +29,35 @@ PR!!!
         - breakdown
         - unit
         - prajob
+        - pitstop
     - alert & confirm diganti modal
 
 
 Prioritas module (masing2 2 minggu):
     - Plant (22 april)
+        - Pitstop
+        - Breakdown
+        - lead time daily check
+        - lead time breakdown
     - Fuel  (29 april)
+        - Flow meter
+        - pengisian bbm
+        - dashboard
     - Operation (13 mei)
-    - Absensi (20 mei)
+        - hourly monitoring barging
+            - stock balanced
+            - anchored barge
+            - prediksi pasang surut
+        - Status Jetty
+            - dwelling time
+            - resume barging daily
+            - productivity jetty
+    - HCGS (20 mei)
+        - absensi
+
+    - SHE
+        - operator performance
+
 
 Perkiraan
 --------------------

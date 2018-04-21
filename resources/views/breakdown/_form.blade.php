@@ -1,4 +1,4 @@
-<div id="modal-form" class="modal fade" tabindex="-1" role="dialog">
+<div id="modal-form" class="modal fade" role="dialog">
     <div class="modal-dialog">
         <div class="modal-content">
             <form class="form-horizontal" role="form" @submit.prevent="formData.id == undefined ? store : update">
