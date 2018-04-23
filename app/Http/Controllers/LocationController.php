@@ -15,6 +15,8 @@ class LocationController extends Controller
      */
     public function index(Request $request)
     {
+        $this->authorize('view', Location::class);
+
         if ($request->ajax())
         {
             $pageSize = $request->rowCount > 0 ? $request->rowCount : 1000000;
@@ -52,6 +54,7 @@ class LocationController extends Controller
      */
     public function store(LocationRequest $request)
     {
+        $this->authorize('create', Location::class);
         return Location::create($request->all());
     }
 
@@ -63,6 +66,7 @@ class LocationController extends Controller
      */
     public function show(Location $location)
     {
+        $this->authorize('view', Location::class);
         return $location;
     }
 
@@ -75,6 +79,7 @@ class LocationController extends Controller
      */
     public function update(LocationRequest $request, Location $location)
     {
+        $this->authorize('update', Location::class);
         $location->update($request->all());
         return $location;
     }
@@ -87,6 +92,7 @@ class LocationController extends Controller
      */
     public function destroy(Location $location)
     {
+        $this->authorize('delete', Location::class);
         return ['success' => $location->delete()];
     }
 }

@@ -15,6 +15,8 @@ class DepartmentController extends Controller
      */
     public function index(Request $request)
     {
+        $this->authorize('view', Department::class);
+
         if ($request->ajax())
         {
             $pageSize = $request->rowCount > 0 ? $request->rowCount : 1000000;
@@ -52,6 +54,7 @@ class DepartmentController extends Controller
      */
     public function store(DepartmentRequest $request)
     {
+        $this->authorize('create', Department::class);
         return Department::create($request->all());
     }
 
@@ -63,6 +66,7 @@ class DepartmentController extends Controller
      */
     public function show(Department $department)
     {
+        $this->authorize('view', Department::class);
         return $department;
     }
 
@@ -75,6 +79,7 @@ class DepartmentController extends Controller
      */
     public function update(DepartmentRequest $request, Department $department)
     {
+        $this->authorize('update', Department::class);
         $department->update($request->all());
         return $department;
     }
@@ -87,6 +92,7 @@ class DepartmentController extends Controller
      */
     public function destroy(Department $department)
     {
+        $this->authorize('delete', Department::class);
         return ['success' => $department->delete()];
     }
 }

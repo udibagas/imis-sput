@@ -15,6 +15,8 @@ class BreakdownStatusController extends Controller
      */
     public function index(Request $request)
     {
+        $this->authorize('view', BreakdownStatus::class);
+
         if ($request->ajax())
         {
             $pageSize = $request->rowCount > 0 ? $request->rowCount : 1000000;
@@ -52,6 +54,7 @@ class BreakdownStatusController extends Controller
      */
     public function store(BreakdownStatusRequest $request)
     {
+        $this->authorize('create', BreakdownStatus::class);
         return BreakdownStatus::create($request->all());
     }
 
@@ -63,6 +66,7 @@ class BreakdownStatusController extends Controller
      */
     public function show(BreakdownStatus $breakdownStatus)
     {
+        $this->authorize('view', BreakdownStatus::class);
         return $breakdownStatus;
     }
 
@@ -75,6 +79,7 @@ class BreakdownStatusController extends Controller
      */
     public function update(BreakdownStatusRequest $request, BreakdownStatus $breakdownStatus)
     {
+        $this->authorize('update', BreakdownStatus::class);
         $breakdownStatus->update($request->all());
         return $breakdownStatus;
     }
@@ -87,6 +92,7 @@ class BreakdownStatusController extends Controller
      */
     public function destroy(BreakdownStatus $breakdownStatus)
     {
+        $this->authorize('delete', BreakdownStatus::class);
         return ['success' => $breakdownStatus->delete()];
     }
 }

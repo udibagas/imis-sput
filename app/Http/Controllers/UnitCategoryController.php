@@ -15,6 +15,8 @@ class UnitCategoryController extends Controller
      */
     public function index(Request $request)
     {
+        $this->authorize('view', UnitCategory::class);
+
         if ($request->ajax())
         {
             $pageSize = $request->rowCount > 0 ? $request->rowCount : 1000000;
@@ -52,6 +54,7 @@ class UnitCategoryController extends Controller
      */
     public function store(UnitCategoryRequest $request)
     {
+        $this->authorize('create', UnitCategory::class);
         return UnitCategory::create($request->all());
     }
 
@@ -63,6 +66,7 @@ class UnitCategoryController extends Controller
      */
     public function show(UnitCategory $unitCategory)
     {
+        $this->authorize('view', UnitCategory::class);
         return $unitCategory;
     }
 
@@ -75,6 +79,7 @@ class UnitCategoryController extends Controller
      */
     public function update(UnitCategoryRequest $request, UnitCategory $unitCategory)
     {
+        $this->authorize('update', UnitCategory::class);
         $unitCategory->update($request->all());
         return $unitCategory;
     }
@@ -87,6 +92,7 @@ class UnitCategoryController extends Controller
      */
     public function destroy(UnitCategory $unitCategory)
     {
+        $this->authorize('delete', UnitCategory::class);
         return ['success' => $unitCategory->delete()];
     }
 }

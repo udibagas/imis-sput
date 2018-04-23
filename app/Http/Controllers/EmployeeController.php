@@ -15,6 +15,8 @@ class EmployeeController extends Controller
      */
     public function index(Request $request)
     {
+        $this->authorize('view', Employee::class);
+
         if ($request->ajax())
         {
             $pageSize = $request->rowCount > 0 ? $request->rowCount : 1000000;
@@ -67,6 +69,7 @@ class EmployeeController extends Controller
      */
     public function store(EmployeeRequest $request)
     {
+        $this->authorize('create', Employee::class);
         return Employee::create($request->all());
     }
 
@@ -78,6 +81,7 @@ class EmployeeController extends Controller
      */
     public function show(Employee $employee)
     {
+        $this->authorize('view', Employee::class);
         return $employee;
     }
 
@@ -90,6 +94,7 @@ class EmployeeController extends Controller
      */
     public function update(EmployeeRequest $request, Employee $employee)
     {
+        $this->authorize('update', Employee::class);
         $employee->update($request->all());
         return $employee;
     }
@@ -102,6 +107,7 @@ class EmployeeController extends Controller
      */
     public function destroy(Employee $employee)
     {
+        $this->authorize('delete', Employee::class);
         return ['success' => $employee->delete()];
     }
 }

@@ -15,6 +15,8 @@ class BreakdownCategoryController extends Controller
      */
     public function index(Request $request)
     {
+        $this->authorize('view', BreakdownCategory::class);
+
         if ($request->ajax())
         {
             $pageSize = $request->rowCount > 0 ? $request->rowCount : 1000000;
@@ -53,6 +55,7 @@ class BreakdownCategoryController extends Controller
      */
     public function store(BreakdownCategoryRequest $request)
     {
+        $this->authorize('create', BreakdownCategory::class);
         return BreakdownCategory::create($request->all());
     }
 
@@ -64,6 +67,7 @@ class BreakdownCategoryController extends Controller
      */
     public function show(BreakdownCategory $breakdownCategory)
     {
+        $this->authorize('view', BreakdownCategory::class);
         return $breakdownCategory;
     }
 
@@ -76,6 +80,7 @@ class BreakdownCategoryController extends Controller
      */
     public function update(BreakdownCategoryRequest $request, BreakdownCategory $breakdownCategory)
     {
+        $this->authorize('update', BreakdownCategory::class);
         $breakdownCategory->update($request->all());
         return $breakdownCategory;
     }
@@ -88,6 +93,7 @@ class BreakdownCategoryController extends Controller
      */
     public function destroy(BreakdownCategory $breakdownCategory)
     {
+        $this->authorize('delete', BreakdownCategory::class);
         return ['success' => $breakdownCategory->delete()];
     }
 }

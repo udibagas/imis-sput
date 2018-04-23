@@ -16,6 +16,8 @@ class FuelTankController extends Controller
      */
     public function index(Request $request)
     {
+        $this->authorize('view', FuelTank::class);
+
         if ($request->ajax())
         {
             $pageSize = $request->rowCount > 0 ? $request->rowCount : 1000000;
@@ -53,6 +55,7 @@ class FuelTankController extends Controller
      */
     public function store(FuelTankRequest $request)
     {
+        $this->authorize('create', FuelTank::class);
         return FuelTank::create($request->all());
     }
 
@@ -64,6 +67,7 @@ class FuelTankController extends Controller
      */
     public function show(FuelTank $fuelTank)
     {
+        $this->authorize('view', FuelTank::class);
         return $fuelTank;
     }
 
@@ -76,6 +80,7 @@ class FuelTankController extends Controller
      */
     public function update(FuelTankRequest $request, FuelTank $fuelTank)
     {
+        $this->authorize('update', FuelTank::class);
         $fuelTank->update($request->all());
         return $fuelTank;
     }
@@ -88,11 +93,14 @@ class FuelTankController extends Controller
      */
     public function destroy(FuelTank $fuelTank)
     {
+        $this->authorize('delete', FuelTank::class);
         return ['success' => $fuelTank->delete()];
     }
 
     public function dashboard(Request $request)
     {
+        $this->authorize('dashboard', FuelTank::class);
+
         if ($request->ajax()) {
             return FuelTank::orderBy('name', 'ASC')->get();
         }

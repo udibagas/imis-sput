@@ -15,6 +15,8 @@ class UserController extends Controller
      */
     public function index(Request $request)
     {
+        $this->authorize('view', User::class);
+
         if ($request->ajax())
         {
             $pageSize = $request->rowCount > 0 ? $request->rowCount : 1000000;
@@ -51,6 +53,7 @@ class UserController extends Controller
      */
     public function store(UserRequest $request)
     {
+        $this->authorize('create', User::class);
         $input = $request->all();
         $input['password'] = bcrypt($request->password);
         return User::create($input);
@@ -64,6 +67,7 @@ class UserController extends Controller
      */
     public function show(User $user)
     {
+        $this->authorize('view', User::class);
         return $user;
     }
 
@@ -76,6 +80,7 @@ class UserController extends Controller
      */
     public function update(UserRequest $request, User $user)
     {
+        $this->authorize('update', User::class);
         $input = $request->all();
 
         if ($request->password) {
@@ -94,6 +99,7 @@ class UserController extends Controller
      */
     public function destroy(User $user)
     {
+        $this->authorize('delete', User::class);
         return ['success' => $user->delete()];
     }
 }

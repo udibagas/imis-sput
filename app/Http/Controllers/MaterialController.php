@@ -15,6 +15,8 @@ class MaterialController extends Controller
      */
     public function index(Request $request)
     {
+        $this->authorize('view', Material::class);
+
         if ($request->ajax())
         {
             $pageSize = $request->rowCount > 0 ? $request->rowCount : 1000000;
@@ -52,6 +54,7 @@ class MaterialController extends Controller
      */
     public function store(MaterialRequest $request)
     {
+        $this->authorize('create', Material::class);
         return Material::create($request->all());
     }
 
@@ -63,6 +66,7 @@ class MaterialController extends Controller
      */
     public function show(Material $material)
     {
+        $this->authorize('view', Material::class);
         return $material;
     }
 
@@ -75,6 +79,7 @@ class MaterialController extends Controller
      */
     public function update(MaterialRequest $request, Material $material)
     {
+        $this->authorize('update', Material::class);
         $material->update($request->all());
         return $material;
     }
@@ -87,6 +92,7 @@ class MaterialController extends Controller
      */
     public function destroy(Material $material)
     {
+        $this->authorize('delete', Material::class);
         return ['success' => $material->delete()];
     }
 }

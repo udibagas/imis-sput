@@ -15,6 +15,8 @@ class OwnerController extends Controller
      */
     public function index(Request $request)
     {
+        $this->authorize('view', Owner::class);
+
         if ($request->ajax())
         {
             $pageSize = $request->rowCount > 0 ? $request->rowCount : 1000000;
@@ -52,6 +54,7 @@ class OwnerController extends Controller
      */
     public function store(OwnerRequest $request)
     {
+        $this->authorize('create', Owner::class);
         return Owner::create($request->all());
     }
 
@@ -63,6 +66,7 @@ class OwnerController extends Controller
      */
     public function show(Owner $owner)
     {
+        $this->authorize('view', Owner::class);
         return $owner;
     }
 
@@ -75,6 +79,7 @@ class OwnerController extends Controller
      */
     public function update(OwnerRequest $request, Owner $owner)
     {
+        $this->authorize('update', Owner::class);
         $owner->update($request->all());
         return $owner;
     }
@@ -87,6 +92,7 @@ class OwnerController extends Controller
      */
     public function destroy(Owner $owner)
     {
+        $this->authorize('delete', Owner::class);
         return ['success' => $owner->delete()];
     }
 }

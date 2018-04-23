@@ -15,6 +15,8 @@ class SupervisingPredictionController extends Controller
      */
     public function index(Request $request)
     {
+        $this->authorize('view', SupervisingPrediction::class);
+
         if ($request->ajax())
         {
             $pageSize = $request->rowCount > 0 ? $request->rowCount : 1000000;
@@ -52,6 +54,7 @@ class SupervisingPredictionController extends Controller
      */
     public function store(SupervisingPredictionRequest $request)
     {
+        $this->authorize('create', SupervisingPrediction::class);
         return SupervisingPrediction::create($request->all());
     }
 
@@ -63,6 +66,7 @@ class SupervisingPredictionController extends Controller
      */
     public function show(SupervisingPrediction $supervisingPrediction)
     {
+        $this->authorize('view', SupervisingPrediction::class);
         return $supervisingPrediction;
     }
 
@@ -75,6 +79,7 @@ class SupervisingPredictionController extends Controller
      */
     public function update(SupervisingPredictionRequest $request, SupervisingPrediction $supervisingPrediction)
     {
+        $this->authorize('update', SupervisingPrediction::class);
         $supervisingPrediction->update($request->all());
         return $supervisingPrediction;
     }
@@ -87,6 +92,7 @@ class SupervisingPredictionController extends Controller
      */
     public function destroy(SupervisingPrediction $supervisingPrediction)
     {
+        $this->authorize('delete', SupervisingPrediction::class);
         return ['success' => $supervisingPrediction->delete()];
     }
 }

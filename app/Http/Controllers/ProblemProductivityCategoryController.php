@@ -15,6 +15,8 @@ class ProblemProductivityCategoryController extends Controller
      */
     public function index(Request $request)
     {
+        $this->authorize('view', ProblemProductivityCategory::class);
+
         if ($request->ajax())
         {
             $pageSize = $request->rowCount > 0 ? $request->rowCount : 1000000;
@@ -52,6 +54,7 @@ class ProblemProductivityCategoryController extends Controller
      */
     public function store(ProblemProductivityCategoryRequest $request)
     {
+        $this->authorize('create', ProblemProductivityCategory::class);
         return ProblemProductivityCategory::create($request->all());
     }
 
@@ -63,6 +66,7 @@ class ProblemProductivityCategoryController extends Controller
      */
     public function show(ProblemProductivityCategory $problemProductivityCategory)
     {
+        $this->authorize('view', ProblemProductivityCategory::class);
         return $problemProductivityCategory;
     }
 
@@ -75,6 +79,7 @@ class ProblemProductivityCategoryController extends Controller
      */
     public function update(ProblemProductivityCategoryRequest $request, ProblemProductivityCategory $problemProductivityCategory)
     {
+        $this->authorize('update', ProblemProductivityCategory::class);
         $problemProductivityCategory->update($request->all());
         return $problemProductivityCategory;
     }
@@ -87,6 +92,7 @@ class ProblemProductivityCategoryController extends Controller
      */
     public function destroy(ProblemProductivityCategory $problemProductivityCategory)
     {
+        $this->authorize('delete', ProblemProductivityCategory::class);
         return ['success' => $problemProductivityCategory->delete()];
     }
 }

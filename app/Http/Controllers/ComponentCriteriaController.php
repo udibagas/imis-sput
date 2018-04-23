@@ -15,6 +15,8 @@ class ComponentCriteriaController extends Controller
      */
     public function index(Request $request)
     {
+        $this->authorize('view', ComponentCriteria::class);
+
         if ($request->ajax())
         {
             $pageSize = $request->rowCount > 0 ? $request->rowCount : 1000000;
@@ -52,6 +54,7 @@ class ComponentCriteriaController extends Controller
      */
     public function store(ComponentCriteriaRequest $request)
     {
+        $this->authorize('create', ComponentCriteria::class);
         return ComponentCriteria::create($request->all());
     }
 
@@ -63,6 +66,7 @@ class ComponentCriteriaController extends Controller
      */
     public function show(ComponentCriteria $componentCriteria)
     {
+        $this->authorize('view', ComponentCriteria::class);
         return $componentCriteria;
     }
 
@@ -75,6 +79,7 @@ class ComponentCriteriaController extends Controller
      */
     public function update(ComponentCriteriaRequest $request, ComponentCriteria $componentCriteria)
     {
+        $this->authorize('update', ComponentCriteria::class);
         $componentCriteria->update($request->all());
         return $componentCriteria;
     }
@@ -87,6 +92,7 @@ class ComponentCriteriaController extends Controller
      */
     public function destroy(ComponentCriteria $componentCriteria)
     {
+        $this->authorize('delete', ComponentCriteria::class);
         return ['success' => $componentCriteria->delete()];
     }
 }

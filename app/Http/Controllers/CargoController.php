@@ -15,6 +15,8 @@ class CargoController extends Controller
      */
     public function index(Request $request)
     {
+        $this->authorize('view', Cargo::class);
+
         if ($request->ajax())
         {
             $pageSize = $request->rowCount > 0 ? $request->rowCount : 1000000;
@@ -55,6 +57,7 @@ class CargoController extends Controller
      */
     public function store(CargoRequest $request)
     {
+        $this->authorize('create', Cargo::class);
         return Cargo::create($request->all());
     }
 
@@ -66,6 +69,7 @@ class CargoController extends Controller
      */
     public function show(Cargo $cargo)
     {
+        $this->authorize('view', Cargo::class);
         return $cargo;
     }
 
@@ -78,6 +82,7 @@ class CargoController extends Controller
      */
     public function update(CargoRequest $request, Cargo $cargo)
     {
+        $this->authorize('update', Cargo::class);
         $cargo->update($request->all());
         return $cargo;
     }
@@ -90,6 +95,7 @@ class CargoController extends Controller
      */
     public function destroy(Cargo $cargo)
     {
+        $this->authorize('delete', Cargo::class);
         return ['success' => $cargo->delete()];
     }
 }

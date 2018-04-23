@@ -15,6 +15,8 @@ class StaffCategoryController extends Controller
      */
     public function index(Request $request)
     {
+        $this->authorize('view', StaffCategory::class);
+
         if ($request->ajax())
         {
             $pageSize = $request->rowCount > 0 ? $request->rowCount : 1000000;
@@ -52,6 +54,7 @@ class StaffCategoryController extends Controller
      */
     public function store(StaffCategoryRequest $request)
     {
+        $this->authorize('create', StaffCategory::class);
         return StaffCategory::create($request->all());
     }
 
@@ -63,6 +66,7 @@ class StaffCategoryController extends Controller
      */
     public function show(StaffCategory $staffCategory)
     {
+        $this->authorize('view', StaffCategory::class);
         return $staffCategory;
     }
 
@@ -75,6 +79,7 @@ class StaffCategoryController extends Controller
      */
     public function update(StaffCategoryRequest $request, StaffCategory $staffCategory)
     {
+        $this->authorize('update', StaffCategory::class);
         $staffCategory->update($request->all());
         return $staffCategory;
     }
@@ -87,6 +92,7 @@ class StaffCategoryController extends Controller
      */
     public function destroy(StaffCategory $staffCategory)
     {
+        $this->authorize('delete', StaffCategory::class);
         return ['success' => $staffCategory->delete()];
     }
 }

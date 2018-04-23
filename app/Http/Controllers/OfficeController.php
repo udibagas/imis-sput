@@ -15,6 +15,8 @@ class OfficeController extends Controller
      */
     public function index(Request $request)
     {
+        $this->authorize('view', Office::class);
+
         if ($request->ajax())
         {
             $pageSize = $request->rowCount > 0 ? $request->rowCount : 1000000;
@@ -52,6 +54,7 @@ class OfficeController extends Controller
      */
     public function store(OfficeRequest $request)
     {
+        $this->authorize('create', Office::class);
         return Office::create($request->all());
     }
 
@@ -63,6 +66,7 @@ class OfficeController extends Controller
      */
     public function show(Office $office)
     {
+        $this->authorize('view', Office::class);
         return $office;
     }
 
@@ -75,6 +79,7 @@ class OfficeController extends Controller
      */
     public function update(OfficeRequest $request, Office $office)
     {
+        $this->authorize('update', Office::class);
         $office->update($request->all());
         return $office;
     }
@@ -87,6 +92,7 @@ class OfficeController extends Controller
      */
     public function destroy(Office $office)
     {
+        $this->authorize('delete', Office::class);
         return ['success' => $office->delete()];
     }
 }

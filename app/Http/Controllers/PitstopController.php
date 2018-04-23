@@ -15,6 +15,8 @@ class PitstopController extends Controller
      */
     public function index(Request $request)
     {
+        $this->authorize('view', Pitstop::class);
+
         if ($request->ajax())
         {
             $pageSize = $request->rowCount > 0 ? $request->rowCount : 1000000;
@@ -59,6 +61,7 @@ class PitstopController extends Controller
      */
     public function store(PitstopRequest $request)
     {
+        $this->authorize('create', Pitstop::class);
         $input = $request->all();
         $input['user_id'] = auth()->user()->id;
         return Pitstop::create($input);
@@ -72,6 +75,7 @@ class PitstopController extends Controller
      */
     public function show(Pitstop $pitstop)
     {
+        $this->authorize('view', Pitstop::class);
         return $pitstop;
     }
 
@@ -84,6 +88,7 @@ class PitstopController extends Controller
      */
     public function update(PitstopRequest $request, Pitstop $pitstop)
     {
+        $this->authorize('update', Pitstop::class);
         $pitstop->update($request->all());
         return $pitstop;
     }
@@ -96,6 +101,7 @@ class PitstopController extends Controller
      */
     public function destroy(Pitstop $pitstop)
     {
+        $this->authorize('delete', Pitstop::class);
         return ['success' => $pitstop->delete()];
     }
 }

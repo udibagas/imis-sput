@@ -15,6 +15,8 @@ class SubUnitController extends Controller
      */
     public function index(Request $request)
     {
+        $this->authorize('view', SubUnit::class);
+
         if ($request->ajax())
         {
             $pageSize = $request->rowCount > 0 ? $request->rowCount : 1000000;
@@ -52,6 +54,7 @@ class SubUnitController extends Controller
      */
     public function store(SubUnitRequest $request)
     {
+        $this->authorize('create', SubUnit::class);
         return SubUnit::create($request->all());
     }
 
@@ -63,6 +66,7 @@ class SubUnitController extends Controller
      */
     public function show(SubUnit $subUnit)
     {
+        $this->authorize('view', SubUnit::class);
         return $subUnit;
     }
 
@@ -75,6 +79,7 @@ class SubUnitController extends Controller
      */
     public function update(SubUnitRequest $request, SubUnit $subUnit)
     {
+        $this->authorize('update', SubUnit::class);
         $subUnit->update($request->all());
         return $subUnit;
     }
@@ -87,6 +92,7 @@ class SubUnitController extends Controller
      */
     public function destroy(SubUnit $subUnit)
     {
+        $this->authorize('delete', SubUnit::class);
         return ['success' => $subUnit->delete()];
     }
 }

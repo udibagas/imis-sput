@@ -15,6 +15,8 @@ class PlanCategoryController extends Controller
      */
     public function index(Request $request)
     {
+        $this->authorize('view', PlanCategory::class);
+
         if ($request->ajax())
         {
             $pageSize = $request->rowCount > 0 ? $request->rowCount : 1000000;
@@ -52,6 +54,7 @@ class PlanCategoryController extends Controller
      */
     public function store(PlanCategoryRequest $request)
     {
+        $this->authorize('create', PlanCategory::class);
         return PlanCategory::create($request->all());
     }
 
@@ -63,6 +66,7 @@ class PlanCategoryController extends Controller
      */
     public function show(PlanCategory $planCategory)
     {
+        $this->authorize('view', PlanCategory::class);
         return $planCategory;
     }
 
@@ -75,6 +79,7 @@ class PlanCategoryController extends Controller
      */
     public function update(PlanCategoryRequest $request, PlanCategory $planCategory)
     {
+        $this->authorize('update', PlanCategory::class);
         $planCategory->update($request->all());
         return $planCategory;
     }
@@ -87,6 +92,7 @@ class PlanCategoryController extends Controller
      */
     public function destroy(PlanCategory $planCategory)
     {
+        $this->authorize('delete', PlanCategory::class);
         return ['success' => $planCategory->delete()];
     }
 }

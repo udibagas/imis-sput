@@ -15,6 +15,8 @@ class StopWorkingPredictionController extends Controller
      */
     public function index(Request $request)
     {
+        $this->authorize('view', StopWorkingPrediction::class);
+
         if ($request->ajax())
         {
             $pageSize = $request->rowCount > 0 ? $request->rowCount : 1000000;
@@ -52,6 +54,7 @@ class StopWorkingPredictionController extends Controller
      */
     public function store(StopWorkingPredictionRequest $request)
     {
+        $this->authorize('create', StopWorkingPrediction::class);
         return StopWorkingPrediction::create($request->all());
     }
 
@@ -63,6 +66,7 @@ class StopWorkingPredictionController extends Controller
      */
     public function show(StopWorkingPrediction $stopWorkingPrediction)
     {
+        $this->authorize('view', StopWorkingPrediction::class);
         return $stopWorkingPrediction;
     }
 
@@ -75,6 +79,7 @@ class StopWorkingPredictionController extends Controller
      */
     public function update(StopWorkingPredictionRequest $request, StopWorkingPrediction $stopWorkingPrediction)
     {
+        $this->authorize('update', StopWorkingPrediction::class);
         $stopWorkingPrediction->update($request->all());
         return $stopWorkingPrediction;
     }
@@ -87,6 +92,7 @@ class StopWorkingPredictionController extends Controller
      */
     public function destroy(StopWorkingPrediction $stopWorkingPrediction)
     {
+        $this->authorize('delete', StopWorkingPrediction::class);
         return ['success' => $stopWorkingPrediction->delete()];
     }
 }

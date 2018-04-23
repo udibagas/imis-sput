@@ -15,6 +15,8 @@ class EgiController extends Controller
      */
     public function index(Request $request)
     {
+        $this->authorize('view', Egi::class);
+
         if ($request->ajax())
         {
             $pageSize = $request->rowCount > 0 ? $request->rowCount : 1000000;
@@ -52,6 +54,7 @@ class EgiController extends Controller
      */
     public function store(EgiRequest $request)
     {
+        $this->authorize('create', Egi::class);
         return Egi::create($request->all());
     }
 
@@ -63,6 +66,7 @@ class EgiController extends Controller
      */
     public function show(Egi $egi)
     {
+        $this->authorize('view', Egi::class);
         return $egi;
     }
 
@@ -75,6 +79,7 @@ class EgiController extends Controller
      */
     public function update(EgiRequest $request, Egi $egi)
     {
+        $this->authorize('update', Egi::class);
         $egi->update($request->all());
         return $egi;
     }
@@ -87,6 +92,7 @@ class EgiController extends Controller
      */
     public function destroy(Egi $egi)
     {
+        $this->authorize('delete', Egi::class);
         return ['success' => $egi->delete()];
     }
 }

@@ -79,7 +79,7 @@ class AlocationController extends Controller
      */
     public function update(AlocationRequest $request, Alocation $alocation)
     {
-        $this->authorize('update', $alocation);
+        $this->authorize('update', Alocation::class);
         $alocation->update($request->all());
         return $alocation;
     }
@@ -92,7 +92,7 @@ class AlocationController extends Controller
      */
     public function destroy(Alocation $alocation)
     {
-        $this->authorize('delete', $alocation);
+        $this->authorize('delete', Alocation::class);
         return ['success' => $alocation->delete()];
     }
 }

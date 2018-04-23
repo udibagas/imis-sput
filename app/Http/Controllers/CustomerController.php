@@ -15,6 +15,8 @@ class CustomerController extends Controller
      */
     public function index(Request $request)
     {
+        $this->authorize('view', Customer::class);
+
         if ($request->ajax())
         {
             $pageSize = $request->rowCount > 0 ? $request->rowCount : 1000000;
@@ -55,6 +57,7 @@ class CustomerController extends Controller
      */
     public function store(CustomerRequest $request)
     {
+        $this->authorize('create', Customer::class);
         return Customer::create($request->all());
     }
 
@@ -66,6 +69,7 @@ class CustomerController extends Controller
      */
     public function show(Customer $customer)
     {
+        $this->authorize('view', Customer::class);
         return $customer;
     }
 
@@ -78,6 +82,7 @@ class CustomerController extends Controller
      */
     public function update(CustomerRequest $request, Customer $customer)
     {
+        $this->authorize('update', Customer::class);
         $customer->update($request->all());
         return $customer;
     }
@@ -90,6 +95,7 @@ class CustomerController extends Controller
      */
     public function destroy(Customer $customer)
     {
+        $this->authorize('delete', Customer::class);
         return ['success' => $customer->delete()];
     }
 }

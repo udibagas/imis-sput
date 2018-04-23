@@ -15,6 +15,8 @@ class JabatanController extends Controller
      */
     public function index(Request $request)
     {
+        $this->authorize('view', Jabatan::class);
+
         if ($request->ajax())
         {
             $pageSize = $request->rowCount > 0 ? $request->rowCount : 1000000;
@@ -52,6 +54,7 @@ class JabatanController extends Controller
      */
     public function store(JabatanRequest $request)
     {
+        $this->authorize('create', Jabatan::class);
         return Jabatan::create($request->all());
     }
 
@@ -63,6 +66,7 @@ class JabatanController extends Controller
      */
     public function show(Jabatan $jabatan)
     {
+        $this->authorize('view', Jabatan::class);
         return $jabatan;
     }
 
@@ -75,6 +79,7 @@ class JabatanController extends Controller
      */
     public function update(JabatanRequest $request, Jabatan $jabatan)
     {
+        $this->authorize('update', Jabatan::class);
         $jabatan->update($request->all());
         return $jabatan;
     }
@@ -87,6 +92,7 @@ class JabatanController extends Controller
      */
     public function destroy(Jabatan $jabatan)
     {
+        $this->authorize('delete', Jabatan::class);
         return ['success' => $jabatan->delete()];
     }
 }

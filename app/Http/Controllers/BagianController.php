@@ -15,6 +15,8 @@ class BagianController extends Controller
      */
     public function index(Request $request)
     {
+        $this->authorize('view', Bagian::class);
+
         if ($request->ajax())
         {
             $pageSize = $request->rowCount > 0 ? $request->rowCount : 1000000;
@@ -52,6 +54,7 @@ class BagianController extends Controller
      */
     public function store(BagianRequest $request)
     {
+        $this->authorize('create', Bagian::class);
         return Bagian::create($request->all());
     }
 
@@ -63,6 +66,7 @@ class BagianController extends Controller
      */
     public function show(Bagian $bagian)
     {
+        $this->authorize('view', Bagian::class);
         return $bagian;
     }
 
@@ -75,6 +79,7 @@ class BagianController extends Controller
      */
     public function update(BagianRequest $request, Bagian $bagian)
     {
+        $this->authorize('update', Bagian::class);
         $bagian->update($request->all());
         return $bagian;
     }
@@ -87,6 +92,7 @@ class BagianController extends Controller
      */
     public function destroy(Bagian $bagian)
     {
+        $this->authorize('delete', Bagian::class);
         return ['success' => $bagian->delete()];
     }
 }

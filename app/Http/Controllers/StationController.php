@@ -15,6 +15,8 @@ class StationController extends Controller
      */
     public function index(Request $request)
     {
+        $this->authorize('view', Station::class);
+
         if ($request->ajax())
         {
             $pageSize = $request->rowCount > 0 ? $request->rowCount : 1000000;
@@ -52,6 +54,7 @@ class StationController extends Controller
      */
     public function store(StationRequest $request)
     {
+        $this->authorize('create', Station::class);
         return Station::create($request->all());
     }
 
@@ -63,6 +66,7 @@ class StationController extends Controller
      */
     public function show(Station $station)
     {
+        $this->authorize('view', Station::class);
         return $station;
     }
 
@@ -75,6 +79,7 @@ class StationController extends Controller
      */
     public function update(StationRequest $request, Station $station)
     {
+        $this->authorize('update', Station::class);
         $station->update($request->all());
         return $station;
     }
@@ -87,6 +92,7 @@ class StationController extends Controller
      */
     public function destroy(Station $station)
     {
+        $this->authorize('delete', Station::class);
         return ['success' => $station->delete()];
     }
 }

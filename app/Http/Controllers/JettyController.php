@@ -15,6 +15,8 @@ class JettyController extends Controller
      */
     public function index(Request $request)
     {
+        $this->authorize('view', Jetty::class);
+
         if ($request->ajax())
         {
             $pageSize = $request->rowCount > 0 ? $request->rowCount : 1000000;
@@ -52,6 +54,7 @@ class JettyController extends Controller
      */
     public function store(JettyRequest $request)
     {
+        $this->authorize('create', Jetty::class);
         return Jetty::create($request->all());
     }
 
@@ -63,6 +66,7 @@ class JettyController extends Controller
      */
     public function show(Jetty $jetty)
     {
+        $this->authorize('view', Jetty::class);
         return $jetty;
     }
 
@@ -75,6 +79,7 @@ class JettyController extends Controller
      */
     public function update(JettyRequest $request, Jetty $jetty)
     {
+        $this->authorize('update', Jetty::class);
         $jetty->update($request->all());
         return $jetty;
     }
@@ -87,6 +92,7 @@ class JettyController extends Controller
      */
     public function destroy(Jetty $jetty)
     {
+        $this->authorize('delete', Jetty::class);
         return ['success' => $jetty->delete()];
     }
 

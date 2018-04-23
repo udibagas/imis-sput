@@ -15,6 +15,8 @@ class LostTimeCategoryController extends Controller
      */
     public function index(Request $request)
     {
+        $this->authorize('view', LostTimeCategory::class);
+
         if ($request->ajax())
         {
             $pageSize = $request->rowCount > 0 ? $request->rowCount : 1000000;
@@ -52,6 +54,7 @@ class LostTimeCategoryController extends Controller
      */
     public function store(LostTimeCategoryRequest $request)
     {
+        $this->authorize('create', LostTimeCategory::class);
         return LostTimeCategory::create($request->all());
     }
 
@@ -63,6 +66,7 @@ class LostTimeCategoryController extends Controller
      */
     public function show(LostTimeCategory $lostTimeCategory)
     {
+        $this->authorize('view', LostTimeCategory::class);
         return $lostTimeCategory;
     }
 
@@ -75,6 +79,7 @@ class LostTimeCategoryController extends Controller
      */
     public function update(LostTimeCategoryRequest $request, LostTimeCategory $lostTimeCategory)
     {
+        $this->authorize('update', LostTimeCategory::class);
         $lostTimeCategory->update($request->all());
         return $lostTimeCategory;
     }
@@ -87,6 +92,7 @@ class LostTimeCategoryController extends Controller
      */
     public function destroy(LostTimeCategory $lostTimeCategory)
     {
+        $this->authorize('delete', LostTimeCategory::class);
         return ['success' => $lostTimeCategory->delete()];
     }
 }

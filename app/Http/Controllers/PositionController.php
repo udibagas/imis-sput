@@ -15,6 +15,8 @@ class PositionController extends Controller
      */
     public function index(Request $request)
     {
+        $this->authorize('view', Position::class);
+
         if ($request->ajax())
         {
             $pageSize = $request->rowCount > 0 ? $request->rowCount : 1000000;
@@ -52,6 +54,7 @@ class PositionController extends Controller
      */
     public function store(PositionRequest $request)
     {
+        $this->authorize('create', Position::class);
         return Position::create($request->all());
     }
 
@@ -63,6 +66,7 @@ class PositionController extends Controller
      */
     public function show(Position $position)
     {
+        $this->authorize('view', Position::class);
         return $position;
     }
 
@@ -75,6 +79,7 @@ class PositionController extends Controller
      */
     public function update(PositionRequest $request, Position $position)
     {
+        $this->authorize('update', Position::class);
         $position->update($request->all());
         return $position;
     }
@@ -87,6 +92,7 @@ class PositionController extends Controller
      */
     public function destroy(Position $position)
     {
+        $this->authorize('delete', Position::class);
         return ['success' => $position->delete()];
     }
 }

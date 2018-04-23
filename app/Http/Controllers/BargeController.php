@@ -15,6 +15,8 @@ class BargeController extends Controller
      */
     public function index(Request $request)
     {
+        $this->authorize('view', Barge::class);
+
         if ($request->ajax())
         {
             $pageSize = $request->rowCount > 0 ? $request->rowCount : 1000000;
@@ -52,6 +54,7 @@ class BargeController extends Controller
      */
     public function store(BargeRequest $request)
     {
+        $this->authorize('create', Barge::class);
         return Barge::create($request->all());
     }
 
@@ -63,6 +66,7 @@ class BargeController extends Controller
      */
     public function show(Barge $barge)
     {
+        $this->authorize('view', Barge::class);
         return $barge;
     }
 
@@ -75,6 +79,7 @@ class BargeController extends Controller
      */
     public function update(BargeRequest $request, Barge $barge)
     {
+        $this->authorize('update', Barge::class);
         $barge->update($request->all());
         return $barge;
     }
@@ -87,6 +92,7 @@ class BargeController extends Controller
      */
     public function destroy(Barge $barge)
     {
+        $this->authorize('delete', Barge::class);
         return ['success' => $barge->delete()];
     }
 

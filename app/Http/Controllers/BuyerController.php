@@ -15,6 +15,8 @@ class BuyerController extends Controller
      */
     public function index(Request $request)
     {
+        $this->authorize('view', Buyer::class);
+
         if ($request->ajax())
         {
             $pageSize = $request->rowCount > 0 ? $request->rowCount : 1000000;
@@ -55,6 +57,7 @@ class BuyerController extends Controller
      */
     public function store(BuyerRequest $request)
     {
+        $this->authorize('create', Buyer::class);
         return Buyer::create($request->all());
     }
 
@@ -66,6 +69,7 @@ class BuyerController extends Controller
      */
     public function show(Buyer $buyer)
     {
+        $this->authorize('view', Buyer::class);
         return $buyer;
     }
 
@@ -78,6 +82,7 @@ class BuyerController extends Controller
      */
     public function update(BuyerRequest $request, Buyer $buyer)
     {
+        $this->authorize('update', Buyer::class);
         $buyer->update($request->all());
         return $buyer;
     }
@@ -90,6 +95,7 @@ class BuyerController extends Controller
      */
     public function destroy(Buyer $buyer)
     {
+        $this->authorize('delete', Buyer::class);
         return ['success' => $buyer->delete()];
     }
 }

@@ -15,6 +15,8 @@ class PrajobsController extends Controller
      */
     public function index(Request $request)
     {
+        $this->authorize('view', Prajobs::class);
+
         if ($request->ajax())
         {
             $pageSize = $request->rowCount > 0 ? $request->rowCount : 1000000;
@@ -67,6 +69,7 @@ class PrajobsController extends Controller
      */
     public function store(PrajobsRequest $request)
     {
+        $this->authorize('create', Prajobs::class);
         return Prajobs::create($request->all());
     }
 
@@ -78,6 +81,7 @@ class PrajobsController extends Controller
      */
     public function show(Prajobs $prajob)
     {
+        $this->authorize('view', Prajobs::class);
         return $prajob;
     }
 
@@ -90,6 +94,7 @@ class PrajobsController extends Controller
      */
     public function update(PrajobsRequest $request, Prajobs $prajob)
     {
+        $this->authorize('update', Prajobs::class);
         $prajob->update($request->all());
         return $prajob;
     }
@@ -102,6 +107,7 @@ class PrajobsController extends Controller
      */
     public function destroy(Prajobs $prajob)
     {
+        $this->authorize('delete', Prajobs::class);
         return ['success' => $prajob->delete()];
     }
 }
