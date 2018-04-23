@@ -5,26 +5,32 @@
 <div class="panel panel-primary" id="app">
     <div class="panel-body">
         <h3 class="pull-left text-primary">ALOCATION <small>Manage</small></h3>
+        @can('create', App\Alocation::class)
         <span class="pull-right" style="margin:15px 0 15px 10px;">
             <a href="#" @click="add" class="btn btn-primary"><i class="icon-plus-circled"></i></a>
         </span>
+        @endcan
         <table class="table table-striped table-hover " id="bootgrid" style="border-top:2px solid #ddd">
             <thead>
                 <tr>
                     <th data-column-id="id" data-width="3%">ID</th>
                     <th data-column-id="name">Name</th>
                     <th data-column-id="description">Description</th>
+                    @can('updateOrDelete', App\Alocation::class)
                     <th data-column-id="commands" data-width="5%"
                         data-formatter="commands"
                         data-sortable="false"
                         data-align="right"
                         data-header-align="right"></th>
+                    @endcan
                 </tr>
             </thead>
         </table>
     </div>
 
+    @can('createOrUpdate', App\Alocation::class)
     @include('alocation._form')
+    @endcan
 
 </div>
 
@@ -165,8 +171,8 @@
                 formatters: {
                     "commands": function(column, row) {
                         var t = t;
-                        return '<a href="#" class="btn btn-info btn-xs c-edit" data-id="'+row.id+'"><i class="icon-pencil"></i></a> ' +
-                            '<a href="#" class="btn btn-danger btn-xs c-delete" data-id="'+row.id+'"><i class="icon-trash"></i></a>';
+                        return '@can("update", App\Alocation::class) <a href="#" class="btn btn-info btn-xs c-edit" data-id="'+row.id+'"><i class="icon-pencil"></i></a> @endcan' +
+                            '@can("delete", App\Alocation::class) <a href="#" class="btn btn-danger btn-xs c-delete" data-id="'+row.id+'"><i class="icon-trash"></i></a> @endcan';
                     }
                 }
             }).on("loaded.rs.jquery.bootgrid", function(e) {

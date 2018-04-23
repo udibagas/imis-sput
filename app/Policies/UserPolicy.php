@@ -3,7 +3,6 @@
 namespace App\Policies;
 
 use App\User;
-use App\User;
 use App\Authorization;
 use Illuminate\Auth\Access\HandlesAuthorization;
 
@@ -80,5 +79,15 @@ class UserPolicy
         return Authorization::where('controller', 'User')
                 ->where('user_id', $user->id)
                 ->where('delete', 1)->count();
+    }
+
+    public function createOrUpdate(User $user)
+    {
+        return $this->create($user) || $this->update($user);
+    }
+
+    public function updateOrDelete(User $user)
+    {
+        return $this->update($user) || $this->delete($user);
     }
 }

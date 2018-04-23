@@ -15,7 +15,7 @@ class ComponentCriteriaController extends Controller
      */
     public function index(Request $request)
     {
-        $this->authorize('view', ComponentCriteria::class);
+        // $this->authorize('view', ComponentCriteria::class);
 
         if ($request->ajax())
         {
