@@ -91,8 +91,12 @@ class FuelTankController extends Controller
         return ['success' => $fuelTank->delete()];
     }
 
-    public function dashboard()
+    public function dashboard(Request $request)
     {
+        if ($request->ajax()) {
+            return FuelTank::orderBy('name', 'ASC')->get();
+        }
+
         return view('fuelTank.dashboard', [
             'fuelTanks' => FuelTank::orderBy('name', 'ASC')->get(),
             'egi'=> Egi::orderBy('name', 'ASC')->get(),

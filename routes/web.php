@@ -19,6 +19,7 @@ Route::group(['middleware' => 'auth'], function() {
     // Master data
     Route::resource('alocation', 'AlocationController');
     Route::resource('bagian', 'BagianController');
+    Route::get('barge/resume', 'BargeController@resume');
     Route::resource('barge', 'BargeController');
     Route::resource('breakdownCategory', 'BreakdownCategoryController');
     Route::resource('breakdownStatus', 'BreakdownStatusController');
@@ -33,6 +34,8 @@ Route::group(['middleware' => 'auth'], function() {
     Route::get('fuelTank/dashboard', 'FuelTankController@dashboard');
     Route::resource('fuelTank', 'FuelTankController');
     Route::resource('jabatan', 'JabatanController');
+    Route::get('jetty/productivity', 'JettyController@productivity');
+    Route::get('jetty/dwellingTime', 'JettyController@dwellingTime');
     Route::resource('jetty', 'JettyController');
     Route::resource('location', 'LocationController');
     Route::resource('lostTimeCategory', 'LostTimeCategoryController');
@@ -53,7 +56,6 @@ Route::group(['middleware' => 'auth'], function() {
     Route::resource('user', 'UserController');
     // end of master data
     Route::get('pasangSurut', 'OperationController@pasangSurut');
-    Route::get('productivityJetty', 'OperationController@productivityJetty');
 });
 
 View::composer('layouts._sidebar', function($view) {
@@ -108,9 +110,9 @@ View::composer('layouts._sidebar', function($view) {
 
                 ],
                 'Status Jetty' => [
-                    'dwellingTime' => 'Dwelling Time',
-                    'resumeBargingDaily' => 'Resume Barging Daily',
-                    'productivityJetty' => 'Productivity Jetty'
+                    'jetty/dwellingTime' => 'Dwelling Time',
+                    'barge/resume' => 'Resume Barging Daily',
+                    'jetty/productivity' => 'Productivity Jetty'
                 ],
                 '<i class="fa fa-database"></i> Master Data' => [
                     'barge' => 'Barges',

@@ -89,4 +89,55 @@ class JettyController extends Controller
     {
         return ['success' => $jetty->delete()];
     }
+
+    public function productivity(Request $request)
+    {
+        if ($request->ajax())
+        {
+            $jetties = Jetty::orderBy('name', 'ASC')->get();
+            $series = [];
+
+            foreach ($jetties as $j)
+            {
+                $data = [];
+                for ($i = 0; $i < 24; $i++) {
+                    $data[] = rand(3000,5000);
+                }
+
+                $series[] = [
+                    'name' => 'JETTY '.$j->name,
+                    'data' => $data,
+                    'type' => 'line',
+                    'label' => [
+                        'show' => true,
+                        'position' => 'top'
+                    ]
+                ];
+            }
+
+            return $series;
+        }
+
+        else {
+            return view('jetty.productivity', [
+                'breadcrumbs' => [
+                    'operation/dashboard' => 'Operation',
+                    '#' => 'Status Jetty',
+                    'jetty/productivity' => 'Productivity'
+                ]
+            ]);
+        }
+
+    }
+
+    public function dwellingTime(Request $request)
+    {
+        return view('jetty.dwellingTime', [
+            'breadcrumbs' => [
+                'operation/dashboard' => 'Operation',
+                '#' => 'Status Jetty',
+                'jetty/dwellingTime' => 'Dwelling Time'
+            ]
+        ]);
+    }
 }

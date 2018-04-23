@@ -91,153 +91,91 @@ const app = new Vue({
             autoclose: true
         });
 
-        $('#fuel-ratio').highcharts({
-            title: {
-                text: 'FUEL RATIO PERIODE ' + this.period
-            },
-            xAxis: {
-                categories: ['05.00','06.00','07.00','08.00','09.00','10.00','11.00','12.00','13.00','14.00','15.00','16.00','17.00','18.00','19.00','20.00','21.00','22.00','23.00','00.00','01.00','02.00','03.00','04.00'],
-                gridLineWidth: 1,
-                gridLineDashStyle: 'dot',
-                labels: {
-                    rotation  : -90,
-                    align : 'right'
-                }
-            },
-            yAxis: [{
-                title: {
-                    text: 'Liter / Tonase'
-                } ,
-                min: 0,
-               // ,max:100
-                opposite: true
-            } , {
-                gridLineWidth: 0,
-                min: 0,
-                max:6,
-                title: {
-                    text: 'Duration',
-                    style: {
-                        color: Highcharts.getOptions().colors[0]
-                    }
-                },
-                labels: {
-                    format: '{value}',
-                    style: {
-                        color: Highcharts.getOptions().colors[0]
-                    }
-                }
-            }
+        // var chart1 = echarts.init(document.getElementById('fuel-ratio'));
+        // chart1.setOption({
+        //     title: {
+        //         text: 'FUEL RATIO PERIODE ' + this.period
+        //     },
+        //     xAxis: {
+        //         type: 'category',
+        //         data: ['05.00','06.00','07.00','08.00','09.00','10.00','11.00','12.00','13.00','14.00','15.00','16.00','17.00','18.00','19.00','20.00','21.00','22.00','23.00','00.00','01.00','02.00','03.00','04.00'],
+        //     },
+        //     yAxis: {
+        //         type: 'value'
+        //     }
+        // });
 
-            ],
-            legend: {
-                align: 'center',
-                // x: -20,
-                verticalAlign: 'bottom',
-                // y: 20,
-                floating: false,
-                backgroundColor: (Highcharts.theme && Highcharts.theme.legendBackgroundColorSolid) || 'white',
-                borderColor: '#CCC',
-                borderWidth: 1,
-                shadow: false,
-                layout: 'horizontal'
+        var chart2 = echarts.init(document.getElementById('fuel-stock'));
+        chart2.setOption({
+            title: {
+                text: 'FUEL STOCK',
+                subtext: '{{date("Y-m-d")}}',
+                x: 'center'
             },
             tooltip: {
-                formatter: function() {
-                    return  this.series.name +': '+ this.y
+                trigger: 'axis',
+                axisPointer: {
+                    type: 'shadow'
                 }
             },
-            plotOptions: {
-                column: {
-                    dataLabels: {
-                        enabled: true ,
-                        color: "#505150",
-                        y: 5,
-                        crop: false,
-                        overflow: 'none',
-                        style: {
-                            fontSize: '8px',
-                            fontFamily: 'Verdana, sans-serif'
-                        }
-                    }
-                },
-                line: {
-                    dataLabels: {
-                        enabled: true  ,
-                        color: "#505150",
-                        y: -5,
-                        crop: false,
-                        overflow: 'none',
-                        style: {
-                            fontSize: '8px',
-                            fontFamily: 'Verdana, sans-serif'
-                        }
-                    }
-                }
+            legend: {
+                enabled: true,
+                data:['CAPACITY', 'STOCK'],
+                bottom: 'bottom',
             },
-            credits: {
-                enabled: false
-            },
-            series:  [{"name":"Fuel Ratio","type":"column","color":"#FFA07A","data":[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]},{"name":"Duration","type":"line","yAxis":1,"data":[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]}]
-
-        });
-
-        $('#fuel-stock').highcharts({
-            credits: {
-                enabled: false
-            },
-            chart: {
-                type: 'column'
-            },
-            title: {
-                text: 'FUEL STOCK'
+            grid: {
+                left: '3%',
+                right: '3%',
+                bottom: '10%',
+                containLabel: true
             },
             xAxis: {
-                categories: [
-                    @foreach ($fuelTanks as $f)
-                    '{{$f->name}} ({{$f->last_stock_time}})',
-                    @endforeach
-                ]
+                type: 'category',
+                boundaryGap: true,
+                data:[@foreach ($fuelTanks as $f) '{{$f->name}}', @endforeach],
             },
             yAxis: {
-                min: 0,
-                title: {
-                    text: 'Stock Fuel dalam Liter'
-                }
+                type: 'value'
             },
-            tooltip: {
-                pointFormat: '<span style="color:{series.color}">{series.name}</span>: <b>{point.y}</b> L<br/>',
-                shared: true
-            },
-            plotOptions: {
-                column: {
-                    grouping: false,
-                    shadow: false,
-                    borderWidth: 0
-                }
-            },
-            series: [{
-                name: 'Kapasitas',
-                // color: 'rgba(165,170,217,1)',
-                data: [
-                    @foreach ($fuelTanks as $f)
-                    {{$f->capacity}},
-                    @endforeach
-                ],
-                pointPadding: 0.12,
-                pointPlacement: -0.2
-            }, {
-                name: 'Stock',
-                // color: 'rgba(126,86,134,.9)',
-                data: [
-                    @foreach ($fuelTanks as $f)
-                    {{$f->stock}},
-                    @endforeach
-                ],
-                pointPadding: 0.2,
-                pointPlacement: -0.2
-            }]
+            series: []
         });
+
+        labelOption = {
+            show: true,
+            position: 'top'
+        };
+
+        var requestData = function() {
+            $.getJSON('{{url("fuelTank/dashboard")}}', function(r) {
+
+                var dataCapacity = [];
+                var dataStock = [];
+
+                for (i in r) {
+                    dataCapacity.push(r[i].capacity);
+                    dataStock.push(r[i].stock);
+                }
+
+                chart2.setOption({
+                    series: [{
+                        name: 'CAPACITY',
+                        type: 'bar',
+                        barGap: 0,
+                        label: labelOption,
+                        data: dataCapacity
+                    }, {
+                        name: 'STOCK',
+                        type: 'bar',
+                        barGap: 0,
+                        label: labelOption,
+                        data: dataStock
+                    }]
+                });
+                setTimeout(requestData, 3000);
+            });
+        };
+
+        requestData();
     }
 });
 

@@ -89,4 +89,41 @@ class BargeController extends Controller
     {
         return ['success' => $barge->delete()];
     }
+
+    public function resume(Request $request)
+    {
+        if ($request->ajax())
+        {
+            $labelSetting = [
+                'show' => true,
+                'position' => 'top',
+                'fontSize' => 16,
+            ];
+
+            return [
+                [
+                    'name' => 'PLAN',
+                    'type' => 'bar',
+                    'barGap' => 0,
+                    'label' => $labelSetting,
+                    'data' => [rand(150000, 32000), rand(150000, 32000), rand(150000, 32000), rand(150000, 32000)]
+                ],
+                [
+                    'name' => 'ACTUAL',
+                    'type' => 'bar',
+                    'barGap' => 0,
+                    'label' => $labelSetting,
+                    'data' => [rand(150000, 32000), rand(150000, 32000), rand(150000, 32000), rand(150000, 32000)]
+                ]
+            ];
+        }
+
+        return view('barge.resume', [
+            'breadcrumbs' => [
+                'operation/dashboard' => 'Operation',
+                '#' => 'Status Jetty',
+                'barge/resume' => 'Resume Barging Daily'
+            ]
+        ]);
+    }
 }
