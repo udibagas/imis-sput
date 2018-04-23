@@ -91,19 +91,45 @@ const app = new Vue({
             autoclose: true
         });
 
-        // var chart1 = echarts.init(document.getElementById('fuel-ratio'));
-        // chart1.setOption({
-        //     title: {
-        //         text: 'FUEL RATIO PERIODE ' + this.period
-        //     },
-        //     xAxis: {
-        //         type: 'category',
-        //         data: ['05.00','06.00','07.00','08.00','09.00','10.00','11.00','12.00','13.00','14.00','15.00','16.00','17.00','18.00','19.00','20.00','21.00','22.00','23.00','00.00','01.00','02.00','03.00','04.00'],
-        //     },
-        //     yAxis: {
-        //         type: 'value'
-        //     }
-        // });
+        var chart1 = echarts.init(document.getElementById('fuel-ratio'));
+        chart1.setOption({
+            title: {
+                text: 'FUEL RATIO PERIODE ' + this.period
+            },
+            tooltip: {
+                trigger: 'axis',
+                axisPointer: {
+                    type: 'cross',
+                    crossStyle: {
+                        color: '#999'
+                    }
+                }
+            },
+            xAxis: {
+                type: 'category',
+                axisPointer: {
+                    type: 'shadow'
+                }
+                data: [
+                    '05.00','06.00','07.00','08.00','09.00','10.00','11.00','12.00',
+                    '13.00','14.00','15.00','16.00','17.00','18.00','19.00','20.00',
+                    '21.00','22.00','23.00','00.00','01.00','02.00','03.00','04.00'
+                ],
+            },
+            yAxis: [{
+                type: 'value',
+                name: 'AA',
+                axisLabel: {
+                    formatter: '{value} °C'
+                }
+            }, {
+                type: 'value',
+                name: 'BB'
+            }],
+            series: [
+                {name: 'ss', type: 'line', yAxisIndex: 1, data: []}
+            ]
+        });
 
         var chart2 = echarts.init(document.getElementById('fuel-stock'));
         chart2.setOption({

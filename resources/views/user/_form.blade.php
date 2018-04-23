@@ -48,16 +48,15 @@
                         </div>
                     </div>
 
-                    <div class="form-group" :class="formErrors.role ? 'has-error' : ''">
-                        <label class="control-label col-md-4 col-sm-4 col-xs-12" for="role">Role
+                    <div class="form-group" :class="formErrors.super_admin ? 'has-error' : ''">
+                        <label class="control-label col-md-4 col-sm-4 col-xs-12" for="super_admin">Super Admin
                         </label>
                         <div class="col-md-8 col-sm-8 col-xs-12">
-                            <select class="form-control" v-model="formData.role" data-placeholder="Role">
-                                @foreach (\App\User::getRoles() as $role)
-                                <option value="{{$role}}">{{$role}}</option>
-                                @endforeach
+                            <select class="form-control" v-model="formData.super_admin" data-placeholder="Select Status">
+                                <option value="1">Yes</option>
+                                <option value="0">No</option>
                             </select>
-                            <span v-if="formErrors.role" class="help-block">@{{formErrors.role[0]}}</span>
+                            <span v-if="formErrors.super_admin" class="help-block">@{{formErrors.super_admin[0]}}</span>
                         </div>
                     </div>
 

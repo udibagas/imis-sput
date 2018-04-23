@@ -15,6 +15,8 @@ class AlocationController extends Controller
      */
     public function index(Request $request)
     {
+        $this->authorize('view', Alocation::class);
+
         if ($request->ajax())
         {
             $pageSize = $request->rowCount > 0 ? $request->rowCount : 1000000;
@@ -52,6 +54,7 @@ class AlocationController extends Controller
      */
     public function store(AlocationRequest $request)
     {
+        $this->authorize('create', Alocation::class);
         return Alocation::create($request->all());
     }
 
@@ -63,6 +66,7 @@ class AlocationController extends Controller
      */
     public function show(Alocation $alocation)
     {
+        $this->authorize('view', Alocation::class);
         return $alocation;
     }
 
@@ -75,6 +79,7 @@ class AlocationController extends Controller
      */
     public function update(AlocationRequest $request, Alocation $alocation)
     {
+        $this->authorize('update', $alocation);
         $alocation->update($request->all());
         return $alocation;
     }
@@ -87,6 +92,7 @@ class AlocationController extends Controller
      */
     public function destroy(Alocation $alocation)
     {
+        $this->authorize('delete', $alocation);
         return ['success' => $alocation->delete()];
     }
 }

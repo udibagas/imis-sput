@@ -164,7 +164,8 @@ View::composer('layouts._sidebar', function($view) {
             'icon' => 'sliders',
             'url'=> [
                 'user' => 'Users',
-                'setting' => 'Settings',
+                'authorization' => 'Authorization',
+                // 'setting' => 'Settings',
             ]
         ]
     ];

@@ -32,7 +32,11 @@ PR!!!
     - breakdown (CRUD)
     - export to excel
     - change chart from highcharts to echarts
-
+    - auth (today)
+        - form untuk update policy
+        - generate policy (php artisan make:policy NamePolicy --model=Name)
+        - update all controller to use $this->authorize('[action]', Name::class);
+        - update all view @can('update', $post)
 
 Prioritas module (masing2 2 minggu):
     - Plant (22 april)

@@ -75,7 +75,8 @@
             data:['PT. BRE - KPP','PT. BRE - HRS', 'PT. KPP - SALE', 'PT. PAMA'],
         },
         yAxis: {
-            type: 'value'
+            type: 'value',
+            // name: 'TON'
         },
         series: []
     });

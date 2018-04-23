@@ -33,7 +33,6 @@ class UserRequest extends FormRequest
                 Rule::unique('users')->ignore($user ? $user->id : 0)
             ],
             'password' => 'required|confirmed',
-            'role' => 'required'
         ];
 
         // kalau edit password boleh tidak diisi

@@ -14,7 +14,7 @@
                     <th data-column-id="id" data-width="3%" data-width="3%">ID</th>
                     <th data-column-id="name">Name</th>
                     <th data-column-id="email">Email</th>
-                    <th data-column-id="role">Role</th>
+                    <th data-column-id="super_admin" data-formatter="super_admin">Super Admin</th>
                     <th data-column-id="active" data-formatter="active">Active</th>
                     <th data-column-id="commands" data-width="5%"
                         data-formatter="commands"
@@ -172,6 +172,11 @@
                     },
                     "active": function(column, row) {
                         return row.active
+                            ? '<span class="label label-success">Y</span>'
+                            : '<span class="label label-default">N</span>';
+                    },
+                    "super_admin": function(column, row) {
+                        return row.super_admin
                             ? '<span class="label label-success">Y</span>'
                             : '<span class="label label-default">N</span>';
                     }

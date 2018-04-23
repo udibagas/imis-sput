@@ -105,6 +105,7 @@ class BargeController extends Controller
                     'name' => 'PLAN',
                     'type' => 'bar',
                     'barGap' => 0,
+                    'color' => 'navy',
                     'label' => $labelSetting,
                     'data' => [rand(150000, 32000), rand(150000, 32000), rand(150000, 32000), rand(150000, 32000)]
                 ],
@@ -112,6 +113,7 @@ class BargeController extends Controller
                     'name' => 'ACTUAL',
                     'type' => 'bar',
                     'barGap' => 0,
+                    'color' => 'green',
                     'label' => $labelSetting,
                     'data' => [rand(150000, 32000), rand(150000, 32000), rand(150000, 32000), rand(150000, 32000)]
                 ]
