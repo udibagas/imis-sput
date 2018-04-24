@@ -32,7 +32,6 @@ PR!!!
     - change chart from highcharts to echarts
     - auth (today)
         - form untuk update policy
-        - update all view @can('update', $post)
 
 Prioritas module (masing2 2 minggu):
     - Plant (22 april)

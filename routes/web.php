@@ -51,6 +51,7 @@ Route::group(['middleware' => 'auth'], function() {
     Route::resource('station', 'StationController');
     Route::resource('subUnit', 'SubUnitController');
     Route::resource('supervisingPrediction', 'SupervisingPredictionController');
+    Route::resource('terminalAbsensi', 'TerminalAbsensiController');
     Route::resource('unit', 'UnitController');
     Route::resource('unitCategory', 'UnitCategoryController');
     Route::resource('user', 'UserController');
