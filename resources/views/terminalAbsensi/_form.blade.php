@@ -30,7 +30,7 @@
                     </div>
 
                     <div class="form-group" :class="formErrors.location_id ? 'has-error' : ''">
-                        <label class="control-label col-md-4 col-sm-4 col-xs-12" for="location_id">LOcation
+                        <label class="control-label col-md-4 col-sm-4 col-xs-12" for="location_id">Location
                         </label>
                         <div class="col-md-8 col-sm-8 col-xs-12">
                             <select class="form-control" v-model="formData.location_id">

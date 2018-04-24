@@ -30,7 +30,12 @@ class TerminalAbsensiRequest extends FormRequest
             'code' => [
                 'required',
                 Rule::unique('terminal_absensis')->ignore($terminalAbsensi ? $terminalAbsensi->id : 0)
-            ]
+            ],
+            'ip_address' => [
+                'required',
+                Rule::unique('terminal_absensis')->ignore($terminalAbsensi ? $terminalAbsensi->id : 0)
+            ],
+            'location_id' => 'required'
         ];
     }
 }
