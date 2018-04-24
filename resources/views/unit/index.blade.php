@@ -5,9 +5,11 @@
 <div class="panel panel-primary" id="app">
     <div class="panel-body">
         <h3 class="pull-left text-primary">UNITS <small>Manage</small></h3>
+        @can('create', App\Unit::class)
         <span class="pull-right" style="margin:15px 0 15px 10px;">
             <a href="#" @click="add" class="btn btn-primary"><i class="icon-plus-circled"></i></a>
         </span>
+        @endcan
         <table class="table table-striped table-hover " id="bootgrid" style="border-top:2px solid #ddd">
             <thead>
                 <tr>
@@ -18,17 +20,21 @@
                     <th data-column-id="egi">EGI</th>
                     <th data-column-id="alocation">Alocation</th>
                     <th data-column-id="status">Status</th>
+                    @can('updateOrDelete', App\Unit::class)
                     <th data-column-id="commands" data-width="5%"
                         data-formatter="commands"
                         data-sortable="false"
                         data-align="right"
                         data-header-align="right"></th>
+                    @endcan
                 </tr>
             </thead>
         </table>
     </div>
 
+    @can('createOrUpdate', App\Unit::class)
     @include('unit._form')
+    @endcan
 
 </div>
 

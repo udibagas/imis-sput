@@ -5,9 +5,11 @@
 <div class="panel panel-primary" id="app">
     <div class="panel-body">
         <h3 class="pull-left text-primary">BREAKDOWN <small>Manage</small></h3>
+        @can('create', App\Breakdown::class)
         <span class="pull-right" style="margin:15px 0 15px 10px;">
             <a href="#" @click="add" class="btn btn-primary"><i class="icon-plus-circled"></i></a>
         </span>
+        @endcan
         <table class="table table-striped table-hover " id="bootgrid" style="border-top:2px solid #ddd">
             <thead>
                 <tr>
@@ -25,17 +27,21 @@
                     <th data-column-id="component_criteria">Component Criteria</th>
                     <th data-column-id="tindakan">Tindakan</th>
                     <th data-column-id="wo_number">WO Number</th>
+                    @can('updateOrDelete', App\Breakdown::class)
                     <th data-column-id="commands" data-width="5%"
                         data-formatter="commands"
                         data-sortable="false"
                         data-align="right"
                         data-header-align="right"></th>
+                    @endcan
                 </tr>
             </thead>
         </table>
     </div>
 
+    @can('createOrUpdate', App\Breakdown::class)
     @include('breakdown._form')
+    @endcan
 
 </div>
 

@@ -5,26 +5,32 @@
 <div class="panel panel-primary" id="app">
     <div class="panel-body">
         <h3 class="pull-left text-primary">COMPONENT CRITERIA <small>Manage</small></h3>
+        @can('create', App\ComponentCriteria::class)
         <span class="pull-right" style="margin:15px 0 15px 10px;">
             <a href="#" @click="add" class="btn btn-primary"><i class="icon-plus-circled"></i></a>
         </span>
+        @endcan
         <table class="table table-striped table-hover " id="bootgrid" style="border-top:2px solid #ddd">
             <thead>
                 <tr>
                     <th data-column-id="id" data-width="3%">ID</th>
                     <th data-column-id="code">Code</th>
                     <th data-column-id="description">Description</th>
+                    @can('updateOrDelete', App\ComponentCriteria::class)
                     <th data-column-id="commands" data-width="5%"
                         data-formatter="commands"
                         data-sortable="false"
                         data-align="right"
                         data-header-align="right"></th>
+                    @endcan
                 </tr>
             </thead>
         </table>
     </div>
 
+    @can('createOrUpdate', App\ComponentCriteria::class)
     @include('componentCriteria._form')
+    @endcan
 
 </div>
 
@@ -55,7 +61,7 @@
             store: function() {
                 block('form');
                 var t = this;
-                axios.post('{{url("componentCriteria")}}', this.formData).then(function(r) {
+                axios.post('{{url("componentCriterias")}}', this.formData).then(function(r) {
                     unblock('form');
                     $('#modal-form').modal('hide');
                     toastr["success"]("Data berhasil ditambahkan");
@@ -79,7 +85,7 @@
                 this.formErrors = {};
                 this.error = {};
 
-                axios.get('{{url("componentCriteria")}}/' + id).then(function(r) {
+                axios.get('{{url("componentCriterias")}}/' + id).then(function(r) {
                     t.formData = r.data;
                     $('#modal-form').modal('show');
                 })
@@ -94,7 +100,7 @@
             update: function() {
                 block('form');
                 var t = this;
-                axios.put('{{url("componentCriteria")}}/' + this.formData.id, this.formData).then(function(r) {
+                axios.put('{{url("componentCriterias")}}/' + this.formData.id, this.formData).then(function(r) {
                     unblock('form');
                     $('#modal-form').modal('hide');
                     toastr["success"]("Data berhasil diupdate");
@@ -118,7 +124,7 @@
                     message: "Anda yakin akan menghapus data ini?",
                     callback: function(r) {
                         if (r == true) {
-                            axios.delete('{{url("componentCriteria")}}/' + id)
+                            axios.delete('{{url("componentCriterias")}}/' + id)
 
                             .then(function(r) {
                                 if (r.data.success == true) {
@@ -146,7 +152,7 @@
 
             var grid = $('#bootgrid').bootgrid({
                 rowCount: [10,25,50,100],
-                ajax: true, url: '{{url('componentCriteria')}}',
+                ajax: true, url: '{{url('componentCriterias')}}',
                 ajaxSettings: {
                     method: 'GET', cache: false,
                     statusCode: {

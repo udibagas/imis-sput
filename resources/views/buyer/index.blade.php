@@ -5,9 +5,11 @@
 <div class="panel panel-primary" id="app">
     <div class="panel-body">
         <h3 class="pull-left text-primary">BUYER <small>Manage</small></h3>
+        @can('create', App\Buyer::class)
         <span class="pull-right" style="margin:15px 0 15px 10px;">
             <a href="#" @click="add" class="btn btn-primary"><i class="icon-plus-circled"></i></a>
         </span>
+        @endcan
         <table class="table table-striped table-hover " id="bootgrid" style="border-top:2px solid #ddd">
             <thead>
                 <tr>
@@ -17,17 +19,21 @@
                     <th data-column-id="email">Email</th>
                     <th data-column-id="phone">Phone</th>
                     <th data-column-id="fax">Fax</th>
+                    @can('updateOrDelete', App\Buyer::class)
                     <th data-column-id="commands" data-width="5%"
                         data-formatter="commands"
                         data-sortable="false"
                         data-align="right"
                         data-header-align="right"></th>
+                    @endcan
                 </tr>
             </thead>
         </table>
     </div>
 
+    @can('createOrUpdate', App\Buyer::class)
     @include('buyer._form')
+    @endcan
 
 </div>
 

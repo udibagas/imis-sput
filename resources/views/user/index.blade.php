@@ -5,9 +5,11 @@
 <div class="panel panel-primary" id="app">
     <div class="panel-body">
         <h3 class="pull-left text-primary">USERS <small>Manage users</small></h3>
+        @can('create', App\User::class)
         <span class="pull-right" style="margin:15px 0 15px 10px;">
             <a href="#" @click="add" class="btn btn-primary"><i class="icon-plus-circled"></i></a>
         </span>
+        @endcan
         <table class="table table-striped table-hover " id="bootgrid" style="border-top:2px solid #ddd">
             <thead>
                 <tr>
@@ -16,17 +18,21 @@
                     <th data-column-id="email">Email</th>
                     <th data-column-id="super_admin" data-formatter="super_admin">Super Admin</th>
                     <th data-column-id="active" data-formatter="active">Active</th>
+                    @can('updateOrDelete', App\User::class)
                     <th data-column-id="commands" data-width="5%"
                         data-formatter="commands"
                         data-sortable="false"
                         data-align="right"
                         data-header-align="right"></th>
+                    @endcan
                 </tr>
             </thead>
         </table>
     </div>
 
+    @can('createOrUpdate', App\User::class)
     @include('user._form')
+    @endcan
 
 </div>
 

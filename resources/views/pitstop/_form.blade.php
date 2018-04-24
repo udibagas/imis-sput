@@ -30,7 +30,7 @@
                         <label class="control-label col-md-3 col-sm-3 col-xs-12" for="station_id">Station
                         </label>
                         <div class="col-md-9 col-sm-9 col-xs-12">
-                            <select class="form-control" v-model="formData.station_id" data-placeholder="Station">
+                            <select class="form-control" v-model="formData.station_id" v-selecttwo="formData.station_id" data-placeholder="Station">
                                 @foreach (\App\Station::orderBy('name', 'ASC')->pluck('name', 'id') as $id => $name)
                                 <option value="{{$id}}">{{$name}}</option>
                                 @endforeach

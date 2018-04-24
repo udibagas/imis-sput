@@ -6,7 +6,9 @@
     <div class="panel-body">
         <h3 class="pull-left text-primary">PITSTOP LOG</h3>
         <span class="pull-right" style="margin:15px 0 15px 10px;">
+            @can('create', App\Pitstop::class)
             <a href="#" @click="add" class="btn btn-primary"><i class="icon-plus-circled"></i></a>
+            @endcan
             <a href="#" class="btn btn-primary"><i class="fa fa-download"></i>EXPORT</a>
             <a href="#" class="btn btn-primary"><i class="fa fa-upload"></i>IMPORT</a>
         </span>
@@ -21,17 +23,21 @@
                     <th data-column-id="time_out">Time Out</th>
                     <th data-column-id="description">Description</th>
                     <th data-column-id="hm">HM</th>
+                    @can('updateOrDelete', App\Pitstop::class)
                     <th data-column-id="commands" data-width="5%"
                         data-formatter="commands"
                         data-sortable="false"
                         data-align="right"
                         data-header-align="right"></th>
+                    @endcan
                 </tr>
             </thead>
         </table>
     </div>
 
+    @can('createOrUpdate', App\Pitstop::class)
     @include('pitstop._form')
+    @endcan
 
 </div>
 

@@ -24,9 +24,9 @@ Route::group(['middleware' => 'auth'], function() {
     Route::resource('breakdownCategory', 'BreakdownCategoryController');
     Route::resource('breakdownStatus', 'BreakdownStatusController');
     Route::resource('breakdown', 'BreakdownController');
+    Route::resource('componentCriterias', 'ComponentCriteriaController');
     Route::resource('buyer', 'BuyerController');
     Route::resource('cargo', 'CargoController');
-    Route::resource('componentCriteria', 'ComponentCriteriaController');
     Route::resource('customer', 'CustomerController');
     Route::resource('department', 'DepartmentController');
     Route::resource('egi', 'EgiController');
@@ -78,7 +78,7 @@ View::composer('layouts._sidebar', function($view) {
                     'bagian' => 'Bagian',
                     'breakdownStatus' => 'Breakdown Statuses',
                     'breakdownCategory' => 'Breakdown Categories',
-                    'componentCriteria' => 'Component Criterias',
+                    'componentCriterias' => 'Component Criterias',
                     'egi' => 'EGI',
                     'location' => 'Locations',
                     'material' => 'Materials',
