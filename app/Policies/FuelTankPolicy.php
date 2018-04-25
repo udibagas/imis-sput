@@ -82,6 +82,17 @@ class FuelTankPolicy
                 ->where('delete', 1)->count();
     }
 
+    public function dashboard(User $user)
+    {
+        if ($user->super_admin) {
+            return true;
+        }
+
+        return Authorization::where('controller', 'FuelTank')
+                ->where('user_id', $user->id)
+                ->where('dashboard', 1)->count();
+    }
+
     public function createOrUpdate(User $user)
     {
         return $this->create($user) || $this->update($user);

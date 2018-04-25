@@ -114,4 +114,36 @@ class FuelTankController extends Controller
             ]
         ]);
     }
+
+    public function ratio(Request $request)
+    {
+        if ($request->ajax())
+        {
+            $labelSetting = [
+                'show' => true,
+                'position' => 'top',
+            ];
+
+            $rand1 = [];
+            $rand2 = [];
+
+            for ($i = 0; $i < 24; $i ++) {
+                $rand1[] = rand(1,10);
+                $rand2[] = rand(1,5);
+            }
+
+            return [[
+                'name' => 'Duration',
+                'type' => 'line',
+                'label' => $labelSetting,
+                'data' => $rand1
+            ], [
+                'name' => 'Fuel Ratio',
+                'type' => 'line',
+                'label' => $labelSetting,
+                'yAxisIndex' => 1,
+                'data' => $rand2
+            ]];
+        }
+    }
 }

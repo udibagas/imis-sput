@@ -36,29 +36,31 @@
     </div>
 
     <div class="col-md-6">
-        <div class="panel panel-primary" style="height:330px;overflow:auto;">
+        <div class="panel panel-primary">
             <div class="panel-heading">
-                <h3 class="panel-title">FUEL CONSUMPTION</h3>
+                <h3 class="panel-title text-center">FUEL CONSUMPTION</h3>
                 <div class="clearfix"> </div>
             </div>
-            <table class="table table-striped table-hover">
-                <thead>
-                    <tr>
-                        <th>EGI</th>
-                        <th>FC Today</th>
-                        <th>FC Month to Date</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @foreach ($egi as $e)
-                    <tr>
-                        <td>{{$e->name}}</td>
-                        <td>{{''}}</td>
-                        <td>{{''}}</td>
-                    </tr>
-                    @endforeach
-                </tbody>
-            </table>
+            <div class="panel-body" style="height:285px;overflow:auto;">
+                <table class="table table-striped table-hover">
+                    <thead>
+                        <tr>
+                            <th>EGI</th>
+                            <th>FC Today</th>
+                            <th>FC Month to Date</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach ($egi as $e)
+                        <tr>
+                            <td>{{$e->name}}</td>
+                            <td>{{''}}</td>
+                            <td>{{''}}</td>
+                        </tr>
+                        @endforeach
+                    </tbody>
+                </table>
+            </div>
         </div>
     </div>
 
@@ -94,7 +96,20 @@ const app = new Vue({
         var chart1 = echarts.init(document.getElementById('fuel-ratio'));
         chart1.setOption({
             title: {
-                text: 'FUEL RATIO PERIODE ' + this.period
+                text: 'FUEL RATIO',
+                subtext: 'Periode: ' + this.period,
+                x: 'center'
+            },
+            grid: {
+                left: '3%',
+                right: '3%',
+                bottom: '10%',
+                containLabel: true
+            },
+            legend: {
+                enabled: true,
+                data:['Fuel Ratio', 'Duration'],
+                bottom: 'bottom',
             },
             tooltip: {
                 trigger: 'axis',
@@ -107,9 +122,6 @@ const app = new Vue({
             },
             xAxis: {
                 type: 'category',
-                axisPointer: {
-                    type: 'shadow'
-                }
                 data: [
                     '05.00','06.00','07.00','08.00','09.00','10.00','11.00','12.00',
                     '13.00','14.00','15.00','16.00','17.00','18.00','19.00','20.00',
@@ -118,18 +130,31 @@ const app = new Vue({
             },
             yAxis: [{
                 type: 'value',
-                name: 'AA',
+                name: 'DURATION',
+                min: 0,
+                max: 10,
+                interval: 2,
                 axisLabel: {
-                    formatter: '{value} °C'
+                    formatter: '{value}'
                 }
             }, {
                 type: 'value',
-                name: 'BB'
+                name: 'LITER/TONASE',
+                min: 0,
+                max: 5,
+                interval: 1,
             }],
-            series: [
-                {name: 'ss', type: 'line', yAxisIndex: 1, data: []}
-            ]
+            series: []
         });
+
+        var requestDataRatio = function() {
+            $.getJSON('{{url("fuelTank/ratio")}}', function(r) {
+                chart1.setOption({series: r});
+                setTimeout(requestDataRatio, 3000);
+            });
+        };
+
+        requestDataRatio();
 
         var chart2 = echarts.init(document.getElementById('fuel-stock'));
         chart2.setOption({
@@ -168,7 +193,13 @@ const app = new Vue({
 
         labelOption = {
             show: true,
-            position: 'top'
+            position: 'top',
+            formatter: function(v) {
+                return parseFloat(v.value)
+                    .toFixed(0)
+                    .toString()
+                    .replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+            }
         };
 
         var requestData = function() {

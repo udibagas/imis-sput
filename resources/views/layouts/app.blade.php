@@ -27,7 +27,7 @@
   <div class="page-sidebar">
 
 		<header class="site-header">
-		  <div class="site-logo"><a href="{{url('/')}}"><img src="{{ asset('img/logo.png') }}" alt="Mouldifi" title="Mouldifi"></a></div>
+		  <div class="site-logo"><a href="{{url('/')}}"><img src="{{ asset('img/logo.png') }}" alt="IMIS" title="IMIS"></a></div>
 		  <div class="sidebar-collapse hidden-xs"><a class="sidebar-collapse-icon" href="#"><i class="icon-menu"></i></a></div>
 		  <div class="sidebar-mobile-menu visible-xs"><a data-target="#side-nav" data-toggle="collapse" class="mobile-menu-icon" href="#"><i class="icon-menu"></i></a></div>
 		</header>
@@ -49,6 +49,7 @@
                 @endforeach
     		</ol>
             @endif
+            @auth
             <ul class="user-info pull-right">
                 <li class="profile-info dropdown"><a data-toggle="dropdown" class="dropdown-toggle" href="#" aria-expanded="false"><img style="width:35px;height:35px;" class="img-circle avatar" alt="" src="{{asset('img/user.png')}}">{{auth()->user()->name}} <span class="caret"></span></a>
                     <ul class="dropdown-menu">
@@ -69,18 +70,10 @@
             <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
                 @csrf
             </form>
+            @endauth
         </div>
-        <!-- <div class="clearfix">
-
-        </div> -->
     </div>
 	<div class="main-content">
-		<!-- <h1 class="page-title">Page Title</h1>
-		<ol class="breadcrumb breadcrumb-2">
-			<li><a href="index.html"><i class="fa fa-home"></i>Home</a></li>
-			<li><a href="login.html">Various Screens</a></li>
-			<li class="active"><strong>Blank Page</strong></li>
-		</ol> -->
 		<div class="row">
 			<div class="col-lg-12">
 			    @yield('content')

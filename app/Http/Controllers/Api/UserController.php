@@ -1,8 +1,9 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Api;
 
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
 use App\User;
 use App\Http\Requests\UserRequest;
 
@@ -13,36 +14,10 @@ class UserController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index(Request $request)
+    public function index()
     {
         $this->authorize('view', User::class);
-
-        if ($request->ajax())
-        {
-            $pageSize = $request->rowCount > 0 ? $request->rowCount : 1000000;
-            $request['page'] = $request->current;
-            $sort = $request->sort ? key($request->sort) : 'name';
-            $dir = $request->sort ? $request->sort[$sort] : 'asc';
-
-            $users = User::when($request->searchPhrase, function($query) use ($request) {
-                    return $query->where('name', 'LIKE', '%'.$request->searchPhrase.'%')
-                        ->orWhere('email', 'LIKE', '%'.$request->searchPhrase.'%')
-                        ->orWhere('role', 'LIKE', '%'.$request->searchPhrase.'%');
-                })->orderBy($sort, $dir)->paginate($pageSize);
-
-            return [
-                'rowCount' => $users->perPage(),
-                'total' => $users->total(),
-                'current' => $users->currentPage(),
-                'rows' => $users->items(),
-            ];
-        }
-        return view('user.index', [
-            'breadcrumbs' => [
-                '#' => 'Administration',
-                'user' => 'Users'
-            ]
-        ]);
+        return User::orderBy('name', 'ASC')->get();
     }
 
     /**

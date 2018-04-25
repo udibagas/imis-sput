@@ -27,11 +27,19 @@ PR!!!
         - unit
         - prajob
         - pitstop
+        BELUM:
+        - terminal absensi (location_id)
     - breakdown (CRUD)
     - export to excel
-    - change chart from highcharts to echarts
     - auth (today)
         - form untuk update policy
+    - refactor semua view menggunakan vue
+    - api semua controller yg dibutuhkan
+        - employee
+        - fuelTank
+        - prajob
+        - unit
+        - user
 
 Prioritas module (masing2 2 minggu):
     - Plant (22 april)

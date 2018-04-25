@@ -25,7 +25,6 @@
                         data-sortable="false"
                         data-align="right"
                         data-header-align="right"></th>
-                        @can('create', App\FuelTank::class)
                     @endcan
                 </tr>
             </thead>

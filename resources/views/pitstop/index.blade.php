@@ -53,7 +53,8 @@
             formData: {},
             formErrors: {},
             formTitle: '',
-            error: {}
+            error: {},
+            units: ['A', 'B', 'C']
         },
         methods: {
             add: function() {

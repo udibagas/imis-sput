@@ -25,6 +25,18 @@
                         </div>
                     </div>
 
+                    <div class="form-group" :class="formErrors.anchored ? 'has-error' : ''">
+                        <label class="control-label col-md-4 col-sm-4 col-xs-12" for="anchored">Description
+                        </label>
+                        <div class="col-md-8 col-sm-8 col-xs-12">
+                            <select class="form-control" v-model="formData.anchored">
+                                <option value="0">No</option>
+                                <option value="1">Yes</option>
+                            </select>
+                            <span v-if="formErrors.anchored" class="help-block">@{{formErrors.anchored[0]}}</span>
+                        </div>
+                    </div>
+
                 </div>
                 <div class="modal-footer">
                     <button type="submit" v-if="formData.id == undefined" class="btn btn-primary" @click="store"><i class="fa fa-floppy-o"></i> Save</button>

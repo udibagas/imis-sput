@@ -23,6 +23,7 @@ class CreateAuthorizationsTable extends Migration
             $table->boolean('delete')->default(0);
             $table->boolean('export')->default(0);
             $table->boolean('import')->default(0);
+            $table->boolean('dashboard')->default(0);
             $table->timestamps();
         });
     }

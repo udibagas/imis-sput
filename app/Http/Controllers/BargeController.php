@@ -96,6 +96,12 @@ class BargeController extends Controller
         return ['success' => $barge->delete()];
     }
 
+    public function getAnchored()
+    {
+        return Barge::orderBy('updated_at', 'DESC')
+            ->where('anchored', 1)->get();
+    }
+
     public function resume(Request $request)
     {
         if ($request->ajax())
@@ -111,7 +117,7 @@ class BargeController extends Controller
                     'name' => 'PLAN',
                     'type' => 'bar',
                     'barGap' => 0,
-                    'color' => 'navy',
+                    // 'color' => 'navy',
                     'label' => $labelSetting,
                     'data' => [rand(150000, 32000), rand(150000, 32000), rand(150000, 32000), rand(150000, 32000)]
                 ],
@@ -119,7 +125,7 @@ class BargeController extends Controller
                     'name' => 'ACTUAL',
                     'type' => 'bar',
                     'barGap' => 0,
-                    'color' => 'green',
+                    // 'color' => 'green',
                     'label' => $labelSetting,
                     'data' => [rand(150000, 32000), rand(150000, 32000), rand(150000, 32000), rand(150000, 32000)]
                 ]
