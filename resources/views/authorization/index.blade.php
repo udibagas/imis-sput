@@ -4,8 +4,8 @@
 
 <div class="panel panel-primary" id="app">
     <div class="panel-body">
-        <h3 class="pull-left text-primary">CUSTOMER <small>Manage</small></h3>
-        @can('create', App\Customer::class)
+        <h3 class="pull-left text-primary">AUTHORIZATION <small>Manage</small></h3>
+        @can('create', App\Authorization::class)
         <span class="pull-right" style="margin:15px 0 15px 10px;">
             <a href="#" @click="add" class="btn btn-primary"><i class="icon-plus-circled"></i></a>
         </span>
@@ -14,12 +14,16 @@
             <thead>
                 <tr>
                     <th data-column-id="id" data-width="3%">ID</th>
-                    <th data-column-id="name">Name</th>
-                    <th data-column-id="address">Address</th>
-                    <th data-column-id="email">Email</th>
-                    <th data-column-id="phone">Phone</th>
-                    <th data-column-id="fax">Fax</th>
-                    @can('updateOrDelete', App\Customer::class)
+                    <th data-column-id="user">Name</th>
+                    <th data-column-id="controller">Controller</th>
+                    <th data-column-id="view" data-formatter="view">View</th>
+                    <th data-column-id="create" data-formatter="create">Create</th>
+                    <th data-column-id="update" data-formatter="update">Update</th>
+                    <th data-column-id="delete" data-formatter="delete">Delete</th>
+                    <th data-column-id="export" data-formatter="export">Export</th>
+                    <th data-column-id="import" data-formatter="import">Import</th>
+                    <th data-column-id="dashboard" data-formatter="dashboard">Dashboard</th>
+                    @can('updateOrDelete', App\Authorization::class)
                     <th data-column-id="commands" data-width="5%"
                         data-formatter="commands"
                         data-sortable="false"
@@ -31,8 +35,8 @@
         </table>
     </div>
 
-    @can('createOrUpdate', App\Customer::class)
-    @include('customer._form')
+    @can('createOrUpdate', App\Authorization::class)
+    @include('authorization._form')
     @endcan
 
 </div>
@@ -54,8 +58,10 @@
         methods: {
             add: function() {
                 // reset the form
-                this.formTitle = "ADD CUSTOMER";
-                this.formData = {};
+                this.formTitle = "ADD AUTHORIZATION";
+                this.formData = {
+                    view: 1, create: 1, update: 1, delete: 1, export: 1, import: 1, dashboard: 1
+                };
                 this.formErrors = {};
                 this.error = {};
                 // open form
@@ -65,7 +71,7 @@
                 block('form');
                 var t = this;
 
-                axios.post('{{url("customer")}}', this.formData).then(function(r) {
+                axios.post('{{url("authorization")}}', this.formData).then(function(r) {
                     unblock('form');
                     $('#modal-form').modal('hide');
                     toastr["success"]("Data berhasil ditambahkan");
@@ -86,11 +92,11 @@
             },
             edit: function(id) {
                 var t = this;
-                this.formTitle = "EDIT CUSTOMER";
+                this.formTitle = "EDIT AUTHORIZATION";
                 this.formErrors = {};
                 this.error = {};
 
-                axios.get('{{url("customer")}}/' + id).then(function(r) {
+                axios.get('{{url("authorization")}}/' + id).then(function(r) {
                     t.formData = r.data;
                     $('#modal-form').modal('show');
                 })
@@ -105,7 +111,7 @@
             update: function() {
                 block('form');
                 var t = this;
-                axios.put('{{url("customer")}}/' + this.formData.id, this.formData).then(function(r) {
+                axios.put('{{url("authorization")}}/' + this.formData.id, this.formData).then(function(r) {
                     unblock('form');
                     $('#modal-form').modal('hide');
                     toastr["success"]("Data berhasil diupdate");
@@ -129,7 +135,7 @@
                     message: "Anda yakin akan menghapus data ini?",
                     callback: function(r) {
                         if (r == true) {
-                            axios.delete('{{url("customer")}}/' + id)
+                            axios.delete('{{url("authorization")}}/' + id)
 
                             .then(function(r) {
                                 if (r.data.success == true) {
@@ -157,7 +163,7 @@
 
             var grid = $('#bootgrid').bootgrid({
                 rowCount: [10,25,50,100],
-                ajax: true, url: '{{url('customer')}}',
+                ajax: true, url: '{{url('authorization')}}',
                 ajaxSettings: {
                     method: 'GET', cache: false,
                     statusCode: {
@@ -174,9 +180,44 @@
                 formatters: {
                     "commands": function(column, row) {
                         var t = t;
-                        return '@can("update", App\Customer::class) <a href="#" class="btn btn-info btn-xs c-edit" data-id="'+row.id+'"><i class="icon-pencil"></i></a> @endcan' +
-                            '@can("delete", App\Customer::class) <a href="#" class="btn btn-danger btn-xs c-delete" data-id="'+row.id+'"><i class="icon-trash"></i></a> @endcan';
-                    }
+                        return '@can("update", App\Authorization::class) <a href="#" class="btn btn-info btn-xs c-edit" data-id="'+row.id+'"><i class="icon-pencil"></i></a> @endcan' +
+                            '@can("delete", App\Authorization::class) <a href="#" class="btn btn-danger btn-xs c-delete" data-id="'+row.id+'"><i class="icon-trash"></i></a> @endcan';
+                    },
+                    "view": function(column, row) {
+                        return row.view
+                            ? '<span class="label label-success">Y</span>'
+                            : '<span class="label label-danger">N</span>';
+                    },
+                    "create": function(column, row) {
+                        return row.create
+                            ? '<span class="label label-success">Y</span>'
+                            : '<span class="label label-danger">N</span>';
+                    },
+                    "update": function(column, row) {
+                        return row.update
+                            ? '<span class="label label-success">Y</span>'
+                            : '<span class="label label-danger">N</span>';
+                    },
+                    "delete": function(column, row) {
+                        return row.delete
+                            ? '<span class="label label-success">Y</span>'
+                            : '<span class="label label-danger">N</span>';
+                    },
+                    "export": function(column, row) {
+                        return row.export
+                            ? '<span class="label label-success">Y</span>'
+                            : '<span class="label label-danger">N</span>';
+                    },
+                    "import": function(column, row) {
+                        return row.import
+                            ? '<span class="label label-success">Y</span>'
+                            : '<span class="label label-danger">N</span>';
+                    },
+                    "dashboard": function(column, row) {
+                        return row.dashboard
+                            ? '<span class="label label-success">Y</span>'
+                            : '<span class="label label-danger">N</span>';
+                    },
                 }
             }).on("loaded.rs.jquery.bootgrid", function(e) {
                 grid.find(".c-delete").on("click", function(e) {

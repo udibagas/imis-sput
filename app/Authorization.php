@@ -8,7 +8,7 @@ class Authorization extends Model
 {
     protected $fillable = [
         'controller', 'create', 'update', 'delete', 'export', 'import',
-        'dashboard'
+        'dashboard', 'view', 'user_id'
     ];
 
     public static function getModule()

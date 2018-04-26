@@ -18,6 +18,7 @@ Route::group(['middleware' => 'auth'], function() {
     Route::get('/home', 'HomeController@index')->name('home');
     // Master data
     Route::resource('alocation', 'AlocationController')->except(['edit', 'create']);
+    Route::resource('authorization', 'AuthorizationController')->except(['edit', 'create']);
     Route::resource('bagian', 'BagianController')->except(['edit', 'create']);
     Route::get('barge/getAnchored', 'BargeController@getAnchored');
     Route::get('barge/resume', 'BargeController@resume');

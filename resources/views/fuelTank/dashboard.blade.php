@@ -3,14 +3,10 @@
 @section('content')
 <div id="app">
     <div class="panel panel-primary">
-        <!-- <div class="panel-heading">
-        <h3 class="panel-title">FUEL RATIO</h3>
-        <div class="clearfix"> </div>
-        </div> -->
         <div class="panel-body">
             <form class="form-inline pull-right" action="" method="get" style="margin-bottom:0;">
                 <input type="text" v-model="period" class="form-control" placeholder="Periode" id="period">
-                <button type="button" name="button" class="btn btn-primary" v-on:click="filter"><i class="icon icon-search"></i></button>
+                <button type="button" name="button" class="btn btn-primary"><i class="icon icon-search"></i></button>
             </form>
             <div class="clearfix"> </div>
             <div class="" id="fuel-ratio" style="height:320px;">
@@ -23,46 +19,41 @@
 
         <div class="col-md-6">
             <div class="panel panel-primary">
-                <!-- <div class="panel-heading">
-                <h3 class="panel-title">FUEL STOCK</h3>
-                <div class="clearfix"> </div>
-            </div> -->
-            <div class="panel-body">
-                <div class="" id="fuel-stock" style="height:300px;">
-
+                <div class="panel-body">
+                    <div class="" id="fuel-stock" style="height:300px;">
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
 
-    <div class="col-md-6">
-        <div class="panel panel-primary">
-            <div class="panel-heading">
-                <h3 class="panel-title text-center">FUEL CONSUMPTION</h3>
-                <div class="clearfix"> </div>
-            </div>
-            <div class="panel-body" style="height:285px;overflow:auto;">
-                <table class="table table-striped table-hover">
-                    <thead>
-                        <tr>
-                            <th>EGI</th>
-                            <th>FC Today</th>
-                            <th>FC Month to Date</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @foreach ($egi as $e)
-                        <tr>
-                            <td>{{$e->name}}</td>
-                            <td>{{''}}</td>
-                            <td>{{''}}</td>
-                        </tr>
-                        @endforeach
-                    </tbody>
-                </table>
+        <div class="col-md-6">
+            <div class="panel panel-primary">
+                <div class="panel-heading">
+                    <h3 class="panel-title text-center">FUEL CONSUMPTION</h3>
+                    <div class="clearfix"> </div>
+                </div>
+                <div class="panel-body" style="height:285px;overflow:auto;">
+                    <table class="table table-striped table-hover">
+                        <thead>
+                            <tr>
+                                <th>EGI</th>
+                                <th>FC Today</th>
+                                <th>FC Month to Date</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach ($egi as $e)
+                            <tr>
+                                <td>{{$e->name}}</td>
+                                <td>{{''}}</td>
+                                <td>{{''}}</td>
+                            </tr>
+                            @endforeach
+                        </tbody>
+                    </table>
+                </div>
             </div>
         </div>
-    </div>
 
     </div>
 </div>
@@ -74,17 +65,65 @@
 const app = new Vue({
     el: '#app',
     data: {
-        period: '{{date('Y-m-d')}}'
+        chartRatio: null,
+        chartStock: null,
+        period: '{{date('Y-m-d')}}',
+        labelOption: {
+            show: true,
+            position: 'top',
+            formatter: function(v) {
+                return parseFloat(v.value)
+                    .toFixed(0)
+                    .toString()
+                    .replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+            }
+        }
     },
-    // watch: {
-    //     period: function(val) {
-    //         alert(val);
-    //     }
-    // },
     methods: {
-        filter: function() {
-            // todo, refresh chart
-            alert(this.period);
+        requestDataRatio: function() {
+            var _this = this;
+            axios.get('{{url("fuelTank/ratio")}}').then(function(r) {
+                _this.chartRatio.setOption({series: r.data});
+                setTimeout(_this.requestDataRatio, 3000);
+            })
+        },
+        requestDataFuelStok: function() {
+            var _this = this;
+            axios.get('{{url("fuelTank/dashboard")}}').then(function(r) {
+                var dataCapacity = [];
+                var dataStock = [];
+
+                for (i in r.data) {
+                    dataCapacity.push(r.data[i].capacity);
+                    dataStock.push(r.data[i].stock);
+                }
+
+                _this.chartStock.setOption({
+                    series: [{
+                        name: 'CAPACITY',
+                        type: 'bar',
+                        barGap: 0,
+                        label: _this.labelOption,
+                        data: dataCapacity
+                    }, {
+                        name: 'STOCK',
+                        type: 'bar',
+                        barGap: 0,
+                        label: _this.labelOption,
+                        data: dataStock
+                    }]
+                });
+                setTimeout(_this.requestDataFuelStok, 3000);
+            });
+        },
+        requestDataFuelConsumption: function() {
+            axios.get('{{url('')}}').then(function(r) {
+
+            })
+
+            .catch(function(error) {
+
+            });
         }
     },
     mounted: function() {
@@ -93,8 +132,8 @@ const app = new Vue({
             autoclose: true
         });
 
-        var chart1 = echarts.init(document.getElementById('fuel-ratio'));
-        chart1.setOption({
+        this.chartRatio = echarts.init(document.getElementById('fuel-ratio'));
+        this.chartRatio.setOption({
             title: {
                 text: 'FUEL RATIO',
                 subtext: 'Periode: ' + this.period,
@@ -147,17 +186,8 @@ const app = new Vue({
             series: []
         });
 
-        var requestDataRatio = function() {
-            $.getJSON('{{url("fuelTank/ratio")}}', function(r) {
-                chart1.setOption({series: r});
-                setTimeout(requestDataRatio, 3000);
-            });
-        };
-
-        requestDataRatio();
-
-        var chart2 = echarts.init(document.getElementById('fuel-stock'));
-        chart2.setOption({
+        this.chartStock = echarts.init(document.getElementById('fuel-stock'));
+        this.chartStock.setOption({
             title: {
                 text: 'FUEL STOCK',
                 subtext: '{{date("Y-m-d")}}',
@@ -186,53 +216,14 @@ const app = new Vue({
                 data:[@foreach ($fuelTanks as $f) '{{$f->name}}', @endforeach],
             },
             yAxis: {
-                type: 'value'
+                type: 'value',
+                name: 'LITER'
             },
             series: []
         });
 
-        labelOption = {
-            show: true,
-            position: 'top',
-            formatter: function(v) {
-                return parseFloat(v.value)
-                    .toFixed(0)
-                    .toString()
-                    .replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-            }
-        };
-
-        var requestData = function() {
-            $.getJSON('{{url("fuelTank/dashboard")}}', function(r) {
-
-                var dataCapacity = [];
-                var dataStock = [];
-
-                for (i in r) {
-                    dataCapacity.push(r[i].capacity);
-                    dataStock.push(r[i].stock);
-                }
-
-                chart2.setOption({
-                    series: [{
-                        name: 'CAPACITY',
-                        type: 'bar',
-                        barGap: 0,
-                        label: labelOption,
-                        data: dataCapacity
-                    }, {
-                        name: 'STOCK',
-                        type: 'bar',
-                        barGap: 0,
-                        label: labelOption,
-                        data: dataStock
-                    }]
-                });
-                setTimeout(requestData, 3000);
-            });
-        };
-
-        requestData();
+        this.requestDataRatio();
+        this.requestDataFuelStok();
     }
 });
 

@@ -31,15 +31,16 @@ PR!!!
         - terminal absensi (location_id)
     - breakdown (CRUD)
     - export to excel
-    - auth (today)
+    - auth
         - form untuk update policy
-    - refactor semua view menggunakan vue
     - api semua controller yg dibutuhkan
         - employee
         - fuelTank
         - prajob
         - unit
         - user
+    - catch error di semua axios (chart) tampilkan toaster error
+    - updated_at di anchored barge pake diffForHumans
 
 Prioritas module (masing2 2 minggu):
     - Plant (22 april)

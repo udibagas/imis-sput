@@ -20,10 +20,10 @@ mix.js('resources/assets/js/app.js', 'public/js')
        'resources/assets/theme/css/mouldifi-core.css',
        'resources/assets/theme/css/plugins/datepicker/bootstrap-datepicker.css',
        'resources/assets/theme/css/plugins/select2/select2.css',
-       'resources/assets/theme/css/mouldifi-forms.css',
        'resources/assets/jquery.bootgrid/jquery.bootgrid.min.css',
        'resources/assets/datetimepicker/bootstrap-datetimepicker.css',
-       'resources/assets/toastr/toastr.min.css'
+       'resources/assets/toastr/toastr.min.css',
+       'resources/assets/theme/css/mouldifi-forms.css'
    ], 'public/css/theme.css')
    .scripts([
        'resources/assets/theme/js/jquery.min.js',
