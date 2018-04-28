@@ -11,7 +11,7 @@ class Barge extends Model
 
     public function getUpdatedAtAttribute($value)
     {
-        return $value;
-        // return $value->diffForHumans();
+        $time = Carbon::parse($value);
+        return $time->diffForHumans();
     }
 }

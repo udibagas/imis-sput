@@ -103,4 +103,24 @@ class UserController extends Controller
         $this->authorize('delete', User::class);
         return ['success' => $user->delete()];
     }
+
+    public function profile(Request $request)
+    {
+        $user = auth()->user();
+
+        if ($request->update)
+        {
+            $input = $request->all();
+            
+            if ($request->password) {
+                $input['password'] = bcrypt($request->password);
+            }
+
+            $user->update($input);
+        }
+
+        return view('user.profile', [
+            'user' => $user
+        ]);
+    }
 }

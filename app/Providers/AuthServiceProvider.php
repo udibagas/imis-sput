@@ -13,9 +13,8 @@ class AuthServiceProvider extends ServiceProvider
      * @var array
      */
     protected $policies = [
-        'App\Alocation' => 'App\Policies\AlocationPolicy',
+        'App\Area' => 'App\Policies\AreaPolicy',
         'App\Authorization' => 'App\Policies\AuthorizationPolicy',
-        'App\Bagian' => 'App\Policies\BagianPolicy',
         'App\Barge' => 'App\Policies\BargePolicy',
         'App\Breakdown' => 'App\Policies\BreakdownPolicy',
         'App\BreakdownCategory' => 'App\Policies\BreakdownCategoryPolicy',
@@ -40,10 +39,10 @@ class AuthServiceProvider extends ServiceProvider
         'App\Position' => 'App\Policies\PositionPolicy',
         'App\Prajob' => 'App\Policies\PrajobPolicy',
         'App\ProblemProductivityCategory' => 'App\Policies\ProblemProductivityCategoryPolicy',
+        'App\RunningText' => 'App\Policies\RunningTextPolicy',
         'App\StaffCategory' => 'App\Policies\StaffCategoryPolicy',
-        'App\Station' => 'App\Policies\StationPolicy',
         'App\StopWorkingPrediction' => 'App\Policies\StopWorkingPredictionPolicy',
-        'App\SubUnit' => 'App\Policies\SubUnitPolicy',
+        'App\SubArea' => 'App\Policies\SubAreaPolicy',
         'App\SupervisingPrediction' => 'App\Policies\SupervisingPredictionPolicy',
         'App\TerminalAbsensi' => 'App\Policies\TerminalAbsensiPolicy',
         'App\Unit' => 'App\Policies\UnitPolicy',

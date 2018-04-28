@@ -992,13 +992,6 @@ window.Vue = __webpack_require__(34);
 
 // Vue.component('example-component', require('./components/ExampleComponent.vue'));
 
-// const app = new Vue({
-//     el: '#app',
-//     data: {
-//         message: "ini data test"
-//     }
-// });
-
 /***/ }),
 /* 11 */
 /***/ (function(module, exports, __webpack_require__) {

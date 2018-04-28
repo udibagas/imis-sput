@@ -22,7 +22,7 @@
 </head>
 <body>
 
-<div class="page-container" id="app">
+<div class="page-container">
 
   <div class="page-sidebar">
 
@@ -54,12 +54,12 @@
                 <li class="profile-info dropdown"><a data-toggle="dropdown" class="dropdown-toggle" href="#" aria-expanded="false"><img style="width:35px;height:35px;" class="img-circle avatar" alt="" src="{{asset('img/user.png')}}">{{auth()->user()->name}} <span class="caret"></span></a>
                     <ul class="dropdown-menu">
 
-                        <li><a href="#/"><i class="icon-user"></i>My profile</a></li>
+                        <!-- <li><a href="#/"><i class="icon-user"></i>My profile</a></li>
                         <li><a href="#/"><i class="icon-mail"></i>Messages</a></li>
                         <li><a href="#"><i class="icon-clipboard"></i>Tasks</a></li>
                         <li class="divider"></li>
                         <li><a href="#"><i class="icon-cog"></i>Account settings</a></li>
-                        <li>
+                        <li> -->
                             <a href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
                                 <i class="icon-logout"></i>Logout
                             </a>
@@ -80,11 +80,17 @@
 			</div>
 		</div>
 
-		<footer class="animatedParent animateOnce z-index-10">
+		<!-- <footer class="animatedParent animateOnce z-index-10">
 			<div class="footer-main animated fadeInUp slow">&copy; {{ date('Y') }} <strong>KPP - SPUT</strong></div>
-		</footer>
+		</footer> -->
 
 	  </div>
+
+      <div v-if="text !== null" id="runningText" style="height:50px;background-color:blue;padding:10px;color:white;font-size:20px;">
+          <div class="marquee">
+              @{{text}}
+          </div>
+      </div>
   </div>
 </div>
 
@@ -92,6 +98,46 @@
 <script src="{{ asset('js/theme.js') }}"></script>
 
 @stack('scripts')
+
+<script type="text/javascript">
+const runningText = new Vue({
+    el: '#runningText',
+    data: {
+        text: null
+    },
+    methods: {
+        getData: function() {
+            var _this = this;
+            _this.text = "";
+
+            axios.get('{{url("api/runningText")}}').then(function(r) {
+
+                if (r.data.length == 0) {
+                    _this.text = null;
+                }
+
+                for (var i = 0; i < r.data.length; i++) {
+                    _this.text += " :: ";
+                    _this.text += r.data[i].text;
+                }
+
+            });
+
+            setTimeout(_this.getData, 5000);
+        },
+        runMarquee: function() {
+            $('.marquee').marquee({
+                duration: 20000,
+                pauseOnHover: true
+            });
+        },
+    },
+    mounted: function() {
+        // this.getData();
+        // this.runMarquee();
+    }
+});
+</script>
 
 <script src="{{ asset('js/functions.js') }}"></script>
 

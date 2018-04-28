@@ -86,6 +86,13 @@ const app = new Vue({
                 _this.chartRatio.setOption({series: r.data});
                 setTimeout(_this.requestDataRatio, 3000);
             })
+
+            .catch(function(error) {
+                if (error.response.status == 500) {
+                    var error = error.response.data;
+                    toastr["error"](error.message + ". " + error.file + ":" + error.line)
+                }
+            });
         },
         requestDataFuelStok: function() {
             var _this = this;
@@ -114,6 +121,13 @@ const app = new Vue({
                     }]
                 });
                 setTimeout(_this.requestDataFuelStok, 3000);
+            })
+
+            .catch(function(error) {
+                if (error.response.status == 500) {
+                    var error = error.response.data;
+                    toastr["error"](error.message + ". " + error.file + ":" + error.line)
+                }
             });
         },
         requestDataFuelConsumption: function() {
@@ -122,7 +136,10 @@ const app = new Vue({
             })
 
             .catch(function(error) {
-
+                if (error.response.status == 500) {
+                    var error = error.response.data;
+                    toastr["error"](error.message + ". " + error.file + ":" + error.line)
+                }
             });
         }
     },

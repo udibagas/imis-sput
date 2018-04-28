@@ -19,7 +19,8 @@
                     <th data-column-id="owner">Owner</th>
                     <th data-column-id="egi">EGI</th>
                     <th data-column-id="alocation">Alocation</th>
-                    <th data-column-id="status">Status</th>
+                    <th data-column-id="fc">FC</th>
+                    <!-- <th data-column-id="status">Status</th> -->
                     @can('updateOrDelete', App\Unit::class)
                     <th data-column-id="commands" data-width="5%"
                         data-formatter="commands"

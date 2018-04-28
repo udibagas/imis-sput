@@ -46,5 +46,3 @@ var unblock = function(el) {
         $(el).removeClass('reloading');
     }, 100);
 };
-
-Vue.use(vueSelect2);

@@ -5,7 +5,7 @@ namespace App\Http\Requests;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
 
-class BagianRequest extends FormRequest
+class SubAreaRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -24,12 +24,12 @@ class BagianRequest extends FormRequest
      */
     public function rules()
     {
-        $bagian = $this->route('bagian');
+        $area = $this->route('area');
 
         return [
             'name' => [
                 'required',
-                Rule::unique('bagians')->ignore($bagian ? $bagian->id : 0)
+                Rule::unique('areas')->ignore($area ? $area->id : 0)
             ]
         ];
     }

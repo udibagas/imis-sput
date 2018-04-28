@@ -74,14 +74,23 @@
                         </div>
                     </div>
 
-                    <div class="form-group" :class="formErrors.status ? 'has-error' : ''">
+                    <div class="form-group" :class="formErrors.fc ? 'has-error' : ''">
+                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="fc">FC
+                        </label>
+                        <div class="col-md-9 col-sm-9 col-xs-12">
+                            <input type="number" v-model="formData.fc" class="form-control" placeholder="Status">
+                            <span v-if="formErrors.fc" class="help-block">@{{formErrors.fc[0]}}</span>
+                        </div>
+                    </div>
+
+                    <!-- <div class="form-group" :class="formErrors.status ? 'has-error' : ''">
                         <label class="control-label col-md-3 col-sm-3 col-xs-12" for="status">Status
                         </label>
                         <div class="col-md-9 col-sm-9 col-xs-12">
                             <input type="text" v-model="formData.status" class="form-control" placeholder="Status">
                             <span v-if="formErrors.status" class="help-block">@{{formErrors.status[0]}}</span>
                         </div>
-                    </div>
+                    </div> -->
 
                 </div>
                 <div class="modal-footer">

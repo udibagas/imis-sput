@@ -16,7 +16,8 @@
                     <th data-column-id="id" data-width="3%">ID</th>
                     <th data-column-id="name">Name</th>
                     <th data-column-id="description">Description</th>
-                    <th data-column-id="anchored">Anchored</th>
+                    <th data-column-id="anchored" data-formatter="anchored">Anchored</th>
+                    <th data-column-id="updated_at">Last Update</th>
                     @can('updateOrDelete', App\Barge::class)
                     <th data-column-id="commands" data-width="5%"
                         data-formatter="commands"
@@ -174,7 +175,12 @@
                         var t = t;
                         return '@can("update", App\Barge::class) <a href="#" class="btn btn-info btn-xs c-edit" data-id="'+row.id+'"><i class="icon-pencil"></i></a> @endcan' +
                             '@can("delete", App\Barge::class) <a href="#" class="btn btn-danger btn-xs c-delete" data-id="'+row.id+'"><i class="icon-trash"></i></a> @endcan';
-                    }
+                    },
+                    "anchored": function(column, row) {
+                        return row.anchored
+                            ? '<span class="label label-success">Y</span>'
+                            : '<span class="label label-default">N</span>';
+                    },
                 }
             }).on("loaded.rs.jquery.bootgrid", function(e) {
                 grid.find(".c-delete").on("click", function(e) {

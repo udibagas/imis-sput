@@ -26,6 +26,13 @@ const app = new Vue({
             axios.get('{{url("jetty/productivity")}}').then(function(r) {
                 _this.chart.setOption({series: r.data});
                 setTimeout(_this.requestData, 3000);
+            })
+
+            .catch(function(error) {
+                if (error.response.status == 500) {
+                    var error = error.response.data;
+                    toastr["error"](error.message + ". " + error.file + ":" + error.line)
+                }
             });
         }
     },

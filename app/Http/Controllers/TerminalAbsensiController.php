@@ -21,7 +21,7 @@ class TerminalAbsensiController extends Controller
         {
             $pageSize = $request->rowCount > 0 ? $request->rowCount : 1000000;
             $request['page'] = $request->current;
-            $sort = $request->sort ? key($request->sort) : 'name';
+            $sort = $request->sort ? key($request->sort) : 'code';
             $dir = $request->sort ? $request->sort[$sort] : 'asc';
 
             $terminalAbsensi = TerminalAbsensi::when($request->searchPhrase, function($query) use ($request) {

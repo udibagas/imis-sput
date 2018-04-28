@@ -82,6 +82,28 @@ class BreakdownPolicy
                 ->where('delete', 1)->count();
     }
 
+    public function export(User $user)
+    {
+        if ($user->super_admin) {
+            return true;
+        }
+
+        return Authorization::where('controller', 'Breakdown')
+                ->where('user_id', $user->id)
+                ->where('export', 1)->count();
+    }
+
+    public function import(User $user)
+    {
+        if ($user->super_admin) {
+            return true;
+        }
+
+        return Authorization::where('controller', 'Breakdown')
+                ->where('user_id', $user->id)
+                ->where('import', 1)->count();
+    }
+
     public function createOrUpdate(User $user)
     {
         return $this->create($user) || $this->update($user);

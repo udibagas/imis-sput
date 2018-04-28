@@ -8,6 +8,6 @@ class Unit extends Model
 {
     protected $fillable = [
         'name', 'egi_id', 'owner_id', 'alocation_id', 'status',
-        'unit_category_id'
+        'unit_category_id', 'fc'
     ];
 }

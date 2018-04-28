@@ -3,19 +3,19 @@
 namespace App\Policies;
 
 use App\User;
-use App\Bagian;
+use App\Area;
 use App\Authorization;
 use Illuminate\Auth\Access\HandlesAuthorization;
 
-class BagianPolicy
+class AreaPolicy
 {
     use HandlesAuthorization;
 
     /**
-     * Determine whether the user can view the bagian.
+     * Determine whether the user can view the area.
      *
      * @param  \App\User  $user
-     * @param  \App\Bagian  $bagian
+     * @param  \App\Area  $area
      * @return mixed
      */
     public function view(User $user)
@@ -24,13 +24,13 @@ class BagianPolicy
             return true;
         }
 
-        return Authorization::where('controller', 'Bagian')
+        return Authorization::where('controller', 'Area')
                 ->where('user_id', $user->id)
                 ->where('view', 1)->count();
     }
 
     /**
-     * Determine whether the user can create bagians.
+     * Determine whether the user can create areas.
      *
      * @param  \App\User  $user
      * @return mixed
@@ -41,16 +41,16 @@ class BagianPolicy
             return true;
         }
 
-        return Authorization::where('controller', 'Bagian')
+        return Authorization::where('controller', 'Area')
                 ->where('user_id', $user->id)
                 ->where('create', 1)->count();
     }
 
     /**
-     * Determine whether the user can update the bagian.
+     * Determine whether the user can update the area.
      *
      * @param  \App\User  $user
-     * @param  \App\Bagian  $bagian
+     * @param  \App\Area  $area
      * @return mixed
      */
     public function update(User $user)
@@ -59,16 +59,16 @@ class BagianPolicy
             return true;
         }
 
-        return Authorization::where('controller', 'Bagian')
+        return Authorization::where('controller', 'Area')
                 ->where('user_id', $user->id)
                 ->where('update', 1)->count();
     }
 
     /**
-     * Determine whether the user can delete the bagian.
+     * Determine whether the user can delete the area.
      *
      * @param  \App\User  $user
-     * @param  \App\Bagian  $bagian
+     * @param  \App\Area  $area
      * @return mixed
      */
     public function delete(User $user)
@@ -77,7 +77,7 @@ class BagianPolicy
             return true;
         }
 
-        return Authorization::where('controller', 'Bagian')
+        return Authorization::where('controller', 'Area')
                 ->where('user_id', $user->id)
                 ->where('delete', 1)->count();
     }

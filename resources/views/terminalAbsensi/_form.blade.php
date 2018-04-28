@@ -12,19 +12,19 @@
                         @{{error.file}}:@{{error.line}}
                     </div>
                     <div class="form-group" :class="formErrors.code ? 'has-error' : ''">
-                        <label class="control-label col-md-4 col-sm-4 col-xs-12" for="code">Name
+                        <label class="control-label col-md-4 col-sm-4 col-xs-12" for="code">Code
                         </label>
                         <div class="col-md-8 col-sm-8 col-xs-12">
-                            <input type="text" v-model="formData.code" class="form-control" placeholder="Name">
+                            <input type="text" v-model="formData.code" class="form-control" placeholder="Code">
                             <span v-if="formErrors.code" class="help-block">@{{formErrors.code[0]}}</span>
                         </div>
                     </div>
 
                     <div class="form-group" :class="formErrors.ip_address ? 'has-error' : ''">
-                        <label class="control-label col-md-4 col-sm-4 col-xs-12" for="ip_address">Description
+                        <label class="control-label col-md-4 col-sm-4 col-xs-12" for="ip_address">IP Address
                         </label>
                         <div class="col-md-8 col-sm-8 col-xs-12">
-                            <input type="text" v-model="formData.ip_address" class="form-control" placeholder="Description">
+                            <input type="text" v-model="formData.ip_address" class="form-control" placeholder="IP Address">
                             <span v-if="formErrors.ip_address" class="help-block">@{{formErrors.ip_address[0]}}</span>
                         </div>
                     </div>

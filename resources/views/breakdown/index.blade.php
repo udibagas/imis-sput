@@ -5,25 +5,32 @@
 <div class="panel panel-primary" id="app">
     <div class="panel-body">
         <h3 class="pull-left text-primary">BREAKDOWN <small>Manage</small></h3>
-        @can('create', App\Breakdown::class)
         <span class="pull-right" style="margin:15px 0 15px 10px;">
+            @can('create', App\Breakdown::class)
             <a href="#" @click="add" class="btn btn-primary"><i class="icon-plus-circled"></i></a>
+            @endcan
+            @can('export', App\Breakdown::class)
+            <a href="#" class="btn btn-primary"><i class="icon-download"></i> EXPORT</a>
+            @endcan
+            @can('import', App\Breakdown::class)
+            <a href="#" class="btn btn-primary"><i class="icon-upload"></i> IMPORT</a>
+            @endcan
         </span>
-        @endcan
         <table class="table table-striped table-hover " id="bootgrid" style="border-top:2px solid #ddd">
             <thead>
                 <tr>
                     <th data-column-id="id" data-width="3%">ID</th>
                     <th data-column-id="unit">Unit</th>
                     <th data-column-id="unit_category">Unit Category</th>
-                    <th data-column-id="breakdown_category">D/B Type</th>
+                    <th data-column-id="breakdown_category">B/D Type</th>
+                    <th data-column-id="breakdown_status">B/D Status</th>
                     <th data-column-id="location">Location</th>
                     <th data-column-id="hm">HM</th>
                     <th data-column-id="km">KM</th>
                     <th data-column-id="time_in">Time In</th>
                     <th data-column-id="time_out">Time Out</th>
+                    <th data-column-id="duration">Duration</th>
                     <th data-column-id="diagnosa">Problem</th>
-                    <th data-column-id="code">Code</th>
                     <th data-column-id="component_criteria">Component Criteria</th>
                     <th data-column-id="tindakan">Tindakan</th>
                     <th data-column-id="wo_number">WO Number</th>
@@ -180,9 +187,14 @@
                 formatters: {
                     "commands": function(column, row) {
                         var t = t;
-                        return '@can("update", App\Breakdown::class) <a href="#" class="btn btn-info btn-xs c-edit" data-id="'+row.id+'"><i class="icon-pencil"></i></a> @endcan' +
-                            '@can("delete", App\Breakdown::class) <a href="#" class="btn btn-danger btn-xs c-delete" data-id="'+row.id+'"><i class="icon-trash"></i></a> @endcan';
-                    }
+                        var btn = '@can("update", App\Breakdown::class) <a href="#" class="btn btn-info btn-xs c-edit" data-id="'+row.id+'"><i class="icon-pencil"></i></a> @endcan';
+
+                        if (row.time_out == null) {
+                            btn += '@can("delete", App\Breakdown::class) <a href="#" class="btn btn-danger btn-xs c-delete" data-id="'+row.id+'"><i class="icon-trash"></i></a> @endcan';
+                        }
+
+                        return btn;
+                    },
                 }
             }).on("loaded.rs.jquery.bootgrid", function() {
                 grid.find(".c-delete").on("click", function(e) {

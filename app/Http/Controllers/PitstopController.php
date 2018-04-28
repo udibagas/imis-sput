@@ -104,4 +104,27 @@ class PitstopController extends Controller
         $this->authorize('delete', Pitstop::class);
         return ['success' => $pitstop->delete()];
     }
+
+    public function leadTimeDailyCheck(Request $request)
+    {
+        if ($request->ajax())
+        {
+            return Pitstop::selectRaw('
+                    pitstops.*,
+                    units.name AS unit,
+                    stations.name AS station
+                ')
+                ->join('units', 'units.id', '=', 'pitstops.unit_id')
+                ->join('stations', 'stations.id', '=', 'pitstops.station_id')
+                ->where('pitstops.status', 0)
+                ->orderBy('created_at', 'DESC')->get();
+        }
+
+        return view('pitstop.leadTimeDailyCheck', [
+            'breadcrumbs' => [
+                'plant/dashboard' => 'Plant',
+                '#' => 'Lead Time Daily Check'
+            ]
+        ]);
+    }
 }

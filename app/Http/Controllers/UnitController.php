@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Unit;
 use App\Http\Requests\UnitRequest;
+use DB;
 
 class UnitController extends Controller
 {
@@ -33,7 +34,7 @@ class UnitController extends Controller
                 ')
                 ->join('owners', 'owners.id', '=', 'units.owner_id')
                 ->join('egis', 'egis.id', '=', 'units.egi_id')
-                ->join('alocations', 'alocations.id', '=', 'units.alocation_id')
+                ->join('alocations', 'alocations.id', '=', 'units.alocation_id', 'LEFT')
                 ->join('unit_categories', 'unit_categories.id', '=', 'units.unit_category_id', 'LEFT')
                 ->when($request->searchPhrase, function($query) use ($request) {
                     return $query->where('units.name', 'LIKE', '%'.$request->searchPhrase.'%')
@@ -108,5 +109,17 @@ class UnitController extends Controller
     {
         $this->authorize('delete', Unit::class);
         return ['success' => $unit->delete()];
+    }
+
+    public function remarkUnitByType()
+    {
+        $sql = "SELECT
+                uc.name AS category,
+                (SELECT COUNT(id) FROM units WHERE status = 1 AND unit_category_id = uc.id) AS ready,
+                (SELECT COUNT(id) FROM units WHERE status = 0 AND unit_category_id = uc.id) AS breakdown
+            FROM unit_categories uc ORDER BY name ASC
+        ";
+
+        return DB::select(DB::raw($sql));
     }
 }

@@ -1,10 +1,10 @@
 <div id="modal-form" class="modal fade" role="dialog">
     <div class="modal-dialog">
         <div class="modal-content">
-            <form class="form-horizontal" role="form" @submit.prevent="formData.id == undefined ? store : update">
+            <form class="form-horizontal" role="form" @submit.prevent="update">
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                    <h4 class="modal-title">@{{formTitle}}</h4>
+                    <h4 class="modal-title">UPDATE PCR</h4>
                 </div>
                 <div class="modal-body">
 
@@ -13,7 +13,7 @@
                         @{{error.file}}:@{{error.line}}
                     </div>
 
-                    <div v-if="formData.id !== undefined" class="form-group" :class="formErrors.wo_number ? 'has-error' : ''">
+                    <div class="form-group" :class="formErrors.wo_number ? 'has-error' : ''">
                         <label class="control-label col-md-3 col-sm-3 col-xs-12" for="wo_number">WO Number
                         </label>
                         <div class="col-md-9 col-sm-9 col-xs-12">
@@ -48,7 +48,7 @@
                         </div>
                     </div>
 
-                    <div v-if="formData.id !== undefined" class="form-group" :class="formErrors.breakdown_status_id ? 'has-error' : ''">
+                    <div class="form-group" :class="formErrors.breakdown_status_id ? 'has-error' : ''">
                         <label class="control-label col-md-3 col-sm-3 col-xs-12" for="breakdown_status_id">B/D Status
                         </label>
                         <div class="col-md-9 col-sm-9 col-xs-12">
@@ -110,7 +110,7 @@
                         </div>
                     </div>
 
-                    <div v-if="formData.id !== undefined" class="form-group" :class="formErrors.tindakan ? 'has-error' : ''">
+                    <div class="form-group" :class="formErrors.tindakan ? 'has-error' : ''">
                         <label class="control-label col-md-3 col-sm-3 col-xs-12" for="tindakan">Tindakan
                         </label>
                         <div class="col-md-9 col-sm-9 col-xs-12">
@@ -119,7 +119,7 @@
                         </div>
                     </div>
 
-                    <div v-if="formData.id !== undefined" class="form-group" :class="formErrors.component_criteria_id ? 'has-error' : ''">
+                    <div class="form-group" :class="formErrors.component_criteria_id ? 'has-error' : ''">
                         <label class="control-label col-md-3 col-sm-3 col-xs-12" for="component_criteria_id">Component Criteria
                         </label>
                         <div class="col-md-9 col-sm-9 col-xs-12">
@@ -132,7 +132,7 @@
                         </div>
                     </div>
 
-                    <div v-if="formData.id !== undefined" class="form-group" :class="formErrors.time_out ? 'has-error' : ''">
+                    <div class="form-group" :class="formErrors.time_out ? 'has-error' : ''">
                         <label class="control-label col-md-3 col-sm-3 col-xs-12" for="time_out">Time Out
                         </label>
                         <div class="col-md-9 col-sm-9 col-xs-12">
@@ -141,7 +141,7 @@
                         </div>
                     </div>
 
-                    <div v-if="formData.id !== undefined" class="form-group" :class="formErrors.warning_part ? 'has-error' : ''">
+                    <div class="form-group" :class="formErrors.warning_part ? 'has-error' : ''">
                         <label class="control-label col-md-3 col-sm-3 col-xs-12" for="warning_part">Warning Part
                         </label>
                         <div class="col-md-9 col-sm-9 col-xs-12">
@@ -152,8 +152,7 @@
 
                 </div>
                 <div class="modal-footer">
-                    <button type="submit" v-if="formData.id == undefined" class="btn btn-primary" @click="store"><i class="fa fa-floppy-o"></i> Save</button>
-                    <button type="submit" v-if="formData.id != undefined" class="btn btn-primary" @click="update"><i class="fa fa-floppy-o"></i> Save</button>
+                    <button type="submit" class="btn btn-primary"><i class="fa fa-floppy-o"></i> Save</button>
                     <button type="button" class="btn btn-default" data-dismiss="modal"><i class="fa fa-close"></i> Cancel</button>
                 </div>
             </form>

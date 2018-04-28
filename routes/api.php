@@ -24,3 +24,6 @@ Route::group(['middleware' => 'auth:api'], function() {
     Route::resource('unit', 'Api\UnitController')->except(['edit', 'create']);
     Route::resource('user', 'Api\UserController')->except(['edit', 'create']);
 });
+
+// ga perlu auth
+Route::get('runningText', 'Api\RunningTextController@index');

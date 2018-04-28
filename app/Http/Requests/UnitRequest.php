@@ -34,7 +34,6 @@ class UnitRequest extends FormRequest
             'egi_id' => 'required',
             'owner_id' => 'required',
             'alocation_id' => 'required',
-            'status' => 'required',
             'unit_category_id' => 'required'
         ];
     }

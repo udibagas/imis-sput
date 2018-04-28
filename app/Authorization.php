@@ -13,8 +13,16 @@ class Authorization extends Model
 
     public static function getModule()
     {
-        return [
-            'Alocation' => ['create', 'update', 'delete']
-        ];
+        // return [
+        //     'Plant' => [
+        //         'Lead Time Breakdown Unit' => [
+        //             'controller' => '',
+        //             ''
+        //         ]
+        //     ],
+        //     'Plant > Master Data' => [
+        //         'Alocation' => ['view', 'create', 'update', 'delete'],
+        //     ]
+        // ];
     }
 }

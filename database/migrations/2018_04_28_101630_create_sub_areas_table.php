@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateSubUnitsTable extends Migration
+class CreateSubAreasTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,10 +13,12 @@ class CreateSubUnitsTable extends Migration
      */
     public function up()
     {
-        Schema::create('sub_units', function (Blueprint $table) {
+        Schema::create('sub_areas', function (Blueprint $table) {
             $table->increments('id');
+            $table->integer('area_id')->unsigned();
             $table->string('name', 30);
             $table->string('description')->nullable();
+            $table->boolean('status')->default(1);
             $table->timestamps();
         });
     }
@@ -28,6 +30,6 @@ class CreateSubUnitsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('sub_units');
+        Schema::dropIfExists('sub_areas');
     }
 }

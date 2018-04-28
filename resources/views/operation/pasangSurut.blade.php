@@ -12,7 +12,7 @@
             </div>
             <ul class="list-group">
                 <li class="list-group-item" v-for="b in barges">
-                    <span class="pull-right text-muted"><i>@{{b.updated_at}}</i></span>
+                    <span class="pull-right text-muted">@{{b.updated_at}}</span>
                     <h3 style="margin-bottom:0;">@{{b.name}}</h3>
                 </li>
             </ul>
@@ -44,12 +44,7 @@
         el: '#app',
         data: {
             chart: null,
-            barges: [
-                {
-                    name: 'HASNUR',
-                    updated_at: '3 mins ago'
-                }
-            ]
+            barges: []
         },
         methods: {
             getAnchoredBarges: function() {
@@ -59,8 +54,10 @@
                 })
 
                 .catch(function(error) {
-                    var error = error.response.data;
-                    toastr["error"](error.message + ". " + error.file + ":" + error.line)
+                    if (error.response.status == 500) {
+                        var error = error.response.data;
+                        toastr["error"](error.message + ". " + error.file + ":" + error.line)
+                    }
                 });
 
                 // recusrive
@@ -68,9 +65,10 @@
             }
         },
         mounted: function() {
-            this.getAnchoredBarges();
-            this.chart = echarts.init(document.getElementById('chart'));
-            this.chart.setOption({
+            var _this = this;
+            _this.getAnchoredBarges();
+            _this.chart = echarts.init(document.getElementById('chart'));
+            _this.chart.setOption({
                 title: {
                     text: 'ESTIMASI TINGGI AIR (meter)',
                     subtext: '{{date("Y-m-d")}}',
@@ -124,14 +122,12 @@
                 }]
             });
 
-            // var requestData = function() {
-            //     $.getJSON('{{url("jetty/productivity")}}', function(r) {
-            //         chart.setOption({series: r});
-            //         setTimeout(requestData, 3000);
-            //     });
-            // };
-            //
-            // requestData();
+            $(window).on('resize', function(){
+                if(_this.chart != null && _this.chart != undefined){
+                    _this.chart.resize();
+                }
+            });
+
         }
     });
 

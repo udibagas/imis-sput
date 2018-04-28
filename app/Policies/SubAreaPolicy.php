@@ -3,19 +3,19 @@
 namespace App\Policies;
 
 use App\User;
-use App\Alocation;
+use App\SubArea;
 use App\Authorization;
 use Illuminate\Auth\Access\HandlesAuthorization;
 
-class AlocationPolicy
+class SubAreaPolicy
 {
     use HandlesAuthorization;
 
     /**
-     * Determine whether the user can view the alocation.
+     * Determine whether the user can view the subArea.
      *
      * @param  \App\User  $user
-     * @param  \App\Alocation  $alocation
+     * @param  \App\SubArea  $subArea
      * @return mixed
      */
     public function view(User $user)
@@ -24,13 +24,13 @@ class AlocationPolicy
             return true;
         }
 
-        return Authorization::where('controller', 'Alocation')
+        return Authorization::where('controller', 'SubArea')
                 ->where('user_id', $user->id)
                 ->where('view', 1)->count();
     }
 
     /**
-     * Determine whether the user can create alocations.
+     * Determine whether the user can create subAreas.
      *
      * @param  \App\User  $user
      * @return mixed
@@ -41,16 +41,16 @@ class AlocationPolicy
             return true;
         }
 
-        return Authorization::where('controller', 'Alocation')
+        return Authorization::where('controller', 'SubArea')
                 ->where('user_id', $user->id)
                 ->where('create', 1)->count();
     }
 
     /**
-     * Determine whether the user can update the alocation.
+     * Determine whether the user can update the subArea.
      *
      * @param  \App\User  $user
-     * @param  \App\Alocation  $alocation
+     * @param  \App\SubArea  $subArea
      * @return mixed
      */
     public function update(User $user)
@@ -59,16 +59,16 @@ class AlocationPolicy
             return true;
         }
 
-        return Authorization::where('controller', 'Alocation')
+        return Authorization::where('controller', 'SubArea')
                 ->where('user_id', $user->id)
                 ->where('update', 1)->count();
     }
 
     /**
-     * Determine whether the user can delete the alocation.
+     * Determine whether the user can delete the subArea.
      *
      * @param  \App\User  $user
-     * @param  \App\Alocation  $alocation
+     * @param  \App\SubArea  $subArea
      * @return mixed
      */
     public function delete(User $user)
@@ -77,7 +77,7 @@ class AlocationPolicy
             return true;
         }
 
-        return Authorization::where('controller', 'Alocation')
+        return Authorization::where('controller', 'SubArea')
                 ->where('user_id', $user->id)
                 ->where('delete', 1)->count();
     }

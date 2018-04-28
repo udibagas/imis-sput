@@ -4,8 +4,8 @@
 
 <div class="panel panel-primary" id="app">
     <div class="panel-body">
-        <h3 class="pull-left text-primary">BAGIAN <small>Manage</small></h3>
-        @can('create', App\Bagian::class)
+        <h3 class="pull-left text-primary">RUNNING TEXT <small>Manage</small></h3>
+        @can('create', App\RunningText::class)
         <span class="pull-right" style="margin:15px 0 15px 10px;">
             <a href="#" @click="add" class="btn btn-primary"><i class="icon-plus-circled"></i></a>
         </span>
@@ -14,9 +14,10 @@
             <thead>
                 <tr>
                     <th data-column-id="id" data-width="3%">ID</th>
-                    <th data-column-id="name">Name</th>
-                    <th data-column-id="description">Description</th>
-                    @can('updateOrDelete', App\Bagian::class)
+                    <th data-column-id="module">Module</th>
+                    <th data-column-id="text">Text</th>
+                    <th data-column-id="status" data-formatter="status">Status</th>
+                    @can('updateOrDelete', App\RunningText::class)
                     <th data-column-id="commands" data-width="5%"
                         data-formatter="commands"
                         data-sortable="false"
@@ -28,8 +29,8 @@
         </table>
     </div>
 
-    @can('createOrUpdate', App\Bagian::class)
-    @include('bagian._form')
+    @can('createOrUpdate', App\RunningText::class)
+    @include('runningText._form')
     @endcan
 
 </div>
@@ -51,7 +52,7 @@
         methods: {
             add: function() {
                 // reset the form
-                this.formTitle = "ADD BAGIAN";
+                this.formTitle = "ADD RUNNING TEXT";
                 this.formData = {};
                 this.formErrors = {};
                 this.error = {};
@@ -61,7 +62,8 @@
             store: function() {
                 block('form');
                 var t = this;
-                axios.post('{{url("bagian")}}', this.formData).then(function(r) {
+
+                axios.post('{{url("runningText")}}', this.formData).then(function(r) {
                     unblock('form');
                     $('#modal-form').modal('hide');
                     toastr["success"]("Data berhasil ditambahkan");
@@ -70,6 +72,7 @@
                 // validasi
                 .catch(function(error) {
                     unblock('form');
+
                     if (error.response.status == 422) {
                         t.formErrors = error.response.data.errors;
                     }
@@ -81,11 +84,11 @@
             },
             edit: function(id) {
                 var t = this;
-                this.formTitle = "EDIT BAGIAN";
+                this.formTitle = "EDIT RUNNING TEXT";
                 this.formErrors = {};
                 this.error = {};
 
-                axios.get('{{url("bagian")}}/' + id).then(function(r) {
+                axios.get('{{url("runningText")}}/' + id).then(function(r) {
                     t.formData = r.data;
                     $('#modal-form').modal('show');
                 })
@@ -100,7 +103,7 @@
             update: function() {
                 block('form');
                 var t = this;
-                axios.put('{{url("bagian")}}/' + this.formData.id, this.formData).then(function(r) {
+                axios.put('{{url("runningText")}}/' + this.formData.id, this.formData).then(function(r) {
                     unblock('form');
                     $('#modal-form').modal('hide');
                     toastr["success"]("Data berhasil diupdate");
@@ -124,7 +127,7 @@
                     message: "Anda yakin akan menghapus data ini?",
                     callback: function(r) {
                         if (r == true) {
-                            axios.delete('{{url("bagian")}}/' + id)
+                            axios.delete('{{url("runningText")}}/' + id)
 
                             .then(function(r) {
                                 if (r.data.success == true) {
@@ -152,7 +155,7 @@
 
             var grid = $('#bootgrid').bootgrid({
                 rowCount: [10,25,50,100],
-                ajax: true, url: '{{url('bagian')}}',
+                ajax: true, url: '{{url('runningText')}}',
                 ajaxSettings: {
                     method: 'GET', cache: false,
                     statusCode: {
@@ -169,11 +172,16 @@
                 formatters: {
                     "commands": function(column, row) {
                         var t = t;
-                        return '@can("update", App\Bagian::class) <a href="#" class="btn btn-info btn-xs c-edit" data-id="'+row.id+'"><i class="icon-pencil"></i></a> @endcan ' +
-                            '@can("delete", App\Bagian::class) <a href="#" class="btn btn-danger btn-xs c-delete" data-id="'+row.id+'"><i class="icon-trash"></i></a> @endcan';
-                    }
+                        return '@can("update", App\RunningText::class) <a href="#" class="btn btn-info btn-xs c-edit" data-id="'+row.id+'"><i class="icon-pencil"></i></a> @endcan' +
+                            '@can("delete", App\RunningText::class) <a href="#" class="btn btn-danger btn-xs c-delete" data-id="'+row.id+'"><i class="icon-trash"></i></a> @endcan';
+                    },
+                    "status": function(column, row) {
+                        return row.status
+                            ? '<span class="label label-success">SHOW</span>'
+                            : '<span class="label label-default">HIDDEN</span>';
+                    },
                 }
-            }).on("loaded.rs.jquery.bootgrid", function() {
+            }).on("loaded.rs.jquery.bootgrid", function(e) {
                 grid.find(".c-delete").on("click", function(e) {
                     t.delete($(this).data("id"));
                 });

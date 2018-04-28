@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateBagiansTable extends Migration
+class CreateAreasTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,10 +13,12 @@ class CreateBagiansTable extends Migration
      */
     public function up()
     {
-        Schema::create('bagians', function (Blueprint $table) {
+        Schema::create('areas', function (Blueprint $table) {
             $table->increments('id');
             $table->string('name', 30);
+            $table->integer('capacity');
             $table->string('description')->nullable();
+            $table->boolean('status')->default(1);
             $table->timestamps();
         });
     }
@@ -28,6 +30,6 @@ class CreateBagiansTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('bagians');
+        Schema::dropIfExists('areas');
     }
 }

@@ -3,19 +3,19 @@
 namespace App\Policies;
 
 use App\User;
-use App\SubUnit;
+use App\RunningText;
 use App\Authorization;
 use Illuminate\Auth\Access\HandlesAuthorization;
 
-class SubUnitPolicy
+class RunningTextPolicy
 {
     use HandlesAuthorization;
 
     /**
-     * Determine whether the user can view the subUnit.
+     * Determine whether the user can view the runningText.
      *
      * @param  \App\User  $user
-     * @param  \App\SubUnit  $subUnit
+     * @param  \App\RunningText  $runningText
      * @return mixed
      */
     public function view(User $user)
@@ -24,13 +24,13 @@ class SubUnitPolicy
             return true;
         }
 
-        return Authorization::where('controller', 'SubUnit')
+        return Authorization::where('controller', 'RunningText')
                 ->where('user_id', $user->id)
                 ->where('view', 1)->count();
     }
 
     /**
-     * Determine whether the user can create subUnits.
+     * Determine whether the user can create runningTexts.
      *
      * @param  \App\User  $user
      * @return mixed
@@ -41,16 +41,16 @@ class SubUnitPolicy
             return true;
         }
 
-        return Authorization::where('controller', 'SubUnit')
+        return Authorization::where('controller', 'RunningText')
                 ->where('user_id', $user->id)
                 ->where('create', 1)->count();
     }
 
     /**
-     * Determine whether the user can update the subUnit.
+     * Determine whether the user can update the runningText.
      *
      * @param  \App\User  $user
-     * @param  \App\SubUnit  $subUnit
+     * @param  \App\RunningText  $runningText
      * @return mixed
      */
     public function update(User $user)
@@ -59,16 +59,16 @@ class SubUnitPolicy
             return true;
         }
 
-        return Authorization::where('controller', 'SubUnit')
+        return Authorization::where('controller', 'RunningText')
                 ->where('user_id', $user->id)
                 ->where('update', 1)->count();
     }
 
     /**
-     * Determine whether the user can delete the subUnit.
+     * Determine whether the user can delete the runningText.
      *
      * @param  \App\User  $user
-     * @param  \App\SubUnit  $subUnit
+     * @param  \App\RunningText  $runningText
      * @return mixed
      */
     public function delete(User $user)
@@ -77,7 +77,7 @@ class SubUnitPolicy
             return true;
         }
 
-        return Authorization::where('controller', 'SubUnit')
+        return Authorization::where('controller', 'RunningText')
                 ->where('user_id', $user->id)
                 ->where('delete', 1)->count();
     }

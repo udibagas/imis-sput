@@ -7,27 +7,36 @@
                     <h4 class="modal-title">@{{formTitle}}</h4>
                 </div>
                 <div class="modal-body">
-
                     <div class="alert alert-danger" v-if="error.message">
                         @{{error.message}}<br>
                         @{{error.file}}:@{{error.line}}
                     </div>
-                    
-                    <div class="form-group" :class="formErrors.name ? 'has-error' : ''">
-                        <label class="control-label col-md-4 col-sm-4 col-xs-12" for="name">Name
+                    <div class="form-group" :class="formErrors.module ? 'has-error' : ''">
+                        <label class="control-label col-md-4 col-sm-4 col-xs-12" for="module">Module
                         </label>
                         <div class="col-md-8 col-sm-8 col-xs-12">
-                            <input type="text" v-model="formData.name" class="form-control" placeholder="Name">
-                            <span v-if="formErrors.name" class="help-block">@{{formErrors.name[0]}}</span>
+                            <input type="text" v-model="formData.module" class="form-control" placeholder="Name">
+                            <span v-if="formErrors.module" class="help-block">@{{formErrors.module[0]}}</span>
                         </div>
                     </div>
 
-                    <div class="form-group" :class="formErrors.description ? 'has-error' : ''">
-                        <label class="control-label col-md-4 col-sm-4 col-xs-12" for="description">Description
+                    <div class="form-group" :class="formErrors.status ? 'has-error' : ''">
+                        <label class="control-label col-md-4 col-sm-4 col-xs-12" for="status">Status
                         </label>
                         <div class="col-md-8 col-sm-8 col-xs-12">
-                            <input type="text" v-model="formData.description" class="form-control" placeholder="Description">
-                            <span v-if="formErrors.description" class="help-block">@{{formErrors.description[0]}}</span>
+                            <select class="form-control" v-model="formData.status" data-placeholder="Select Status">
+                                <option value="1">Show</option>
+                                <option value="0">Hide</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="form-group" :class="formErrors.text ? 'has-error' : ''">
+                        <label class="control-label col-md-4 col-sm-4 col-xs-12" for="text">Text
+                        </label>
+                        <div class="col-md-8 col-sm-8 col-xs-12">
+                            <textarea v-model="formData.text" class="form-control" placeholder="Description" rows="10"></textarea>
+                            <span v-if="formErrors.text" class="help-block">@{{formErrors.text[0]}}</span>
                         </div>
                     </div>
 

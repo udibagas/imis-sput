@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Breakdown;
 use App\Http\Requests\BreakdownRequest;
+use Carbon\Carbon;
 
 class BreakdownController extends Controller
 {
@@ -28,13 +29,17 @@ class BreakdownController extends Controller
                     breakdowns.*,
                     units.name AS unit,
                     locations.name AS location,
-                    breakdown_categories.name AS category,
-                    breakdown_statuses.code AS breakdown_status
+                    CONCAT(breakdown_categories.name, " - ", breakdown_categories.description_en) AS breakdown_category,
+                    breakdown_statuses.code AS breakdown_status,
+                    unit_categories.name AS unit_category,
+                    CONCAT(component_criterias.code, " - ", component_criterias.description) AS component_criteria
                 ')
                 ->join('units', 'units.id', '=', 'breakdowns.unit_id')
+                ->join('unit_categories', 'unit_categories.id', '=', 'units.unit_category_id')
                 ->join('locations', 'locations.id', '=', 'breakdowns.location_id')
                 ->join('breakdown_categories', 'breakdown_categories.id', '=', 'breakdowns.breakdown_category_id')
                 ->join('breakdown_statuses', 'breakdown_statuses.id', '=', 'breakdowns.breakdown_status_id', 'LEFT')
+                ->join('component_criterias', 'component_criterias.id', '=', 'breakdowns.component_criteria_id', 'LEFT')
                 ->when($request->searchPhrase, function($query) use ($request) {
                     return $query->where('units.name', 'LIKE', '%'.$request->searchPhrase.'%')
                         ->where('locations.name', 'LIKE', '%'.$request->searchPhrase.'%')
@@ -67,7 +72,10 @@ class BreakdownController extends Controller
     public function store(BreakdownRequest $request)
     {
         $this->authorize('create', Breakdown::class);
-        return Breakdown::create($request->all());
+        $input = $request->all();
+        $input['user_id'] = auth()->user()->id;
+        $breakdown = Breakdown::create($input);
+        $breakdown->unit->update(['status' => 0]);
     }
 
     /**
@@ -92,7 +100,11 @@ class BreakdownController extends Controller
     public function update(BreakdownRequest $request, Breakdown $breakdown)
     {
         $this->authorize('update', Breakdown::class);
-        $breakdown->update($request->all());
+        $input = $request->all();
+        $input['update_pcr_by'] = auth()->user()->id;
+        $input['update_pcr_time'] = Carbon::now();
+        $breakdown->update($input);
+        $breakdown->unit->update(['status' => $breakdown->status]);
         return $breakdown;
     }
 
@@ -106,5 +118,79 @@ class BreakdownController extends Controller
     {
         $this->authorize('delete', Breakdown::class);
         return ['success' => $breakdown->delete()];
+    }
+
+    public function leadTimeBreakdownUnit(Request $request)
+    {
+        if ($request->ajax())
+        {
+            return Breakdown::selectRaw('
+                    breakdowns.*,
+                    units.name AS unit,
+                    locations.name AS location,
+                    breakdown_categories.name AS breakdown_category,
+                    breakdown_statuses.code AS breakdown_status,
+                    unit_categories.name AS unit_category,
+                    CONCAT(component_criterias.code, " - ", component_criterias.description) AS component_criteria
+                ')
+                ->join('units', 'units.id', '=', 'breakdowns.unit_id')
+                ->join('unit_categories', 'unit_categories.id', '=', 'units.unit_category_id')
+                ->join('locations', 'locations.id', '=', 'breakdowns.location_id')
+                ->join('breakdown_categories', 'breakdown_categories.id', '=', 'breakdowns.breakdown_category_id')
+                ->join('breakdown_statuses', 'breakdown_statuses.id', '=', 'breakdowns.breakdown_status_id', 'LEFT')
+                ->join('component_criterias', 'component_criterias.id', '=', 'breakdowns.component_criteria_id', 'LEFT')
+                ->where('breakdowns.status', 0)
+                ->orderBy('created_at', 'DESC')
+                ->get();
+        }
+
+        return view('breakdown.leadTimeBreakdownUnit', [
+            'breadcrumbs' => [
+                'plant/dashboard' => 'Plant',
+                '#' => 'Lead Time Breakdown Unit'
+            ]
+        ]);
+    }
+
+    public function pcr(Request $request)
+    {
+        if ($request->ajax())
+        {
+            return Breakdown::selectRaw('
+                    breakdowns.*,
+                    units.name AS unit,
+                    locations.name AS location,
+                    breakdown_categories.name AS breakdown_category,
+                    breakdown_statuses.code AS breakdown_status,
+                    unit_categories.name AS unit_category,
+                    CONCAT(component_criterias.code, " - ", component_criterias.description) AS component_criteria
+                ')
+                ->join('units', 'units.id', '=', 'breakdowns.unit_id')
+                ->join('unit_categories', 'unit_categories.id', '=', 'units.unit_category_id')
+                ->join('locations', 'locations.id', '=', 'breakdowns.location_id')
+                ->join('breakdown_categories', 'breakdown_categories.id', '=', 'breakdowns.breakdown_category_id')
+                ->join('breakdown_statuses', 'breakdown_statuses.id', '=', 'breakdowns.breakdown_status_id', 'LEFT')
+                ->join('component_criterias', 'component_criterias.id', '=', 'breakdowns.component_criteria_id', 'LEFT')
+                ->where('breakdowns.status', 0)
+                ->orderBy('created_at', 'DESC')
+                ->get();
+        }
+
+        return view('breakdown.pcr', [
+            'breadcrumbs' => [
+                '#' => 'Plant',
+                'breakdown/pcr' => 'Breakdown PCR'
+            ]
+        ]);
+    }
+
+    public function achievementDailyCheck()
+    {
+        return ['plan' => 20, 'actual' => 18];
+    }
+
+    public function todayPlanDailyCheck()
+    {
+        return [];
     }
 }

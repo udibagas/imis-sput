@@ -55,7 +55,7 @@
                         <label class="control-label col-md-3 col-sm-3 col-xs-12" for="time_in">Time In
                         </label>
                         <div class="col-md-9 col-sm-9 col-xs-12">
-                            <input type="text" v-model="formData.time_in" class="datetime-picker form-control" placeholder="Time In">
+                            <input type="text" v-model="formData.time_in" class="datetime-picker form-control" placeholder="Time In" data-date-format="YYYY-MM-DD HH:mm">
                             <span v-if="formErrors.time_in" class="help-block">@{{formErrors.time_in[0]}}</span>
                         </div>
                     </div>
@@ -64,7 +64,7 @@
                         <label class="control-label col-md-3 col-sm-3 col-xs-12" for="time_out">Time Out
                         </label>
                         <div class="col-md-9 col-sm-9 col-xs-12">
-                            <input type="text" v-model="formData.time_out" class="datetime-picker form-control" placeholder="Time out">
+                            <input type="text" v-model="formData.time_out" class="datetime-picker form-control" placeholder="Time out" data-date-format="YYYY-MM-DD HH:mm">
                             <span v-if="formErrors.time_out" class="help-block">@{{formErrors.time_out[0]}}</span>
                         </div>
                     </div>

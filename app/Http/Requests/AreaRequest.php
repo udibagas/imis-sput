@@ -5,7 +5,7 @@ namespace App\Http\Requests;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
 
-class SubUnitRequest extends FormRequest
+class AreaRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -24,13 +24,13 @@ class SubUnitRequest extends FormRequest
      */
     public function rules()
     {
-        $subUnit = $this->route('subUnit');
+        $area = $this->route('area');
 
         return [
             'name' => [
                 'required',
-                Rule::unique('sub_units')->ignore($subUnit ? $subUnit->id : 0)
-            ],
+                Rule::unique('areas')->ignore($area ? $area->id : 0)
+            ]
         ];
     }
 }

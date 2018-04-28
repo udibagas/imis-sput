@@ -20,7 +20,7 @@ mix.js('resources/assets/js/app.js', 'public/js')
        'resources/assets/theme/css/mouldifi-core.css',
        'resources/assets/theme/css/plugins/datepicker/bootstrap-datepicker.css',
        'resources/assets/theme/css/plugins/select2/select2.css',
-       'resources/assets/jquery.bootgrid/jquery.bootgrid.min.css',
+       'resources/assets/jquery.bootgrid/jquery.bootgrid.css',
        'resources/assets/datetimepicker/bootstrap-datetimepicker.css',
        'resources/assets/toastr/toastr.min.css',
        'resources/assets/theme/css/mouldifi-forms.css'
@@ -40,7 +40,7 @@ mix.js('resources/assets/js/app.js', 'public/js')
        'resources/assets/toastr/toastr.min.js',
        'resources/assets/js/bootbox.min.js',
        'resources/assets/js/echarts.min.js',
-       'resources/assets/js/vue-select2.js',
+       'resources/assets/js/marquee.js',
        'resources/assets/js/my.js'
    ], 'public/js/theme.js')
    .scripts(['resources/assets/theme/js/functions.js'], 'public/js/functions.js')

@@ -17,14 +17,18 @@ Route::group(['middleware' => 'auth'], function() {
     Route::get('/', 'HomeController@index')->name('home');
     Route::get('/home', 'HomeController@index')->name('home');
     // Master data
-    Route::resource('alocation', 'AlocationController')->except(['edit', 'create']);
+    Route::resource('area', 'AreaController')->except(['edit', 'create']);
+    Route::resource('subArea', 'SubAreaController')->except(['edit', 'create']);
     Route::resource('authorization', 'AuthorizationController')->except(['edit', 'create']);
-    Route::resource('bagian', 'BagianController')->except(['edit', 'create']);
     Route::get('barge/getAnchored', 'BargeController@getAnchored');
     Route::get('barge/resume', 'BargeController@resume');
     Route::resource('barge', 'BargeController')->except(['edit', 'create']);
     Route::resource('breakdownCategory', 'BreakdownCategoryController')->except(['edit', 'create']);
     Route::resource('breakdownStatus', 'BreakdownStatusController')->except(['edit', 'create']);
+    Route::get('breakdown/leadTimeBreakdownUnit', 'BreakdownController@leadTimeBreakdownUnit');
+    Route::get('breakdown/achievementDailyCheck', 'BreakdownController@achievementDailyCheck');
+    Route::get('breakdown/todayPlanDailyCheck', 'BreakdownController@todayPlanDailyCheck');
+    Route::get('breakdown/pcr', 'BreakdownController@pcr');
     Route::resource('breakdown', 'BreakdownController')->except(['edit', 'create']);
     Route::resource('componentCriterias', 'ComponentCriteriaController')->except(['edit', 'create']);
     Route::resource('buyer', 'BuyerController')->except(['edit', 'create']);
@@ -45,16 +49,17 @@ Route::group(['middleware' => 'auth'], function() {
     Route::resource('material', 'MaterialController')->except(['edit', 'create']);
     Route::resource('office', 'OfficeController')->except(['edit', 'create']);
     Route::resource('owner', 'OwnerController')->except(['edit', 'create']);
+    Route::get('pitstop/leadTimeDailyCheck', 'PitstopController@leadTimeDailyCheck');
     Route::resource('pitstop', 'PitstopController')->except(['edit', 'create']);
     Route::resource('planCategory', 'PlanCategoryController')->except(['edit', 'create']);
     Route::resource('position', 'PositionController')->except(['edit', 'create']);
     Route::resource('problemProductivityCategory', 'ProblemProductivityCategoryController')->except(['edit', 'create']);
+    Route::resource('runningText', 'RunningTextController')->except(['edit', 'create']);
     Route::resource('staffCategory', 'StaffCategoryController')->except(['edit', 'create']);
     Route::resource('stopWorkingPrediction', 'StopWorkingPredictionController')->except(['edit', 'create']);
-    Route::resource('station', 'StationController')->except(['edit', 'create']);
-    Route::resource('subUnit', 'SubUnitController')->except(['edit', 'create']);
     Route::resource('supervisingPrediction', 'SupervisingPredictionController')->except(['edit', 'create']);
     Route::resource('terminalAbsensi', 'TerminalAbsensiController')->except(['edit', 'create']);
+    Route::get('unit/remarkUnitByType', 'UnitController@remarkUnitByType');
     Route::resource('unit', 'UnitController')->except(['edit', 'create']);
     Route::resource('unitCategory', 'UnitCategoryController')->except(['edit', 'create']);
     Route::resource('user', 'UserController')->except(['edit', 'create']);
@@ -71,22 +76,20 @@ View::composer('layouts._sidebar', function($view) {
         'PLANT' => [
             'icon' => 'wrench',
             'url' => [
-                'plant/dashboard' => 'Dashboard',
-                'breakdown/leadTimeBreakdownUnit' => 'Leadtime B/D Unit',
-                'breakdown/leadTimeDailyCheck' => 'Leadtime Daily Check',
+                // 'plant/dashboard' => 'Dashboard',
+                'breakdown/leadTimeBreakdownUnit' => 'Lead Time B/D Unit',
+                'pitstop/leadTimeDailyCheck' => 'Lead Time Daily Check',
                 'breakdown' => 'Workshop',
                 'breakdown/pcr' => 'Breakdown PCR',
-                'pitstop' => 'Pitstop',
+                'pitstop' => 'Daily Check',
                 '<i class="fa fa-database"></i> Master Data' => [
-                    'alocation' => 'Alocations',
-                    'bagian' => 'Bagian',
                     'breakdownStatus' => 'Breakdown Statuses',
                     'breakdownCategory' => 'Breakdown Categories',
                     'componentCriterias' => 'Component Criterias',
                     'egi' => 'EGI',
                     'location' => 'Locations',
                     'material' => 'Materials',
-                    'station' => 'Stations',
+                    'owner' => 'Unit Owners',
                     'unit' => 'Units',
                     'unitCategory' => 'Unit Categories',
                 ]
@@ -118,6 +121,7 @@ View::composer('layouts._sidebar', function($view) {
                     'jetty/productivity' => 'Productivity Jetty'
                 ],
                 '<i class="fa fa-database"></i> Master Data' => [
+                    'area' => 'Area',
                     'barge' => 'Barges',
                     'buyer' => 'Buyers',
                     'cargo' => 'Cargos',
@@ -126,6 +130,7 @@ View::composer('layouts._sidebar', function($view) {
                     'lostTimeCategory' => 'Lost Time Categories',
                     'planCategory' => 'Plan Category',
                     'problemProductivityCategory' => 'Problem Productivity Categories',
+                    'subArea' => 'Sub Area',
                 ]
             ]
         ],
@@ -141,7 +146,6 @@ View::composer('layouts._sidebar', function($view) {
                     'employee' => 'Employees',
                     'jabatan' => 'Jabatan',
                     'office' => 'Offices',
-                    'owner' => 'Owners',
                     'position' => 'Positions',
                     'stopWorkingPrediction' => 'Stop Working Predictions',
                     'supervisingPrediction' => 'Supervising Predictions',
@@ -168,6 +172,7 @@ View::composer('layouts._sidebar', function($view) {
             'url'=> [
                 'user' => 'Users',
                 'authorization' => 'Authorization',
+                'runningText' => 'Running Text',
                 // 'setting' => 'Settings',
             ]
         ]
