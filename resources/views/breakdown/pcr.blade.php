@@ -31,7 +31,7 @@
                 </tr>
             </thead>
             <tbody>
-                <tr v-for="b in breakdowns">
+                <tr v-for="b in breakdowns" :class="rowClass[b.breakdown_category]">
                     <td></td>
                     <td>@{{b.unit}}</td>
                     <td>@{{b.unit_category}}</td>
@@ -74,6 +74,12 @@ const app = new Vue({
         formData: {},
         formErrors: {},
         error: {},
+        rowClass: {
+            ICM: 'danger',
+            USM: 'warning',
+            SCM: 'info',
+            TRM: 'warning',
+        }
     },
     methods: {
         getData: function() {
@@ -107,6 +113,7 @@ const app = new Vue({
         update: function() {
             block('form');
             var _this = this;
+            _this.formData.pcr = 1;
             axios.put('{{url("breakdown")}}/' + this.formData.id, this.formData).then(function(r) {
                 unblock('form');
                 $('#modal-form').modal('hide');
@@ -125,6 +132,34 @@ const app = new Vue({
                 }
             });
         },
+        updateAndClose: function() {
+            var _this = this;
+            _this.formData.status = 1;
+            bootbox.confirm({
+                title: "Konfirmasi",
+                message: "Anda yakin?",
+                callback: function(r) {
+                    if (r == true) {
+                        axios.put('{{url("breakdown")}}/' + _this.formData.id)
+
+                        .then(function(r) {
+                            toastr["success"]("Data berhasil disimpan");
+                            if (r.data.success == true) {
+                            } else {
+                                toastr["error"]("Data gagal dihapus. " + r.data.message);
+                            }
+                        })
+
+                        .catch(function(error) {
+                            if (error.response.status == 500) {
+                                var error = error.response.data;
+                                toastr["error"](error.message + ". " + error.file + ":" + error.line)
+                            }
+                        });
+                    }
+                }
+            });
+        }
     },
     mounted: function() {
         this.getData();

@@ -22,24 +22,21 @@
                         </div>
                     </div>
 
+                    <div class="form-group" :class="formErrors.capacity ? 'has-error' : ''">
+                        <label class="control-label col-md-4 col-sm-4 col-xs-12" for="capacity">Capacity (Ton)
+                        </label>
+                        <div class="col-md-8 col-sm-8 col-xs-12">
+                            <input type="number" v-model="formData.capacity" class="form-control" placeholder="Capacity">
+                            <span v-if="formErrors.capacity" class="help-block">@{{formErrors.capacity[0]}}</span>
+                        </div>
+                    </div>
+
                     <div class="form-group" :class="formErrors.description ? 'has-error' : ''">
                         <label class="control-label col-md-4 col-sm-4 col-xs-12" for="description">Description
                         </label>
                         <div class="col-md-8 col-sm-8 col-xs-12">
                             <input type="text" v-model="formData.description" class="form-control" placeholder="Description">
                             <span v-if="formErrors.description" class="help-block">@{{formErrors.description[0]}}</span>
-                        </div>
-                    </div>
-
-                    <div class="form-group" :class="formErrors.anchored ? 'has-error' : ''">
-                        <label class="control-label col-md-4 col-sm-4 col-xs-12" for="anchored">Anchored
-                        </label>
-                        <div class="col-md-8 col-sm-8 col-xs-12">
-                            <select class="form-control" v-model="formData.anchored">
-                                <option value="0">No</option>
-                                <option value="1">Yes</option>
-                            </select>
-                            <span v-if="formErrors.anchored" class="help-block">@{{formErrors.anchored[0]}}</span>
                         </div>
                     </div>
 

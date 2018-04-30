@@ -31,9 +31,9 @@
 			</div>
 			<table class="table table-striped table-bordered">
                 <tbody>
-                    <tr>
-                        <td></td>
-                        <td></td>
+                    <tr v-for="u in unitBaruReady">
+                        <td>@{{u.name}}</td>
+                        <td>@{{u.time}}</td>
                     </tr>
                 </tbody>
 			</table>
@@ -87,7 +87,7 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr v-for="b in breakdowns">
+                    <tr v-for="b in breakdowns" :class="rowClass[b.breakdown_category]">
                         <td></td>
                         <td>@{{b.unit}}</td>
                         <td>@{{b.unit_category}}</td>
@@ -112,6 +112,12 @@ const app = new Vue({
     data: {
         breakdowns: [],
         remarkUnitByType: [],
+        rowClass: {
+            ICM: 'danger',
+            USM: 'warning',
+            SCM: 'info',
+            TRM: 'warning',
+        }
     },
     methods: {
         getData: function() {

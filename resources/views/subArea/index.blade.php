@@ -4,8 +4,8 @@
 
 <div class="panel panel-primary" id="app">
     <div class="panel-body">
-        <h3 class="pull-left text-primary">EGI <small>Manage</small></h3>
-        @can('create', App\Egi::class)
+        <h3 class="pull-left text-primary">SUB AREAS <small>Manage</small></h3>
+        @can('create', App\SubArea::class)
         <span class="pull-right" style="margin:15px 0 15px 10px;">
             <a href="#" @click="add" class="btn btn-primary"><i class="icon-plus-circled"></i></a>
         </span>
@@ -15,9 +15,9 @@
                 <tr>
                     <th data-column-id="id" data-width="3%">ID</th>
                     <th data-column-id="name">Name</th>
+                    <th data-column-id="area">Area</th>
                     <th data-column-id="description">Description</th>
-                    <th data-column-id="fc">FC</th>
-                    @can('updateOrDelete', App\Egi::class)
+                    @can('updateOrDelete', App\SubArea::class)
                     <th data-column-id="commands" data-width="5%"
                         data-formatter="commands"
                         data-sortable="false"
@@ -29,8 +29,8 @@
         </table>
     </div>
 
-    @can('createOrUpdate', App\Egi::class)
-    @include('egi._form')
+    @can('createOrUpdate', App\SubArea::class)
+    @include('subArea._form')
     @endcan
 
 </div>
@@ -52,7 +52,7 @@
         methods: {
             add: function() {
                 // reset the form
-                this.formTitle = "ADD EGI";
+                this.formTitle = "ADD SUB AREA";
                 this.formData = {};
                 this.formErrors = {};
                 this.error = {};
@@ -62,7 +62,8 @@
             store: function() {
                 block('form');
                 var t = this;
-                axios.post('{{url("egi")}}', this.formData).then(function(r) {
+
+                axios.post('{{url("subArea")}}', this.formData).then(function(r) {
                     unblock('form');
                     $('#modal-form').modal('hide');
                     toastr["success"]("Data berhasil ditambahkan");
@@ -71,6 +72,7 @@
                 // validasi
                 .catch(function(error) {
                     unblock('form');
+
                     if (error.response.status == 422) {
                         t.formErrors = error.response.data.errors;
                     }
@@ -82,11 +84,11 @@
             },
             edit: function(id) {
                 var t = this;
-                this.formTitle = "EDIT EGI";
+                this.formTitle = "EDIT SUB AREA";
                 this.formErrors = {};
                 this.error = {};
 
-                axios.get('{{url("egi")}}/' + id).then(function(r) {
+                axios.get('{{url("subArea")}}/' + id).then(function(r) {
                     t.formData = r.data;
                     $('#modal-form').modal('show');
                 })
@@ -101,7 +103,7 @@
             update: function() {
                 block('form');
                 var t = this;
-                axios.put('{{url("egi")}}/' + this.formData.id, this.formData).then(function(r) {
+                axios.put('{{url("subArea")}}/' + this.formData.id, this.formData).then(function(r) {
                     unblock('form');
                     $('#modal-form').modal('hide');
                     toastr["success"]("Data berhasil diupdate");
@@ -125,7 +127,7 @@
                     message: "Anda yakin akan menghapus data ini?",
                     callback: function(r) {
                         if (r == true) {
-                            axios.delete('{{url("egi")}}/' + id)
+                            axios.delete('{{url("subArea")}}/' + id)
 
                             .then(function(r) {
                                 if (r.data.success == true) {
@@ -153,7 +155,7 @@
 
             var grid = $('#bootgrid').bootgrid({
                 rowCount: [10,25,50,100],
-                ajax: true, url: '{{url('egi')}}',
+                ajax: true, url: '{{url('subArea')}}',
                 ajaxSettings: {
                     method: 'GET', cache: false,
                     statusCode: {
@@ -170,11 +172,11 @@
                 formatters: {
                     "commands": function(column, row) {
                         var t = t;
-                        return '@can("update", App\Egi::class) <a href="#" class="btn btn-info btn-xs c-edit" data-id="'+row.id+'"><i class="icon-pencil"></i></a> @endcan' +
-                            '@can("delete", App\Egi::class) <a href="#" class="btn btn-danger btn-xs c-delete" data-id="'+row.id+'"><i class="icon-trash"></i></a> @endcan';
-                    }
+                        return '@can("update", App\SubArea::class) <a href="#" class="btn btn-info btn-xs c-edit" data-id="'+row.id+'"><i class="icon-pencil"></i></a> @endcan' +
+                            '@can("delete", App\SubArea::class) <a href="#" class="btn btn-danger btn-xs c-delete" data-id="'+row.id+'"><i class="icon-trash"></i></a> @endcan';
+                    },
                 }
-            }).on("loaded.rs.jquery.bootgrid", function() {
+            }).on("loaded.rs.jquery.bootgrid", function(e) {
                 grid.find(".c-delete").on("click", function(e) {
                     t.delete($(this).data("id"));
                 });

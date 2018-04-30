@@ -26,16 +26,16 @@
                         </div>
                     </div>
 
-                    <div class="form-group" :class="formErrors.station_id ? 'has-error' : ''">
-                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="station_id">Station
+                    <div class="form-group" :class="formErrors.location_id ? 'has-error' : ''">
+                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="location_id">Location
                         </label>
                         <div class="col-md-9 col-sm-9 col-xs-12">
-                            <select class="form-control" v-model="formData.station_id" data-placeholder="Station">
-                                @foreach (\App\Station::orderBy('name', 'ASC')->pluck('name', 'id') as $id => $name)
+                            <select class="form-control" v-model="formData.location_id" data-placeholder="Station">
+                                @foreach (\App\Location::orderBy('name', 'ASC')->pluck('name', 'id') as $id => $name)
                                 <option value="{{$id}}">{{$name}}</option>
                                 @endforeach
                             </select>
-                            <span v-if="formErrors.station_id" class="help-block">@{{formErrors.station_id[0]}}</span>
+                            <span v-if="formErrors.location_id" class="help-block">@{{formErrors.location_id[0]}}</span>
                         </div>
                     </div>
 

@@ -4,30 +4,34 @@
 
 <div class="panel panel-primary" id="app">
     <div class="panel-body">
-        <h3 class="pull-left text-primary">CARGO <small>Manage</small></h3>
+        <h3 class="pull-left text-primary">AREAS <small>Manage</small></h3>
+        @can('create', App\Area::class)
         <span class="pull-right" style="margin:15px 0 15px 10px;">
             <a href="#" @click="add" class="btn btn-primary"><i class="icon-plus-circled"></i></a>
         </span>
+        @endcan
         <table class="table table-striped table-hover " id="bootgrid" style="border-top:2px solid #ddd">
             <thead>
                 <tr>
                     <th data-column-id="id" data-width="3%">ID</th>
                     <th data-column-id="name">Name</th>
-                    <th data-column-id="address">Address</th>
-                    <th data-column-id="email">Email</th>
-                    <th data-column-id="phone">Phone</th>
-                    <th data-column-id="fax">Fax</th>
+                    <th data-column-id="capacity">Capacity (Ton)</th>
+                    <th data-column-id="description">Description</th>
+                    @can('updateOrDelete', App\Area::class)
                     <th data-column-id="commands" data-width="5%"
                         data-formatter="commands"
                         data-sortable="false"
                         data-align="right"
                         data-header-align="right"></th>
+                    @endcan
                 </tr>
             </thead>
         </table>
     </div>
 
-    @include('cargo._form')
+    @can('createOrUpdate', App\Area::class)
+    @include('area._form')
+    @endcan
 
 </div>
 
@@ -48,7 +52,7 @@
         methods: {
             add: function() {
                 // reset the form
-                this.formTitle = "ADD CARGO";
+                this.formTitle = "ADD AREA";
                 this.formData = {};
                 this.formErrors = {};
                 this.error = {};
@@ -59,7 +63,7 @@
                 block('form');
                 var t = this;
 
-                axios.post('{{url("cargo")}}', this.formData).then(function(r) {
+                axios.post('{{url("area")}}', this.formData).then(function(r) {
                     unblock('form');
                     $('#modal-form').modal('hide');
                     toastr["success"]("Data berhasil ditambahkan");
@@ -80,11 +84,11 @@
             },
             edit: function(id) {
                 var t = this;
-                this.formTitle = "EDIT CARGO";
+                this.formTitle = "EDIT AREA";
                 this.formErrors = {};
                 this.error = {};
 
-                axios.get('{{url("cargo")}}/' + id).then(function(r) {
+                axios.get('{{url("area")}}/' + id).then(function(r) {
                     t.formData = r.data;
                     $('#modal-form').modal('show');
                 })
@@ -99,7 +103,7 @@
             update: function() {
                 block('form');
                 var t = this;
-                axios.put('{{url("cargo")}}/' + this.formData.id, this.formData).then(function(r) {
+                axios.put('{{url("area")}}/' + this.formData.id, this.formData).then(function(r) {
                     unblock('form');
                     $('#modal-form').modal('hide');
                     toastr["success"]("Data berhasil diupdate");
@@ -123,7 +127,7 @@
                     message: "Anda yakin akan menghapus data ini?",
                     callback: function(r) {
                         if (r == true) {
-                            axios.delete('{{url("cargo")}}/' + id)
+                            axios.delete('{{url("area")}}/' + id)
 
                             .then(function(r) {
                                 if (r.data.success == true) {
@@ -151,7 +155,7 @@
 
             var grid = $('#bootgrid').bootgrid({
                 rowCount: [10,25,50,100],
-                ajax: true, url: '{{url('cargo')}}',
+                ajax: true, url: '{{url('area')}}',
                 ajaxSettings: {
                     method: 'GET', cache: false,
                     statusCode: {
@@ -168,9 +172,9 @@
                 formatters: {
                     "commands": function(column, row) {
                         var t = t;
-                        return '@can("update", App\Cargo::class) <a href="#" class="btn btn-info btn-xs c-edit" data-id="'+row.id+'"><i class="icon-pencil"></i></a> @endcan' +
-                            '@can("delete", App\Cargo::class) <a href="#" class="btn btn-danger btn-xs c-delete" data-id="'+row.id+'"><i class="icon-trash"></i></a> @endcan';
-                    }
+                        return '@can("update", App\Area::class) <a href="#" class="btn btn-info btn-xs c-edit" data-id="'+row.id+'"><i class="icon-pencil"></i></a> @endcan' +
+                            '@can("delete", App\Area::class) <a href="#" class="btn btn-danger btn-xs c-delete" data-id="'+row.id+'"><i class="icon-trash"></i></a> @endcan';
+                    },
                 }
             }).on("loaded.rs.jquery.bootgrid", function(e) {
                 grid.find(".c-delete").on("click", function(e) {

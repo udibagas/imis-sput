@@ -152,7 +152,8 @@
 
                 </div>
                 <div class="modal-footer">
-                    <button type="submit" class="btn btn-primary"><i class="fa fa-floppy-o"></i> Save</button>
+                    <button type="submit" class="btn btn-primary"><i class="fa fa-edit"></i> Update</button>
+                    <button type="button" @click="updateAndClose" class="btn btn-success"><i class="fa fa-check"></i> Update and Close</button>
                     <button type="button" class="btn btn-default" data-dismiss="modal"><i class="fa fa-close"></i> Cancel</button>
                 </div>
             </form>

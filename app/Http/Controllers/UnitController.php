@@ -29,18 +29,16 @@ class UnitController extends Controller
                     units.*,
                     owners.name AS owner,
                     egis.name AS egi,
-                    alocations.name AS alocation,
+                    egis.fc AS fc,
                     unit_categories.name AS category
                 ')
                 ->join('owners', 'owners.id', '=', 'units.owner_id')
                 ->join('egis', 'egis.id', '=', 'units.egi_id')
-                ->join('alocations', 'alocations.id', '=', 'units.alocation_id', 'LEFT')
                 ->join('unit_categories', 'unit_categories.id', '=', 'units.unit_category_id', 'LEFT')
                 ->when($request->searchPhrase, function($query) use ($request) {
                     return $query->where('units.name', 'LIKE', '%'.$request->searchPhrase.'%')
                         ->orWhere('owners.name', 'LIKE', '%'.$request->searchPhrase.'%')
                         ->orWhere('egis.name', 'LIKE', '%'.$request->searchPhrase.'%')
-                        ->orWhere('alocations.name', 'LIKE', '%'.$request->searchPhrase.'%')
                         ->orWhere('unit_categories.name', 'LIKE', '%'.$request->searchPhrase.'%');
                 })->orderBy($sort, $dir)->paginate($pageSize);
 

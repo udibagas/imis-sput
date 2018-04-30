@@ -16,7 +16,7 @@
             <thead>
                 <tr>
                     <th data-column-id="id" data-width="3%">ID</th>
-                    <th data-column-id="station">Station</th>
+                    <th data-column-id="location">Location</th>
                     <th data-column-id="unit">Unit</th>
                     <th data-column-id="shift">Shift</th>
                     <th data-column-id="time_in">Time In</th>

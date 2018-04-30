@@ -3,10 +3,10 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Cargo;
-use App\Http\Requests\CargoRequest;
+use App\Area;
+use App\Http\Requests\AreaRequest;
 
-class CargoController extends Controller
+class AreaController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -15,7 +15,7 @@ class CargoController extends Controller
      */
     public function index(Request $request)
     {
-        $this->authorize('view', Cargo::class);
+        $this->authorize('view', Area::class);
 
         if ($request->ajax())
         {
@@ -24,27 +24,24 @@ class CargoController extends Controller
             $sort = $request->sort ? key($request->sort) : 'name';
             $dir = $request->sort ? $request->sort[$sort] : 'asc';
 
-            $cargo = Cargo::when($request->searchPhrase, function($query) use ($request) {
+            $area = Area::when($request->searchPhrase, function($query) use ($request) {
                     return $query->where('name', 'LIKE', '%'.$request->searchPhrase.'%')
-                        ->orWhere('address', 'LIKE', '%'.$request->searchPhrase.'%')
-                        ->orWhere('email', 'LIKE', '%'.$request->searchPhrase.'%')
-                        ->orWhere('phone', 'LIKE', '%'.$request->searchPhrase.'%')
-                        ->orWhere('fax', 'LIKE', '%'.$request->searchPhrase.'%');
+                        ->orWhere('description', 'LIKE', '%'.$request->searchPhrase.'%');
                 })->orderBy($sort, $dir)->paginate($pageSize);
 
             return [
-                'rowCount' => $cargo->perPage(),
-                'total' => $cargo->total(),
-                'current' => $cargo->currentPage(),
-                'rows' => $cargo->items(),
+                'rowCount' => $area->perPage(),
+                'total' => $area->total(),
+                'current' => $area->currentPage(),
+                'rows' => $area->items(),
             ];
         }
 
-        return view('cargo.index', [
+        return view('area.index', [
             'breadcrumbs' => [
-                'plant/dashboard' => 'Plant',
+                '0' => 'Operation',
                 '#' => 'Master Data',
-                'cargo' => 'Cargo'
+                'area' => 'Area'
             ]
         ]);
     }
@@ -55,10 +52,10 @@ class CargoController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(CargoRequest $request)
+    public function store(AreaRequest $request)
     {
-        $this->authorize('create', Cargo::class);
-        return Cargo::create($request->all());
+        $this->authorize('create', Area::class);
+        return Area::create($request->all());
     }
 
     /**
@@ -67,10 +64,10 @@ class CargoController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show(Cargo $cargo)
+    public function show(Area $area)
     {
-        $this->authorize('view', Cargo::class);
-        return $cargo;
+        $this->authorize('view', Area::class);
+        return $area;
     }
 
     /**
@@ -80,11 +77,11 @@ class CargoController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(CargoRequest $request, Cargo $cargo)
+    public function update(AreaRequest $request, Area $area)
     {
-        $this->authorize('update', Cargo::class);
-        $cargo->update($request->all());
-        return $cargo;
+        $this->authorize('update', Area::class);
+        $area->update($request->all());
+        return $area;
     }
 
     /**
@@ -93,9 +90,9 @@ class CargoController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Cargo $cargo)
+    public function destroy(Area $area)
     {
-        $this->authorize('delete', Cargo::class);
-        return ['success' => $cargo->delete()];
+        $this->authorize('delete', Area::class);
+        return ['success' => $area->delete()];
     }
 }

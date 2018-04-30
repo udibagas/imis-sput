@@ -101,8 +101,16 @@ class BreakdownController extends Controller
     {
         $this->authorize('update', Breakdown::class);
         $input = $request->all();
-        $input['update_pcr_by'] = auth()->user()->id;
-        $input['update_pcr_time'] = Carbon::now();
+
+        if ($request->pcr == 1) {
+            $input['update_pcr_by'] = auth()->user()->id;
+            $input['update_pcr_time'] = Carbon::now();
+        }
+
+        if ($request->status == 1) {
+            $input['time_close'] = Carbon::now();
+        }
+
         $breakdown->update($input);
         $breakdown->unit->update(['status' => $breakdown->status]);
         return $breakdown;

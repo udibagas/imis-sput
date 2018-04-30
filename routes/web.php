@@ -32,7 +32,6 @@ Route::group(['middleware' => 'auth'], function() {
     Route::resource('breakdown', 'BreakdownController')->except(['edit', 'create']);
     Route::resource('componentCriterias', 'ComponentCriteriaController')->except(['edit', 'create']);
     Route::resource('buyer', 'BuyerController')->except(['edit', 'create']);
-    Route::resource('cargo', 'CargoController')->except(['edit', 'create']);
     Route::resource('customer', 'CustomerController')->except(['edit', 'create']);
     Route::resource('department', 'DepartmentController')->except(['edit', 'create']);
     Route::resource('egi', 'EgiController')->except(['edit', 'create']);
@@ -76,10 +75,8 @@ View::composer('layouts._sidebar', function($view) {
         'PLANT' => [
             'icon' => 'wrench',
             'url' => [
-                // 'plant/dashboard' => 'Dashboard',
                 'breakdown/leadTimeBreakdownUnit' => 'Lead Time B/D Unit',
                 'pitstop/leadTimeDailyCheck' => 'Lead Time Daily Check',
-                'breakdown' => 'Workshop',
                 'breakdown/pcr' => 'Breakdown PCR',
                 'pitstop' => 'Daily Check',
                 '<i class="fa fa-database"></i> Master Data' => [
@@ -88,7 +85,6 @@ View::composer('layouts._sidebar', function($view) {
                     'componentCriterias' => 'Component Criterias',
                     'egi' => 'EGI',
                     'location' => 'Locations',
-                    'material' => 'Materials',
                     'owner' => 'Unit Owners',
                     'unit' => 'Units',
                     'unitCategory' => 'Unit Categories',
@@ -109,7 +105,7 @@ View::composer('layouts._sidebar', function($view) {
         'OPERATION' => [
             'icon' => 'cogs',
             'url' => [
-                'operation/dashboard' => 'Dashboard',
+                'breakdown' => 'Breakdown OCR',
                 'pasangSurut' => 'Hourly Monitoring Barging',
                 // 'Hourly Monitoring Barging' => [
                 //     'stockBalanced' => 'Stock Balanced',
@@ -124,10 +120,10 @@ View::composer('layouts._sidebar', function($view) {
                     'area' => 'Area',
                     'barge' => 'Barges',
                     'buyer' => 'Buyers',
-                    'cargo' => 'Cargos',
                     'customer' => 'Customers',
                     'jetty' => 'Jetties',
                     'lostTimeCategory' => 'Lost Time Categories',
+                    'material' => 'Materials',
                     'planCategory' => 'Plan Category',
                     'problemProductivityCategory' => 'Problem Productivity Categories',
                     'subArea' => 'Sub Area',
@@ -160,13 +156,6 @@ View::composer('layouts._sidebar', function($view) {
                 'operatorPerformance' => 'Operator Performance'
             ]
         ],
-        // Shared Master Data
-        // 'MASTER DATA' => [
-        //     'icon' => 'database',
-        //     'url' => [
-        //
-        //     ]
-        // ],
         'ADMINISTRATION' => [
             'icon' => 'sliders',
             'url'=> [

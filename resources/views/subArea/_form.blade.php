@@ -7,6 +7,12 @@
                     <h4 class="modal-title">@{{formTitle}}</h4>
                 </div>
                 <div class="modal-body">
+
+                    <div class="alert alert-danger" v-if="error.message">
+                        @{{error.message}}<br>
+                        @{{error.file}}:@{{error.line}}
+                    </div>
+
                     <div class="form-group" :class="formErrors.name ? 'has-error' : ''">
                         <label class="control-label col-md-4 col-sm-4 col-xs-12" for="name">Name
                         </label>
@@ -16,39 +22,25 @@
                         </div>
                     </div>
 
-                    <div class="form-group" :class="formErrors.address ? 'has-error' : ''">
-                        <label class="control-label col-md-4 col-sm-4 col-xs-12" for="address">Address
+                    <div class="form-group" :class="formErrors.area_id ? 'has-error' : ''">
+                        <label class="control-label col-md-4 col-sm-4 col-xs-12" for="area_id">Capacity (Ton)
                         </label>
                         <div class="col-md-8 col-sm-8 col-xs-12">
-                            <input type="text" v-model="formData.address" class="form-control" placeholder="Address">
-                            <span v-if="formErrors.address" class="help-block">@{{formErrors.address[0]}}</span>
+                            <select class="form-control" v-model="formData.area_id">
+                                @foreach (\App\Area::orderBy('name', 'ASC')->pluck('name', 'id') as $id => $name)
+                                <option value="{{$id}}">{{$name}}</option>
+                                @endforeach
+                            </select>
+                            <span v-if="formErrors.area_id" class="help-block">@{{formErrors.area_id[0]}}</span>
                         </div>
                     </div>
 
-                    <div class="form-group" :class="formErrors.email ? 'has-error' : ''">
-                        <label class="control-label col-md-4 col-sm-4 col-xs-12" for="email">Email
+                    <div class="form-group" :class="formErrors.description ? 'has-error' : ''">
+                        <label class="control-label col-md-4 col-sm-4 col-xs-12" for="description">Description
                         </label>
                         <div class="col-md-8 col-sm-8 col-xs-12">
-                            <input type="text" v-model="formData.email" class="form-control" placeholder="Email">
-                            <span v-if="formErrors.email" class="help-block">@{{formErrors.email[0]}}</span>
-                        </div>
-                    </div>
-
-                    <div class="form-group" :class="formErrors.phone ? 'has-error' : ''">
-                        <label class="control-label col-md-4 col-sm-4 col-xs-12" for="phone">Phone
-                        </label>
-                        <div class="col-md-8 col-sm-8 col-xs-12">
-                            <input type="text" v-model="formData.phone" class="form-control" placeholder="Phone">
-                            <span v-if="formErrors.phone" class="help-block">@{{formErrors.phone[0]}}</span>
-                        </div>
-                    </div>
-
-                    <div class="form-group" :class="formErrors.fax ? 'has-error' : ''">
-                        <label class="control-label col-md-4 col-sm-4 col-xs-12" for="fax">Fax
-                        </label>
-                        <div class="col-md-8 col-sm-8 col-xs-12">
-                            <input type="text" v-model="formData.fax" class="form-control" placeholder="Fax">
-                            <span v-if="formErrors.fax" class="help-block">@{{formErrors.fax[0]}}</span>
+                            <input type="text" v-model="formData.description" class="form-control" placeholder="Description">
+                            <span v-if="formErrors.description" class="help-block">@{{formErrors.description[0]}}</span>
                         </div>
                     </div>
 

@@ -13,15 +13,6 @@
                         @{{error.file}}:@{{error.line}}
                     </div>
 
-                    <div v-if="formData.id !== undefined" class="form-group" :class="formErrors.wo_number ? 'has-error' : ''">
-                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="wo_number">WO Number
-                        </label>
-                        <div class="col-md-9 col-sm-9 col-xs-12">
-                            <input type="text" v-model="formData.wo_number" class="form-control" placeholder="WO Number">
-                            <span v-if="formErrors.wo_number" class="help-block">@{{formErrors.wo_number[0]}}</span>
-                        </div>
-                    </div>
-
                     <div class="form-group" :class="formErrors.unit_id ? 'has-error' : ''">
                         <label class="control-label col-md-3 col-sm-3 col-xs-12" for="unit_id">Unit
                         </label>
@@ -45,19 +36,6 @@
                                 @endforeach
                             </select>
                             <span v-if="formErrors.breakdown_category_id" class="help-block">@{{formErrors.breakdown_category_id[0]}}</span>
-                        </div>
-                    </div>
-
-                    <div v-if="formData.id !== undefined" class="form-group" :class="formErrors.breakdown_status_id ? 'has-error' : ''">
-                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="breakdown_status_id">B/D Status
-                        </label>
-                        <div class="col-md-9 col-sm-9 col-xs-12">
-                            <select class="form-control" v-model="formData.breakdown_status_id" data-placeholder="B/D Status">
-                                @foreach (\App\BreakdownStatus::selectRaw('id, CONCAT(code, " - ", description) AS code')->orderBy('code', 'ASC')->pluck('code', 'id') as $id => $code)
-                                <option value="{{$id}}">{{$code}}</option>
-                                @endforeach
-                            </select>
-                            <span v-if="formErrors.breakdown_status_id" class="help-block">@{{formErrors.breakdown_status_id[0]}}</span>
                         </div>
                     </div>
 
@@ -107,46 +85,6 @@
                         <div class="col-md-9 col-sm-9 col-xs-12">
                             <textarea v-model="formData.diagnosa" class="form-control" placeholder="Diagnosa" rows="5"></textarea>
                             <span v-if="formErrors.diagnosa" class="help-block">@{{formErrors.diagnosa[0]}}</span>
-                        </div>
-                    </div>
-
-                    <div v-if="formData.id !== undefined" class="form-group" :class="formErrors.tindakan ? 'has-error' : ''">
-                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="tindakan">Tindakan
-                        </label>
-                        <div class="col-md-9 col-sm-9 col-xs-12">
-                            <textarea v-model="formData.tindakan" class="form-control" placeholder="Tindakan" rows="5"></textarea>
-                            <span v-if="formErrors.tindakan" class="help-block">@{{formErrors.tindakan[0]}}</span>
-                        </div>
-                    </div>
-
-                    <div v-if="formData.id !== undefined" class="form-group" :class="formErrors.component_criteria_id ? 'has-error' : ''">
-                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="component_criteria_id">Component Criteria
-                        </label>
-                        <div class="col-md-9 col-sm-9 col-xs-12">
-                            <select class="form-control" v-model="formData.component_criteria_id" data-placeholder="Component Criteria">
-                                @foreach (\App\ComponentCriteria::selectRaw('id, CONCAT(code, " - ", description) AS code')->orderBy('code', 'ASC')->pluck('code', 'id') as $id => $code)
-                                <option value="{{$id}}">{{$code}}</option>
-                                @endforeach
-                            </select>
-                            <span v-if="formErrors.component_criteria_id" class="help-block">@{{formErrors.component_criteria_id[0]}}</span>
-                        </div>
-                    </div>
-
-                    <div v-if="formData.id !== undefined" class="form-group" :class="formErrors.time_out ? 'has-error' : ''">
-                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="time_out">Time Out
-                        </label>
-                        <div class="col-md-9 col-sm-9 col-xs-12">
-                            <input type="text" v-model="formData.time_out" class="form-control datetime-picker" placeholder="Time Out" data-date-format="YYYY-MM-DD HH:mm">
-                            <span v-if="formErrors.time_out" class="help-block">@{{formErrors.time_out[0]}}</span>
-                        </div>
-                    </div>
-
-                    <div v-if="formData.id !== undefined" class="form-group" :class="formErrors.warning_part ? 'has-error' : ''">
-                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="warning_part">Warning Part
-                        </label>
-                        <div class="col-md-9 col-sm-9 col-xs-12">
-                            <textarea v-model="formData.warning_part" class="form-control" placeholder="Warning Part" rows="5"></textarea>
-                            <span v-if="formErrors.warning_part" class="help-block">@{{formErrors.warning_part[0]}}</span>
                         </div>
                     </div>
 

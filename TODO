@@ -29,30 +29,20 @@ Berapa volume in
 
 PLANT:
     - Master data:
-        - Brekdown status: (CLEAR)
-        - Breakdown category: (CLEAR)
-        - Component criteria: (CLEAR)
-        - EGI: (CLEAR)
-        - Location: (CLEAR)
-        - Material: apakah perlu? masuk module mana? =>Operation (ganti jadi seam)
-        - Station (untuk pitstop) : (CLEAR) -> apakah sama dengan lokasi? SAMA
-        - Units : field alokasi untuk apa?
-        - Unit category: tambahan.
-            - Barge, Operation Port, Road Maintenance, Subcont
-            - apakah maksudnya alocation?
         - adat table master yang perlu ditambahkan?
 
 
     - Dashboard:
-        - Beda Breakdown & Breakdown PCR
+        - Setting daily check! ==> untuk ambil data today plan & tomorrow plan
+        - Beda Breakdown (operation) & Breakdown PCR (plant, hanya edit & close)
         - Beda update & close di Breakdown PCR
-        - Menu Workshop
+        - Menu Workshop => setting daily check
             - Today plan service
             - Tomorrow plan service
         - Remark unit by type
-            - type = category?
+            - type = category? YUP
         - unit yang baru ready
-            - bagaimana filternya?
+            - bagaimana filternya? => 10 unit yg baru saja di close breakdownnya
         - Pitstop
             - today plan daily check ambil data dari mana?
             - antrian maksudnya?
@@ -60,13 +50,7 @@ PLANT:
                 - plan & actual cara ngitungnya?
             - today plan daily check:
                 - data pitstop hari ini?
-                - warna hijau maksudnya?
-
-HARUS DIHAPUS:
-    - stations
-    - alocation
-    - bagian
-    - sub unit
+                - warna hijau maksudnya? (yang sudah close)
 
 
 Phase 1 : Data master
@@ -115,7 +99,6 @@ PR!!!
     - bikin running text
         - ada menu ini di tiap module
     - responsive chart atau persistent collapse sidebar
-    - warna di leadTimeBreakdownUnit
 
 Prioritas module (masing2 2 minggu):
     - Plant (22 april)

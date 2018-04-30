@@ -36,7 +36,7 @@
                     </div>
 
                     <div class="form-group" :class="formErrors.owner_id ? 'has-error' : ''">
-                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="owner_id">Owner
+                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="owner_id">Unit Owner
                         </label>
                         <div class="col-md-9 col-sm-9 col-xs-12">
                             <select class="form-control" v-model="formData.owner_id" data-placeholder="Owner">
@@ -60,37 +60,6 @@
                             <span v-if="formErrors.egi_id" class="help-block">@{{formErrors.egi_id[0]}}</span>
                         </div>
                     </div>
-
-                    <div class="form-group" :class="formErrors.alocation_id ? 'has-error' : ''">
-                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="alocation_id">Alocation
-                        </label>
-                        <div class="col-md-9 col-sm-9 col-xs-12">
-                            <select class="form-control" v-model="formData.alocation_id" data-placeholder="Alocation">
-                                @foreach (\App\Alocation::orderBy('name', 'ASC')->pluck('name', 'id') as $id => $name)
-                                <option value="{{$id}}">{{$name}}</option>
-                                @endforeach
-                            </select>
-                            <span v-if="formErrors.alocation_id" class="help-block">@{{formErrors.alocation_id[0]}}</span>
-                        </div>
-                    </div>
-
-                    <div class="form-group" :class="formErrors.fc ? 'has-error' : ''">
-                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="fc">FC
-                        </label>
-                        <div class="col-md-9 col-sm-9 col-xs-12">
-                            <input type="number" v-model="formData.fc" class="form-control" placeholder="Status">
-                            <span v-if="formErrors.fc" class="help-block">@{{formErrors.fc[0]}}</span>
-                        </div>
-                    </div>
-
-                    <!-- <div class="form-group" :class="formErrors.status ? 'has-error' : ''">
-                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="status">Status
-                        </label>
-                        <div class="col-md-9 col-sm-9 col-xs-12">
-                            <input type="text" v-model="formData.status" class="form-control" placeholder="Status">
-                            <span v-if="formErrors.status" class="help-block">@{{formErrors.status[0]}}</span>
-                        </div>
-                    </div> -->
 
                 </div>
                 <div class="modal-footer">

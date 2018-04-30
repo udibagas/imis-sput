@@ -31,6 +31,7 @@ class CreateBreakdownsTable extends Migration
             $table->integer('breakdown_status_id')->nullable();
             $table->integer('component_criteria_id')->nullable();
             $table->dateTime('update_pcr_time')->nullable();
+            $table->dateTime('time_close')->nullable();
             $table->integer('update_pcr_by')->nullable();
             $table->boolean('status')->nullable();
             $table->integer('user_id')->nullable();

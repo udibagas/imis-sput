@@ -20,7 +20,6 @@ class AuthServiceProvider extends ServiceProvider
         'App\BreakdownCategory' => 'App\Policies\BreakdownCategoryPolicy',
         'App\BreakdownStatus' => 'App\Policies\BreakdownStatusPolicy',
         'App\Buyer' => 'App\Policies\BuyerPolicy',
-        'App\Cargo' => 'App\Policies\CargoPolicy',
         'App\ComponentCriteria' => 'App\Policies\ComponentCriteriaPolicy',
         'App\Customer' => 'App\Policies\CustomerPolicy',
         'App\Department' => 'App\Policies\DepartmentPolicy',

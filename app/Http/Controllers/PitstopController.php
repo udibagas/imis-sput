@@ -27,10 +27,10 @@ class PitstopController extends Controller
             $pitstop = Pitstop::selectRaw('
                     pitstops.*,
                     units.name AS unit,
-                    stations.name AS station
+                    locations.name AS location
                 ')
                 ->join('units', 'units.id', '=', 'pitstops.unit_id')
-                ->join('stations', 'stations.id', '=', 'pitstops.station_id')
+                ->join('locations', 'locations.id', '=', 'pitstops.location_id')
                 ->when($request->searchPhrase, function($query) use ($request) {
                     return $query->where('stations.name', 'LIKE', '%'.$request->searchPhrase.'%')
                         ->orWhere('units.name', 'LIKE', '%'.$request->searchPhrase.'%')
@@ -112,10 +112,10 @@ class PitstopController extends Controller
             return Pitstop::selectRaw('
                     pitstops.*,
                     units.name AS unit,
-                    stations.name AS station
+                    locations.name AS location
                 ')
                 ->join('units', 'units.id', '=', 'pitstops.unit_id')
-                ->join('stations', 'stations.id', '=', 'pitstops.station_id')
+                ->join('locations', 'locations.id', '=', 'pitstops.location_id')
                 ->where('pitstops.status', 0)
                 ->orderBy('created_at', 'DESC')->get();
         }

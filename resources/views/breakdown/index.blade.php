@@ -34,6 +34,7 @@
                     <th data-column-id="component_criteria">Component Criteria</th>
                     <th data-column-id="tindakan">Tindakan</th>
                     <th data-column-id="wo_number">WO Number</th>
+                    <th data-column-id="status" data-formatter="status">Status</th>
                     @can('updateOrDelete', App\Breakdown::class)
                     <th data-column-id="commands" data-width="5%"
                         data-formatter="commands"
@@ -189,11 +190,16 @@
                         var t = t;
                         var btn = '@can("update", App\Breakdown::class) <a href="#" class="btn btn-info btn-xs c-edit" data-id="'+row.id+'"><i class="icon-pencil"></i></a> @endcan';
 
-                        if (row.time_out == null) {
+                        if (row.update_pcr_time == null) {
                             btn += '@can("delete", App\Breakdown::class) <a href="#" class="btn btn-danger btn-xs c-delete" data-id="'+row.id+'"><i class="icon-trash"></i></a> @endcan';
                         }
 
                         return btn;
+                    },
+                    "status": function(column, row) {
+                        return row.status
+                            ? '<span class="label label-success">CLOSED</span>'
+                            : '<span class="label label-default">OPEN</span>';
                     },
                 }
             }).on("loaded.rs.jquery.bootgrid", function() {

@@ -14,20 +14,29 @@
                     </div>
 
                     <div class="form-group" :class="formErrors.name ? 'has-error' : ''">
-                        <label class="control-label col-md-4 col-sm-4 col-xs-12" for="name">Name
+                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="name">Name
                         </label>
-                        <div class="col-md-8 col-sm-8 col-xs-12">
+                        <div class="col-md-9 col-sm-9 col-xs-12">
                             <input type="text" v-model="formData.name" class="form-control" placeholder="Name">
                             <span v-if="formErrors.name" class="help-block">@{{formErrors.name[0]}}</span>
                         </div>
                     </div>
 
                     <div class="form-group" :class="formErrors.description ? 'has-error' : ''">
-                        <label class="control-label col-md-4 col-sm-4 col-xs-12" for="description">Description
+                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="description">Description
                         </label>
-                        <div class="col-md-8 col-sm-8 col-xs-12">
+                        <div class="col-md-9 col-sm-9 col-xs-12">
                             <input type="text" v-model="formData.description" class="form-control" placeholder="Description">
                             <span v-if="formErrors.description" class="help-block">@{{formErrors.description[0]}}</span>
+                        </div>
+                    </div>
+
+                    <div class="form-group" :class="formErrors.fc ? 'has-error' : ''">
+                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="fc">FC
+                        </label>
+                        <div class="col-md-9 col-sm-9 col-xs-12">
+                            <input type="number" v-model="formData.fc" class="form-control" placeholder="FC">
+                            <span v-if="formErrors.fc" class="help-block">@{{formErrors.fc[0]}}</span>
                         </div>
                     </div>
 

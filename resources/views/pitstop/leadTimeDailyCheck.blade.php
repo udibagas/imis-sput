@@ -51,7 +51,7 @@
                 <thead>
                     <tr>
                         <th>#</th>
-                        <th>PITSTOP</th>
+                        <th>LOCATION</th>
                         <th>UNIT</th>
                         <th>SHIFT</th>
                         <th>DATE IN</th>
@@ -62,7 +62,7 @@
                 <tbody>
                     <tr v-for="p in pitstops">
                         <td></td>
-                        <td>@{{p.station}}</td>
+                        <td>@{{p.location}}</td>
                         <td>@{{p.unit}}</td>
                         <td>@{{p.shift}}</td>
                         <td>@{{p.time_in}}</td>
