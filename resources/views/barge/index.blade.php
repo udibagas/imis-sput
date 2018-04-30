@@ -15,6 +15,7 @@
                 <tr>
                     <th data-column-id="id" data-width="3%">ID</th>
                     <th data-column-id="name">Name</th>
+                    <th data-column-id="capacity">Capacity</th>
                     <th data-column-id="description">Description</th>
                     <th data-column-id="anchored" data-formatter="anchored">Anchored</th>
                     <th data-column-id="updated_at">Last Update</th>

@@ -6,5 +6,5 @@ use Illuminate\Database\Eloquent\Model;
 
 class Jetty extends Model
 {
-    protected $fillable = ['name', 'description'];
+    protected $fillable = ['name', 'description', 'capacity'];
 }

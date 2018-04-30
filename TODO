@@ -34,7 +34,7 @@ PLANT:
 
     - Dashboard:
         - Setting daily check! ==> untuk ambil data today plan & tomorrow plan
-        - Beda Breakdown (operation) & Breakdown PCR (plant, hanya edit & close)
+        - Beda Breakdown (operation, OCR) & Breakdown PCR (plant, hanya edit & close)
         - Beda update & close di Breakdown PCR
         - Menu Workshop => setting daily check
             - Today plan service

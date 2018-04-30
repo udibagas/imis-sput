@@ -54,6 +54,7 @@ Route::group(['middleware' => 'auth'], function() {
     Route::resource('position', 'PositionController')->except(['edit', 'create']);
     Route::resource('problemProductivityCategory', 'ProblemProductivityCategoryController')->except(['edit', 'create']);
     Route::resource('runningText', 'RunningTextController')->except(['edit', 'create']);
+    Route::resource('seam', 'SeamController')->except(['edit', 'create']);
     Route::resource('staffCategory', 'StaffCategoryController')->except(['edit', 'create']);
     Route::resource('stopWorkingPrediction', 'StopWorkingPredictionController')->except(['edit', 'create']);
     Route::resource('supervisingPrediction', 'SupervisingPredictionController')->except(['edit', 'create']);
@@ -126,6 +127,7 @@ View::composer('layouts._sidebar', function($view) {
                     'material' => 'Materials',
                     'planCategory' => 'Plan Category',
                     'problemProductivityCategory' => 'Problem Productivity Categories',
+                    'seam' => 'Seam',
                     'subArea' => 'Sub Area',
                 ]
             ]

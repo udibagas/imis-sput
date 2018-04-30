@@ -4,8 +4,8 @@
 
 <div class="panel panel-primary" id="app">
     <div class="panel-body">
-        <h3 class="pull-left text-primary">JETTIES <small>Manage</small></h3>
-        @can('create', App\Jetty::class)
+        <h3 class="pull-left text-primary">SEAM <small>Manage</small></h3>
+        @can('create', App\Seam::class)
         <span class="pull-right" style="margin:15px 0 15px 10px;">
             <a href="#" @click="add" class="btn btn-primary"><i class="icon-plus-circled"></i></a>
         </span>
@@ -15,9 +15,8 @@
                 <tr>
                     <th data-column-id="id" data-width="3%">ID</th>
                     <th data-column-id="name">Name</th>
-                    <th data-column-id="capacity">Capacity</th>
                     <th data-column-id="description">Description</th>
-                    @can('updateOrDelete', App\Jetty::class)
+                    @can('updateOrDelete', App\Seam::class)
                     <th data-column-id="commands" data-width="5%"
                         data-formatter="commands"
                         data-sortable="false"
@@ -29,8 +28,8 @@
         </table>
     </div>
 
-    @can('createOrUpdate', App\Jetty::class)
-    @include('jetty._form')
+    @can('createOrUpdate', App\Seam::class)
+    @include('seam._form')
     @endcan
 
 </div>
@@ -52,7 +51,7 @@
         methods: {
             add: function() {
                 // reset the form
-                this.formTitle = "ADD JETTY";
+                this.formTitle = "ADD SEAM";
                 this.formData = {};
                 this.formErrors = {};
                 this.error = {};
@@ -62,8 +61,7 @@
             store: function() {
                 block('form');
                 var t = this;
-
-                axios.post('{{url("jetty")}}', this.formData).then(function(r) {
+                axios.post('{{url("seam")}}', this.formData).then(function(r) {
                     unblock('form');
                     $('#modal-form').modal('hide');
                     toastr["success"]("Data berhasil ditambahkan");
@@ -72,7 +70,6 @@
                 // validasi
                 .catch(function(error) {
                     unblock('form');
-
                     if (error.response.status == 422) {
                         t.formErrors = error.response.data.errors;
                     }
@@ -84,11 +81,11 @@
             },
             edit: function(id) {
                 var t = this;
-                this.formTitle = "EDIT JETTY";
+                this.formTitle = "EDIT SEAM";
                 this.formErrors = {};
                 this.error = {};
 
-                axios.get('{{url("jetty")}}/' + id).then(function(r) {
+                axios.get('{{url("seam")}}/' + id).then(function(r) {
                     t.formData = r.data;
                     $('#modal-form').modal('show');
                 })
@@ -103,7 +100,7 @@
             update: function() {
                 block('form');
                 var t = this;
-                axios.put('{{url("jetty")}}/' + this.formData.id, this.formData).then(function(r) {
+                axios.put('{{url("seam")}}/' + this.formData.id, this.formData).then(function(r) {
                     unblock('form');
                     $('#modal-form').modal('hide');
                     toastr["success"]("Data berhasil diupdate");
@@ -127,7 +124,7 @@
                     message: "Anda yakin akan menghapus data ini?",
                     callback: function(r) {
                         if (r == true) {
-                            axios.delete('{{url("jetty")}}/' + id)
+                            axios.delete('{{url("seam")}}/' + id)
 
                             .then(function(r) {
                                 if (r.data.success == true) {
@@ -155,7 +152,7 @@
 
             var grid = $('#bootgrid').bootgrid({
                 rowCount: [10,25,50,100],
-                ajax: true, url: '{{url('jetty')}}',
+                ajax: true, url: '{{url('seam')}}',
                 ajaxSettings: {
                     method: 'GET', cache: false,
                     statusCode: {
@@ -172,11 +169,11 @@
                 formatters: {
                     "commands": function(column, row) {
                         var t = t;
-                        return '@can("update", App\Jetty::class) <a href="#" class="btn btn-info btn-xs c-edit" data-id="'+row.id+'"><i class="icon-pencil"></i></a> @endcan' +
-                            '@can("delete", App\Jetty::class) <a href="#" class="btn btn-danger btn-xs c-delete" data-id="'+row.id+'"><i class="icon-trash"></i></a> @endcan';
+                        return '@can("update", App\Seam::class) <a href="#" class="btn btn-info btn-xs c-edit" data-id="'+row.id+'"><i class="icon-pencil"></i></a> @endcan' +
+                            '@can("delete", App\Seam::class) <a href="#" class="btn btn-danger btn-xs c-delete" data-id="'+row.id+'"><i class="icon-trash"></i></a> @endcan';
                     }
                 }
-            }).on("loaded.rs.jquery.bootgrid", function(e) {
+            }).on("loaded.rs.jquery.bootgrid", function() {
                 grid.find(".c-delete").on("click", function(e) {
                     t.delete($(this).data("id"));
                 });

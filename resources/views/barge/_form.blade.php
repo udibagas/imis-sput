@@ -22,6 +22,15 @@
                         </div>
                     </div>
 
+                    <div class="form-group" :class="formErrors.capacity ? 'has-error' : ''">
+                        <label class="control-label col-md-4 col-sm-4 col-xs-12" for="capacity">Capacity
+                        </label>
+                        <div class="col-md-8 col-sm-8 col-xs-12">
+                            <input type="text" v-model="formData.capacity" class="form-control" placeholder="Capacity">
+                            <span v-if="formErrors.capacity" class="help-block">@{{formErrors.capacity[0]}}</span>
+                        </div>
+                    </div>
+
                     <div class="form-group" :class="formErrors.description ? 'has-error' : ''">
                         <label class="control-label col-md-4 col-sm-4 col-xs-12" for="description">Description
                         </label>

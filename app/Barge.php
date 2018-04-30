@@ -7,7 +7,7 @@ use Carbon\Carbon;
 
 class Barge extends Model
 {
-    protected $fillable = ['name', 'description', 'anchored'];
+    protected $fillable = ['name', 'description', 'anchored', 'capacity'];
 
     public function getUpdatedAtAttribute($value)
     {

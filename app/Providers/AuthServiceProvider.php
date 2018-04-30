@@ -39,6 +39,7 @@ class AuthServiceProvider extends ServiceProvider
         'App\Prajob' => 'App\Policies\PrajobPolicy',
         'App\ProblemProductivityCategory' => 'App\Policies\ProblemProductivityCategoryPolicy',
         'App\RunningText' => 'App\Policies\RunningTextPolicy',
+        'App\Seam' => 'App\Policies\SeamPolicy',
         'App\StaffCategory' => 'App\Policies\StaffCategoryPolicy',
         'App\StopWorkingPrediction' => 'App\Policies\StopWorkingPredictionPolicy',
         'App\SubArea' => 'App\Policies\SubAreaPolicy',
