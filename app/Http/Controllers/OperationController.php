@@ -28,14 +28,22 @@ class OperationController extends Controller
         ]);
     }
 
-
-
     public function dashboard()
     {
         return view('operation.dashboard', [
             'breadcrumbs' => [
                 'operation/dashboard' => 'Operation',
                 'dashboard' => 'Dashboard'
+            ]
+        ]);
+    }
+
+    public function game()
+    {
+        return view('operation.game', [
+            'breadcrumbs' => [
+                'operation/dashboard' => 'Operation',
+                'dashboard' => 'Game'
             ]
         ]);
     }

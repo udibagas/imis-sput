@@ -87,8 +87,8 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr v-for="b in breakdowns" :class="rowClass[b.breakdown_category]">
-                        <td></td>
+                    <tr v-for="(b, i) in breakdowns" :class="rowClass[b.breakdown_category]">
+                        <td>@{{i+1}}</td>
                         <td>@{{b.unit}}</td>
                         <td>@{{b.unit_category}}</td>
                         <td>@{{b.breakdown_category}}</td>

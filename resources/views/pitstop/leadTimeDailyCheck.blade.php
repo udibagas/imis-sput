@@ -60,8 +60,8 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr v-for="p in pitstops">
-                        <td></td>
+                    <tr v-for="(p, i) in pitstops">
+                        <td>@{{i+1}}</td>
                         <td>@{{p.location}}</td>
                         <td>@{{p.unit}}</td>
                         <td>@{{p.shift}}</td>

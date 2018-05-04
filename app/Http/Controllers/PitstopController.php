@@ -48,7 +48,7 @@ class PitstopController extends Controller
         return view('pitstop.index', [
             'breadcrumbs' => [
                 'plant/dashboard' => 'Plant',
-                'pitstop' => 'Pitstop'
+                'pitstop' => 'Daily Check'
             ]
         ]);
     }

@@ -33,6 +33,8 @@ Route::group(['middleware' => 'auth'], function() {
     Route::resource('componentCriterias', 'ComponentCriteriaController')->except(['edit', 'create']);
     Route::resource('buyer', 'BuyerController')->except(['edit', 'create']);
     Route::resource('customer', 'CustomerController')->except(['edit', 'create']);
+    Route::get('dailyCheckSetting/getData', 'DailyCheckSettingController@getData');
+    Route::resource('dailyCheckSetting', 'DailyCheckSettingController')->except(['edit', 'create']);
     Route::resource('department', 'DepartmentController')->except(['edit', 'create']);
     Route::resource('egi', 'EgiController')->except(['edit', 'create']);
     Route::resource('employee', 'EmployeeController')->except(['edit', 'create']);
@@ -65,6 +67,7 @@ Route::group(['middleware' => 'auth'], function() {
     Route::resource('user', 'UserController')->except(['edit', 'create']);
     // end of master data
     Route::get('pasangSurut', 'OperationController@pasangSurut');
+    Route::get('game', 'OperationController@game');
 });
 
 View::composer('layouts._sidebar', function($view) {
@@ -84,6 +87,7 @@ View::composer('layouts._sidebar', function($view) {
                     'breakdownStatus' => 'Breakdown Statuses',
                     'breakdownCategory' => 'Breakdown Categories',
                     'componentCriterias' => 'Component Criterias',
+                    'dailyCheckSetting' => 'Daily Check Setting',
                     'egi' => 'EGI',
                     'location' => 'Locations',
                     'owner' => 'Unit Owners',
@@ -107,6 +111,7 @@ View::composer('layouts._sidebar', function($view) {
             'icon' => 'cogs',
             'url' => [
                 'breakdown' => 'Breakdown OCR',
+                'stockBalanced' => 'Stock Balanced',
                 'pasangSurut' => 'Hourly Monitoring Barging',
                 // 'Hourly Monitoring Barging' => [
                 //     'stockBalanced' => 'Stock Balanced',

@@ -2,43 +2,60 @@
 
 @section('content')
 
-<div class="panel panel-primary" id="app">
-    <div class="panel-body">
-        <h3 class="pull-left text-primary">DAILY CHECK LOG</h3>
-        <span class="pull-right" style="margin:15px 0 15px 10px;">
-            @can('create', App\Pitstop::class)
-            <a href="#" @click="add" class="btn btn-primary"><i class="icon-plus-circled"></i></a>
+<div class="row" id="app">
+    <div class="col-md-6">
+        <div class="panel panel-primary">
+            <div class="panel-body">
+                @can('create', App\DailyCheckSetting::class)
+                <span class="pull-right" style="margin:15px 0 15px 10px;">
+                    <a href="#" @click="add" class="btn btn-primary"><i class="icon-plus-circled"></i></a>
+                </span>
+                @endcan
+                <table class="table table-striped table-hover " id="bootgrid" style="border-top:2px solid #ddd">
+                    <thead>
+                        <tr>
+                            <th data-column-id="id">ID</th>
+                            <th data-column-id="day" data-formatter="day">Day</th>
+                            <th data-column-id="unit">Unit</th>
+                            @can('updateOrDelete', App\DailyCheckSetting::class)
+                            <th data-column-id="commands"
+                                data-formatter="commands"
+                                data-sortable="false"
+                                data-align="right"
+                                data-header-align="right"></th>
+                            @endcan
+                        </tr>
+                    </thead>
+                </table>
+            </div>
+
+            @can('createOrUpdate', App\DailyCheckSetting::class)
+            @include('dailyCheckSetting._form')
             @endcan
-            <a href="#" class="btn btn-primary"><i class="fa fa-download"></i>EXPORT</a>
-            <a href="#" class="btn btn-primary"><i class="fa fa-upload"></i>IMPORT</a>
-        </span>
-        <table class="table table-striped table-hover " id="bootgrid" style="border-top:2px solid #ddd">
-            <thead>
-                <tr>
-                    <th data-column-id="id" data-width="3%">ID</th>
-                    <th data-column-id="location">Location</th>
-                    <th data-column-id="unit">Unit</th>
-                    <th data-column-id="shift">Shift</th>
-                    <th data-column-id="time_in">Time In</th>
-                    <th data-column-id="time_out">Time Out</th>
-                    <th data-column-id="description">Description</th>
-                    <th data-column-id="hm">HM</th>
-                    @can('updateOrDelete', App\Pitstop::class)
-                    <th data-column-id="commands" data-width="5%"
-                        data-formatter="commands"
-                        data-sortable="false"
-                        data-align="right"
-                        data-header-align="right"></th>
-                    @endcan
-                </tr>
-            </thead>
-        </table>
+
+        </div>
     </div>
-
-    @can('createOrUpdate', App\Pitstop::class)
-    @include('pitstop._form')
-    @endcan
-
+    <div class="col-md-6">
+        <div class="panel panel-primary">
+            <div class="panel-heading">
+                DAILY CHECK SETTING
+            </div>
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th v-for="d in dailyCheckSettings">@{{days[d.day]}}</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td v-for="d in dailyCheckSettings">
+                            @{{d.units | addBr}}
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
 </div>
 
 @endsection
@@ -50,16 +67,35 @@
     const app = new Vue({
         el: '#app',
         data: {
-            formData: {},
-            formErrors: {},
-            formTitle: '',
-            error: {},
-            units: ['A', 'B', 'C']
+            formData    : {},
+            formErrors  : {},
+            formTitle   : '',
+            error       : {},
+            days        : ['Minggu', 'Senin', 'Selasa', 'Rabu', 'Kamis', 'Jumat', 'Sabtu'],
+            dailyCheckSettings: []
+        },
+        filters: {
+            addBr(str) {
+                return str.replace(',', '<br>');
+            },
         },
         methods: {
+            getData: function() {
+                var _this = this;
+                axios.get('{{url("dailyCheckSetting/getData")}}').then(function(r) {
+                    _this.dailyCheckSettings = r.data;
+                })
+
+                .catch(function(error) {
+                    if (error.response.status == 500) {
+                        var error = error.response.data;
+                        toastr["error"](error.message + ". " + error.file + ":" + error.line)
+                    }
+                });
+            },
             add: function() {
                 // reset the form
-                this.formTitle = "ADD PITSTOP";
+                this.formTitle = "ADD DAILY CHECK SETTING";
                 this.formData = {};
                 this.formErrors = {};
                 this.error = {};
@@ -69,11 +105,12 @@
             store: function() {
                 block('form');
                 var t = this;
-                axios.post('{{url("pitstop")}}', this.formData).then(function(r) {
+                axios.post('{{url("dailyCheckSetting")}}', this.formData).then(function(r) {
                     unblock('form');
                     $('#modal-form').modal('hide');
                     toastr["success"]("Data berhasil ditambahkan");
                     $('#bootgrid').bootgrid('reload');
+                    t.getData();
                 })
                 // validasi
                 .catch(function(error) {
@@ -89,11 +126,11 @@
             },
             edit: function(id) {
                 var t = this;
-                this.formTitle = "EDIT PITSTOP";
+                this.formTitle = "EDIT DAILY CHECK SETTING";
                 this.formErrors = {};
                 this.error = {};
 
-                axios.get('{{url("pitstop")}}/' + id).then(function(r) {
+                axios.get('{{url("dailyCheckSetting")}}/' + id).then(function(r) {
                     t.formData = r.data;
                     $('#modal-form').modal('show');
                 })
@@ -108,11 +145,12 @@
             update: function() {
                 block('form');
                 var t = this;
-                axios.put('{{url("pitstop")}}/' + this.formData.id, this.formData).then(function(r) {
+                axios.put('{{url("dailyCheckSetting")}}/' + this.formData.id, this.formData).then(function(r) {
                     unblock('form');
                     $('#modal-form').modal('hide');
                     toastr["success"]("Data berhasil diupdate");
                     $('#bootgrid').bootgrid('reload');
+                    t.getData();
                 })
                 // validasi
                 .catch(function(error) {
@@ -132,12 +170,13 @@
                     message: "Anda yakin akan menghapus data ini?",
                     callback: function(r) {
                         if (r == true) {
-                            axios.delete('{{url("pitstop")}}/' + id)
+                            axios.delete('{{url("dailyCheckSetting")}}/' + id)
 
                             .then(function(r) {
                                 if (r.data.success == true) {
                                     toastr["success"]("Data berhasil dihapus");
                                     $('#bootgrid').bootgrid('reload');
+                                    t.getData();
                                 } else {
                                     toastr["error"]("Data gagal dihapus. " + r.data.message);
                                 }
@@ -155,12 +194,12 @@
             },
         },
         mounted: function() {
-
+            this.getData();
             var t = this;
 
             var grid = $('#bootgrid').bootgrid({
                 rowCount: [10,25,50,100],
-                ajax: true, url: '{{url('pitstop')}}',
+                ajax: true, url: '{{url('dailyCheckSetting')}}',
                 ajaxSettings: {
                     method: 'GET', cache: false,
                     statusCode: {
@@ -177,8 +216,12 @@
                 formatters: {
                     "commands": function(column, row) {
                         var t = t;
-                        return '@can("update", App\Pitstop::class) <a href="#" class="btn btn-info btn-xs c-edit" data-id="'+row.id+'"><i class="icon-pencil"></i></a> @endcan' +
-                            '@can("delete", App\Pitstop::class) <a href="#" class="btn btn-danger btn-xs c-delete" data-id="'+row.id+'"><i class="icon-trash"></i></a> @endcan';
+                        return '@can("update", App\DailyCheckSetting::class) <a href="#" class="btn btn-info btn-xs c-edit" data-id="'+row.id+'"><i class="icon-pencil"></i></a> @endcan' +
+                            '@can("delete", App\DailyCheckSetting::class) <a href="#" class="btn btn-danger btn-xs c-delete" data-id="'+row.id+'"><i class="icon-trash"></i></a> @endcan';
+                    },
+                    "day": function(column, row) {
+                        var days = ["Minggu", "Senin", "Selasa", "Rabu", "Kamis", "Jumat", "sabtu"];
+                        return days[row.day];
                     }
                 }
             }).on("loaded.rs.jquery.bootgrid", function() {
