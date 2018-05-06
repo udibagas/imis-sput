@@ -107,6 +107,8 @@ class PitstopController extends Controller
 
     public function leadTimeDailyCheck(Request $request)
     {
+        $this->authorize('view', Pitstop::class);
+
         if ($request->ajax())
         {
             return Pitstop::selectRaw('
@@ -126,5 +128,11 @@ class PitstopController extends Controller
                 '#' => 'Lead Time Daily Check'
             ]
         ]);
+    }
+
+    public function achievementDailyCheck()
+    {
+        $this->authorize('view', Pitstop::class);
+        return ['plan' => 20, 'actual' => 18];
     }
 }

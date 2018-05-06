@@ -139,7 +139,7 @@ class FuelTankController extends Controller
                 'data' => $rand1
             ], [
                 'name' => 'Fuel Ratio',
-                'type' => 'line',
+                'type' => 'bar',
                 'label' => $labelSetting,
                 'yAxisIndex' => 1,
                 'data' => $rand2

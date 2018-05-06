@@ -1,20 +1,8 @@
 Customer (owner) => pemilik batu / shipper
     - Long term
         - BRE (owner) : KPP (kontraktor/tukang gali)
-            - Seam (varian)
-                - A & G
         - BRE : HRS
-        - Seam (varian)
-            - G, O, W
     - Sale / short term
-Barge (4)
-    - kapasitas
-        - H & U : 700
-        - J & K : 1200
-
-Blok area
-    - I, II, III, IV
-    - dibagi ke sub area
 
 Checker : menghitung yang masuk ke area stock pile
 
@@ -33,44 +21,13 @@ PLANT:
 
 
     - Dashboard:
-        - Setting daily check! ==> untuk ambil data today plan & tomorrow plan
-        - Beda Breakdown (operation, OCR) & Breakdown PCR (plant, hanya edit & close)
-        - Beda update & close di Breakdown PCR
-        - Menu Workshop => setting daily check
-            - Today plan service
-            - Tomorrow plan service
-        - Remark unit by type
-            - type = category? YUP
-        - unit yang baru ready
-            - bagaimana filternya? => 10 unit yg baru saja di close breakdownnya
         - Pitstop
-            - today plan daily check ambil data dari mana?
             - antrian maksudnya?
             - achievement daily check?
                 - plan & actual cara ngitungnya?
             - today plan daily check:
                 - data pitstop hari ini?
                 - warna hijau maksudnya? (yang sudah close)
-
-
-Phase 1 : Data master
-    - rapikan view (join table, form)
-    - test all crud
-    - seeding/populate database
-
-Phase 2 : Data trx
-    - lengkapi table database
-    - generate request (validation)
-    - generate controller
-
-Phase 3 : Report (chart)
-    - lengkapi table database
-    - generate request (validation)
-    - generate controller
-
-Phase 4 : Export & Import
-    - excel
-    - pdf
 
 
 PR!!!

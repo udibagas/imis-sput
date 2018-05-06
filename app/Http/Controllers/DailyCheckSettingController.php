@@ -107,8 +107,10 @@ class DailyCheckSettingController extends Controller
 
     public function getData()
     {
+        $this->authorize('view', DailyCheckSetting::class);
+
         $sql = "SELECT DISTINCT(day),
-                (SELECT GROUP_CONCAT(units.name, ',')
+                (SELECT GROUP_CONCAT(units.name)
                     FROM daily_check_settings
                     JOIN units ON units.id = daily_check_settings.unit_id
                     WHERE daily_check_settings.day = d.day
@@ -117,13 +119,38 @@ class DailyCheckSettingController extends Controller
             ORDER BY day ASC";
 
         return DB::select(DB::raw($sql));
+    }
 
-        // $this->authorize('view', DailyCheckSetting::class);
-        // return DailyCheckSetting::selectRaw('
-        //         daily_check_settings.*,
-        //         units.name AS unit
-        //     ')
-        //     ->join('units', 'units.id', '=', 'daily_check_settings.unit_id')
-        //     ->orderBy('units.name', 'ASC')->get();
+    public function unScheduled()
+    {
+        $this->authorize('view', DailyCheckSetting::class);
+
+        $sql = "SELECT units.name AS unit
+            FROM units
+            WHERE id NOT IN (SELECT unit_id FROM daily_check_settings)";
+
+        return DB::select(DB::raw($sql));
+    }
+
+    public function todayPlan()
+    {
+        $this->authorize('view', DailyCheckSetting::class);
+        $sql = "SELECT u.*
+            FROM units u
+            JOIN daily_check_settings d ON d.unit_id = u.id
+            WHERE d.day = :day";
+
+        return DB::select(DB::raw($sql), ['day' => date('w')]);
+    }
+
+    public function tomorrowPlan()
+    {
+        $this->authorize('view', DailyCheckSetting::class);
+        $sql = "SELECT u.*
+            FROM units u
+            JOIN daily_check_settings d ON d.unit_id = u.id
+            WHERE d.day = :day";
+
+        return DB::select(DB::raw($sql), ['day' => date('w') < 6 ? date('w') + 1 : 0]);
     }
 }

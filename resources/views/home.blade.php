@@ -7,7 +7,7 @@
 </div> -->
 
 <div class="row text-center" style="width:1000px;margin:auto;">
-    <h1>Welcome to IMIS KPP Site Sungai Putting!</h1>
+    <h1>Welcome to IMIS KPP Site Sungai Puting!</h1>
     <br>
     <div class="col-md-4">
         <div class="panel panel-primary">
@@ -26,7 +26,7 @@
             <div class="panel-body">
                 <a href="{{url('fuelTank/dashboard')}}">
                     <div class="stack-order">
-                        <div class="fa fa-industry fa-3x"></div>
+                        <div class="fa fa-map-marker fa-3x"></div>
                         <h1 class="no-margins">SM</h1>
                     </div>
                 </a>
@@ -75,7 +75,7 @@
                 <a href="{{url('admin/dashboard')}}">
                     <div class="stack-order">
                         <div class="fa fa-sliders fa-3x"></div>
-                        <h1 class="no-margins">ADMINISTRATION</h1>
+                        <h1 class="no-margins">ADMIN</h1>
                     </div>
                 </a>
             </div>

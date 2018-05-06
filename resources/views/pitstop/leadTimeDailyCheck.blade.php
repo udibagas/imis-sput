@@ -33,10 +33,10 @@
 			        </tr>
 			    </thead>
                 <tbody>
-                    <tr v-for="i in todayPlans">
-                        <td>@{{i.unit}}</td>
-                        <td>@{{i.durasi}}</td>
-                        <td>@{{i.timeout}}</td>
+                    <tr v-for="i in todayPlan">
+                        <td>@{{i.name}}</td>
+                        <td></td>
+                        <td></td>
                     </tr>
                 </tbody>
 			</table>
@@ -87,7 +87,7 @@ const app = new Vue({
             plan: 0,
             actual: 0
         },
-        todayPlans: []
+        todayPlan: []
     },
     methods: {
         getData: function() {
@@ -107,7 +107,7 @@ const app = new Vue({
         },
         getDataAchievementDailyCheck: function() {
             var _this = this;
-            axios.get('{{url("breakdown/achievementDailyCheck")}}').then(function(r) {
+            axios.get('{{url("pitstop/achievementDailyCheck")}}').then(function(r) {
                 _this.achievement = r.data;
             })
 
@@ -118,10 +118,10 @@ const app = new Vue({
 
             setTimeout(_this.getDataAchievementDailyCheck, 3000);
         },
-        getDataTodayPlanDailyCheck: function() {
+        getTodayPlan: function() {
             var _this = this;
-            axios.get('{{url("breakdown/todayPlanDailyCheck")}}').then(function(r) {
-                _this.todayPlans = r.data;
+            axios.get('{{url("dailyCheckSetting/todayPlan")}}').then(function(r) {
+                _this.todayPlan = r.data;
             })
 
             .catch(function(error) {
@@ -129,13 +129,13 @@ const app = new Vue({
                 toastr["error"](error.message + ". " + error.file + ":" + error.line)
             });
 
-            setTimeout(_this.getDataTodayPlanDailyCheck, 3000);
+            setTimeout(_this.getTodayPlan, 3000);
         },
     },
     mounted: function() {
         this.getData();
         this.getDataAchievementDailyCheck();
-        this.getDataTodayPlanDailyCheck();
+        this.getTodayPlan();
     }
 });
 

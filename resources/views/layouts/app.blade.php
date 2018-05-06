@@ -9,7 +9,6 @@
 <!-- CSRF Token -->
 <meta name="csrf-token" content="{{ csrf_token() }}">
 <title>{{ config('app.name', 'IMIS - SPUT') }}</title>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:400,300,600,700,900">
 <link href="{{ asset('css/theme.css') }}" rel="stylesheet">
 
 <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
@@ -18,6 +17,12 @@
       <script src="{{ asset('js/html5shiv.min.js') }}"></script>
       <script src="{{ asset('js/respond.min.js') }}"></script>
 <![endif]-->
+
+<style media="screen">
+    .table > thead > tr > th, .panel-heading {
+        font-weight: bold;
+    }
+</style>
 
 </head>
 <body>

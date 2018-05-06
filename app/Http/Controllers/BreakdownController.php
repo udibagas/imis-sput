@@ -192,13 +192,16 @@ class BreakdownController extends Controller
         ]);
     }
 
-    public function achievementDailyCheck()
+    public function getUnitReady()
     {
-        return ['plan' => 20, 'actual' => 18];
-    }
-
-    public function todayPlanDailyCheck()
-    {
-        return [];
+        return Breakdown::selectRaw('
+                breakdowns.*,
+                units.name AS unit
+            ')
+            ->join('units', 'units.id', '=', 'breakdowns.unit_id')
+            ->where('breakdowns.status', 1)
+            ->orderBy('created_at', 'DESC')
+            ->limit(10)
+            ->get();
     }
 }

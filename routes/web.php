@@ -26,14 +26,16 @@ Route::group(['middleware' => 'auth'], function() {
     Route::resource('breakdownCategory', 'BreakdownCategoryController')->except(['edit', 'create']);
     Route::resource('breakdownStatus', 'BreakdownStatusController')->except(['edit', 'create']);
     Route::get('breakdown/leadTimeBreakdownUnit', 'BreakdownController@leadTimeBreakdownUnit');
-    Route::get('breakdown/achievementDailyCheck', 'BreakdownController@achievementDailyCheck');
-    Route::get('breakdown/todayPlanDailyCheck', 'BreakdownController@todayPlanDailyCheck');
     Route::get('breakdown/pcr', 'BreakdownController@pcr');
+    Route::get('breakdown/getUnitReady', 'BreakdownController@getUnitReady');
     Route::resource('breakdown', 'BreakdownController')->except(['edit', 'create']);
     Route::resource('componentCriterias', 'ComponentCriteriaController')->except(['edit', 'create']);
     Route::resource('buyer', 'BuyerController')->except(['edit', 'create']);
     Route::resource('customer', 'CustomerController')->except(['edit', 'create']);
     Route::get('dailyCheckSetting/getData', 'DailyCheckSettingController@getData');
+    Route::get('dailyCheckSetting/unScheduled', 'DailyCheckSettingController@unScheduled');
+    Route::get('dailyCheckSetting/todayPlan', 'DailyCheckSettingController@todayPlan');
+    Route::get('dailyCheckSetting/tomorrowPlan', 'DailyCheckSettingController@tomorrowPlan');
     Route::resource('dailyCheckSetting', 'DailyCheckSettingController')->except(['edit', 'create']);
     Route::resource('department', 'DepartmentController')->except(['edit', 'create']);
     Route::resource('egi', 'EgiController')->except(['edit', 'create']);
@@ -51,6 +53,7 @@ Route::group(['middleware' => 'auth'], function() {
     Route::resource('office', 'OfficeController')->except(['edit', 'create']);
     Route::resource('owner', 'OwnerController')->except(['edit', 'create']);
     Route::get('pitstop/leadTimeDailyCheck', 'PitstopController@leadTimeDailyCheck');
+    Route::get('pitstop/achievementDailyCheck', 'PitstopController@achievementDailyCheck');
     Route::resource('pitstop', 'PitstopController')->except(['edit', 'create']);
     Route::resource('planCategory', 'PlanCategoryController')->except(['edit', 'create']);
     Route::resource('position', 'PositionController')->except(['edit', 'create']);
@@ -97,7 +100,7 @@ View::composer('layouts._sidebar', function($view) {
             ]
         ],
         'SM' => [
-            'icon' => 'industry',
+            'icon' => 'map-marker',
             'url' => [
                 'fuelTank/dashboard' => 'Dashboard',
                 'pengisianSolar' => 'Pengisian Solar',

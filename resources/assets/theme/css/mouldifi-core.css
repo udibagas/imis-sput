@@ -1,8 +1,25 @@
+@font-face {
+    font-family: "Nirmala UI";
+    src: url("/fonts/Nirmala_0.ttf");
+}
+
+@font-face {
+    font-family: "UthmanTN1Ver10";
+    src: url("/fonts/UthmanTN1Ver10.otf");
+}
+
+@font-face {
+    font-family: "UthmanTN1BVer10";
+    src: url("/fonts/UthmanTN1BVer10.otf");
+	font-weight: bold;
+}
+
 html {
   height: 100%; }
 
 body {
-  font-family: "Source Sans Pro", sans-serif;
+  /*font-family: "Source Sans Pro", sans-serif;*/
+  font-family: "Nirmala UI", sans-serif;
   height: 100%;
   color: #505050; }
   body.login-page {

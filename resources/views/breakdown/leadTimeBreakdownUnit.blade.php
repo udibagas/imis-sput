@@ -10,9 +10,9 @@
 			<table class="table table-striped table-bordered">
 			    <thead>
 			        <tr>
-			            <th style="font-weight:bold;">TYPE</th>
-			            <th style="font-weight:bold;text-align:center;">READY</th>
-			            <th style="font-weight:bold;text-align:center;">B/D</th>
+			            <th>TYPE</th>
+			            <th style="text-align:center;">READY</th>
+			            <th style="text-align:center;">B/D</th>
 			        </tr>
 			    </thead>
                 <tbody>
@@ -31,9 +31,9 @@
 			</div>
 			<table class="table table-striped table-bordered">
                 <tbody>
-                    <tr v-for="u in unitBaruReady">
-                        <td>@{{u.name}}</td>
-                        <td>@{{u.time}}</td>
+                    <tr v-for="u in unitready">
+                        <td>@{{u.unit}}</td>
+                        <td class="text-right">@{{u.duration}}</td>
                     </tr>
                 </tbody>
 			</table>
@@ -41,27 +41,27 @@
 
         <div class="panel minimal panel-default">
 			<div class="panel-heading clearfix">
-				<div class="panel-title text-primary">TODAY PLAN SERVICE</div>
+				<div class="panel-title text-primary">SERVICE PLAN</div>
 			</div>
 			<table class="table table-striped table-bordered">
-                <tbody>
+                <thead>
                     <tr>
-                        <td></td>
-                        <td></td>
+                        <th width="50%">TODAY</th>
+                        <th width="50%">TOMORROW</th>
                     </tr>
-                </tbody>
-			</table>
-		</div>
-
-        <div class="panel minimal panel-default">
-			<div class="panel-heading clearfix">
-				<div class="panel-title text-primary">TOMORROW PLAN SERVICE</div>
-			</div>
-			<table class="table table-striped table-bordered">
+                </thead>
                 <tbody>
                     <tr>
-                        <td></td>
-                        <td></td>
+                        <td>
+                            <div v-for="p in todayPlan">
+                                @{{p.name}}
+                            </div>
+                        </td>
+                        <td>
+                            <div v-for="p in tomorrowPlan">
+                                @{{p.name}}
+                            </div>
+                        </td>
                     </tr>
                 </tbody>
 			</table>
@@ -69,9 +69,12 @@
 
     </div>
     <div class="col-md-9">
-        <div class="panel panel-primary">
+        <div class="panel panel-default">
             <div class="panel-heading">
-                STATUS & LEAD TIME B/D UNIT
+                <div class="pull-right">
+                    <a href="#"><i class="fa fa-filter"></i></a>
+                </div>
+                <span class="text-primary">STATUS & LEAD TIME B/D UNIT</span>
             </div>
             <table class="table table-striped">
                 <thead>
@@ -83,7 +86,7 @@
                         <th>LOKASI B/D</th>
                         <th>PROBLEM</th>
                         <th>TIME IN</th>
-                        <th>DOWN TIME</th>
+                        <th class="text-right">DOWN TIME</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -95,7 +98,7 @@
                         <td>@{{b.location}}</td>
                         <td>@{{b.diagnosa}}</td>
                         <td>@{{b.time_in}}</td>
-                        <td></td>
+                        <td class="text-right">@{{b.downtime}}</td>
                     </tr>
                 </tbody>
             </table>
@@ -112,11 +115,19 @@ const app = new Vue({
     data: {
         breakdowns: [],
         remarkUnitByType: [],
+        todayPlan: [],
+        tomorrowPlan: [],
+        unitready: [],
         rowClass: {
             ICM: 'danger',
             USM: 'warning',
             SCM: 'info',
             TRM: 'warning',
+        }
+    },
+    filters: {
+        downtime: function(time_in) {
+            secs = (new Date() - new Date(time_in))/1000;
         }
     },
     methods: {
@@ -133,6 +144,28 @@ const app = new Vue({
 
             setTimeout(_this.getData, 3000);
         },
+        getTodayPlan: function() {
+            var _this = this;
+            axios.get('{{url("dailyCheckSetting/todayPlan")}}').then(function(r) {
+                _this.todayPlan = r.data;
+            })
+
+            .catch(function(error) {
+                var error = error.response.data;
+                toastr["error"](error.message + ". " + error.file + ":" + error.line)
+            });
+        },
+        getTomorrowPlan: function() {
+            var _this = this;
+            axios.get('{{url("dailyCheckSetting/tomorrowPlan")}}').then(function(r) {
+                _this.tomorrowPlan = r.data;
+            })
+
+            .catch(function(error) {
+                var error = error.response.data;
+                toastr["error"](error.message + ". " + error.file + ":" + error.line)
+            });
+        },
         getDataRemarkUnitByType: function() {
             var _this = this;
             axios.get('{{url("unit/remarkUnitByType")}}').then(function(r) {
@@ -145,10 +178,26 @@ const app = new Vue({
             });
 
             setTimeout(_this.getDataRemarkUnitByType, 3000);
-        }
+        },
+        getUnitReady: function() {
+            var _this = this;
+            axios.get('{{url("breakdown/getUnitReady")}}').then(function(r) {
+                _this.unitready = r.data;
+            })
+
+            .catch(function(error) {
+                var error = error.response.data;
+                toastr["error"](error.message + ". " + error.file + ":" + error.line)
+            });
+
+            setTimeout(_this.getUnitReady, 3000);
+        },
     },
     mounted: function() {
         this.getData();
+        this.getUnitReady();
+        this.getTodayPlan();
+        this.getTomorrowPlan();
         this.getDataRemarkUnitByType();
     }
 });

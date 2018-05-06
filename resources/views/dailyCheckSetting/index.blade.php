@@ -40,20 +40,31 @@
             <div class="panel-heading">
                 DAILY CHECK SETTING
             </div>
-            <table class="table">
+            <table class="table table-bordered">
                 <thead>
                     <tr>
-                        <th v-for="d in dailyCheckSettings">@{{days[d.day]}}</th>
+                        <th v-for="d in dailyCheckSettings" style="font-weight:bold;">@{{days[d.day]}}</th>
                     </tr>
                 </thead>
                 <tbody>
                     <tr>
                         <td v-for="d in dailyCheckSettings">
-                            @{{d.units | addBr}}
+                            <div v-for="u in d.units.split(',')">
+                                @{{u}}
+                            </div>
                         </td>
                     </tr>
                 </tbody>
             </table>
+        </div>
+
+        <div class="panel panel-primary">
+            <div class="panel-heading">
+                UNIT BELUM TERJADWAL (@{{unscheduled.length}} unit)
+            </div>
+            <div class="panel-body">
+                <span v-for="u in unscheduled">@{{u.unit}}, </span>
+            </div>
         </div>
     </div>
 </div>
@@ -72,11 +83,13 @@
             formTitle   : '',
             error       : {},
             days        : ['Minggu', 'Senin', 'Selasa', 'Rabu', 'Kamis', 'Jumat', 'Sabtu'],
-            dailyCheckSettings: []
+            unscheduled : [],
+            dailyCheckSettings: [],
         },
         filters: {
             addBr(str) {
-                return str.replace(',', '<br>');
+                // return str;
+                return str.replace(',', '<br />');
             },
         },
         methods: {
@@ -84,6 +97,19 @@
                 var _this = this;
                 axios.get('{{url("dailyCheckSetting/getData")}}').then(function(r) {
                     _this.dailyCheckSettings = r.data;
+                })
+
+                .catch(function(error) {
+                    if (error.response.status == 500) {
+                        var error = error.response.data;
+                        toastr["error"](error.message + ". " + error.file + ":" + error.line)
+                    }
+                });
+            },
+            getUnscheduled: function() {
+                var _this = this;
+                axios.get('{{url("dailyCheckSetting/unScheduled")}}').then(function(r) {
+                    _this.unscheduled = r.data;
                 })
 
                 .catch(function(error) {
@@ -111,6 +137,7 @@
                     toastr["success"]("Data berhasil ditambahkan");
                     $('#bootgrid').bootgrid('reload');
                     t.getData();
+                    setTimeout(t.getUnscheduled, 300);
                 })
                 // validasi
                 .catch(function(error) {
@@ -151,6 +178,7 @@
                     toastr["success"]("Data berhasil diupdate");
                     $('#bootgrid').bootgrid('reload');
                     t.getData();
+                    setTimeout(t.getUnscheduled, 300);
                 })
                 // validasi
                 .catch(function(error) {
@@ -177,6 +205,7 @@
                                     toastr["success"]("Data berhasil dihapus");
                                     $('#bootgrid').bootgrid('reload');
                                     t.getData();
+                                    setTimeout(t.getUnscheduled, 300);
                                 } else {
                                     toastr["error"]("Data gagal dihapus. " + r.data.message);
                                 }
@@ -195,6 +224,7 @@
         },
         mounted: function() {
             this.getData();
+            this.getUnscheduled();
             var t = this;
 
             var grid = $('#bootgrid').bootgrid({
@@ -220,7 +250,7 @@
                             '@can("delete", App\DailyCheckSetting::class) <a href="#" class="btn btn-danger btn-xs c-delete" data-id="'+row.id+'"><i class="icon-trash"></i></a> @endcan';
                     },
                     "day": function(column, row) {
-                        var days = ["Minggu", "Senin", "Selasa", "Rabu", "Kamis", "Jumat", "sabtu"];
+                        var days = ["Minggu", "Senin", "Selasa", "Rabu", "Kamis", "Jumat", "Sabtu"];
                         return days[row.day];
                     }
                 }

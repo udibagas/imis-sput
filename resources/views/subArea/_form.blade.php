@@ -23,7 +23,7 @@
                     </div>
 
                     <div class="form-group" :class="formErrors.area_id ? 'has-error' : ''">
-                        <label class="control-label col-md-4 col-sm-4 col-xs-12" for="area_id">Capacity (Ton)
+                        <label class="control-label col-md-4 col-sm-4 col-xs-12" for="area_id">Area
                         </label>
                         <div class="col-md-8 col-sm-8 col-xs-12">
                             <select class="form-control" v-model="formData.area_id">
@@ -32,6 +32,15 @@
                                 @endforeach
                             </select>
                             <span v-if="formErrors.area_id" class="help-block">@{{formErrors.area_id[0]}}</span>
+                        </div>
+                    </div>
+
+                    <div class="form-group" :class="formErrors.capacity ? 'has-error' : ''">
+                        <label class="control-label col-md-4 col-sm-4 col-xs-12" for="capacity">Capacity (Ton)
+                        </label>
+                        <div class="col-md-8 col-sm-8 col-xs-12">
+                            <input type="number" v-model="formData.capacity" class="form-control" placeholder="Capacity">
+                            <span v-if="formErrors.capacity" class="help-block">@{{formErrors.capacity[0]}}</span>
                         </div>
                     </div>
 

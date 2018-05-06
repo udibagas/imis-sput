@@ -93,12 +93,12 @@ const app = new Vue({
                 toastr["error"](error.message + ". " + error.file + ":" + error.line)
             });
 
-            setTimeout(_this.getData, 3000);
+            setTimeout(_this.getData, 5000);
         },
         edit: function(id) {
             var _this = this;
-            this.formErrors = {};
-            this.error = {};
+            _this.formErrors = {};
+            _this.error = {};
 
             axios.get('{{url("breakdown")}}/' + id).then(function(r) {
                 _this.formData = r.data;
@@ -114,11 +114,10 @@ const app = new Vue({
             block('form');
             var _this = this;
             _this.formData.pcr = 1;
-            axios.put('{{url("breakdown")}}/' + this.formData.id, this.formData).then(function(r) {
+            axios.put('{{url("breakdown")}}/' + _this.formData.id, _this.formData).then(function(r) {
                 unblock('form');
                 $('#modal-form').modal('hide');
                 toastr["success"]("Data berhasil diupdate");
-                $('#bootgrid').bootgrid('reload');
             })
             // validasi
             .catch(function(error) {
@@ -133,32 +132,31 @@ const app = new Vue({
             });
         },
         updateAndClose: function() {
+            block('form');
             var _this = this;
             _this.formData.status = 1;
-            bootbox.confirm({
-                title: "Konfirmasi",
-                message: "Anda yakin?",
-                callback: function(r) {
-                    if (r == true) {
-                        axios.put('{{url("breakdown")}}/' + _this.formData.id)
 
-                        .then(function(r) {
-                            toastr["success"]("Data berhasil disimpan");
-                            if (r.data.success == true) {
-                            } else {
-                                toastr["error"]("Data gagal dihapus. " + r.data.message);
-                            }
-                        })
+            if (confirm('Anda yakin?')) {
+                axios.put('{{url("breakdown")}}/' + _this.formData.id)
 
-                        .catch(function(error) {
-                            if (error.response.status == 500) {
-                                var error = error.response.data;
-                                toastr["error"](error.message + ". " + error.file + ":" + error.line)
-                            }
-                        });
+                .then(function(r) {
+                    unblock('form');
+                    $('#modal-form').modal('hide');
+                    toastr["success"]("Data berhasil disimpan");
+                })
+
+                .catch(function(error) {
+                    unblock('form');
+                    if (error.response.status == 422) {
+                        _this.formErrors = error.response.data.errors;
                     }
-                }
-            });
+
+                    if (error.response.status == 500) {
+                        var error = error.response.data;
+                        toastr["error"](error.message + ". " + error.file + ":" + error.line)
+                    }
+                });
+            }
         }
     },
     mounted: function() {

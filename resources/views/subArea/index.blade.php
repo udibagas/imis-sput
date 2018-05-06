@@ -16,6 +16,7 @@
                     <th data-column-id="id" data-width="3%">ID</th>
                     <th data-column-id="name">Name</th>
                     <th data-column-id="area">Area</th>
+                    <th data-column-id="capacity">Capacity</th>
                     <th data-column-id="description">Description</th>
                     @can('updateOrDelete', App\SubArea::class)
                     <th data-column-id="commands" data-width="5%"

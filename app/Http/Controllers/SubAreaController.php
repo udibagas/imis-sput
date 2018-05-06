@@ -21,12 +21,15 @@ class SubAreaController extends Controller
         {
             $pageSize = $request->rowCount > 0 ? $request->rowCount : 1000000;
             $request['page'] = $request->current;
-            $sort = $request->sort ? key($request->sort) : 'name';
+            $sort = $request->sort ? key($request->sort) : 'sub_areas.name';
             $dir = $request->sort ? $request->sort[$sort] : 'asc';
 
-            $subArea = SubArea::when($request->searchPhrase, function($query) use ($request) {
-                    return $query->where('name', 'LIKE', '%'.$request->searchPhrase.'%')
-                        ->orWhere('description', 'LIKE', '%'.$request->searchPhrase.'%');
+            $subArea = SubArea::selectRaw('sub_areas.*, areas.name AS area')
+                ->join('areas', 'areas.id', '=', 'sub_areas.area_id')
+                ->when($request->searchPhrase, function($query) use ($request) {
+                    return $query->where('sub_areas.name', 'LIKE', '%'.$request->searchPhrase.'%')
+                        ->orWhere('areas.name', 'LIKE', '%'.$request->searchPhrase.'%')
+                        ->orWhere('sub_areas.description', 'LIKE', '%'.$request->searchPhrase.'%');
                 })->orderBy($sort, $dir)->paginate($pageSize);
 
             return [
