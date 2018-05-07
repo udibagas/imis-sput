@@ -82,8 +82,10 @@
                         <th>#</th>
                         <th>UNIT</th>
                         <th>TYPE</th>
-                        <th>JENIS B/D</th>
+                        <th>B/D TYPE</th>
+                        <th>B/D STATUS</th>
                         <th>LOKASI B/D</th>
+                        <th>HM/KM</th>
                         <th>PROBLEM</th>
                         <th>TIME IN</th>
                         <th class="text-right">DOWN TIME</th>
@@ -95,7 +97,9 @@
                         <td>@{{b.unit}}</td>
                         <td>@{{b.unit_category}}</td>
                         <td>@{{b.breakdown_category}}</td>
+                        <td>@{{b.breakdown_status}}</td>
                         <td>@{{b.location}}</td>
+                        <td>@{{b.hm}}/@{{b.km}}</td>
                         <td>@{{b.diagnosa}}</td>
                         <td>@{{b.time_in}}</td>
                         <td class="text-right">@{{b.downtime}}</td>
