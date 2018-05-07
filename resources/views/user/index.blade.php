@@ -13,13 +13,13 @@
         <table class="table table-striped table-hover " id="bootgrid" style="border-top:2px solid #ddd">
             <thead>
                 <tr>
-                    <th data-column-id="id" data-width="3%" data-width="3%">ID</th>
+                    <th data-column-id="id">ID</th>
                     <th data-column-id="name">Name</th>
                     <th data-column-id="email">Email</th>
                     <th data-column-id="super_admin" data-formatter="super_admin">Super Admin</th>
                     <th data-column-id="active" data-formatter="active">Active</th>
                     @can('updateOrDelete', App\User::class)
-                    <th data-column-id="commands" data-width="5%"
+                    <th data-column-id="commands"
                         data-formatter="commands"
                         data-sortable="false"
                         data-align="right"
