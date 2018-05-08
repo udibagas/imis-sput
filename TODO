@@ -9,7 +9,7 @@ Customer (owner) => pemilik batu / shipper
 
 Checker : menghitung yang masuk ke area stock pile
 
-
+Custom message & label attribute
 
 Activity
     - stock piling

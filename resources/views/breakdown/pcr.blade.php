@@ -113,6 +113,12 @@ const app = new Vue({
             });
         },
         update: function() {
+            if (this.formData.status == 1) {
+                if (!confirm("Anda yaki?")) {
+                    return;
+                }
+            }
+
             block('form');
             var _this = this;
             _this.formData.pcr = 1;

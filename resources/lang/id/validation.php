@@ -38,7 +38,7 @@ return [
     'digits_between'       => 'The :attribute must be between :min and :max digits.',
     'dimensions'           => 'The :attribute has invalid image dimensions.',
     'distinct'             => 'The :attribute field has a duplicate value.',
-    'email'                => 'Field :attribute harus berupa alamat email yang valid.',
+    'email'                => ':attribute harus berupa alamat email yang valid.',
     'exists'               => 'The selected :attribute is invalid.',
     'file'                 => 'The :attribute must be a file.',
     'filled'               => 'The :attribute field must have a value.',
@@ -66,10 +66,10 @@ return [
     ],
     'not_in'               => 'The selected :attribute is invalid.',
     'not_regex'            => 'The :attribute format is invalid.',
-    'numeric'              => 'Field :attribute harus berupa angka.',
+    'numeric'              => ':attribute harus berupa angka.',
     'present'              => 'The :attribute field must be present.',
     'regex'                => 'The :attribute format is invalid.',
-    'required'             => 'Field :attribute harus diisi.',
+    'required'             => ':attribute harus diisi.',
     'required_if'          => 'The :attribute field is required when :other is :value.',
     'required_unless'      => 'The :attribute field is required unless :other is in :values.',
     'required_with'        => 'The :attribute field is required when :values is present.',
@@ -117,6 +117,17 @@ return [
     |
     */
 
-    'attributes' => [],
+    'attributes' => [
+        'unit_id' => 'Unit',
+        'breakdown_status_id' => 'B/D Status',
+        'breakdown_category_id' => 'B/D Type',
+        'component_criteria_id' => 'Component Criteria',
+        'tindakan' => 'Tindakan',
+        'time_out' => 'Time Out',
+        'location_id' => 'Location',
+        'time_in' => 'Time In',
+        'diagnosa' => 'Diagnosa',
+        'warning_part' => 'Warning Part'
+    ],
 
 ];
