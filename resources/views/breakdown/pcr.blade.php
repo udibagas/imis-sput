@@ -1,10 +1,12 @@
 @extends('layouts.app')
 
 @section('content')
-<div class="row" id="app">
-<div class="panel panel-primary">
+<div class="panel panel-default" id="app">
     <div class="panel-heading">
-        DAILY BREADOWN REPORT
+        <div class="pull-right">
+            <a href="#"><i class="fa fa-filter"></i></a>
+        </div>
+        <span class="text-primary">DAILY BREADOWN REPORT</span>
     </div>
     <div class="table-responsive">
         <table class="table table-hover">
@@ -131,33 +133,6 @@ const app = new Vue({
                 }
             });
         },
-        updateAndClose: function() {
-            block('form');
-            var _this = this;
-            _this.formData.status = 1;
-
-            if (confirm('Anda yakin?')) {
-                axios.put('{{url("breakdown")}}/' + _this.formData.id)
-
-                .then(function(r) {
-                    unblock('form');
-                    $('#modal-form').modal('hide');
-                    toastr["success"]("Data berhasil disimpan");
-                })
-
-                .catch(function(error) {
-                    unblock('form');
-                    if (error.response.status == 422) {
-                        _this.formErrors = error.response.data.errors;
-                    }
-
-                    if (error.response.status == 500) {
-                        var error = error.response.data;
-                        toastr["error"](error.message + ". " + error.file + ":" + error.line)
-                    }
-                });
-            }
-        }
     },
     mounted: function() {
         this.getData();

@@ -2,17 +2,13 @@
 
 @section('content')
 
-<!-- <div class="panel panel-primary panel-body" style="min-height:500px;">
-    <h1>Welcome to IMIS KPP SUNGAI PUTTING</h1>
-</div> -->
-
 <div class="row text-center" style="width:1000px;margin:auto;">
     <h1>Welcome to IMIS KPP Site Sungai Puting!</h1>
     <br>
     <div class="col-md-4">
         <div class="panel panel-primary">
             <div class="panel-body">
-                <a href="{{url('plant/dashboard')}}">
+                <a href="{{url('breakdown/leadTimeBreakdownUnit')}}">
                     <div class="stack-order">
                         <div class="fa fa-wrench fa-3x"></div>
                         <h1 class="no-margins">PLANT</h1>

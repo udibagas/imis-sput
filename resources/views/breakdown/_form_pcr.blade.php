@@ -150,10 +150,21 @@
                         </div>
                     </div>
 
+                    <div class="form-group" :class="formErrors.status ? 'has-error' : ''">
+                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="status">Close
+                        </label>
+                        <div class="col-md-9 col-sm-9 col-xs-12">
+                            <select class="form-control" v-model="formData.status">
+                                <option value="0">No</option>
+                                <option value="1">Yes</option>
+                            </select>
+                            <span v-if="formErrors.status" class="help-block">@{{formErrors.status[0]}}</span>
+                        </div>
+                    </div>
+
                 </div>
                 <div class="modal-footer">
                     <button type="submit" class="btn btn-primary"><i class="fa fa-edit"></i> Update</button>
-                    <button type="button" @click="updateAndClose" class="btn btn-success"><i class="fa fa-check"></i> Update and Close</button>
                     <button type="button" class="btn btn-default" data-dismiss="modal"><i class="fa fa-close"></i> Cancel</button>
                 </div>
             </form>
