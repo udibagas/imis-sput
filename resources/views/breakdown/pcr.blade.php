@@ -82,7 +82,7 @@ const app = new Vue({
             SCM: 'info',
             TRM: 'warning',
         },
-        component_criterias: {!!App\ComponentCriteria::selectRaw('id AS id, code AS text')->orderBy('code', 'ASC')->get()!!},
+        component_criterias: {!!App\ComponentCriteria::selectRaw('id AS id, CONCAT(code, " - ", description) AS text')->orderBy('code', 'ASC')->get()!!},
     },
     methods: {
         getData: function() {
