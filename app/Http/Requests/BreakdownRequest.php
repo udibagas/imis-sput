@@ -49,4 +49,22 @@ class BreakdownRequest extends FormRequest
             'breakdown_status_id.required_if' => ':attribute harus diisi jika Close',
         ];
     }
+
+    public function attributes()
+    {
+        return [
+            'unit_id' => 'Unit',
+            'breakdown_status_id' => 'B/D Status',
+            'breakdown_category_id' => 'B/D Type',
+            'component_criteria_id' => 'Component Criteria',
+            'tindakan' => 'Tindakan',
+            'time_out' => 'Time Out',
+            'location_id' => 'Location',
+            'time_in' => 'Time In',
+            'diagnosa' => 'Diagnosa',
+            'warning_part' => 'Warning Part',
+            'hm' => 'HM',
+            'km' => 'KM',
+        ];
+    }
 }

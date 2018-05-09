@@ -42,4 +42,13 @@ class UserRequest extends FormRequest
 
         return $rules;
     }
+
+    public function attributes()
+    {
+        return [
+            'name' => 'Name',
+            'email' => 'Email',
+            'password' => 'Password',
+        ];
+    }
 }

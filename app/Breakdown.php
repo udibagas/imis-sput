@@ -15,13 +15,18 @@ class Breakdown extends Model
         'update_pcr_time', 'update_pcr_by', 'status', 'user_id'
     ];
 
-    protected $appends = ['duration', 'downtime'];
+    protected $appends = ['duration', 'downtime', 'ready_time'];
 
     public function getDurationAttribute()
     {
         $in = Carbon::parse($this->time_in);
         $out = Carbon::parse($this->time_out);
         return $in->diffForHumans($out, true);
+    }
+
+    public function getReadyTimeAttribute()
+    {
+        return Carbon::parse($this->time_out)->diffForHumans();
     }
 
     public function getDowntimeAttribute()

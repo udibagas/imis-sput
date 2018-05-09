@@ -95,7 +95,7 @@ const app = new Vue({
                 toastr["error"](error.message + ". " + error.file + ":" + error.line)
             });
 
-            setTimeout(_this.getData, 5000);
+            setTimeout(_this.getData, 3000);
         },
         edit: function(id) {
             var _this = this;
@@ -104,7 +104,18 @@ const app = new Vue({
 
             axios.get('{{url("breakdown")}}/' + id).then(function(r) {
                 _this.formData = r.data;
+                $('#time_out').datetimepicker().on('dp.change', function() {
+                    _this.formData.time_out = $(this).val();
+                });
+
+                $('#component_criteria_id').css('width', '100%')
+                .select2()
+                .on('select2:select', function() {
+                    _this.formData.component_criteria_id = $(this).val();
+                });
+
                 $('#modal-form').modal('show');
+
             })
 
             .catch(function(error) {
@@ -114,7 +125,7 @@ const app = new Vue({
         },
         update: function() {
             if (this.formData.status == 1) {
-                if (!confirm("Anda yaki?")) {
+                if (!confirm("Anda yakin?")) {
                     return;
                 }
             }

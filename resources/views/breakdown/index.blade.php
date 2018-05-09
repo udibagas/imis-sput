@@ -72,6 +72,7 @@
                 // reset the form
                 this.formTitle = "ADD BREAKDOWN";
                 this.formData = {};
+                this.formData.time_in = '{{date("Y-m-d H:i")}}';
                 this.formErrors = {};
                 this.error = {};
                 // open form
@@ -79,8 +80,8 @@
             },
             store: function() {
                 block('form');
-                var t = this;
-                axios.post('{{url("breakdown")}}', this.formData).then(function(r) {
+                var _this = this;
+                axios.post('{{url("breakdown")}}', _this.formData).then(function(r) {
                     unblock('form');
                     $('#modal-form').modal('hide');
                     toastr["success"]("Data berhasil ditambahkan");
@@ -90,11 +91,11 @@
                 .catch(function(error) {
                     unblock('form');
                     if (error.response.status == 422) {
-                        t.formErrors = error.response.data.errors;
+                        _this.formErrors = error.response.data.errors;
                     }
 
                     if (error.response.status == 500) {
-                        t.error = error.response.data;
+                        _this.error = error.response.data;
                     }
                 });
             },
@@ -168,6 +169,15 @@
         mounted: function() {
 
             var t = this;
+
+            $('#time_in').datetimepicker().on('dp.change', function() {
+                t.formData.time_in = $(this).val();
+            });
+
+            $('#time_out').datetimepicker().on('dp.change', function() {
+                t.formData.time_out = $(this).val();
+            });
+
 
             var grid = $('#bootgrid').bootgrid({
                 rowCount: [10,25,50,100],

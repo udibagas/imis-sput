@@ -33,7 +33,7 @@
                 <tbody>
                     <tr v-for="u in unitready">
                         <td>@{{u.unit}}</td>
-                        <td class="text-right">@{{u.duration}}</td>
+                        <td class="text-right">@{{u.ready_time}}</td>
                     </tr>
                 </tbody>
 			</table>

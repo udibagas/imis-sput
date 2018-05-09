@@ -74,7 +74,7 @@
                         <label class="control-label col-md-3 col-sm-3 col-xs-12" for="time_in">Time In
                         </label>
                         <div class="col-md-9 col-sm-9 col-xs-12">
-                            <input type="text" v-model="formData.time_in" class="form-control datetime-picker" placeholder="Time In" data-date-format="YYYY-MM-DD HH:mm">
+                            <input type="text" v-model="formData.time_in" id="time_in" class="form-control datetime-picker" placeholder="Time In" data-date-format="YYYY-MM-DD HH:mm">
                             <span v-if="formErrors.time_in" class="help-block">@{{formErrors.time_in[0]}}</span>
                         </div>
                     </div>

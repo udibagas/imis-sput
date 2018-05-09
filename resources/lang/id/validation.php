@@ -31,8 +31,8 @@ return [
     ],
     'boolean'              => 'The :attribute field must be true or false.',
     'confirmed'            => 'The :attribute confirmation does not match.',
-    'date'                 => 'The :attribute is not a valid date.',
-    'date_format'          => 'The :attribute does not match the format :format.',
+    'date'                 => ':attribute bukan tanggal yang valid.',
+    'date_format'          => ':attribute harus dengan format :format.',
     'different'            => 'The :attribute and :other must be different.',
     'digits'               => 'The :attribute must be :digits digits.',
     'digits_between'       => 'The :attribute must be between :min and :max digits.',
@@ -117,17 +117,6 @@ return [
     |
     */
 
-    'attributes' => [
-        'unit_id' => 'Unit',
-        'breakdown_status_id' => 'B/D Status',
-        'breakdown_category_id' => 'B/D Type',
-        'component_criteria_id' => 'Component Criteria',
-        'tindakan' => 'Tindakan',
-        'time_out' => 'Time Out',
-        'location_id' => 'Location',
-        'time_in' => 'Time In',
-        'diagnosa' => 'Diagnosa',
-        'warning_part' => 'Warning Part'
-    ],
+    'attributes' => [],
 
 ];

@@ -9,8 +9,6 @@ Customer (owner) => pemilik batu / shipper
 
 Checker : menghitung yang masuk ke area stock pile
 
-Custom message & label attribute
-
 Activity
     - stock piling
     - direct dumping / hauling luar
@@ -19,18 +17,14 @@ Activity
 Berapa volume in
 
 PLANT:
-    - Master data:
-        - adat table master yang perlu ditambahkan?
-
-
-    - Dashboard:
-        - Pitstop
-            - antrian maksudnya?
-            - achievement daily check?
-                - plan & actual cara ngitungnya?
-            - today plan daily check:
-                - data pitstop hari ini?
-                - warna hijau maksudnya? (yang sudah close)
+- Dashboard:
+    - Pitstop
+        - antrian maksudnya?
+        - achievement daily check?
+            - plan & actual cara ngitungnya?
+        - today plan daily check:
+            - data pitstop hari ini?
+            - warna hijau maksudnya? (yang sudah close)
 
 
 PR!!!

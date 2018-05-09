@@ -22,16 +22,15 @@
                         </div>
                     </div>
 
-                    <div class="form-group" :class="formErrors.unit_id ? 'has-error' : ''">
+                    <div class="form-group">
                         <label class="control-label col-md-3 col-sm-3 col-xs-12" for="unit_id">Unit
                         </label>
                         <div class="col-md-9 col-sm-9 col-xs-12">
-                            <select class="form-control" v-model="formData.unit_id" data-placeholder="Unit">
+                            <select class="form-control" v-model="formData.unit_id" data-placeholder="Unit" disabled>
                                 @foreach (\App\Unit::orderBy('name', 'ASC')->pluck('name', 'id') as $id => $name)
                                 <option value="{{$id}}">{{$name}}</option>
                                 @endforeach
                             </select>
-                            <span v-if="formErrors.unit_id" class="help-block">@{{formErrors.unit_id[0]}}</span>
                         </div>
                     </div>
 
@@ -75,37 +74,45 @@
                     </div>
 
                     <div class="form-group" :class="formErrors.hm ? 'has-error' : ''">
-                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="hm">HM
+                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="hm">KM/HM
                         </label>
                         <div class="col-md-9 col-sm-9 col-xs-12">
-                            <input type="number" v-model="formData.hm" class="form-control" placeholder="HM">
-                            <span v-if="formErrors.hm" class="help-block">@{{formErrors.hm[0]}}</span>
+                            <div class="row">
+                                <div class="col-sm-6">
+                                    <input type="number" v-model="formData.km" class="form-control" placeholder="KM">
+                                    <span v-if="formErrors.km" class="help-block">@{{formErrors.km[0]}}</span>
+                                </div>
+                                <div class="col-sm-6">
+                                    <input type="number" v-model="formData.hm" class="form-control" placeholder="HM">
+                                    <span v-if="formErrors.hm" class="help-block">@{{formErrors.hm[0]}}</span>
+                                </div>
+                            </div>
                         </div>
                     </div>
 
-                    <div class="form-group" :class="formErrors.km ? 'has-error' : ''">
+                    <!-- <div class="form-group" :class="formErrors.km ? 'has-error' : ''">
                         <label class="control-label col-md-3 col-sm-3 col-xs-12" for="km">KM
                         </label>
                         <div class="col-md-9 col-sm-9 col-xs-12">
                             <input type="number" v-model="formData.km" class="form-control" placeholder="KM">
                             <span v-if="formErrors.km" class="help-block">@{{formErrors.km[0]}}</span>
                         </div>
-                    </div>
+                    </div> -->
 
-                    <div class="form-group" :class="formErrors.time_in ? 'has-error' : ''">
+                    <!-- <div class="form-group" :class="formErrors.time_in ? 'has-error' : ''">
                         <label class="control-label col-md-3 col-sm-3 col-xs-12" for="time_in">Time In
                         </label>
                         <div class="col-md-9 col-sm-9 col-xs-12">
                             <input type="text" v-model="formData.time_in" class="form-control datetime-picker" placeholder="Time In" data-date-format="YYYY-MM-DD HH:mm">
                             <span v-if="formErrors.time_in" class="help-block">@{{formErrors.time_in[0]}}</span>
                         </div>
-                    </div>
+                    </div> -->
 
                     <div class="form-group" :class="formErrors.diagnosa ? 'has-error' : ''">
                         <label class="control-label col-md-3 col-sm-3 col-xs-12" for="diagnosa">Diagnosa
                         </label>
                         <div class="col-md-9 col-sm-9 col-xs-12">
-                            <textarea v-model="formData.diagnosa" class="form-control" placeholder="Diagnosa" rows="5"></textarea>
+                            <textarea v-model="formData.diagnosa" class="form-control" placeholder="Diagnosa" rows="3"></textarea>
                             <span v-if="formErrors.diagnosa" class="help-block">@{{formErrors.diagnosa[0]}}</span>
                         </div>
                     </div>
@@ -114,16 +121,16 @@
                         <label class="control-label col-md-3 col-sm-3 col-xs-12" for="tindakan">Tindakan
                         </label>
                         <div class="col-md-9 col-sm-9 col-xs-12">
-                            <textarea v-model="formData.tindakan" class="form-control" placeholder="Tindakan" rows="5"></textarea>
+                            <textarea v-model="formData.tindakan" class="form-control" placeholder="Tindakan" rows="3"></textarea>
                             <span v-if="formErrors.tindakan" class="help-block">@{{formErrors.tindakan[0]}}</span>
                         </div>
                     </div>
 
                     <div class="form-group" :class="formErrors.component_criteria_id ? 'has-error' : ''">
-                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="component_criteria_id">Component Criteria
+                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="component_criteria_id">Comp. Criteria
                         </label>
                         <div class="col-md-9 col-sm-9 col-xs-12">
-                            <select class="form-control" v-model="formData.component_criteria_id" data-placeholder="Component Criteria">
+                            <select class="form-control" v-model="formData.component_criteria_id" data-placeholder="Component Criteria" id="component_criteria_id">
                                 @foreach (\App\ComponentCriteria::selectRaw('id, CONCAT(code, " - ", description) AS code')->orderBy('code', 'ASC')->pluck('code', 'id') as $id => $code)
                                 <option value="{{$id}}">{{$code}}</option>
                                 @endforeach
@@ -132,21 +139,21 @@
                         </div>
                     </div>
 
-                    <div class="form-group" :class="formErrors.time_out ? 'has-error' : ''">
-                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="time_out">Time Out
-                        </label>
-                        <div class="col-md-9 col-sm-9 col-xs-12">
-                            <input type="text" v-model="formData.time_out" class="form-control datetime-picker" placeholder="Time Out" data-date-format="YYYY-MM-DD HH:mm">
-                            <span v-if="formErrors.time_out" class="help-block">@{{formErrors.time_out[0]}}</span>
-                        </div>
-                    </div>
-
                     <div class="form-group" :class="formErrors.warning_part ? 'has-error' : ''">
                         <label class="control-label col-md-3 col-sm-3 col-xs-12" for="warning_part">Warning Part
                         </label>
                         <div class="col-md-9 col-sm-9 col-xs-12">
-                            <textarea v-model="formData.warning_part" class="form-control" placeholder="Warning Part" rows="5"></textarea>
+                            <textarea v-model="formData.warning_part" class="form-control" placeholder="Warning Part" rows="3"></textarea>
                             <span v-if="formErrors.warning_part" class="help-block">@{{formErrors.warning_part[0]}}</span>
+                        </div>
+                    </div>
+
+                    <div class="form-group" :class="formErrors.time_out ? 'has-error' : ''">
+                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="time_out">Time Out
+                        </label>
+                        <div class="col-md-9 col-sm-9 col-xs-12">
+                            <input type="text" v-model="formData.time_out" class="form-control datetime-picker" placeholder="Time Out" data-date-format="YYYY-MM-DD HH:mm" id="time_out">
+                            <span v-if="formErrors.time_out" class="help-block">@{{formErrors.time_out[0]}}</span>
                         </div>
                     </div>
 
