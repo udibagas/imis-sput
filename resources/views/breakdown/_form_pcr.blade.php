@@ -130,11 +130,8 @@
                         <label class="control-label col-md-3 col-sm-3 col-xs-12" for="component_criteria_id">Comp. Criteria
                         </label>
                         <div class="col-md-9 col-sm-9 col-xs-12">
-                            <select class="form-control" v-model="formData.component_criteria_id" data-placeholder="Component Criteria" id="component_criteria_id">
-                                @foreach (\App\ComponentCriteria::selectRaw('id, CONCAT(code, " - ", description) AS code')->orderBy('code', 'ASC')->pluck('code', 'id') as $id => $code)
-                                <option value="{{$id}}">{{$code}}</option>
-                                @endforeach
-                            </select>
+                            <select2 :options="component_criterias" v-model="formData.component_criteria_id" data-placeholder="Component Criteria">
+                            </select2>
                             <span v-if="formErrors.component_criteria_id" class="help-block">@{{formErrors.component_criteria_id[0]}}</span>
                         </div>
                     </div>

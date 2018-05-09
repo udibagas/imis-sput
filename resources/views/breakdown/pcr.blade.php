@@ -81,7 +81,8 @@ const app = new Vue({
             USM: 'warning',
             SCM: 'info',
             TRM: 'warning',
-        }
+        },
+        component_criterias: {!!App\ComponentCriteria::selectRaw('id AS id, code AS text')->orderBy('code', 'ASC')->get()!!},
     },
     methods: {
         getData: function() {
