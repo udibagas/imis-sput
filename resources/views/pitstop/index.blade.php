@@ -23,6 +23,7 @@
                     <th data-column-id="time_out">Time Out</th>
                     <th data-column-id="description">Description</th>
                     <th data-column-id="hm">HM</th>
+                    <th data-column-id="status" data-formatter="status">Status</th>
                     @can('updateOrDelete', App\Pitstop::class)
                     <th data-column-id="commands" data-width="5%"
                         data-formatter="commands"
@@ -54,12 +55,13 @@
             formErrors: {},
             formTitle: '',
             error: {},
-            units: ['A', 'B', 'C']
+            units: {!! App\Unit::selectRaw('id AS id, name AS text')->orderBy('name', 'ASC')->get() !!},
+            locations: {!! App\Location::selectRaw('id AS id, name AS text')->orderBy('name', 'ASC')->get() !!},
         },
         methods: {
             add: function() {
                 // reset the form
-                this.formTitle = "ADD PITSTOP";
+                this.formTitle = "ADD DAILY CHECK";
                 this.formData = {};
                 this.formErrors = {};
                 this.error = {};
@@ -89,13 +91,16 @@
             },
             edit: function(id) {
                 var t = this;
-                this.formTitle = "EDIT PITSTOP";
+                this.formTitle = "EDIT DAILY CHECK";
                 this.formErrors = {};
                 this.error = {};
 
                 axios.get('{{url("pitstop")}}/' + id).then(function(r) {
                     t.formData = r.data;
                     $('#modal-form').modal('show');
+                    $('#time_out').datetimepicker().on('dp.change', function() {
+                        t.formData.time_out = $(this).val();
+                    });
                 })
 
                 .catch(function(error) {
@@ -106,6 +111,10 @@
                 });
             },
             update: function() {
+                if (this.formData.status == 1 && !confirm('Anda yakin?')) {
+                    return;
+                }
+
                 block('form');
                 var t = this;
                 axios.put('{{url("pitstop")}}/' + this.formData.id, this.formData).then(function(r) {
@@ -155,8 +164,11 @@
             },
         },
         mounted: function() {
-
             var t = this;
+
+            $('#time_in').datetimepicker().on('dp.change', function() {
+                t.formData.time_in = $(this).val();
+            });
 
             var grid = $('#bootgrid').bootgrid({
                 rowCount: [10,25,50,100],
@@ -179,7 +191,12 @@
                         var t = t;
                         return '@can("update", App\Pitstop::class) <a href="#" class="btn btn-info btn-xs c-edit" data-id="'+row.id+'"><i class="icon-pencil"></i></a> @endcan' +
                             '@can("delete", App\Pitstop::class) <a href="#" class="btn btn-danger btn-xs c-delete" data-id="'+row.id+'"><i class="icon-trash"></i></a> @endcan';
-                    }
+                    },
+                    "status": function(column, row) {
+                        return row.status
+                            ? '<span class="label label-success">CLOSED</span>'
+                            : '<span class="label label-default">OPEN</span>';
+                    },
                 }
             }).on("loaded.rs.jquery.bootgrid", function() {
                 grid.find(".c-delete").on("click", function(e) {

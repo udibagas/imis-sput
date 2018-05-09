@@ -26263,12 +26263,6 @@ $('ul.nav > li.active')
     .parent().parent().addClass('active')
     .parent().parent().addClass('active');
 
-$(document).ready(function() {
-    // belum jalan
-    // $('select').css('width', '100%').select2();
-    // $('.datetime-picker').datetimepicker();
-});
-
 toastr.options = {
     "closeButton": true,
     "debug": false,

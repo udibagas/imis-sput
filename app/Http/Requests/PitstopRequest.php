@@ -28,10 +28,33 @@ class PitstopRequest extends FormRequest
 
         return [
             'unit_id' => 'required',
-            'station_id' => 'required',
+            'location_id' => 'required',
             'shift' => 'required',
             'time_in' => 'required',
+            'time_out' => 'required_if:status,1',
+            'description' => 'required_if:status,1',
             'hm' => 'required',
+        ];
+    }
+
+    public function messages()
+    {
+        return [
+            'description.required_if' => 'Description harus diisi jika Close',
+            'time_out.required_if' => 'Time Out harus diisi jika Close',
+        ];
+    }
+
+    public function attributes()
+    {
+        return [
+            'unit_id' => 'Unit',
+            'location_id' => 'Location',
+            'shift' => 'Shift',
+            'time_in' => 'Time In',
+            'time_out' => 'Time Out',
+            'hm' => 'HM',
+            'description' => 'Description'
         ];
     }
 }

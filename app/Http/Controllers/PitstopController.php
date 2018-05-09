@@ -133,6 +133,9 @@ class PitstopController extends Controller
     public function achievementDailyCheck()
     {
         $this->authorize('view', Pitstop::class);
-        return ['plan' => 20, 'actual' => 18];
+        return [
+            'plan' => \App\DailyCheckSetting::where('day', date('w'))->count(),
+            'actual' => Pitstop::where('status', 1)->count()
+        ];
     }
 }

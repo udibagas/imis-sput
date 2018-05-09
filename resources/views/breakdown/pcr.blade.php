@@ -109,12 +109,6 @@ const app = new Vue({
                     _this.formData.time_out = $(this).val();
                 });
 
-                $('#component_criteria_id').css('width', '100%')
-                .select2()
-                .on('select2:select', function() {
-                    _this.formData.component_criteria_id = $(this).val();
-                });
-
                 $('#modal-form').modal('show');
 
             })
