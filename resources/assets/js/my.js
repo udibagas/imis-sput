@@ -43,7 +43,7 @@ var unblock = function(el) {
 
 Vue.component('select2', {
     props: ['options', 'value'],
-    template: '<select><slot></slot></select>',
+    template: '<select class="form-control"><slot></slot></select>',
     mounted: function () {
         var vm = this
 

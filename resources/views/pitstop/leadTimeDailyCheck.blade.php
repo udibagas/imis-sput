@@ -92,7 +92,7 @@ const app = new Vue({
     methods: {
         getData: function() {
             var _this = this;
-            axios.get('{{url("pitstop/leadTimeDailyCheck")}}').then(function(r) {
+            axios.get('{{url("leadTimeDailyCheck")}}').then(function(r) {
                 _this.pitstops = r.data;
             })
 

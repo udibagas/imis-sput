@@ -1,3 +1,5 @@
+Dropdown di daily check sesuai yang dujadwalkan
+
 Saran:
     - Bagaimana kalau leadtime breakdown unit disatuin sama breakdown PCR?
 
@@ -29,7 +31,7 @@ PLANT:
 
 PR!!!
     - hari ini ngejar breakdown!!!
-    - select2 & timepicker belum jalan (URGENT)
+    - timepicker belum jalan (URGENT)
     - redirect halaman setelah register
     - delete record lihat dulu kalau dia dipakai table lain (pake foreign key)
         - employee

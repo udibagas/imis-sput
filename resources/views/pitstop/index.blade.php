@@ -25,7 +25,7 @@
                     <th data-column-id="hm">HM</th>
                     <th data-column-id="status" data-formatter="status">Status</th>
                     @can('updateOrDelete', App\Pitstop::class)
-                    <th data-column-id="commands" data-width="5%"
+                    <th data-column-id="commands"
                         data-formatter="commands"
                         data-sortable="false"
                         data-align="right"
@@ -65,7 +65,7 @@
                 this.formData = {};
                 this.formErrors = {};
                 this.error = {};
-                // open form
+                var _this = this;
                 $('#modal-form').modal('show');
             },
             store: function() {
@@ -98,9 +98,6 @@
                 axios.get('{{url("pitstop")}}/' + id).then(function(r) {
                     t.formData = r.data;
                     $('#modal-form').modal('show');
-                    $('#time_out').datetimepicker().on('dp.change', function() {
-                        t.formData.time_out = $(this).val();
-                    });
                 })
 
                 .catch(function(error) {
@@ -168,6 +165,10 @@
 
             $('#time_in').datetimepicker().on('dp.change', function() {
                 t.formData.time_in = $(this).val();
+            });
+
+            $('#time_out').datetimepicker().on('dp.change', function() {
+                t.formData.time_out = $(this).val();
             });
 
             var grid = $('#bootgrid').bootgrid({

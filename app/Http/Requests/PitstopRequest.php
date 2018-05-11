@@ -4,6 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
+use Illuminate\Http\Request;
 
 class PitstopRequest extends FormRequest
 {
@@ -22,12 +23,22 @@ class PitstopRequest extends FormRequest
      *
      * @return array
      */
-    public function rules()
+    public function rules(Request $request)
     {
         $pitstop = $this->route('pitstop');
+        // unit id tidak boleh kembar di hari yang sama
 
         return [
-            'unit_id' => 'required',
+            'unit_id' => [
+                'required',
+                function($attribute, $value, $fail) use ($request) {
+                    $sudah = \App\Pitstop::whereRaw("DATE('$request->time_in') = DATE(NOW()) AND unit_id = $value")->pluck('unit_id')->toArray();
+
+                    if (in_array($value, $sudah)) {
+                        $fail('Unit sudah dicek.');
+                    }
+                }
+            ],
             'location_id' => 'required',
             'shift' => 'required',
             'time_in' => 'required',
@@ -40,8 +51,9 @@ class PitstopRequest extends FormRequest
     public function messages()
     {
         return [
-            'description.required_if' => 'Description harus diisi jika Close',
-            'time_out.required_if' => 'Time Out harus diisi jika Close',
+            'description.required_if' => 'Description harus diisi jika Close.',
+            'time_out.required_if' => 'Time Out harus diisi jika Close.',
+            'unit_id.not_in' => 'Unit sudah dicheck.'
         ];
     }
 

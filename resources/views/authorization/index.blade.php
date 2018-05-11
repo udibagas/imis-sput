@@ -14,7 +14,7 @@
             <thead>
                 <tr>
                     <th data-column-id="id" data-width="3%">ID</th>
-                    <th data-column-id="user">Name</th>
+                    <th data-column-id="user">User</th>
                     <th data-column-id="controller">Controller</th>
                     <th data-column-id="view" data-formatter="view">View</th>
                     <th data-column-id="create" data-formatter="create">Create</th>
@@ -22,7 +22,6 @@
                     <th data-column-id="delete" data-formatter="delete">Delete</th>
                     <th data-column-id="export" data-formatter="export">Export</th>
                     <th data-column-id="import" data-formatter="import">Import</th>
-                    <th data-column-id="dashboard" data-formatter="dashboard">Dashboard</th>
                     @can('updateOrDelete', App\Authorization::class)
                     <th data-column-id="commands" data-width="5%"
                         data-formatter="commands"
@@ -53,18 +52,20 @@
             formData: {},
             formErrors: {},
             formTitle: '',
-            error: {}
+            error: {},
+            modules: {!! json_encode(App\Authorization::getModule()) !!},
+            users: {!! App\User::where('super_admin', 0)->orderBy('name', 'ASC')->selectRaw('name AS text, id AS id')->get() !!}
         },
         methods: {
             add: function() {
                 // reset the form
                 this.formTitle = "ADD AUTHORIZATION";
                 this.formData = {
-                    view: 1, create: 1, update: 1, delete: 1, export: 1, import: 1, dashboard: 1
+                    view: 1, create: 1, update: 1, delete: 1,
+                    export: 1, import: 1, dashboard: 1
                 };
                 this.formErrors = {};
                 this.error = {};
-                // open form
                 $('#modal-form').modal('show');
             },
             store: function() {
@@ -210,11 +211,6 @@
                     },
                     "import": function(column, row) {
                         return row.import
-                            ? '<span class="label label-success">Y</span>'
-                            : '<span class="label label-danger">N</span>';
-                    },
-                    "dashboard": function(column, row) {
-                        return row.dashboard
                             ? '<span class="label label-success">Y</span>'
                             : '<span class="label label-danger">N</span>';
                     },

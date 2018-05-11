@@ -18,7 +18,7 @@
                         </label>
                         <div class="col-md-9 col-sm-9 col-xs-12">
                             <select2 :options="units" v-model="formData.unit_id" data-placeholder="Unit">
-                            </select>
+                            </select2>
                             <span v-if="formErrors.unit_id" class="help-block">@{{formErrors.unit_id[0]}}</span>
                         </div>
                     </div>
@@ -28,7 +28,7 @@
                         </label>
                         <div class="col-md-9 col-sm-9 col-xs-12">
                             <select2 :options="locations" v-model="formData.location_id" data-placeholder="Location">
-                            </select>
+                            </select2>
                             <span v-if="formErrors.location_id" class="help-block">@{{formErrors.location_id[0]}}</span>
                         </div>
                     </div>
@@ -45,20 +45,20 @@
                         </div>
                     </div>
 
-                    <!-- <div class="form-group" :class="formErrors.time_in ? 'has-error' : ''">
+                    <div class="form-group" :class="formErrors.time_in ? 'has-error' : ''">
                         <label class="control-label col-md-3 col-sm-3 col-xs-12" for="time_in">Time In
                         </label>
                         <div class="col-md-9 col-sm-9 col-xs-12">
-                            <input type="text" v-model="formData.time_in" class="datetime-picker form-control" placeholder="Time In" data-date-format="YYYY-MM-DD HH:mm" id="time_in">
+                            <input type="text" v-model="formData.time_in" class="form-control" placeholder="Time In" data-date-format="YYYY-MM-DD HH:mm" id="time_in">
                             <span v-if="formErrors.time_in" class="help-block">@{{formErrors.time_in[0]}}</span>
                         </div>
-                    </div> -->
+                    </div>
 
-                    <div v-if="formData.id != undefined" class="form-group" :class="formErrors.time_out ? 'has-error' : ''">
+                    <div class="form-group" :class="formErrors.time_out ? 'has-error' : ''">
                         <label class="control-label col-md-3 col-sm-3 col-xs-12" for="time_out">Time Out
                         </label>
                         <div class="col-md-9 col-sm-9 col-xs-12">
-                            <input type="text" v-model="formData.time_out" class="datetime-picker form-control" placeholder="Time out" data-date-format="YYYY-MM-DD HH:mm" id="time_out">
+                            <input type="text" v-model="formData.time_out" class="form-control" placeholder="Time out" data-date-format="YYYY-MM-DD HH:mm" id="time_out">
                             <span v-if="formErrors.time_out" class="help-block">@{{formErrors.time_out[0]}}</span>
                         </div>
                     </div>
@@ -67,7 +67,7 @@
                         <label class="control-label col-md-3 col-sm-3 col-xs-12" for="hm">HM
                         </label>
                         <div class="col-md-9 col-sm-9 col-xs-12">
-                            <input type="number" v-model="formData.hm" class="form-control" placeholder="HM">
+                            <input type="text" v-model="formData.hm" class="form-control" placeholder="HM">
                             <span v-if="formErrors.hm" class="help-block">@{{formErrors.hm[0]}}</span>
                         </div>
                     </div>
@@ -81,7 +81,7 @@
                         </div>
                     </div>
 
-                    <div class="form-group" :class="formErrors.status ? 'has-error' : ''">
+                    <div v-if="formData.id != undefined" class="form-group" :class="formErrors.status ? 'has-error' : ''">
                         <label class="control-label col-md-3 col-sm-3 col-xs-12" for="status">Close
                         </label>
                         <div class="col-md-9 col-sm-9 col-xs-12">

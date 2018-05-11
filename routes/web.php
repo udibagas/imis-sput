@@ -25,8 +25,11 @@ Route::group(['middleware' => 'auth'], function() {
     Route::resource('barge', 'BargeController')->except(['edit', 'create']);
     Route::resource('breakdownCategory', 'BreakdownCategoryController')->except(['edit', 'create']);
     Route::resource('breakdownStatus', 'BreakdownStatusController')->except(['edit', 'create']);
-    Route::get('breakdown/leadTimeBreakdownUnit', 'BreakdownController@leadTimeBreakdownUnit');
-    Route::get('breakdown/pcr', 'BreakdownController@pcr');
+
+    Route::get('breakdownPcr', 'BreakdownPcrController@index');
+    Route::get('breakdownPcr/{breakdown}', 'BreakdownPcrController@show');
+    Route::put('breakdownPcr/{breakdown}', 'BreakdownPcrController@update');
+
     Route::get('breakdown/getUnitReady', 'BreakdownController@getUnitReady');
     Route::resource('breakdown', 'BreakdownController')->except(['edit', 'create']);
     Route::resource('componentCriterias', 'ComponentCriteriaController')->except(['edit', 'create']);
@@ -47,12 +50,13 @@ Route::group(['middleware' => 'auth'], function() {
     Route::get('jetty/productivity', 'JettyController@productivity');
     Route::get('jetty/dwellingTime', 'JettyController@dwellingTime');
     Route::resource('jetty', 'JettyController')->except(['edit', 'create']);
+    Route::get('leadTimeBreakdownUnit', 'LeadTimeBreakdownUnitController@index');
+    Route::get('leadTimeDailyCheck', 'LeadTimeDailyCheckController@index');
     Route::resource('location', 'LocationController')->except(['edit', 'create']);
     Route::resource('lostTimeCategory', 'LostTimeCategoryController')->except(['edit', 'create']);
     Route::resource('material', 'MaterialController')->except(['edit', 'create']);
     Route::resource('office', 'OfficeController')->except(['edit', 'create']);
     Route::resource('owner', 'OwnerController')->except(['edit', 'create']);
-    Route::get('pitstop/leadTimeDailyCheck', 'PitstopController@leadTimeDailyCheck');
     Route::get('pitstop/achievementDailyCheck', 'PitstopController@achievementDailyCheck');
     Route::resource('pitstop', 'PitstopController')->except(['edit', 'create']);
     Route::resource('planCategory', 'PlanCategoryController')->except(['edit', 'create']);
@@ -82,9 +86,9 @@ View::composer('layouts._sidebar', function($view) {
         'PLANT' => [
             'icon' => 'wrench',
             'url' => [
-                'breakdown/leadTimeBreakdownUnit' => 'Lead Time B/D Unit',
-                'pitstop/leadTimeDailyCheck' => 'Lead Time Daily Check',
-                'breakdown/pcr' => 'Breakdown PCR',
+                'leadTimeBreakdownUnit' => 'Lead Time B/D Unit',
+                'leadTimeDailyCheck' => 'Lead Time Daily Check',
+                'breakdownPcr' => 'Breakdown PCR',
                 'pitstop' => 'Daily Check',
                 '<i class="fa fa-database"></i> Master Data' => [
                     'breakdownStatus' => 'Breakdown Statuses',

@@ -27,7 +27,7 @@
                     <th>Component Criteria</th>
                     <th>Tindakan</th>
                     <th>WO Number</th>
-                    @can('updateOrDelete', App\Breakdown::class)
+                    @can('update-breakdown-pcr')
                     <th>Action</th>
                     @endcan
                 </tr>
@@ -49,7 +49,7 @@
                     <td>@{{b.component_criteria}}</td>
                     <td>@{{b.tindakan}}</td>
                     <td>@{{b.wo_number}}</td>
-                    @can('updateOrDelete', App\Breakdown::class)
+                    @can('update-breakdown-pcr')
                     <td>
                         <a href="#" @click="edit(b.id)" class="btn btn-primary btn-xs"><i class="icon icon-pencil"></i></a>
                     </td>
@@ -87,7 +87,7 @@ const app = new Vue({
     methods: {
         getData: function() {
             var _this = this;
-            axios.get('{{url("breakdown/pcr")}}').then(function(r) {
+            axios.get('{{url("breakdownPcr")}}').then(function(r) {
                 _this.breakdowns = r.data;
             })
 
@@ -103,7 +103,7 @@ const app = new Vue({
             _this.formErrors = {};
             _this.error = {};
 
-            axios.get('{{url("breakdown")}}/' + id).then(function(r) {
+            axios.get('{{url("breakdownPcr")}}/' + id).then(function(r) {
                 _this.formData = r.data;
                 $('#time_out').datetimepicker().on('dp.change', function() {
                     _this.formData.time_out = $(this).val();
@@ -119,16 +119,14 @@ const app = new Vue({
             });
         },
         update: function() {
-            if (this.formData.status == 1) {
-                if (!confirm("Anda yakin?")) {
-                    return;
-                }
+            if (this.formData.status == 1 && !confirm('Anda yakin?')) {
+                return;
             }
 
             block('form');
             var _this = this;
             _this.formData.pcr = 1;
-            axios.put('{{url("breakdown")}}/' + _this.formData.id, _this.formData).then(function(r) {
+            axios.put('{{url("breakdownPcr")}}/' + _this.formData.id, _this.formData).then(function(r) {
                 unblock('form');
                 $('#modal-form').modal('hide');
                 toastr["success"]("Data berhasil diupdate");

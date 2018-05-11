@@ -31,4 +31,12 @@ class AuthorizationRequest extends FormRequest
             'controller' => 'required',
         ];
     }
+
+    public function attributes()
+    {
+        return [
+            'user_id' => 'User',
+            'controller' => 'Controller'
+        ];
+    }
 }

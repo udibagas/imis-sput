@@ -984,6 +984,8 @@ __webpack_require__(11);
 
 window.Vue = __webpack_require__(34);
 
+// import datetime from 'vuejs-datetimepicker';
+
 /**
  * Next, we will create a fresh Vue application instance and attach it to
  * the page. Then, you may begin adding components to this application

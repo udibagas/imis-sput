@@ -20,6 +20,8 @@
         "vue": "^2.5.7"
     },
     "dependencies": {
-        "fs": "0.0.1-security"
+        "es2016": "0.0.0",
+        "fs": "0.0.1-security",
+        "vuejs-datetimepicker": "^1.1.5"
     }
 }

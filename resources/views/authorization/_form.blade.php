@@ -15,11 +15,8 @@
                         <label class="control-label col-md-3 col-sm-3 col-xs-12" for="user_id">User
                         </label>
                         <div class="col-md-9 col-sm-9 col-xs-12">
-                            <select class="form-control" v-model="formData.user_id" placeholder="User">
-                                @foreach (App\User::where('super_admin', 0)->orderBy('name', 'ASC')->pluck('name', 'id') as $id => $name):
-                                <option value="{{$id}}">{{$name}}</option>
-                                @endforeach
-                            </select>
+                            <select2 v-model="formData.user_id" :options="users" data-placeholder="User">
+                            </select2>
                             <span v-if="formErrors.user_id" class="help-block">@{{formErrors.user_id[0]}}</span>
                         </div>
                     </div>
@@ -28,7 +25,8 @@
                         <label class="control-label col-md-3 col-sm-3 col-xs-12" for="controller">Controller
                         </label>
                         <div class="col-md-9 col-sm-9 col-xs-12">
-                            <input type="text" v-model="formData.controller" class="form-control" placeholder="Controller">
+                            <select2 :options="modules" v-model="formData.controller" data-placeholder="Controller">
+                            </select2>
                             <span v-if="formErrors.controller" class="help-block">@{{formErrors.controller[0]}}</span>
                         </div>
                     </div>
@@ -36,14 +34,14 @@
                     <table class="table table-striped" style="border-top:2px solid #ddd">
                         <thead>
                             <tr>
-                            @foreach (['view', 'create', 'update', 'delete', 'export', 'import', 'dashboard'] as $a)
+                            @foreach (['view', 'create', 'update', 'delete', 'export', 'import'] as $a)
                                 <th class="text-center">{{$a}}</th>
                             @endforeach
                             </tr>
                         </thead>
                         <tbody>
                             <tr>
-                                @foreach (['view', 'create', 'update', 'delete', 'export', 'import', 'dashboard'] as $a)
+                                @foreach (['view', 'create', 'update', 'delete', 'export', 'import'] as $a)
                                     <td class="text-center">
                                         <input type="checkbox" v-model="formData.{{$a}}">
                                     </td>

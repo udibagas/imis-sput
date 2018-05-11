@@ -137,7 +137,7 @@ const app = new Vue({
     methods: {
         getData: function() {
             var _this = this;
-            axios.get('{{url("breakdown/leadTimeBreakdownUnit")}}').then(function(r) {
+            axios.get('{{url("leadTimeBreakdownUnit")}}').then(function(r) {
                 _this.breakdowns = r.data;
             })
 

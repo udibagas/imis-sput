@@ -4,6 +4,7 @@ namespace App\Providers;
 
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
+use App\Authorization;
 
 class AuthServiceProvider extends ServiceProvider
 {
@@ -60,6 +61,35 @@ class AuthServiceProvider extends ServiceProvider
     {
         $this->registerPolicies();
 
-        //
+        Gate::before(function ($user, $ability) {
+            if ($user->super_admin) {
+                return true;
+            }
+        });
+
+        // Register controller yang bukan resource disini
+        Gate::define('view-leadtime-breakdown-unit', function($user) {
+            return Authorization::where('controller', 'LeadTimeBreakdownUnit')
+                ->where('user_id', $user->id)
+                ->where('view', 1)->count();
+        });
+
+        Gate::define('view-leadtime-daily-check', function($user) {
+            return Authorization::where('controller', 'LeadTimeDailyCheck')
+                ->where('user_id', $user->id)
+                ->where('view', 1)->count();
+        });
+
+        Gate::define('view-breakdown-pcr', function($user) {
+            return Authorization::where('controller', 'BreakdownPcr')
+                ->where('user_id', $user->id)
+                ->where('view', 1)->count();
+        });
+
+        Gate::define('update-breakdown-pcr', function($user) {
+            return Authorization::where('controller', 'BreakdownPcr')
+                ->where('user_id', $user->id)
+                ->where('update', 1)->count();
+        });
     }
 }
