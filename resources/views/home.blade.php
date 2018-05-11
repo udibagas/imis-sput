@@ -8,7 +8,7 @@
     <div class="col-md-4">
         <div class="panel panel-primary">
             <div class="panel-body">
-                <a href="{{url('breakdown/leadTimeBreakdownUnit')}}">
+                <a href="{{url('leadTimeBreakdownUnit')}}">
                     <div class="stack-order">
                         <div class="fa fa-wrench fa-3x"></div>
                         <h1 class="no-margins">PLANT</h1>
