@@ -31,14 +31,8 @@ PLANT:
 
 PR!!!
     - hari ini ngejar breakdown!!!
-    - timepicker belum jalan (URGENT)
     - redirect halaman setelah register
     - delete record lihat dulu kalau dia dipakai table lain (pake foreign key)
-        - employee
-        - breakdown
-        - unit
-        - prajob
-        - pitstop
         BELUM:
         - terminal absensi (location_id)
     - export to excel

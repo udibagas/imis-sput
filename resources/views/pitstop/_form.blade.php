@@ -37,10 +37,14 @@
                         <label class="control-label col-md-3 col-sm-3 col-xs-12" for="shift">Shift
                         </label>
                         <div class="col-md-9 col-sm-9 col-xs-12">
-                            <select class="form-control" v-model="formData.shift" data-placeholder="Shift">
-                                <option value="1">1</option>
-                                <option value="2">2</option>
-                            </select>
+                            <div class="radio radio-inline radio-replace radio-success">
+								<input type="radio" v-model="formData.shift" id="shift_1" value="1">
+								<label for="shift_1">1</label>
+							</div>
+                            <div class="radio radio-inline radio-replace radio-success">
+								<input type="radio" v-model="formData.shift" id="shift_2" value="2">
+								<label for="shift_2">2</label>
+							</div>
                             <span v-if="formErrors.shift" class="help-block">@{{formErrors.shift[0]}}</span>
                         </div>
                     </div>
@@ -49,16 +53,18 @@
                         <label class="control-label col-md-3 col-sm-3 col-xs-12" for="time_in">Time In
                         </label>
                         <div class="col-md-9 col-sm-9 col-xs-12">
-                            <input type="text" v-model="formData.time_in" class="form-control" placeholder="Time In" data-date-format="YYYY-MM-DD HH:mm" id="time_in">
+                            <vue-datetimepicker data-date-format="YYYY-MM-DD HH:mm" placeholder="Time In" v-model="formData.time_in">
+                            </vue-datetimepicker>
                             <span v-if="formErrors.time_in" class="help-block">@{{formErrors.time_in[0]}}</span>
                         </div>
                     </div>
 
-                    <div class="form-group" :class="formErrors.time_out ? 'has-error' : ''">
+                    <div v-show="formData.id != undefined" class="form-group" :class="formErrors.time_out ? 'has-error' : ''">
                         <label class="control-label col-md-3 col-sm-3 col-xs-12" for="time_out">Time Out
                         </label>
                         <div class="col-md-9 col-sm-9 col-xs-12">
-                            <input type="text" v-model="formData.time_out" class="form-control" placeholder="Time out" data-date-format="YYYY-MM-DD HH:mm" id="time_out">
+                            <vue-datetimepicker data-date-format="YYYY-MM-DD HH:mm" placeholder="Time Out" v-model="formData.time_out">
+                            </vue-datetimepicker>
                             <span v-if="formErrors.time_out" class="help-block">@{{formErrors.time_out[0]}}</span>
                         </div>
                     </div>
@@ -67,7 +73,7 @@
                         <label class="control-label col-md-3 col-sm-3 col-xs-12" for="hm">HM
                         </label>
                         <div class="col-md-9 col-sm-9 col-xs-12">
-                            <input type="text" v-model="formData.hm" class="form-control" placeholder="HM">
+                            <input type="number" v-model="formData.hm" class="form-control" placeholder="HM">
                             <span v-if="formErrors.hm" class="help-block">@{{formErrors.hm[0]}}</span>
                         </div>
                     </div>
@@ -85,10 +91,14 @@
                         <label class="control-label col-md-3 col-sm-3 col-xs-12" for="status">Close
                         </label>
                         <div class="col-md-9 col-sm-9 col-xs-12">
-                            <select class="form-control" v-model="formData.status">
-                                <option value="0">No</option>
-                                <option value="1">Yes</option>
-                            </select>
+                            <div class="radio radio-inline radio-replace radio-success">
+								<input type="radio" v-model="formData.status" id="yes" value="1">
+								<label for="yes">YES</label>
+							</div>
+                            <div class="radio radio-inline radio-replace radio-danger">
+								<input type="radio" v-model="formData.status" id="no" value="0">
+								<label for="no">NO</label>
+							</div>
                             <span v-if="formErrors.status" class="help-block">@{{formErrors.status[0]}}</span>
                         </div>
                     </div>

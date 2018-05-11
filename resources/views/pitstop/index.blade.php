@@ -23,7 +23,7 @@
                     <th data-column-id="time_out">Time Out</th>
                     <th data-column-id="description">Description</th>
                     <th data-column-id="hm">HM</th>
-                    <th data-column-id="status" data-formatter="status">Status</th>
+                    <th data-column-id="status" data-formatter="status">Closed</th>
                     @can('updateOrDelete', App\Pitstop::class)
                     <th data-column-id="commands"
                         data-formatter="commands"
@@ -62,7 +62,9 @@
             add: function() {
                 // reset the form
                 this.formTitle = "ADD DAILY CHECK";
-                this.formData = {};
+                this.formData = {
+                    time_in: '{{date("Y-m-d H:i:s")}}'
+                };
                 this.formErrors = {};
                 this.error = {};
                 var _this = this;
@@ -90,13 +92,13 @@
                 });
             },
             edit: function(id) {
-                var t = this;
-                this.formTitle = "EDIT DAILY CHECK";
-                this.formErrors = {};
-                this.error = {};
+                var _this = this;
+                _this.formTitle = "EDIT DAILY CHECK";
+                _this.formErrors = {};
+                _this.error = {};
 
                 axios.get('{{url("pitstop")}}/' + id).then(function(r) {
-                    t.formData = r.data;
+                    _this.formData = r.data;
                     $('#modal-form').modal('show');
                 })
 
@@ -163,14 +165,6 @@
         mounted: function() {
             var t = this;
 
-            $('#time_in').datetimepicker().on('dp.change', function() {
-                t.formData.time_in = $(this).val();
-            });
-
-            $('#time_out').datetimepicker().on('dp.change', function() {
-                t.formData.time_out = $(this).val();
-            });
-
             var grid = $('#bootgrid').bootgrid({
                 rowCount: [10,25,50,100],
                 ajax: true, url: '{{url('pitstop')}}',
@@ -195,8 +189,8 @@
                     },
                     "status": function(column, row) {
                         return row.status
-                            ? '<span class="label label-success">CLOSED</span>'
-                            : '<span class="label label-default">OPEN</span>';
+                            ? '<span class="label label-success">Y</span>'
+                            : '<span class="label label-danger">N</span>';
                     },
                 }
             }).on("loaded.rs.jquery.bootgrid", function() {

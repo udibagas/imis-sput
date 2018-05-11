@@ -47,7 +47,8 @@
             formData: {},
             formErrors: {},
             formTitle: '',
-            error: {}
+            error: {},
+            locations: {!! App\Location::selectRaw('id AS id, name AS text')->orderBy('name', 'ASC')->get() !!},
         },
         methods: {
             add: function() {
@@ -61,7 +62,7 @@
             },
             store: function() {
                 block('form');
-                var t = this;
+                var _this = this;
                 axios.post('{{url("terminalAbsensi")}}', this.formData).then(function(r) {
                     unblock('form');
                     $('#modal-form').modal('hide');
@@ -72,22 +73,23 @@
                 .catch(function(error) {
                     unblock('form');
                     if (error.response.status == 422) {
-                        t.formErrors = error.response.data.errors;
+                        _this.formErrors = error.response.data.errors;
+                        _this.error = {}
                     }
 
                     if (error.response.status == 500) {
-                        t.error = error.response.data;
+                        _this.error = error.response.data;
                     }
                 });
             },
             edit: function(id) {
-                var t = this;
-                this.formTitle = "EDIT TERMINAL ABSENSI";
-                this.formErrors = {};
-                this.error = {};
+                var _this = this;
+                _this.formTitle = "EDIT TERMINAL ABSENSI";
+                _this.formErrors = {};
+                _this.error = {};
 
                 axios.get('{{url("terminalAbsensi")}}/' + id).then(function(r) {
-                    t.formData = r.data;
+                    _this.formData = r.data;
                     $('#modal-form').modal('show');
                 })
 
@@ -100,7 +102,7 @@
             },
             update: function() {
                 block('form');
-                var t = this;
+                var _this = this;
                 axios.put('{{url("terminalAbsensi")}}/' + this.formData.id, this.formData).then(function(r) {
                     unblock('form');
                     $('#modal-form').modal('hide');
@@ -111,11 +113,12 @@
                 .catch(function(error) {
                     unblock('form');
                     if (error.response.status == 422) {
-                        t.formErrors = error.response.data.errors;
+                        _this.formErrors = error.response.data.errors;
+                        _this.error = {}
                     }
 
                     if (error.response.status == 500) {
-                        t.error = error.response.data;
+                        _this.error = error.response.data;
                     }
                 });
             },

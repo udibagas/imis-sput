@@ -26329,3 +26329,26 @@ Vue.component('select2', {
         $(this.$el).off().select2('destroy')
     }
 });
+
+Vue.component('vue-datetimepicker', {
+    props: ['value'],
+    watch: {
+        value: function (value) {
+            $(this.$el).val(value).trigger('change');
+        },
+    },
+    template: '<input type="text" class="form-control">',
+    mounted: function () {
+        var vm = this;
+
+        $(this.$el).datetimepicker()
+        .val(this.value)
+        .trigger('change')
+        .on('dp.change', function (e) {
+            vm.$emit('input', this.value)
+        });
+    },
+    destroyed: function () {
+        $(this.$el).off().datetimepicker('destroy');
+    }
+});

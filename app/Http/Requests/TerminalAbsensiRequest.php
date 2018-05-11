@@ -33,9 +33,26 @@ class TerminalAbsensiRequest extends FormRequest
             ],
             'ip_address' => [
                 'required',
+                'ip',
                 Rule::unique('terminal_absensis')->ignore($terminalAbsensi ? $terminalAbsensi->id : 0)
             ],
             'location_id' => 'required'
+        ];
+    }
+
+    public function attributes()
+    {
+        return [
+            'ip_address' => 'IP Address',
+            'code' => 'Code',
+            'location_id' => 'Location'
+        ];
+    }
+
+    public function messages()
+    {
+        return [
+            'ip_address.ip' => 'IP Address tidak valid'
         ];
     }
 }

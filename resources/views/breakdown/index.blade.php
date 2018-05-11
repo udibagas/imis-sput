@@ -34,7 +34,7 @@
                     <th data-column-id="component_criteria">Component Criteria</th>
                     <th data-column-id="tindakan">Tindakan</th>
                     <th data-column-id="wo_number">WO Number</th>
-                    <th data-column-id="status" data-formatter="status">Status</th>
+                    <th data-column-id="status" data-formatter="status">Closed</th>
                     @can('updateOrDelete', App\Breakdown::class)
                     <th data-column-id="commands" data-width="5%"
                         data-formatter="commands"
@@ -65,17 +65,18 @@
             formData: {},
             formErrors: {},
             formTitle: '',
-            error: {}
+            error: {},
+            units: {!! App\Unit::selectRaw('id AS id, name AS text')->orderBy('name', 'ASC')->get() !!},
+            component_criterias: {!!App\ComponentCriteria::selectRaw('id AS id, CONCAT(code, " - ", description) AS text')->orderBy('code', 'ASC')->get()!!},
+            locations: {!! App\Location::selectRaw('id AS id, name AS text')->orderBy('name', 'ASC')->get() !!},
         },
         methods: {
             add: function() {
-                // reset the form
                 this.formTitle = "ADD BREAKDOWN";
                 this.formData = {};
                 this.formData.time_in = '{{date("Y-m-d H:i")}}';
                 this.formErrors = {};
                 this.error = {};
-                // open form
                 $('#modal-form').modal('show');
             },
             store: function() {
@@ -87,15 +88,17 @@
                     toastr["success"]("Data berhasil ditambahkan");
                     $('#bootgrid').bootgrid('reload');
                 })
-                // validasi
+
                 .catch(function(error) {
                     unblock('form');
                     if (error.response.status == 422) {
                         _this.formErrors = error.response.data.errors;
+                        _this.error = {};
                     }
 
                     if (error.response.status == 500) {
                         _this.error = error.response.data;
+                        _this.formErrors = {};
                     }
                 });
             },
@@ -167,18 +170,7 @@
             },
         },
         mounted: function() {
-
             var t = this;
-
-            $('#time_in').datetimepicker().on('dp.change', function() {
-                t.formData.time_in = $(this).val();
-            });
-
-            $('#time_out').datetimepicker().on('dp.change', function() {
-                t.formData.time_out = $(this).val();
-            });
-
-
             var grid = $('#bootgrid').bootgrid({
                 rowCount: [10,25,50,100],
                 ajax: true, url: '{{url('breakdown')}}',
@@ -208,8 +200,8 @@
                     },
                     "status": function(column, row) {
                         return row.status
-                            ? '<span class="label label-success">CLOSED</span>'
-                            : '<span class="label label-default">OPEN</span>';
+                            ? '<span class="label label-success">Y</span>'
+                            : '<span class="label label-danger">N</span>';
                     },
                 }
             }).on("loaded.rs.jquery.bootgrid", function() {

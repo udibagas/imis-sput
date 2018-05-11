@@ -12,32 +12,29 @@
                         @{{error.file}}:@{{error.line}}
                     </div>
                     <div class="form-group" :class="formErrors.code ? 'has-error' : ''">
-                        <label class="control-label col-md-4 col-sm-4 col-xs-12" for="code">Code
+                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="code">Code
                         </label>
-                        <div class="col-md-8 col-sm-8 col-xs-12">
+                        <div class="col-md-9 col-sm-9 col-xs-12">
                             <input type="text" v-model="formData.code" class="form-control" placeholder="Code">
                             <span v-if="formErrors.code" class="help-block">@{{formErrors.code[0]}}</span>
                         </div>
                     </div>
 
                     <div class="form-group" :class="formErrors.ip_address ? 'has-error' : ''">
-                        <label class="control-label col-md-4 col-sm-4 col-xs-12" for="ip_address">IP Address
+                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="ip_address">IP Address
                         </label>
-                        <div class="col-md-8 col-sm-8 col-xs-12">
+                        <div class="col-md-9 col-sm-9 col-xs-12">
                             <input type="text" v-model="formData.ip_address" class="form-control" placeholder="IP Address">
                             <span v-if="formErrors.ip_address" class="help-block">@{{formErrors.ip_address[0]}}</span>
                         </div>
                     </div>
 
                     <div class="form-group" :class="formErrors.location_id ? 'has-error' : ''">
-                        <label class="control-label col-md-4 col-sm-4 col-xs-12" for="location_id">Location
+                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="location_id">Location
                         </label>
-                        <div class="col-md-8 col-sm-8 col-xs-12">
-                            <select class="form-control" v-model="formData.location_id">
-                                @foreach (\App\Location::orderBy('name', 'ASC')->pluck('name', 'id') as $id => $name)
-                                <option value="{{$id}}">{{$name}}</option>
-                                @endforeach
-                            </select>
+                        <div class="col-md-9 col-sm-9 col-xs-12">
+                            <select2 :options="locations" v-model="formData.location_id" data-placeholder="Location">
+                            </select2>
                             <span v-if="formErrors.location_id" class="help-block">@{{formErrors.location_id[0]}}</span>
                         </div>
                     </div>

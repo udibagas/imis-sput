@@ -16,7 +16,7 @@
                     <th data-column-id="id" data-width="3%">ID</th>
                     <th data-column-id="module">Module</th>
                     <th data-column-id="text">Text</th>
-                    <th data-column-id="status" data-formatter="status">Status</th>
+                    <th data-column-id="status" data-formatter="status">Show</th>
                     @can('updateOrDelete', App\RunningText::class)
                     <th data-column-id="commands" data-width="5%"
                         data-formatter="commands"
@@ -177,8 +177,8 @@
                     },
                     "status": function(column, row) {
                         return row.status
-                            ? '<span class="label label-success">SHOW</span>'
-                            : '<span class="label label-default">HIDDEN</span>';
+                            ? '<span class="label label-success">Y</span>'
+                            : '<span class="label label-default">N</span>';
                     },
                 }
             }).on("loaded.rs.jquery.bootgrid", function(e) {

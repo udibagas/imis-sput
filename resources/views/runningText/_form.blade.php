@@ -24,10 +24,14 @@
                         <label class="control-label col-md-4 col-sm-4 col-xs-12" for="status">Status
                         </label>
                         <div class="col-md-8 col-sm-8 col-xs-12">
-                            <select class="form-control" v-model="formData.status" data-placeholder="Select Status">
-                                <option value="1">Show</option>
-                                <option value="0">Hide</option>
-                            </select>
+                            <div class="radio radio-inline radio-replace radio-success">
+								<input type="radio" v-model="formData.status" id="show" value="1">
+								<label for="show">SHOW</label>
+							</div>
+                            <div class="radio radio-inline radio-replace radio-danger">
+								<input type="radio" v-model="formData.status" id="hide" value="0">
+								<label for="hide">HIDE</label>
+							</div>
                         </div>
                     </div>
 

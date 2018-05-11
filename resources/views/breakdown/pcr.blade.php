@@ -28,7 +28,7 @@
                     <th>Tindakan</th>
                     <th>WO Number</th>
                     @can('update-breakdown-pcr')
-                    <th>Action</th>
+                    <th></th>
                     @endcan
                 </tr>
             </thead>
@@ -60,7 +60,7 @@
     </div>
 
     @can('createOrUpdate', App\Breakdown::class)
-    @include('breakdown._form_pcr')
+    @include('breakdown._form')
     @endcan
 
 </div>
@@ -82,7 +82,9 @@ const app = new Vue({
             SCM: 'info',
             TRM: 'warning',
         },
+        units: {!! App\Unit::selectRaw('id AS id, name AS text')->orderBy('name', 'ASC')->get() !!},
         component_criterias: {!!App\ComponentCriteria::selectRaw('id AS id, CONCAT(code, " - ", description) AS text')->orderBy('code', 'ASC')->get()!!},
+        locations: {!! App\Location::selectRaw('id AS id, name AS text')->orderBy('name', 'ASC')->get() !!},
     },
     methods: {
         getData: function() {
@@ -131,15 +133,17 @@ const app = new Vue({
                 $('#modal-form').modal('hide');
                 toastr["success"]("Data berhasil diupdate");
             })
-            // validasi
+
             .catch(function(error) {
                 unblock('form');
                 if (error.response.status == 422) {
                     _this.formErrors = error.response.data.errors;
+                    _this.error = {};
                 }
 
-                else {
+                if (error.response.status == 500) {
                     _this.error = error.response.data;
+                    _this.formErrors = {};
                 }
             });
         },

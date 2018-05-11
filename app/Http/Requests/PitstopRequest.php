@@ -31,13 +31,13 @@ class PitstopRequest extends FormRequest
         return [
             'unit_id' => [
                 'required',
-                function($attribute, $value, $fail) use ($request) {
-                    $sudah = \App\Pitstop::whereRaw("DATE('$request->time_in') = DATE(NOW()) AND unit_id = $value")->pluck('unit_id')->toArray();
-
-                    if (in_array($value, $sudah)) {
-                        $fail('Unit sudah dicek.');
-                    }
-                }
+                // function($attribute, $value, $fail) use ($request) {
+                //     $sudah = \App\Pitstop::whereRaw("DATE('$request->time_in') = DATE(NOW()) AND unit_id = $value")->pluck('unit_id')->toArray();
+                //
+                //     if (in_array($value, $sudah)) {
+                //         $fail('Unit sudah dicek.');
+                //     }
+                // }
             ],
             'location_id' => 'required',
             'shift' => 'required',

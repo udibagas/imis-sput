@@ -52,10 +52,14 @@
                         <label class="control-label col-md-4 col-sm-4 col-xs-12" for="super_admin">Super Admin
                         </label>
                         <div class="col-md-8 col-sm-8 col-xs-12">
-                            <select class="form-control" v-model="formData.super_admin" data-placeholder="Select Status">
-                                <option value="1">Yes</option>
-                                <option value="0">No</option>
-                            </select>
+                            <div class="radio radio-inline radio-replace radio-success">
+								<input type="radio" v-model="formData.super_admin" id="super_admin_yes" value="1">
+								<label for="super_admin_yes">YES</label>
+							</div>
+                            <div class="radio radio-inline radio-replace radio-danger">
+								<input type="radio" v-model="formData.super_admin" id="super_admin_no" value="0">
+								<label for="super_admin_no">NO</label>
+							</div>
                             <span v-if="formErrors.super_admin" class="help-block">@{{formErrors.super_admin[0]}}</span>
                         </div>
                     </div>
@@ -64,10 +68,14 @@
                         <label class="control-label col-md-4 col-sm-4 col-xs-12" for="active">Active
                         </label>
                         <div class="col-md-8 col-sm-8 col-xs-12">
-                            <select class="form-control" v-model="formData.active" data-placeholder="Select Status">
-                                <option value="1">Yes</option>
-                                <option value="0">No</option>
-                            </select>
+                            <div class="radio radio-inline radio-replace radio-success">
+								<input type="radio" v-model="formData.active" id="active_yes" value="1">
+								<label for="active_yes">YES</label>
+							</div>
+                            <div class="radio radio-inline radio-replace radio-danger">
+								<input type="radio" v-model="formData.active" id="active_no" value="0">
+								<label for="active_no">NO</label>
+							</div>
                             <span v-if="formErrors.active" class="help-block">@{{formErrors.active[0]}}</span>
                         </div>
                     </div>
