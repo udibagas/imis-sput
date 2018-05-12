@@ -155,7 +155,7 @@
         },
         mounted: function() {
 
-            var t = this;
+            var _this = this;
 
             var grid = $('#bootgrid').bootgrid({
                 rowCount: [10,25,50,100],
@@ -175,7 +175,6 @@
                 },
                 formatters: {
                     "commands": function(column, row) {
-                        var t = t;
                         return '@can("update", App\User::class) <a href="#" class="btn btn-info btn-xs c-edit" data-id="'+row.id+'"><i class="icon-pencil"></i></a> @endcan' +
                             '@can("delete", App\User::class) <a href="#" class="btn btn-danger btn-xs c-delete" data-id="'+row.id+'"><i class="icon-trash"></i></a> @endcan';
                     },
@@ -192,11 +191,11 @@
                 }
             }).on("loaded.rs.jquery.bootgrid", function() {
                 grid.find(".c-delete").on("click", function(e) {
-                    t.delete($(this).data("id"));
+                    _this.delete($(this).data("id"));
                 });
 
                 grid.find(".c-edit").on("click", function(e) {
-                    t.edit($(this).data("id"));
+                    _this.edit($(this).data("id"));
                 });
             });
 

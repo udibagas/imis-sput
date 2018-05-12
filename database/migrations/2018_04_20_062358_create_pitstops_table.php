@@ -29,7 +29,7 @@ class CreatePitstopsTable extends Migration
 
         Schema::table('pitstops', function (Blueprint $table) {
             $table->foreign('unit_id')->references('id')->on('units');
-            $table->foreign('locationn_id')->references('id')->on('locationns');
+            $table->foreign('locationn_id')->references('id')->on('locations');
             $table->foreign('user_id')->references('id')->on('users');
         });
     }

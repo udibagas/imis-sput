@@ -188,7 +188,6 @@
                 },
                 formatters: {
                     "commands": function(column, row) {
-                        var t = t;
                         var btn = '@can("update", App\Breakdown::class) <a href="#" class="btn btn-info btn-xs c-edit" data-id="'+row.id+'"><i class="icon-pencil"></i></a> @endcan';
 
                         if (row.update_pcr_time == null) {

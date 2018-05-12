@@ -59,7 +59,9 @@
             formData: {},
             formErrors: {},
             formTitle: '',
-            error: {}
+            error: {},
+            units: {!! App\Unit::selectRaw('id AS id, name AS text')->orderBy('name', 'ASC')->get() !!},
+            fuel_tanks: {!! App\FuelTank::selectRaw('id AS id, name AS text')->orderBy('name', 'ASC')->get() !!},
         },
         methods: {
             add: function() {
@@ -167,6 +169,8 @@
 
             var t = this;
 
+            $('#date').datepicker({format:'yyyy-mm-dd'});
+
             var grid = $('#bootgrid').bootgrid({
                 rowCount: [10,25,50,100],
                 ajax: true, url: '{{url('fuelRefill')}}',
@@ -185,7 +189,6 @@
                 },
                 formatters: {
                     "commands": function(column, row) {
-                        var t = t;
                         return '@can("update", App\FuelRefill::class) <a href="#" class="btn btn-info btn-xs c-edit" data-id="'+row.id+'"><i class="icon-pencil"></i></a> @endcan' +
                             '@can("delete", App\FuelRefill::class) <a href="#" class="btn btn-danger btn-xs c-delete" data-id="'+row.id+'"><i class="icon-trash"></i></a> @endcan';
                     }

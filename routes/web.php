@@ -74,6 +74,7 @@ Route::group(['middleware' => 'auth'], function() {
     Route::resource('unit', 'UnitController')->except(['edit', 'create']);
     Route::resource('unitCategory', 'UnitCategoryController')->except(['edit', 'create']);
     Route::resource('user', 'UserController')->except(['edit', 'create']);
+    Route::get('warningPart', 'WarningPartController@index');
     // end of master data
     Route::get('pasangSurut', 'OperationController@pasangSurut');
     Route::get('game', 'OperationController@game');
@@ -109,6 +110,7 @@ View::composer('layouts._sidebar', function($view) {
             'icon' => 'map-marker',
             'url' => [
                 'fuelTank/dashboard' => 'Dashboard',
+                'warningPart' => 'Warning Parts',
                 'fuelRefill' => 'Fuel Refill',
                 'flowMeter' => 'Flow Meter',
                 '<i class="fa fa-database"></i> Master Data' => [

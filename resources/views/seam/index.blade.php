@@ -168,7 +168,6 @@
                 },
                 formatters: {
                     "commands": function(column, row) {
-                        var t = t;
                         return '@can("update", App\Seam::class) <a href="#" class="btn btn-info btn-xs c-edit" data-id="'+row.id+'"><i class="icon-pencil"></i></a> @endcan' +
                             '@can("delete", App\Seam::class) <a href="#" class="btn btn-danger btn-xs c-delete" data-id="'+row.id+'"><i class="icon-trash"></i></a> @endcan';
                     }
