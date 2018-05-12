@@ -42,7 +42,7 @@ class Authorization extends Model
                 'text' => 'SM',
                 'children' => [
                     ['id' => 'Sm', 'text' => 'Dashboard'],
-                    ['id' => 'PengisianSolas', 'text' => 'Pengisian Solar'],
+                    ['id' => 'FuelRefill', 'text' => 'Fuel Refill'],
                     ['id' => 'FlowMeter', 'text' => 'Flow Meter'],
                 ]
             ], [

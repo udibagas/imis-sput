@@ -28,6 +28,8 @@ class AuthServiceProvider extends ServiceProvider
         'App\Egi' => 'App\Policies\EgiPolicy',
         'App\Employee' => 'App\Policies\EmployeePolicy',
         'App\FuelTank' => 'App\Policies\FuelTankPolicy',
+        'App\FlowMeter' => 'App\Policies\FlowMeterPolicy',
+        'App\FuelRefill' => 'App\Policies\FuelRefillPolicy',
         'App\Jabatan' => 'App\Policies\JabatanPolicy',
         'App\Jetty' => 'App\Policies\JettyPolicy',
         'App\Location' => 'App\Policies\LocationPolicy',

@@ -17,4 +17,9 @@ class Pitstop extends Model
             -where('time_in', '=', $time_in)
             ->count();
     }
+
+    public function getDurasiAttribute()
+    {
+        return 10;
+    }
 }

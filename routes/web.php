@@ -45,6 +45,8 @@ Route::group(['middleware' => 'auth'], function() {
     Route::resource('employee', 'EmployeeController')->except(['edit', 'create']);
     Route::get('fuelTank/ratio', 'FuelTankController@ratio');
     Route::get('fuelTank/dashboard', 'FuelTankController@dashboard');
+    Route::resource('flowMeter', 'FlowMeterController')->except(['edit', 'create']);
+    Route::resource('fuelRefill', 'FuelRefillController')->except(['edit', 'create']);
     Route::resource('fuelTank', 'FuelTankController')->except(['edit', 'create']);
     Route::resource('jabatan', 'JabatanController')->except(['edit', 'create']);
     Route::get('jetty/productivity', 'JettyController@productivity');
@@ -107,7 +109,7 @@ View::composer('layouts._sidebar', function($view) {
             'icon' => 'map-marker',
             'url' => [
                 'fuelTank/dashboard' => 'Dashboard',
-                'pengisianSolar' => 'Pengisian Solar',
+                'fuelRefill' => 'Fuel Refill',
                 'flowMeter' => 'Flow Meter',
                 '<i class="fa fa-database"></i> Master Data' => [
                     'fuelTank' => 'Fuel Tanks',

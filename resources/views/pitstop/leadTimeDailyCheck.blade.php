@@ -66,7 +66,7 @@
                         <td>@{{p.unit}}</td>
                         <td>@{{p.shift}}</td>
                         <td>@{{p.time_in}}</td>
-                        <td></td>
+                        <td>@{{p.durasi}}</td>
                         <td>@{{p.description}}</td>
                     </tr>
                 </tbody>

@@ -17,7 +17,7 @@
                         <label class="control-label col-md-4 col-sm-4 col-xs-12" for="name">Name
                         </label>
                         <div class="col-md-8 col-sm-8 col-xs-12">
-                            <input type="text" v-model="formData.name" class="form-control" placeholder="Name" required>
+                            <input type="text" v-model="formData.name" class="form-control" placeholder="Name">
                             <span v-if="formErrors.name" class="help-block">@{{formErrors.name[0]}}</span>
                         </div>
                     </div>
@@ -26,7 +26,7 @@
                         <label class="control-label col-md-4 col-sm-4 col-xs-12" for="email">Email
                         </label>
                         <div class="col-md-8 col-sm-8 col-xs-12">
-                            <input type="email" v-model="formData.email" class="form-control" placeholder="Email" required>
+                            <input type="email" v-model="formData.email" class="form-control" placeholder="Email">
                             <span v-if="formErrors.email" class="help-block">@{{formErrors.email[0]}}</span>
                         </div>
                     </div>
@@ -41,7 +41,7 @@
                     </div>
 
                     <div class="form-group" :class="formErrors.password ? 'has-error' : ''">
-                        <label class="control-label col-md-4 col-sm-4 col-xs-12" for="password_confirmation">Password Confirmation
+                        <label class="control-label col-md-4 col-sm-4 col-xs-12" for="password_confirmation">Confirm Password
                         </label>
                         <div class="col-md-8 col-sm-8 col-xs-12">
                             <input type="password" v-model="formData.password_confirmation" class="form-control" placeholder="Confirm Password">

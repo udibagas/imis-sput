@@ -25,8 +25,7 @@
                     <th data-column-id="breakdown_category">B/D Type</th>
                     <th data-column-id="breakdown_status">B/D Status</th>
                     <th data-column-id="location">Location</th>
-                    <th data-column-id="hm">HM</th>
-                    <th data-column-id="km">KM</th>
+                    <th data-column-id="hm" data-formatter="hm_km">KM/HM</th>
                     <th data-column-id="time_in">Time In</th>
                     <th data-column-id="time_out">Time Out</th>
                     <th data-column-id="duration">Duration</th>
@@ -202,6 +201,9 @@
                         return row.status
                             ? '<span class="label label-success">Y</span>'
                             : '<span class="label label-danger">N</span>';
+                    },
+                    "hm_km": function(column, row) {
+                        return row.km + "/" + row.hm;
                     },
                 }
             }).on("loaded.rs.jquery.bootgrid", function() {

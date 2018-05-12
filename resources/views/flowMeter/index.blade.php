@@ -4,28 +4,20 @@
 
 <div class="panel panel-primary" id="app">
     <div class="panel-body">
-        <h3 class="pull-left text-primary">DAILY CHECK LOG</h3>
+        <h3 class="pull-left text-primary">OWNER <small>Manage</small></h3>
+        @can('create', App\Owner::class)
         <span class="pull-right" style="margin:15px 0 15px 10px;">
-            @can('create', App\Pitstop::class)
             <a href="#" @click="add" class="btn btn-primary"><i class="icon-plus-circled"></i></a>
-            @endcan
-            <a href="#" class="btn btn-primary"><i class="fa fa-download"></i>EXPORT</a>
-            <a href="#" class="btn btn-primary"><i class="fa fa-upload"></i>IMPORT</a>
         </span>
+        @endcan
         <table class="table table-striped table-hover " id="bootgrid" style="border-top:2px solid #ddd">
             <thead>
                 <tr>
                     <th data-column-id="id" data-width="3%">ID</th>
-                    <th data-column-id="location">Location</th>
-                    <th data-column-id="unit">Unit</th>
-                    <th data-column-id="shift">Shift</th>
-                    <th data-column-id="time_in">Time In</th>
-                    <th data-column-id="time_out">Time Out</th>
+                    <th data-column-id="name">Name</th>
                     <th data-column-id="description">Description</th>
-                    <th data-column-id="hm">HM</th>
-                    <th data-column-id="status" data-formatter="status">Closed</th>
-                    @can('updateOrDelete', App\Pitstop::class)
-                    <th data-column-id="commands"
+                    @can('updateOrDelete', App\Owner::class)
+                    <th data-column-id="commands" data-width="5%"
                         data-formatter="commands"
                         data-sortable="false"
                         data-align="right"
@@ -36,8 +28,8 @@
         </table>
     </div>
 
-    @can('createOrUpdate', App\Pitstop::class)
-    @include('pitstop._form')
+    @can('createOrUpdate', App\Owner::class)
+    @include('owner._form')
     @endcan
 
 </div>
@@ -54,26 +46,22 @@
             formData: {},
             formErrors: {},
             formTitle: '',
-            error: {},
-            units: {!! App\Unit::selectRaw('id AS id, name AS text')->orderBy('name', 'ASC')->get() !!},
-            locations: {!! App\Location::selectRaw('id AS id, name AS text')->orderBy('name', 'ASC')->get() !!},
+            error: {}
         },
         methods: {
             add: function() {
                 // reset the form
-                this.formTitle = "ADD DAILY CHECK";
-                this.formData = {
-                    time_in: '{{date("Y-m-d H:i:s")}}'
-                };
+                this.formTitle = "ADD OWNER";
+                this.formData = {};
                 this.formErrors = {};
                 this.error = {};
-                var _this = this;
+                // open form
                 $('#modal-form').modal('show');
             },
             store: function() {
                 block('form');
                 var t = this;
-                axios.post('{{url("pitstop")}}', this.formData).then(function(r) {
+                axios.post('{{url("owner")}}', this.formData).then(function(r) {
                     unblock('form');
                     $('#modal-form').modal('hide');
                     toastr["success"]("Data berhasil ditambahkan");
@@ -92,13 +80,13 @@
                 });
             },
             edit: function(id) {
-                var _this = this;
-                _this.formTitle = "EDIT DAILY CHECK";
-                _this.formErrors = {};
-                _this.error = {};
+                var t = this;
+                this.formTitle = "EDIT OWNER";
+                this.formErrors = {};
+                this.error = {};
 
-                axios.get('{{url("pitstop")}}/' + id).then(function(r) {
-                    _this.formData = r.data;
+                axios.get('{{url("owner")}}/' + id).then(function(r) {
+                    t.formData = r.data;
                     $('#modal-form').modal('show');
                 })
 
@@ -110,19 +98,15 @@
                 });
             },
             update: function() {
-                if (this.formData.status == 1 && !confirm('Anda yakin?')) {
-                    return;
-                }
-
                 block('form');
                 var t = this;
-                axios.put('{{url("pitstop")}}/' + this.formData.id, this.formData).then(function(r) {
+                axios.put('{{url("owner")}}/' + this.formData.id, this.formData).then(function(r) {
                     unblock('form');
                     $('#modal-form').modal('hide');
                     toastr["success"]("Data berhasil diupdate");
                     $('#bootgrid').bootgrid('reload');
                 })
-
+                // validasi
                 .catch(function(error) {
                     unblock('form');
                     if (error.response.status == 422) {
@@ -140,7 +124,7 @@
                     message: "Anda yakin akan menghapus data ini?",
                     callback: function(r) {
                         if (r == true) {
-                            axios.delete('{{url("pitstop")}}/' + id)
+                            axios.delete('{{url("owner")}}/' + id)
 
                             .then(function(r) {
                                 if (r.data.success == true) {
@@ -163,11 +147,12 @@
             },
         },
         mounted: function() {
+
             var t = this;
 
             var grid = $('#bootgrid').bootgrid({
                 rowCount: [10,25,50,100],
-                ajax: true, url: '{{url('pitstop')}}',
+                ajax: true, url: '{{url('owner')}}',
                 ajaxSettings: {
                     method: 'GET', cache: false,
                     statusCode: {
@@ -184,14 +169,9 @@
                 formatters: {
                     "commands": function(column, row) {
                         var t = t;
-                        return '@can("update", App\Pitstop::class) <a href="#" class="btn btn-info btn-xs c-edit" data-id="'+row.id+'"><i class="icon-pencil"></i></a> @endcan' +
-                            '@can("delete", App\Pitstop::class) <a href="#" class="btn btn-danger btn-xs c-delete" data-id="'+row.id+'"><i class="icon-trash"></i></a> @endcan';
-                    },
-                    "status": function(column, row) {
-                        return row.status
-                            ? '<span class="label label-success">Y</span>'
-                            : '<span class="label label-danger">N</span>';
-                    },
+                        return '@can("update", App\Owner::class) <a href="#" class="btn btn-info btn-xs c-edit" data-id="'+row.id+'"><i class="icon-pencil"></i></a> @endcan' +
+                            '@can("delete", App\Owner::class) <a href="#" class="btn btn-danger btn-xs c-delete" data-id="'+row.id+'"><i class="icon-trash"></i></a> @endcan';
+                    }
                 }
             }).on("loaded.rs.jquery.bootgrid", function() {
                 grid.find(".c-delete").on("click", function(e) {

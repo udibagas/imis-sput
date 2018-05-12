@@ -56,7 +56,10 @@
             add: function() {
                 // reset the form
                 this.formTitle = "ADD USER";
-                this.formData = {};
+                this.formData = {
+                    active: 0,
+                    super_admin: 0
+                };
                 this.formErrors = {};
                 this.error = {};
                 // open form
