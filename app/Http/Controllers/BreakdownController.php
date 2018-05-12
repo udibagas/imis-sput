@@ -113,6 +113,11 @@ class BreakdownController extends Controller
 
         $breakdown->update($input);
         $breakdown->unit->update(['status' => $breakdown->status]);
+
+        if ($request->warning_part && !$breakdown->warningPart) {
+            $breakdown->warningPart()->create();
+        }
+
         return $breakdown;
     }
 

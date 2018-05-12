@@ -92,7 +92,6 @@ Vue.component('vue-datetimepicker', {
     }
 });
 
-// belum jalan
 Vue.component('vue-datepicker', {
     props: ['value'],
     watch: {
@@ -104,7 +103,7 @@ Vue.component('vue-datepicker', {
     mounted: function () {
         var vm = this;
 
-        $(this.$el).datepicker()
+        $(this.$el).datepicker({format:'yyyy-mm-dd'})
         .val(this.value)
         .trigger('change')
         .on('dp.change', function (e) {

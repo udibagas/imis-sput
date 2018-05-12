@@ -46,7 +46,10 @@ Route::group(['middleware' => 'auth'], function() {
     Route::get('fuelTank/ratio', 'FuelTankController@ratio');
     Route::get('fuelTank/dashboard', 'FuelTankController@dashboard');
     Route::resource('flowMeter', 'FlowMeterController')->except(['edit', 'create']);
+
+    Route::get('fuelRefill/getLastRefill/{unit}', 'FuelRefillController@getLastRefill');
     Route::resource('fuelRefill', 'FuelRefillController')->except(['edit', 'create']);
+
     Route::resource('fuelTank', 'FuelTankController')->except(['edit', 'create']);
     Route::resource('jabatan', 'JabatanController')->except(['edit', 'create']);
     Route::get('jetty/productivity', 'JettyController@productivity');
@@ -74,7 +77,7 @@ Route::group(['middleware' => 'auth'], function() {
     Route::resource('unit', 'UnitController')->except(['edit', 'create']);
     Route::resource('unitCategory', 'UnitCategoryController')->except(['edit', 'create']);
     Route::resource('user', 'UserController')->except(['edit', 'create']);
-    Route::get('warningPart', 'WarningPartController@index');
+    Route::resource('warningPart', 'WarningPartController')->only(['index', 'show', 'update']);
     // end of master data
     Route::get('pasangSurut', 'OperationController@pasangSurut');
     Route::get('game', 'OperationController@game');
@@ -110,9 +113,9 @@ View::composer('layouts._sidebar', function($view) {
             'icon' => 'map-marker',
             'url' => [
                 'fuelTank/dashboard' => 'Dashboard',
-                'warningPart' => 'Warning Parts',
-                'fuelRefill' => 'Fuel Refill',
                 'flowMeter' => 'Flow Meter',
+                'fuelRefill' => 'Fuel Refill',
+                'warningPart' => 'Warning Parts',
                 '<i class="fa fa-database"></i> Master Data' => [
                     'fuelTank' => 'Fuel Tanks',
                 ]

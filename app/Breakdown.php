@@ -39,9 +39,12 @@ class Breakdown extends Model
         return sprintf('%02d', $jam).":".sprintf('%02d', $menit).":".sprintf('%02d', $detik);
     }
 
-    public function unit()
-    {
+    public function unit() {
         return $this->belongsTo(Unit::class);
+    }
+
+    public function warningPart() {
+        return $this->hasOne(WarningPart::class);
     }
 
 }

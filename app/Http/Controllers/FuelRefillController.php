@@ -4,7 +4,9 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\FuelRefill;
+use App\Unit;
 use App\Http\Requests\FuelRefillRequest;
+use Carbon\Carbon;
 
 class FuelRefillController extends Controller
 {
@@ -21,8 +23,8 @@ class FuelRefillController extends Controller
         {
             $pageSize = $request->rowCount > 0 ? $request->rowCount : 1000000;
             $request['page'] = $request->current;
-            $sort = $request->sort ? key($request->sort) : 'name';
-            $dir = $request->sort ? $request->sort[$sort] : 'asc';
+            $sort = $request->sort ? key($request->sort) : 'fuel_refills.date';
+            $dir = $request->sort ? $request->sort[$sort] : 'DESC';
 
             $fuelRefill = FuelRefill::selectRaw('
                     fuel_refills.*,
@@ -72,7 +74,16 @@ class FuelRefillController extends Controller
     public function store(FuelRefillRequest $request)
     {
         $this->authorize('create', FuelRefill::class);
-        return FuelRefill::create($request->all());
+        $input = $request->all();
+        $input['user_id'] = auth()->user()->id;
+        $fuelRefill = FuelRefill::create($input);
+
+        $fuelRefill->fuelTank->update([
+            'stock' => $fuelRefill->fuelTank->stock - $request->total_real,
+            'last_stock_time' => Carbon::now()
+        ]);
+
+        return $fuelRefill;
     }
 
     /**
@@ -97,7 +108,15 @@ class FuelRefillController extends Controller
     public function update(FuelRefillRequest $request, FuelRefill $fuelRefill)
     {
         $this->authorize('update', FuelRefill::class);
+        // hitung selisih total_real awal & akhir;
+        $selisih = $request->total_real - $fuelRefill->total_real;
         $fuelRefill->update($request->all());
+
+        $fuelRefill->fuelTank->update([
+            'stock' => $fuelRefill->fuelTank->stock - $selisih,
+            'last_stock_time' => Carbon::now()
+        ]);
+
         return $fuelRefill;
     }
 
@@ -110,6 +129,17 @@ class FuelRefillController extends Controller
     public function destroy(FuelRefill $fuelRefill)
     {
         $this->authorize('delete', FuelRefill::class);
+
+        $fuelRefill->fuelTank->update([
+            'stock' => $fuelRefill->fuelTank->stock + $fuelRefill->total_real,
+            'last_stock_time' => Carbon::now()
+        ]);
+
         return ['success' => $fuelRefill->delete()];
+    }
+
+    public function getLastRefill(Unit $unit)
+    {
+        return FuelRefill::where('unit_id', $unit->id)->latest()->first();
     }
 }

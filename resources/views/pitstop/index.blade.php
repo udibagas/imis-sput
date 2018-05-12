@@ -21,9 +21,10 @@
                     <th data-column-id="shift">Shift</th>
                     <th data-column-id="time_in">Time In</th>
                     <th data-column-id="time_out">Time Out</th>
+                    <th data-column-id="duration">Duration</th>
                     <th data-column-id="description">Description</th>
                     <th data-column-id="hm">HM</th>
-                    <th data-column-id="status" data-formatter="status">Closed</th>
+                    <!-- <th data-column-id="status" data-formatter="status">Closed</th> -->
                     @can('updateOrDelete', App\Pitstop::class)
                     <th data-column-id="commands"
                         data-formatter="commands"
@@ -166,6 +167,10 @@
             var t = this;
 
             var grid = $('#bootgrid').bootgrid({
+                statusMapping: {
+                    0: "danger",
+                    1: "success"
+                },
                 rowCount: [10,25,50,100],
                 ajax: true, url: '{{url('pitstop')}}',
                 ajaxSettings: {

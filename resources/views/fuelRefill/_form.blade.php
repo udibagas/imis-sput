@@ -17,7 +17,8 @@
                         <label class="control-label col-md-3 col-sm-3 col-xs-12" for="date">Date
                         </label>
                         <div class="col-md-9 col-sm-9 col-xs-12">
-                            <input type="text" v-model="formData.date" class="form-control" placeholder="Date" id="date">
+                            <vue-datepicker v-model="formData.date" placeholder="Date">
+                            </vue-datepicker>
                             <span v-if="formErrors.date" class="help-block">@{{formErrors.date[0]}}</span>
                         </div>
                     </div>
@@ -26,7 +27,7 @@
                         <label class="control-label col-md-3 col-sm-3 col-xs-12" for="fuel_tank_id">Fuel Tank
                         </label>
                         <div class="col-md-9 col-sm-9 col-xs-12">
-                            <select2 :options="fuel_tanks" v-model="formData.fuel_tank_id" data-placeholder="Unit">
+                            <select2 :options="fuel_tanks" v-model="formData.fuel_tank_id" data-placeholder="Fuel Tank">
                             </select2>
                             <span v-if="formErrors.fuel_tank_id" class="help-block">@{{formErrors.fuel_tank_id[0]}}</span>
                         </div>
@@ -39,6 +40,16 @@
                             <select2 :options="units" v-model="formData.unit_id" data-placeholder="Unit">
                             </select2>
                             <span v-if="formErrors.unit_id" class="help-block">@{{formErrors.unit_id[0]}}</span>
+                        </div>
+                    </div>
+
+                    <div class="form-group" :class="formErrors.employee_id ? 'has-error' : ''">
+                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="employee_id">Employee
+                        </label>
+                        <div class="col-md-9 col-sm-9 col-xs-12">
+                            <select2 :options="employees" v-model="formData.employee_id" data-placeholder="Employee">
+                            </select2>
+                            <span v-if="formErrors.employee_id" class="help-block">@{{formErrors.employee_id[0]}}</span>
                         </div>
                     </div>
 
@@ -58,33 +69,33 @@
                         </div>
                     </div>
 
-                    <div class="form-group" :class="formErrors.hm || formErrors.km ? 'has-error' : ''">
-                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="hm">KM/HM
+                    <div class="form-group" :class="formErrors.hm ? 'has-error' : ''">
+                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="hm">HM
                         </label>
                         <div class="col-md-9 col-sm-9 col-xs-12">
                             <div class="row">
                                 <div class="col-sm-6">
-                                    <input type="number" v-model="formData.km" class="form-control" placeholder="KM">
-                                    <span v-if="formErrors.km" class="help-block">@{{formErrors.km[0]}}</span>
+                                    <input type="number" v-model="formData.hm" class="form-control" placeholder="HM Now">
+                                    <span v-if="formErrors.hm" class="help-block">@{{formErrors.hm[0]}}</span>
                                 </div>
                                 <div class="col-sm-6">
-                                    <input type="number" v-model="formData.hm" class="form-control" placeholder="HM">
-                                    <span v-if="formErrors.hm" class="help-block">@{{formErrors.hm[0]}}</span>
+                                    <input type="number" v-model="formData.hm_last" class="form-control" placeholder="HM Last" readonly>
                                 </div>
                             </div>
                         </div>
                     </div>
 
-                    <div class="form-group">
-                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="hm">KM/HM Last
+                    <div class="form-group" :class="formErrors.km ? 'has-error' : ''">
+                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="hm">KM
                         </label>
                         <div class="col-md-9 col-sm-9 col-xs-12">
                             <div class="row">
                                 <div class="col-sm-6">
-                                    <input type="number" v-model="formData.km_last" class="form-control" placeholder="KM Last" readonly>
+                                    <input type="number" v-model="formData.km" class="form-control" placeholder="KM Now">
+                                    <span v-if="formErrors.km" class="help-block">@{{formErrors.km[0]}}</span>
                                 </div>
                                 <div class="col-sm-6">
-                                    <input type="number" v-model="formData.hm_last" class="form-control" placeholder="HM Last" readonly>
+                                    <input type="number" v-model="formData.km_last" class="form-control" placeholder="KM Last" readonly>
                                 </div>
                             </div>
                         </div>
@@ -100,8 +111,7 @@
                                     <span v-if="formErrors.total_real" class="help-block">@{{formErrors.total_real[0]}}</span>
                                 </div>
                                 <div class="col-sm-6">
-                                    <input type="number" v-model="formData.total_recommended" class="form-control" placeholder="Recommended">
-                                    <span v-if="formErrors.total_recommended" class="help-block">@{{formErrors.total_recommended[0]}}</span>
+                                    <input type="number" v-model="formData.total_recommended" class="form-control" placeholder="Recommended" readonly>
                                 </div>
                             </div>
                         </div>
@@ -113,12 +123,12 @@
                         <div class="col-md-9 col-sm-9 col-xs-12">
                             <div class="row">
                                 <div class="col-sm-6">
-                                    <input type="text" v-model="formData.time_start" class="form-control" placeholder="Start">
-                                    <span v-if="formErrors.time_start" class="help-block">@{{formErrors.time_start[0]}}</span>
+                                    <input type="text" v-model="formData.start_time" class="form-control" placeholder="Start">
+                                    <span v-if="formErrors.start_time" class="help-block">@{{formErrors.start_time[0]}}</span>
                                 </div>
                                 <div class="col-sm-6">
-                                    <input type="text" v-model="formData.time_finish" class="form-control" placeholder="Finish">
-                                    <span v-if="formErrors.time_finish" class="help-block">@{{formErrors.time_finish[0]}}</span>
+                                    <input type="text" v-model="formData.finish_time" class="form-control" placeholder="Finish">
+                                    <span v-if="formErrors.finish_time" class="help-block">@{{formErrors.finish_time[0]}}</span>
                                 </div>
                             </div>
                         </div>

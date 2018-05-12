@@ -11,4 +11,16 @@ class FuelRefill extends Model
         'km', 'hm', 'km_last', 'hm_last', 'total_recommended',
         'total_real', 'user_id', 'shift', 'start_time', 'finish_time'
     ];
+
+    public function fuelTank() {
+        return $this->belongsTo(FuelTank::class);
+    }
+
+    public function getStartTimeAttribute($value) {
+        return date('H:i', strtotime($value));
+    }
+
+    public function getFinishTimeAttribute($value) {
+        return date('H:i', strtotime($value));
+    }
 }

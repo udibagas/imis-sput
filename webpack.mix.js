@@ -32,6 +32,7 @@ mix.js('resources/assets/js/app.js', 'public/js')
        'resources/assets/theme/js/plugins/metismenu/jquery.metisMenu.js',
        'resources/assets/theme/js/plugins/blockui-master/jquery-ui.js',
        'resources/assets/theme/js/plugins/blockui-master/jquery.blockUI.js',
+       'resources/assets/theme/js/plugins/jasny/jasny.bootstrap.min.js',
        'resources/assets/theme/js/plugins/select2/select2.full.min.js',
        'resources/assets/theme/js/plugins/datepicker/bootstrap-datepicker.js',
        'resources/assets/jquery.bootgrid/jquery.bootgrid.js',
@@ -41,7 +42,6 @@ mix.js('resources/assets/js/app.js', 'public/js')
        'resources/assets/js/bootbox.min.js',
        'resources/assets/js/echarts.min.js',
        'resources/assets/js/marquee.js',
-       'resources/assets/js/jquery-ui.min.js',
        'resources/assets/js/jquery.ui.touch-punch.min.js',
        'resources/assets/js/my.js'
    ], 'public/js/theme.js')

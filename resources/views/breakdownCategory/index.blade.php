@@ -152,6 +152,10 @@
             var t = this;
 
             var grid = $('#bootgrid').bootgrid({
+                statusMapping: {
+                    0: "default",
+                    1: "default"
+                },
                 rowCount: [10,25,50,100],
                 ajax: true, url: '{{url('breakdownCategory')}}',
                 ajaxSettings: {

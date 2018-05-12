@@ -42,8 +42,8 @@ class Authorization extends Model
                 'text' => 'SM',
                 'children' => [
                     ['id' => 'Sm', 'text' => 'Dashboard'],
-                    ['id' => 'FuelRefill', 'text' => 'Fuel Refill'],
                     ['id' => 'FlowMeter', 'text' => 'Flow Meter'],
+                    ['id' => 'FuelRefill', 'text' => 'Fuel Refill'],
                     ['id' => 'WarningPart', 'text' => 'Warning Part'],
                 ]
             ], [

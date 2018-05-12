@@ -1316,7 +1316,7 @@
              * @type String
              * @for statusMapping
              **/
-            0: "successss",
+            0: "success",
 
             /**
              * Specifies a neutral informative change or action.
@@ -1325,7 +1325,7 @@
              * @type String
              * @for statusMapping
              **/
-            1: "infooo",
+            1: "info",
 
             /**
              * Specifies a warning that might need attention.

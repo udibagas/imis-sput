@@ -18,7 +18,7 @@ class CreateWarningPartsTable extends Migration
             $table->integer('breakdown_id')->unsigned();
             $table->string('note')->nullable();
             $table->boolean('status')->default(0);
-            $table->integer('user_id')->unsigned();
+            $table->integer('user_id')->unsigned()->nullable();
             $table->timestamps();
         });
     }

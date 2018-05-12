@@ -20,11 +20,14 @@
                     <th data-column-id="location">Location</th>
                     <th data-column-id="warning_part">Warning Part</th>
                     <th data-column-id="time_in">Time In</th>
-                    <th data-column-id="time_out">Time Out</th>
                     <th data-column-id="duration">Duration</th>
-                    <th data-column-id="status" data-formatter="status">Closed</th>
-                    @can('updateOrDelete', App\WarningPart::class)
-                    <th data-column-id="commands" data-width="5%"
+                    <th data-column-id="note">Note</th>
+                    <th data-column-id="bd_status" data-formatter="bd_status">B/D Status</th>
+                    <!-- <th data-column-id="status" data-formatter="status">Closed</th> -->
+                    <th data-column-id="updated_at">Last Update</th>
+                    <th data-column-id="user">Update By</th>
+                    @can('update', App\WarningPart::class)
+                    <th data-column-id="commands"  data-width="3%"
                         data-formatter="commands"
                         data-sortable="false"
                         data-align="right"
@@ -71,10 +74,8 @@
                 })
 
                 .catch(function(error) {
-                    if (error.response.status == 500) {
-                        var error = error.response.data;
-                        toastr["error"](error.message + ". " + error.file + ":" + error.line)
-                    }
+                    var error = error.response.data;
+                    toastr["error"](error.message + ". " + error.file + ":" + error.line)
                 });
             },
             update: function() {
@@ -102,6 +103,10 @@
         mounted: function() {
             var t = this;
             var grid = $('#bootgrid').bootgrid({
+                statusMapping: {
+                    0: "danger",
+                    1: "success"
+                },
                 rowCount: [10,25,50,100],
                 ajax: true, url: '{{url('warningPart')}}',
                 ajaxSettings: {
@@ -119,25 +124,20 @@
                 },
                 formatters: {
                     "commands": function(column, row) {
-                        var btn = '@can("update", App\WarningPart::class) <a href="#" class="btn btn-info btn-xs c-edit" data-id="'+row.id+'"><i class="icon-pencil"></i></a> @endcan';
-
-                        if (row.update_pcr_time == null) {
-                            btn += '@can("delete", App\WarningPart::class) <a href="#" class="btn btn-danger btn-xs c-delete" data-id="'+row.id+'"><i class="icon-trash"></i></a> @endcan';
-                        }
-
-                        return btn;
+                        return '@can("update", App\WarningPart::class) <a href="#" class="btn btn-info btn-xs c-edit" data-id="'+row.id+'"><i class="icon-pencil"></i></a> @endcan';
                     },
                     "status": function(column, row) {
                         return row.status
                             ? '<span class="label label-success">Y</span>'
                             : '<span class="label label-danger">N</span>';
                     },
+                    "bd_status": function(column, row) {
+                        return row.bd_status
+                            ? '<span class="label label-success">C</span>'
+                            : '<span class="label label-danger">O</span>';
+                    },
                 }
             }).on("loaded.rs.jquery.bootgrid", function() {
-                grid.find(".c-delete").on("click", function(e) {
-                    t.delete($(this).data("id"));
-                });
-
                 grid.find(".c-edit").on("click", function(e) {
                     t.edit($(this).data("id"));
                 });

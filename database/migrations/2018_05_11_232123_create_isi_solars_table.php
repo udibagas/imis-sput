@@ -19,17 +19,17 @@ class CreateIsiSolarsTable extends Migration
             $table->integer('fuel_tank_id')->unsigned();
             $table->integer('unit_id')->unsigned();
             $table->boolean('shift');
-            $table->integer('total_recommended');
+            $table->integer('total_recommended')->nullable();
             $table->integer('total_real');
             $table->integer('km');
             $table->integer('hm');
-            $table->integer('km_last');
-            $table->integer('hm_last');
+            $table->integer('km_last')->nullable();
+            $table->integer('hm_last')->nullable();
             $table->integer('employee_id')->unsigned();
             $table->time('start_time');
             $table->time('finish_time');
             $table->integer('user_id')->unsigned();
-            $table->string('insert_via', 10);
+            $table->string('insert_via', 10)->nullable();
             $table->timestamps();
         });
     }

@@ -54,9 +54,11 @@
                         <th>LOCATION</th>
                         <th>UNIT</th>
                         <th>SHIFT</th>
-                        <th>DATE IN</th>
-                        <th>DURASI</th>
-                        <th>DESKRIPSI</th>
+                        <th>TIME IN</th>
+                        <th>TIME OUT</th>
+                        <th>DURATION</th>
+                        <th>DESCRIPTION</th>
+                        <th>HM</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -66,8 +68,10 @@
                         <td>@{{p.unit}}</td>
                         <td>@{{p.shift}}</td>
                         <td>@{{p.time_in}}</td>
+                        <td>@{{p.time_out}}</td>
                         <td>@{{p.durasi}}</td>
                         <td>@{{p.description}}</td>
+                        <td>@{{p.hm}}</td>
                     </tr>
                 </tbody>
             </table>

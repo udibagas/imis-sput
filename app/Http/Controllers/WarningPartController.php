@@ -27,12 +27,16 @@ class WarningPartController extends Controller
 
             $warningPart = WarningPart::selectRaw('
                     warning_parts.*,
+                    breakdowns.warning_part AS warning_part,
+                    breakdowns.time_in AS time_in,
+                    breakdowns.time_out AS time_out,
+                    breakdowns.status AS bd_status,
                     units.name AS unit,
                     locations.name AS location,
                     CONCAT(breakdown_categories.name, " - ", breakdown_categories.description_en) AS breakdown_category,
                     breakdown_statuses.code AS breakdown_status,
                     unit_categories.name AS unit_category,
-                    CONCAT(component_criterias.code, " - ", component_criterias.description) AS component_criteria
+                    users.name AS user
                 ')
                 ->join('breakdowns', 'breakdowns.id', '=', 'warning_parts.breakdown_id')
                 ->join('units', 'units.id', '=', 'breakdowns.unit_id')
@@ -40,7 +44,7 @@ class WarningPartController extends Controller
                 ->join('locations', 'locations.id', '=', 'breakdowns.location_id')
                 ->join('unit_categories', 'unit_categories.id', '=', 'units.unit_category_id')
                 ->join('breakdown_statuses', 'breakdown_statuses.id', '=', 'breakdowns.breakdown_status_id', 'LEFT')
-                ->join('component_criterias', 'component_criterias.id', '=', 'breakdowns.component_criteria_id', 'LEFT')
+                ->join('users', 'users.id', '=', 'warning_parts.user_id', 'LEFT')
                 ->when($request->searchPhrase, function($query) use ($request) {
                     return $query->where('units.name', 'LIKE', '%'.$request->searchPhrase.'%')
                         ->where('locations.name', 'LIKE', '%'.$request->searchPhrase.'%')
@@ -65,21 +69,6 @@ class WarningPartController extends Controller
     }
 
     /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(WarningPartRequest $request)
-    {
-        $this->authorize('create', WarningPart::class);
-        $input = $request->all();
-        $input['user_id'] = auth()->user()->id;
-        $warningPart = WarningPart::create($input);
-        $warningPart->unit->update(['status' => 0]);
-    }
-
-    /**
      * Display the specified resource.
      *
      * @param  int  $id
@@ -101,19 +90,9 @@ class WarningPartController extends Controller
     public function update(WarningPartRequest $request, WarningPart $warningPart)
     {
         $this->authorize('update', WarningPart::class);
-        $warningPart->update($request->all());
+        $input = $request->all();
+        $input['user_id'] = auth()->user()->id;
+        $warningPart->update($input);
         return $warningPart;
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy(WarningPart $warningPart)
-    {
-        $this->authorize('delete', WarningPart::class);
-        return ['success' => $warningPart->delete()];
     }
 }

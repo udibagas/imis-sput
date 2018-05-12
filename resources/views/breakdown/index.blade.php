@@ -33,7 +33,7 @@
                     <th data-column-id="component_criteria">Component Criteria</th>
                     <th data-column-id="tindakan">Tindakan</th>
                     <th data-column-id="wo_number">WO Number</th>
-                    <th data-column-id="status" data-formatter="status">Closed</th>
+                    <!-- <th data-column-id="status" data-formatter="status">Closed</th> -->
                     @can('updateOrDelete', App\Breakdown::class)
                     <th data-column-id="commands" data-width="5%"
                         data-formatter="commands"
@@ -171,6 +171,10 @@
         mounted: function() {
             var t = this;
             var grid = $('#bootgrid').bootgrid({
+                statusMapping: {
+                    0: "danger",
+                    1: "success"
+                },
                 rowCount: [10,25,50,100],
                 ajax: true, url: '{{url('breakdown')}}',
                 ajaxSettings: {

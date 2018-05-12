@@ -5,11 +5,17 @@
 <div class="panel panel-primary" id="app">
     <div class="panel-body">
         <h3 class="pull-left text-primary">FUEL REFILL <small>Manage</small></h3>
-        @can('create', App\FuelRefill::class)
         <span class="pull-right" style="margin:15px 0 15px 10px;">
+            @can('create', App\FuelRefill::class)
             <a href="#" @click="add" class="btn btn-primary"><i class="icon-plus-circled"></i></a>
+            @endcan
+            @can('export', App\FuelRefill::class)
+            <a href="#" class="btn btn-primary"><i class="icon-download"></i> EXPORT</a>
+            @endcan
+            @can('import', App\FuelRefill::class)
+            <a href="#" class="btn btn-primary"><i class="icon-upload"></i> IMPORT</a>
+            @endcan
         </span>
-        @endcan
         <table class="table table-striped table-hover " id="bootgrid" style="border-top:2px solid #ddd">
             <thead>
                 <tr>
@@ -25,9 +31,9 @@
                     <th data-column-id="km_last">KM Last</th>
                     <th data-column-id="hm_last">HM Last</th>
                     <th data-column-id="employee_name">Employee</th>
-                    <th data-column-id="start_time">Start Time</th>
-                    <th data-column-id="start_time">Finish Time</th>
-                    <th data-column-id="durasi">Duration</th>
+                    <th data-column-id="start_time" data-formatter="time">Time</th>
+                    <!-- <th data-column-id="finish_time">Finish Time</th> -->
+                    <th data-column-id="duration">Duration</th>
                     <th data-column-id="insert_by">Insert By</th>
                     @can('updateOrDelete', App\FuelRefill::class)
                     <th data-column-id="commands" data-width="5%"
@@ -62,12 +68,40 @@
             error: {},
             units: {!! App\Unit::selectRaw('id AS id, name AS text')->orderBy('name', 'ASC')->get() !!},
             fuel_tanks: {!! App\FuelTank::selectRaw('id AS id, name AS text')->orderBy('name', 'ASC')->get() !!},
+            employees: {!! App\Employee::selectRaw('id AS id, CONCAT(nrp, " - ", name) AS text')->orderBy('name', 'ASC')->get() !!},
+        },
+        computed: {
+            unitId: function() {
+                return this.formData.unit_id;
+            }
+        },
+        watch: {
+            unitId: function(val) {
+                if (!val) {
+                    return;
+                }
+
+                var _this = this;
+                axios.get('{{url("fuelRefill/getLastRefill")}}/' + val)
+                .then(function(r) {
+                    _this.formData.km_last = r.data.km;
+                    _this.formData.hm_last = r.data.hm;
+                    _this.$forceUpdate();
+                })
+                .catch(function(error) {
+                    var error = error.response.data;
+                    toastr["error"](error.message + ". " + error.file + ":" + error.line)
+                });
+            }
         },
         methods: {
             add: function() {
                 // reset the form
                 this.formTitle = "ADD FUEL REFILL";
-                this.formData = {};
+                this.formData = {
+                    date: '{{date("Y-m-d")}}',
+                    insert_via: 'web'
+                };
                 this.formErrors = {};
                 this.error = {};
                 // open form
@@ -169,8 +203,6 @@
 
             var t = this;
 
-            $('#date').datepicker({format:'yyyy-mm-dd'});
-
             var grid = $('#bootgrid').bootgrid({
                 rowCount: [10,25,50,100],
                 ajax: true, url: '{{url('fuelRefill')}}',
@@ -191,7 +223,10 @@
                     "commands": function(column, row) {
                         return '@can("update", App\FuelRefill::class) <a href="#" class="btn btn-info btn-xs c-edit" data-id="'+row.id+'"><i class="icon-pencil"></i></a> @endcan' +
                             '@can("delete", App\FuelRefill::class) <a href="#" class="btn btn-danger btn-xs c-delete" data-id="'+row.id+'"><i class="icon-trash"></i></a> @endcan';
-                    }
+                    },
+                    "time": function(column, row) {
+                        return row.start_time + " - " + row.finish_time;
+                    },
                 }
             }).on("loaded.rs.jquery.bootgrid", function() {
                 grid.find(".c-delete").on("click", function(e) {
