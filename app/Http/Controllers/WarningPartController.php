@@ -62,8 +62,8 @@ class WarningPartController extends Controller
 
         return view('warningPart.index', [
             'breadcrumbs' => [
-                'plant/dashboard' => 'Plant',
-                'warningPart' => 'Workshop'
+                'sm' => 'SM',
+                'warningPart' => 'Warning Parts'
             ]
         ]);
     }

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\FlowMeter;
 use App\Http\Requests\FlowMeterRequest;
+use Carbon\Carbon;
 
 class FlowMeterController extends Controller
 {
@@ -62,7 +63,14 @@ class FlowMeterController extends Controller
         $this->authorize('create', FlowMeter::class);
         $input = $request->all();
         $input['user_id'] = auth()->user()->id;
-        return FlowMeter::create($input);
+        $flowMeter = FlowMeter::create($input);
+
+        $flowMeter->fuelTank->update([
+            'stock' => $request->volume_by_sounding,
+            'last_stock_time' => Carbon::now()
+        ]);
+
+        return $flowMeter;
     }
 
     /**
@@ -88,6 +96,12 @@ class FlowMeterController extends Controller
     {
         $this->authorize('update', FlowMeter::class);
         $flowMeter->update($request->all());
+
+        $flowMeter->fuelTank->update([
+            'stock' => $request->volume_by_sounding,
+            'last_stock_time' => Carbon::now()
+        ]);
+        
         return $flowMeter;
     }
 
