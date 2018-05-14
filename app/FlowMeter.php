@@ -11,4 +11,8 @@ class FlowMeter extends Model
         'sounding_start', 'sounding_end', 'volume_by_sounding',
         'user_id', 'status'
     ];
+
+    public function fuelTank() {
+        return $this->belongsTo(FuelTank::class);
+    }
 }
