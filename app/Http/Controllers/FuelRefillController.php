@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\FuelRefill;
 use App\Unit;
+use App\FuelTank;
 use App\Http\Requests\FuelRefillRequest;
 use Carbon\Carbon;
 
@@ -108,15 +109,33 @@ class FuelRefillController extends Controller
     public function update(FuelRefillRequest $request, FuelRefill $fuelRefill)
     {
         $this->authorize('update', FuelRefill::class);
-        // hitung selisih total_real awal & akhir;
-        $selisih = $request->total_real - $fuelRefill->total_real;
+
+        // hitung selisih total_real awal & akhir jika fuel tank sama
+        if ($request->fuel_tank_id == $fuelRefill->fuel_tank_id) {
+            $selisih = $request->total_real - $fuelRefill->total_real;
+            $fuelRefill->fuelTank->update([
+                'stock' => $fuelRefill->fuelTank->stock - $selisih,
+                'last_stock_time' => Carbon::now()
+            ]);
+        }
+
+        // kalau fuel tank beda update kedua fuel tank
+        else {
+            // update fuel tank yang lama
+            $fuelRefill->fuelTank->update([
+                'stock' => $fuelRefill->fuelTank->stock + $fuelRefill->total_real,
+                'last_stock_time' => Carbon::now()
+            ]);
+
+            // update fuel tank yang baru
+            $fuelTank = FuelTank::find($request->fuel_tank_id);
+            $fuelTank->update([
+                'stock' => $fuelTank->stock - $request->total_real,
+                'last_stock_time' => Carbon::now()
+            ]);
+        }
+
         $fuelRefill->update($request->all());
-
-        $fuelRefill->fuelTank->update([
-            'stock' => $fuelRefill->fuelTank->stock - $selisih,
-            'last_stock_time' => Carbon::now()
-        ]);
-
         return $fuelRefill;
     }
 

@@ -21,30 +21,18 @@ class FlowMeterController extends Controller
         {
             $pageSize = $request->rowCount > 0 ? $request->rowCount : 1000000;
             $request['page'] = $request->current;
-            $sort = $request->sort ? key($request->sort) : 'name';
-            $dir = $request->sort ? $request->sort[$sort] : 'asc';
+            $sort = $request->sort ? key($request->sort) : 'flow_meters.date';
+            $dir = $request->sort ? $request->sort[$sort] : 'DESC';
 
             $flowMeter = FlowMeter::selectRaw('
-                    fuel_refills.*,
-                    units.name AS unit,
-                    unit_categories.name AS unit_category,
+                    flow_meters.*,
                     fuel_tanks.name AS fuel_tank,
-                    employees.name AS employee_name,
-                    employees.nrp AS nrp,
                     users.name AS insert_by
                 ')
-                ->join('units', 'units.id', '=', 'fuel_refills.unit_id')
-                ->join('fuel_tanks', 'fuel_tanks.id', '=', 'fuel_refills.fuel_tank_id')
-                ->join('employees', 'employees.id', '=', 'fuel_refills.employee_id')
-                ->join('users', 'users.id', '=', 'fuel_refills.user_id')
-                ->join('unit_categories', 'unit_categories.id', '=', 'units.unit_category_id')
+                ->join('fuel_tanks', 'fuel_tanks.id', '=', 'flow_meters.fuel_tank_id')
+                ->join('users', 'users.id', '=', 'flow_meters.user_id', 'LEFT')
                 ->when($request->searchPhrase, function($query) use ($request) {
-                    return $query->where('units.name', 'LIKE', '%'.$request->searchPhrase.'%')
-                        ->orWhere('fuel_tanks.name', 'LIKE', '%'.$request->searchPhrase.'%')
-                        ->orWhere('employees.nrp', 'LIKE', '%'.$request->searchPhrase.'%')
-                        ->orWhere('users.name', 'LIKE', '%'.$request->searchPhrase.'%')
-                        ->orWhere('unit_categories.name', 'LIKE', '%'.$request->searchPhrase.'%')
-                        ->orWhere('employees.name', 'LIKE', '%'.$request->searchPhrase.'%');
+                    return $query->where('fuel_tanks.name', 'LIKE', '%'.$request->searchPhrase.'%');
                 })->orderBy($sort, $dir)->paginate($pageSize);
 
             return [
@@ -72,7 +60,9 @@ class FlowMeterController extends Controller
     public function store(FlowMeterRequest $request)
     {
         $this->authorize('create', FlowMeter::class);
-        return FlowMeter::create($request->all());
+        $input = $request->all();
+        $input['user_id'] = auth()->user()->id;
+        return FlowMeter::create($input);
     }
 
     /**

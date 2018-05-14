@@ -99,14 +99,11 @@ class FuelTankController extends Controller
 
     public function dashboard(Request $request)
     {
-        $this->authorize('dashboard', FuelTank::class);
-
         if ($request->ajax()) {
             return FuelTank::orderBy('name', 'ASC')->get();
         }
 
         return view('fuelTank.dashboard', [
-            'fuelTanks' => FuelTank::orderBy('name', 'ASC')->get(),
             'egi'=> Egi::orderBy('name', 'ASC')->get(),
             'breadcrumbs' => [
                 '0' => 'SM',

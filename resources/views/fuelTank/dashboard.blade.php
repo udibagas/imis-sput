@@ -5,7 +5,8 @@
     <div class="panel panel-primary">
         <div class="panel-body">
             <form class="form-inline pull-right" action="" method="get" style="margin-bottom:0;">
-                <input type="text" v-model="period" class="form-control" placeholder="Periode" id="period">
+                <vue-datepicker v-model="period" placeholder="Periode">
+                </vue-datepicker>
                 <button type="button" name="button" class="btn btn-primary"><i class="icon icon-search"></i></button>
             </form>
             <div class="clearfix"> </div>
@@ -120,14 +121,13 @@ const app = new Vue({
                         data: dataStock
                     }]
                 });
+
                 setTimeout(_this.requestDataFuelStok, 3000);
             })
 
             .catch(function(error) {
-                if (error.response.status == 500) {
-                    var error = error.response.data;
-                    toastr["error"](error.message + ". " + error.file + ":" + error.line)
-                }
+                var error = error.response.data;
+                toastr["error"](error.message + ". " + error.file + ":" + error.line)
             });
         },
         requestDataFuelConsumption: function() {
@@ -136,18 +136,12 @@ const app = new Vue({
             })
 
             .catch(function(error) {
-                if (error.response.status == 500) {
-                    var error = error.response.data;
-                    toastr["error"](error.message + ". " + error.file + ":" + error.line)
-                }
+                var error = error.response.data;
+                toastr["error"](error.message + ". " + error.file + ":" + error.line)
             });
         }
     },
     mounted: function() {
-        $('#period').datepicker({
-            format: 'yyyy-mm-dd',
-            autoclose: true
-        });
 
         this.chartRatio = echarts.init(document.getElementById('fuel-ratio'));
         this.chartRatio.setOption({
@@ -230,7 +224,7 @@ const app = new Vue({
             xAxis: {
                 type: 'category',
                 boundaryGap: true,
-                data:[@foreach ($fuelTanks as $f) '{{$f->name}}', @endforeach],
+                data:{!! App\FuelTank::orderBy('name', 'ASC')->pluck('name') !!},
             },
             yAxis: {
                 type: 'value',

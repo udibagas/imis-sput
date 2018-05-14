@@ -37,4 +37,18 @@ class FlowMeterRequest extends FormRequest
             'volume_by_sounding' => 'required',
         ];
     }
+
+    public function attributes()
+    {
+        return [
+            'date' => 'Date',
+            'status' => 'Status',
+            'fuel_tank_id' => 'Fuel Tank',
+            'flowmeter_start' => 'Flowmeter Start',
+            'flowmeter_end' => 'Flowmeter End',
+            'sounding_start' => 'Sounding Start',
+            'sounding_end' => 'Sounding End',
+            'volume_by_sounding' => 'Volume By Sounding',
+        ];
+    }
 }

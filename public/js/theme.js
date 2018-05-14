@@ -26340,7 +26340,7 @@ Vue.component('vue-datetimepicker', {
         .val(this.value)
         .trigger('change')
         .on('dp.change', function (e) {
-            vm.$emit('input', this.value)
+            vm.$emit('input', this.value);
         });
     },
     destroyed: function () {
@@ -26359,11 +26359,11 @@ Vue.component('vue-datepicker', {
     mounted: function () {
         var vm = this;
 
-        $(this.$el).datepicker({format:'yyyy-mm-dd'})
+        $(this.$el).datepicker({format:'yyyy-mm-dd', autoclose:true})
         .val(this.value)
         .trigger('change')
-        .on('dp.change', function (e) {
-            vm.$emit('input', this.value)
+        .on('change', function (e) {
+            vm.$emit('input', this.value);
         });
     },
     destroyed: function () {
