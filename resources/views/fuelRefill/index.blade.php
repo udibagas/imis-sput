@@ -10,10 +10,7 @@
             <a href="#" @click="add" class="btn btn-primary"><i class="icon-plus-circled"></i></a>
             @endcan
             @can('export', App\FuelRefill::class)
-            <a href="#" class="btn btn-primary"><i class="icon-download"></i> EXPORT</a>
-            @endcan
-            @can('import', App\FuelRefill::class)
-            <a href="#" class="btn btn-primary"><i class="icon-upload"></i> IMPORT</a>
+            <a href="#" @click="openExportForm" class="btn btn-primary"><i class="icon-download"></i> EXPORT</a>
             @endcan
         </span>
         <table class="table table-striped table-hover " id="bootgrid" style="border-top:2px solid #ddd">
@@ -25,15 +22,43 @@
                     <th data-column-id="unit">Unit</th>
                     <th data-column-id="unit_category">Unit Category</th>
                     <th data-column-id="shift">Shift</th>
-                    <th data-column-id="total_real">QTY</th>
-                    <th data-column-id="km">KM</th>
-                    <th data-column-id="hm">HM</th>
-                    <th data-column-id="km_last">KM Last</th>
-                    <th data-column-id="hm_last">HM Last</th>
+
+                    <th data-column-id="total_real"
+                        data-align="right"
+                        data-header-align="right"
+                        data-formatter="total_real">QTY</th>
+
+                    <th data-column-id="km"
+                        data-align="right"
+                        data-header-align="right"
+                        data-formatter="km">KM</th>
+
+                    <th data-column-id="hm"
+                        data-align="right"
+                        data-header-align="right"
+                        data-formatter="hm">HM</th>
+
+                    <th data-column-id="km_last"
+                        data-align="right"
+                        data-header-align="right"
+                        data-formatter="km_last">KM Last</th>
+
+                    <th data-column-id="hm_last"
+                        data-align="right"
+                        data-header-align="right"
+                        data-formatter="hm_last">HM Last</th>
+
                     <th data-column-id="employee_name">Employee</th>
-                    <th data-column-id="start_time" data-formatter="time">Time</th>
-                    <!-- <th data-column-id="finish_time">Finish Time</th> -->
-                    <th data-column-id="duration">Duration</th>
+                    <th data-column-id="start_time"
+                        data-align="center"
+                        data-header-align="center"
+                        data-formatter="time">Time</th>
+
+                    <th data-column-id="duration"
+                        data-align="center"
+                        data-header-align="center"
+                        data-formatter="duration">Duration</th>
+
                     <th data-column-id="insert_by">Insert By</th>
                     @can('updateOrDelete', App\FuelRefill::class)
                     <th data-column-id="commands" data-width="5%"
@@ -51,6 +76,10 @@
     @include('fuelRefill._form')
     @endcan
 
+    @can('export', App\FuelRefill::class)
+    @include('fuelRefill._form_export')
+    @endcan
+
 </div>
 
 @endsection
@@ -66,6 +95,10 @@
             formErrors: {},
             formTitle: '',
             error: {},
+            exportRange: {
+                from: '{{date("Y-m-d")}}',
+                to: '{{date("Y-m-d")}}'
+            },
             units: {!! App\Unit::selectRaw('id AS id, name AS text')->orderBy('name', 'ASC')->get() !!},
             fuel_tanks: {!! App\FuelTank::selectRaw('id AS id, name AS text')->orderBy('name', 'ASC')->get() !!},
             employees: {!! App\Employee::selectRaw('id AS id, CONCAT(nrp, " - ", name) AS text')->orderBy('name', 'ASC')->get() !!},
@@ -95,6 +128,20 @@
             }
         },
         methods: {
+            openExportForm: function() {
+                $('#modal-form-export').modal('show');
+            },
+            doExport: function() {
+                // TODO: validate input first
+                $('#modal-form-export').modal('hide');
+                window.location = '{{url("fuelRefill/export")}}?from=' + this.exportRange.from + '&to=' + this.exportRange.to;
+            },
+            formatNumber: function(v) {
+                return parseFloat(v)
+                    .toFixed(0)
+                    .toString()
+                    .replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+            },
             add: function() {
                 // reset the form
                 this.formTitle = "ADD FUEL REFILL";
@@ -225,7 +272,25 @@
                             '@can("delete", App\FuelRefill::class) <a href="#" class="btn btn-danger btn-xs c-delete" data-id="'+row.id+'"><i class="icon-trash"></i></a> @endcan';
                     },
                     "time": function(column, row) {
-                        return row.start_time + " - " + row.finish_time;
+                        return row.start_time + "-" + row.finish_time;
+                    },
+                    duration: function(column, row) {
+                        return '99:99';
+                    },
+                    total_real: function(column, row) {
+                        return t.formatNumber(row.total_real);
+                    },
+                    km: function(column, row) {
+                        return t.formatNumber(row.km);
+                    },
+                    hm: function(column, row) {
+                        return t.formatNumber(row.hm);
+                    },
+                    km_last: function(column, row) {
+                        return t.formatNumber(row.km_last);
+                    },
+                    hm_last: function(column, row) {
+                        return t.formatNumber(row.hm_last);
                     },
                 }
             }).on("loaded.rs.jquery.bootgrid", function() {

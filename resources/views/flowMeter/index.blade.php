@@ -10,10 +10,7 @@
             <a href="#" @click="add" class="btn btn-primary"><i class="icon-plus-circled"></i></a>
             @endcan
             @can('export', App\FlowMeter::class)
-            <a href="#" class="btn btn-primary"><i class="icon-download"></i> EXPORT</a>
-            @endcan
-            @can('import', App\FlowMeter::class)
-            <a href="#" class="btn btn-primary"><i class="icon-upload"></i> IMPORT</a>
+            <a href="#" @click="openExportForm" class="btn btn-primary"><i class="icon-download"></i> EXPORT</a>
             @endcan
         </span>
         <table class="table table-striped table-hover " id="bootgrid" style="border-top:2px solid #ddd">
@@ -21,7 +18,7 @@
                 <tr>
                     <th data-column-id="id" data-width="3%">ID</th>
                     <th data-column-id="date">Date</th>
-                    
+
                     <th data-column-id="trx"
                         data-formatter="trx"
                         data-sortable="false">Trx</th>
@@ -31,18 +28,22 @@
 
                     <th data-column-id="flowmeter_start"
                         data-align="right"
+                        data-formatter="flowmeter_start"
                         data-header-align="right">Flowmeter Start</th>
 
                     <th data-column-id="flowmeter_end"
                         data-align="right"
+                        data-formatter="flowmeter_end"
                         data-header-align="right">Flowmeter End</th>
 
                     <th data-column-id="sounding_start"
                         data-align="right"
+                        data-formatter="sounding_start"
                         data-header-align="right">Sounding Start</th>
 
                     <th data-column-id="sounding_end"
                         data-align="right"
+                        data-formatter="sounding_end"
                         data-header-align="right">Sounding End</th>
 
                     <th data-column-id="volume_by_flowmeter"
@@ -53,6 +54,7 @@
 
                     <th data-column-id="volume_by_sounding"
                         data-align="right"
+                        data-formatter="volume_by_sounding"
                         data-header-align="right">Volume By Sounding</th>
 
                     <th data-sortable="false"
@@ -76,6 +78,10 @@
     @include('flowMeter._form')
     @endcan
 
+    @can('export', App\FlowMeter::class)
+    @include('flowMeter._form_export')
+    @endcan
+
 </div>
 
 @endsection
@@ -91,6 +97,10 @@
             formErrors: {},
             formTitle: '',
             error: {},
+            exportRange: {
+                from: '{{date("Y-m-d")}}',
+                to: '{{date("Y-m-d")}}'
+            },
             statuses: {
                 'T': 'Transfer',
                 'R': 'Receive',
@@ -99,6 +109,20 @@
             fuel_tanks: {!! App\FuelTank::selectRaw('id AS id, name AS text')->orderBy('name', 'ASC')->get() !!},
         },
         methods: {
+            openExportForm: function() {
+                $('#modal-form-export').modal('show');
+            },
+            doExport: function() {
+                // TODO: validate input first
+                $('#modal-form-export').modal('hide');
+                window.location = '{{url("flowMeter/export")}}?from=' + this.exportRange.from + '&to=' + this.exportRange.to;
+            },
+            formatNumber: function(v) {
+                return parseFloat(v)
+                    .toFixed(0)
+                    .toString()
+                    .replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+            },
             add: function() {
                 this.formTitle = "ADD FLOW METER";
                 this.formData = {
@@ -230,14 +254,29 @@
                         return row.flowmeter_start - row.flowmeter_end > 0 ? 'IN' : 'OUT';
                     },
                     "volume_by_flowmeter": function(column, row) {
-                        return row.flowmeter_end - row.flowmeter_start;
+                        return t.formatNumber(row.flowmeter_end - row.flowmeter_start);
                     },
                     "selisih": function(column, row) {
-                        return row.volume_by_sounding - (row.flowmeter_end - row.flowmeter_start);
+                        return t.formatNumber(row.volume_by_sounding - (row.flowmeter_end - row.flowmeter_start));
                     },
                     "status": function(column, row) {
                         return t.statuses[row.status];
-                    }
+                    },
+                    flowmeter_start: function(column, row) {
+                        return t.formatNumber(row.flowmeter_start);
+                    },
+                    flowmeter_end: function(column, row) {
+                        return t.formatNumber(row.flowmeter_end);
+                    },
+                    sounding_start: function(column, row) {
+                        return t.formatNumber(row.sounding_start);
+                    },
+                    sounding_end: function(column, row) {
+                        return t.formatNumber(row.sounding_end);
+                    },
+                    volume_by_sounding: function(column, row) {
+                        return t.formatNumber(row.volume_by_sounding);
+                    },
                 }
             }).on("loaded.rs.jquery.bootgrid", function() {
                 grid.find(".c-delete").on("click", function(e) {

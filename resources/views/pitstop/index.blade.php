@@ -9,8 +9,9 @@
             @can('create', App\Pitstop::class)
             <a href="#" @click="add" class="btn btn-primary"><i class="icon-plus-circled"></i></a>
             @endcan
-            <a href="#" class="btn btn-primary"><i class="fa fa-download"></i>EXPORT</a>
-            <a href="#" class="btn btn-primary"><i class="fa fa-upload"></i>IMPORT</a>
+            @can('create', App\Pitstop::class)
+            <a href="#" @click="openExportForm" class="btn btn-primary"><i class="fa fa-download"></i>EXPORT</a>
+            @endcan
         </span>
         <table class="table table-striped table-hover " id="bootgrid" style="border-top:2px solid #ddd">
             <thead>
@@ -18,6 +19,7 @@
                     <th data-column-id="id" data-width="3%">ID</th>
                     <th data-column-id="location">Location</th>
                     <th data-column-id="unit">Unit</th>
+                    <th data-column-id="unit_category">Unit Category</th>
                     <th data-column-id="shift">Shift</th>
                     <th data-column-id="time_in">Time In</th>
                     <th data-column-id="time_out">Time Out</th>
@@ -41,6 +43,10 @@
     @include('pitstop._form')
     @endcan
 
+    @can('export', App\Pitstop::class)
+    @include('breakdown._form_export')
+    @endcan
+
 </div>
 
 @endsection
@@ -56,10 +62,22 @@
             formErrors: {},
             formTitle: '',
             error: {},
+            exportRange: {
+                from: '{{date("Y-m-d")}}',
+                to: '{{date("Y-m-d")}}'
+            },
             units: {!! App\Unit::selectRaw('id AS id, name AS text')->orderBy('name', 'ASC')->get() !!},
             locations: {!! App\Location::selectRaw('id AS id, name AS text')->orderBy('name', 'ASC')->get() !!},
         },
         methods: {
+            openExportForm: function() {
+                $('#modal-form-export').modal('show');
+            },
+            doExport: function() {
+                // TODO: validate input first
+                $('#modal-form-export').modal('hide');
+                window.location = '{{url("pitstop/export")}}?from=' + this.exportRange.from + '&to=' + this.exportRange.to;
+            },
             add: function() {
                 // reset the form
                 this.formTitle = "ADD DAILY CHECK";

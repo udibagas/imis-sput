@@ -6,6 +6,8 @@ use Illuminate\Http\Request;
 use App\FlowMeter;
 use App\Http\Requests\FlowMeterRequest;
 use Carbon\Carbon;
+use App\Exports\FlowMeterExport;
+use Excel;
 
 class FlowMeterController extends Controller
 {
@@ -101,7 +103,7 @@ class FlowMeterController extends Controller
             'stock' => $request->volume_by_sounding,
             'last_stock_time' => Carbon::now()
         ]);
-        
+
         return $flowMeter;
     }
 
@@ -115,5 +117,11 @@ class FlowMeterController extends Controller
     {
         $this->authorize('delete', FlowMeter::class);
         return ['success' => $flowMeter->delete()];
+    }
+
+    public function export(Request $request)
+    {
+        $this->authorize('export', FlowMeter::class);
+        return Excel::download(new FlowMeterExport($request), "flowmeter-{$request->from}-to-{$request->to}.xlsx");
     }
 }

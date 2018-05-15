@@ -1,10 +1,10 @@
 Dropdown di daily check sesuai yang dijadwalkan. Perlu?
 FOKUS ke breakdown & daily check!!!
-lanjut ke fuel
 perhitungan durasi pakai moment.js
 validasi kalau waktu mundur (time_in & out untuk breakdown & daily check)
 parsing nilai untuk decimal ==> integer
 disable non sortable field
+export to excel : fuel refill, warning part
 
 Saran:
     - Bagaimana kalau leadtime breakdown unit disatuin sama breakdown PCR?
@@ -64,7 +64,7 @@ Prioritas module (masing2 2 minggu):
         - lead time breakdown
     - Fuel  (29 april)
         - Flow meter
-        - pengisian bbm
+        - fuel refill
         - dashboard
     - Operation (13 mei)
         - hourly monitoring barging

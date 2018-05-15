@@ -150,6 +150,7 @@ class BreakdownController extends Controller
 
     public function export(Request $request)
     {
+        $this->authorize('export', Breakdown::class);
         return Excel::download(new BreakdownExport($request), "breakdowns-{$request->from}-to-{$request->to}.xlsx");
     }
 }

@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Pitstop;
 use App\Http\Requests\PitstopRequest;
+use App\Exports\PitstopExport;
+use Excel;
 
 class PitstopController extends Controller
 {
@@ -27,14 +29,17 @@ class PitstopController extends Controller
             $pitstop = Pitstop::selectRaw('
                     pitstops.*,
                     units.name AS unit,
+                    unit_categories.name AS unit_category,
                     locations.name AS location
                 ')
                 ->join('units', 'units.id', '=', 'pitstops.unit_id')
+                ->join('unit_categories', 'unit_categories.id', '=', 'units.unit_category_id')
                 ->join('locations', 'locations.id', '=', 'pitstops.location_id')
                 ->when($request->searchPhrase, function($query) use ($request) {
-                    return $query->where('stations.name', 'LIKE', '%'.$request->searchPhrase.'%')
+                    return $query->where('locations.name', 'LIKE', '%'.$request->searchPhrase.'%')
                         ->orWhere('units.name', 'LIKE', '%'.$request->searchPhrase.'%')
-                        ->orWhere('pitstop.description', 'LIKE', '%'.$request->searchPhrase.'%');
+                        ->orWhere('unit_categories.name', 'LIKE', '%'.$request->searchPhrase.'%')
+                        ->orWhere('pitstops.description', 'LIKE', '%'.$request->searchPhrase.'%');
                 })->orderBy($sort, $dir)->paginate($pageSize);
 
             return [
@@ -112,5 +117,11 @@ class PitstopController extends Controller
             'plan' => \App\DailyCheckSetting::where('day', date('w'))->count(),
             'actual' => Pitstop::where('status', 1)->count()
         ];
+    }
+
+    public function export(Request $request)
+    {
+        $this->authorize('export', Pitstop::class);
+        return Excel::download(new PitstopExport($request), "daily-check-{$request->from}-to-{$request->to}.xlsx");
     }
 }

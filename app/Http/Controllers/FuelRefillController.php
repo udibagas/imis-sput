@@ -8,6 +8,8 @@ use App\Unit;
 use App\FuelTank;
 use App\Http\Requests\FuelRefillRequest;
 use Carbon\Carbon;
+use App\Exports\FuelRefillExport;
+use Excel;
 
 class FuelRefillController extends Controller
 {
@@ -160,5 +162,11 @@ class FuelRefillController extends Controller
     public function getLastRefill(Unit $unit)
     {
         return FuelRefill::where('unit_id', $unit->id)->latest()->first();
+    }
+
+    public function export(Request $request)
+    {
+        $this->authorize('export', FuelRefill::class);
+        return Excel::download(new FuelRefillExport($request), "fuel-refill-{$request->from}-to-{$request->to}.xlsx");
     }
 }

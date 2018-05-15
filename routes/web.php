@@ -50,9 +50,12 @@ Route::group(['middleware' => 'auth'], function() {
 
     Route::get('fuelTank/ratio', 'FuelTankController@ratio');
     Route::get('fuelTank/dashboard', 'FuelTankController@dashboard');
+
+    Route::get('flowMeter/export', 'FlowMeterController@export');
     Route::resource('flowMeter', 'FlowMeterController')->except(['edit', 'create']);
 
     Route::get('fuelRefill/getLastRefill/{unit}', 'FuelRefillController@getLastRefill');
+    Route::get('fuelRefill/export', 'FuelRefillController@export');
     Route::resource('fuelRefill', 'FuelRefillController')->except(['edit', 'create']);
 
     Route::resource('fuelTank', 'FuelTankController')->except(['edit', 'create']);
@@ -67,8 +70,11 @@ Route::group(['middleware' => 'auth'], function() {
     Route::resource('material', 'MaterialController')->except(['edit', 'create']);
     Route::resource('office', 'OfficeController')->except(['edit', 'create']);
     Route::resource('owner', 'OwnerController')->except(['edit', 'create']);
+
+    Route::get('pitstop/export', 'PitstopController@export');
     Route::get('pitstop/achievementDailyCheck', 'PitstopController@achievementDailyCheck');
     Route::resource('pitstop', 'PitstopController')->except(['edit', 'create']);
+
     Route::resource('planCategory', 'PlanCategoryController')->except(['edit', 'create']);
     Route::resource('position', 'PositionController')->except(['edit', 'create']);
     Route::resource('problemProductivityCategory', 'ProblemProductivityCategoryController')->except(['edit', 'create']);

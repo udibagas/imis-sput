@@ -11,6 +11,8 @@ class Pitstop extends Model
         'shift', 'description', 'hm', 'status'
     ];
 
+    protected $appends = ['duration'];
+
     public function isDuplicate($unit_id, $time_in)
     {
         return self::where('unit_id', '=', $unit_id)
@@ -18,8 +20,11 @@ class Pitstop extends Model
             ->count();
     }
 
-    public function getDurasiAttribute()
+    public function getDurationAttribute()
     {
-        return 10;
+        $in = new \DateTime($this->time_in);
+        $out = new \DateTime($this->time_out);
+        $interval = $in->diff($out);
+        return $interval->format('%H:%i');
     }
 }
