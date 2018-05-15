@@ -2,7 +2,9 @@ Dropdown di daily check sesuai yang dijadwalkan. Perlu?
 FOKUS ke breakdown & daily check!!!
 lanjut ke fuel
 perhitungan durasi pakai moment.js
-validasi kalau waktu mundur
+validasi kalau waktu mundur (time_in & out untuk breakdown & daily check)
+parsing nilai untuk decimal ==> integer
+disable non sortable field
 
 Saran:
     - Bagaimana kalau leadtime breakdown unit disatuin sama breakdown PCR?

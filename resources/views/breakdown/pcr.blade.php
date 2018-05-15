@@ -21,11 +21,12 @@
                     <th>HM</th>
                     <th>KM</th>
                     <th>Time In</th>
-                    <th>Time Out</th>
+                    <!-- <th>Time Out</th> -->
                     <th>Duration</th>
                     <th>Problem</th>
                     <th>Component Criteria</th>
-                    <th>Tindakan</th>
+                    <!-- <th>Tindakan</th> -->
+                    <th>Warning Part</th>
                     <th>WO Number</th>
                     @can('update-breakdown-pcr')
                     <th></th>
@@ -33,24 +34,27 @@
                 </tr>
             </thead>
             <tbody>
-                <tr v-for="(b, i) in breakdowns" :class="rowClass[b.breakdown_category]">
+                <tr v-for="(b, i) in breakdowns">
                     <td>@{{i+1}}</td>
                     <td>@{{b.unit}}</td>
                     <td>@{{b.unit_category}}</td>
-                    <td>@{{b.breakdown_category}}</td>
+                    <td :class="rowClass[b.breakdown_category]">
+                        @{{b.breakdown_category}}
+                    </td>
                     <td>@{{b.breakdown_status}}</td>
                     <td>@{{b.location}}</td>
                     <td>@{{b.hm}}</td>
                     <td>@{{b.km}}</td>
                     <td>@{{b.time_in}}</td>
-                    <td>@{{b.time_out}}</td>
+                    <!-- <td>@{{b.time_out}}</td> -->
                     <td></td>
                     <td>@{{b.diagnosa}}</td>
                     <td>@{{b.component_criteria}}</td>
-                    <td>@{{b.tindakan}}</td>
+                    <!-- <td>@{{b.tindakan}}</td> -->
+                    <td :class="cellClass[b.part_status]">@{{b.warning_part}}</td>
                     <td>@{{b.wo_number}}</td>
                     @can('update-breakdown-pcr')
-                    <td>
+                    <td class="text-right">
                         <a href="#" @click="edit(b.id)" class="btn btn-primary btn-xs"><i class="icon icon-pencil"></i></a>
                     </td>
                     @endcan
@@ -81,6 +85,11 @@ const app = new Vue({
             USM: 'warning',
             SCM: 'info',
             TRM: 'warning',
+        },
+        cellClass: {
+            '': 'default',
+            0: 'warning',
+            1: 'success'
         },
         units: {!! App\Unit::selectRaw('id AS id, name AS text')->orderBy('name', 'ASC')->get() !!},
         component_criterias: {!!App\ComponentCriteria::selectRaw('id AS id, CONCAT(code, " - ", description) AS text')->orderBy('code', 'ASC')->get()!!},

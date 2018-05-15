@@ -21,16 +21,45 @@
                 <tr>
                     <th data-column-id="id" data-width="3%">ID</th>
                     <th data-column-id="date">Date</th>
-                    <th data-column-id="trx" data-formatter="trx">Trx</th>
+                    
+                    <th data-column-id="trx"
+                        data-formatter="trx"
+                        data-sortable="false">Trx</th>
+
                     <th data-column-id="status" data-formatter="status">Status</th>
                     <th data-column-id="fuel_tank">Fuel Tank</th>
-                    <th data-column-id="flowmeter_start">Flowmeter Start</th>
-                    <th data-column-id="flowmeter_end">Flowmeter End</th>
-                    <th data-column-id="sounding_start">Sounding Start</th>
-                    <th data-column-id="sounding_end">Sounding End</th>
-                    <th data-column-id="volume_by_flowmeter" data-formatter="volume_by_flowmeter">Volume By FLow Meter</th>
-                    <th data-column-id="volume_by_sounding">Volume By Sounding</th>
-                    <th data-column-id="selisih" data-formatter="selisih">Selisih Volume</th>
+
+                    <th data-column-id="flowmeter_start"
+                        data-align="right"
+                        data-header-align="right">Flowmeter Start</th>
+
+                    <th data-column-id="flowmeter_end"
+                        data-align="right"
+                        data-header-align="right">Flowmeter End</th>
+
+                    <th data-column-id="sounding_start"
+                        data-align="right"
+                        data-header-align="right">Sounding Start</th>
+
+                    <th data-column-id="sounding_end"
+                        data-align="right"
+                        data-header-align="right">Sounding End</th>
+
+                    <th data-column-id="volume_by_flowmeter"
+                        data-formatter="volume_by_flowmeter"
+                        data-align="right"
+                        data-sortable="false"
+                        data-header-align="right">Volume By FLow Meter</th>
+
+                    <th data-column-id="volume_by_sounding"
+                        data-align="right"
+                        data-header-align="right">Volume By Sounding</th>
+
+                    <th data-sortable="false"
+                        data-formatter="selisih"
+                        data-align="right"
+                        data-header-align="right">Selisih Volume</th>
+
                     @can('updateOrDelete', App\FlowMeter::class)
                     <th data-column-id="commands" data-width="5%"
                         data-formatter="commands"

@@ -15,4 +15,29 @@ class FlowMeter extends Model
     public function fuelTank() {
         return $this->belongsTo(FuelTank::class);
     }
+
+    public function getFlowmeterStartAttribute($value)
+    {
+        return (int) ($value);
+    }
+
+    public function getFlowmeterEndAttribute($value)
+    {
+        return (int) $value;
+    }
+
+    public function getSoundingStartAttribute($value)
+    {
+        return (int) $value;
+    }
+
+    public function getSoundingEndAttribute($value)
+    {
+        return (int) $value;
+    }
+
+    public function getVolumeBySoundingAttribute($value)
+    {
+        return (int) $value;
+    }
 }

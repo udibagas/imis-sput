@@ -28,7 +28,7 @@
                     <th data-column-id="duration">Duration</th>
                     <th data-column-id="diagnosa">Problem</th>
                     <th data-column-id="component_criteria">Component Criteria</th>
-                    <th data-column-id="tindakan">Tindakan</th>
+                    <th data-column-id="tindakan">Action</th>
                     <th data-column-id="wo_number">WO Number</th>
                     <!-- <th data-column-id="status" data-formatter="status">Closed</th> -->
                     @can('updateOrDelete', App\Breakdown::class)
