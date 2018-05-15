@@ -160,7 +160,7 @@
 
                 </div>
                 <div class="modal-footer">
-                    <button type="submit" class="btn btn-primary"><i class="fa fa-edit"></i> Update</button>
+                    <button type="submit" class="btn btn-primary"><i class="fa fa-edit"></i> Save</button>
                     <button type="button" class="btn btn-default" data-dismiss="modal"><i class="fa fa-close"></i> Cancel</button>
                 </div>
             </form>

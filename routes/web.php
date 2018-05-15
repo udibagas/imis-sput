@@ -30,8 +30,10 @@ Route::group(['middleware' => 'auth'], function() {
     Route::get('breakdownPcr/{breakdown}', 'BreakdownPcrController@show');
     Route::put('breakdownPcr/{breakdown}', 'BreakdownPcrController@update');
 
+    Route::get('breakdown/export', 'BreakdownController@export');
     Route::get('breakdown/getUnitReady', 'BreakdownController@getUnitReady');
     Route::resource('breakdown', 'BreakdownController')->except(['edit', 'create']);
+
     Route::resource('componentCriterias', 'ComponentCriteriaController')->except(['edit', 'create']);
     Route::resource('buyer', 'BuyerController')->except(['edit', 'create']);
     Route::resource('customer', 'CustomerController')->except(['edit', 'create']);
@@ -42,7 +44,10 @@ Route::group(['middleware' => 'auth'], function() {
     Route::resource('dailyCheckSetting', 'DailyCheckSettingController')->except(['edit', 'create']);
     Route::resource('department', 'DepartmentController')->except(['edit', 'create']);
     Route::resource('egi', 'EgiController')->except(['edit', 'create']);
+
+    Route::get('employee/export', 'EmployeeController@export');
     Route::resource('employee', 'EmployeeController')->except(['edit', 'create']);
+
     Route::get('fuelTank/ratio', 'FuelTankController@ratio');
     Route::get('fuelTank/dashboard', 'FuelTankController@dashboard');
     Route::resource('flowMeter', 'FlowMeterController')->except(['edit', 'create']);

@@ -1,0 +1,20 @@
+<table>
+    <thead>
+        <tr>
+            <th>NRP</th>
+            <th>Name</th>
+            <th>Department</th>
+            <th>Position</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach ($employees as $e)
+        <tr>
+            <td>{{$e->nrp}}</td>
+            <td>{{$e->name}}</td>
+            <td>{{$e->department}}</td>
+            <td>{{$e->position}}</td>
+        </tr>
+        @endforeach
+    </tbody>
+</table>

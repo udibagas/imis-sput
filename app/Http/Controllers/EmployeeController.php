@@ -4,7 +4,9 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Employee;
+use App\Exports\EmployeeExportQuery;
 use App\Http\Requests\EmployeeRequest;
+use Excel;
 
 class EmployeeController extends Controller
 {
@@ -109,5 +111,10 @@ class EmployeeController extends Controller
     {
         $this->authorize('delete', Employee::class);
         return ['success' => $employee->delete()];
+    }
+
+    public function export(Request $request)
+    {
+        return Excel::download(new EmployeeExportQuery($request), 'employees.xlsx');
     }
 }

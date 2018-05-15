@@ -5,11 +5,14 @@
 <div class="panel panel-primary" id="app">
     <div class="panel-body">
         <h3 class="pull-left text-primary">EMPLOYEE <small>Manage</small></h3>
-        @can('create', App\Employee::class)
         <span class="pull-right" style="margin:15px 0 15px 10px;">
+            @can('create', App\Employee::class)
             <a href="#" @click="add" class="btn btn-primary"><i class="icon-plus-circled"></i></a>
+            @endcan
+            @can('export', App\Employee::class)
+            <a href="{{url('employee/export')}}" class="btn btn-primary"><i class="icon-download"></i> EXPORT</a>
+            @endcan
         </span>
-        @endcan
         <table class="table table-striped table-hover " id="bootgrid" style="border-top:2px solid #ddd">
             <thead>
                 <tr>

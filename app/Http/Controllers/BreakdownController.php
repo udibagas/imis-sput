@@ -6,6 +6,8 @@ use Illuminate\Http\Request;
 use App\Breakdown;
 use App\Http\Requests\BreakdownRequest;
 use Carbon\Carbon;
+use App\Exports\BreakdownExport;
+use Excel;
 
 class BreakdownController extends Controller
 {
@@ -144,5 +146,10 @@ class BreakdownController extends Controller
             ->orderBy('created_at', 'DESC')
             ->limit(10)
             ->get();
+    }
+
+    public function export(Request $request)
+    {
+        return Excel::download(new BreakdownExport($request), "breakdowns-{$request->from}-to-{$request->to}.xlsx");
     }
 }

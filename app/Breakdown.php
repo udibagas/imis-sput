@@ -15,7 +15,7 @@ class Breakdown extends Model
         'update_pcr_time', 'update_pcr_by', 'status', 'user_id'
     ];
 
-    protected $appends = ['duration', 'downtime', 'ready_time'];
+    // protected $appends = ['duration', 'downtime', 'ready_time'];
 
     public function getDurationAttribute()
     {

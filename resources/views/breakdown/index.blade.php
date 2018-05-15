@@ -10,10 +10,7 @@
             <a href="#" @click="add" class="btn btn-primary"><i class="icon-plus-circled"></i></a>
             @endcan
             @can('export', App\Breakdown::class)
-            <a href="#" class="btn btn-primary"><i class="icon-download"></i> EXPORT</a>
-            @endcan
-            @can('import', App\Breakdown::class)
-            <a href="#" class="btn btn-primary"><i class="icon-upload"></i> IMPORT</a>
+            <a href="#" @click="openExportForm" class="btn btn-primary"><i class="icon-download"></i> EXPORT</a>
             @endcan
         </span>
         <table class="table table-striped table-hover " id="bootgrid" style="border-top:2px solid #ddd">
@@ -50,6 +47,10 @@
     @include('breakdown._form')
     @endcan
 
+    @can('export', App\Breakdown::class)
+    @include('breakdown._form_export')
+    @endcan
+
 </div>
 
 @endsection
@@ -65,11 +66,23 @@
             formErrors: {},
             formTitle: '',
             error: {},
+            exportRange: {
+                from: '{{date("Y-m-d")}}',
+                to: '{{date("Y-m-d")}}'
+            },
             units: {!! App\Unit::selectRaw('id AS id, name AS text')->orderBy('name', 'ASC')->get() !!},
             component_criterias: {!!App\ComponentCriteria::selectRaw('id AS id, CONCAT(code, " - ", description) AS text')->orderBy('code', 'ASC')->get()!!},
             locations: {!! App\Location::selectRaw('id AS id, name AS text')->orderBy('name', 'ASC')->get() !!},
         },
         methods: {
+            openExportForm: function() {
+                $('#modal-form-export').modal('show');
+            },
+            doExport: function() {
+                // TODO: validate input first
+                $('#modal-form-export').modal('hide');
+                window.location = '{{url("breakdown/export")}}?from=' + this.exportRange.from + '&to=' + this.exportRange.to;
+            },
             add: function() {
                 this.formTitle = "ADD BREAKDOWN";
                 this.formData = {};
