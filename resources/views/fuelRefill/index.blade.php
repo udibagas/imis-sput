@@ -57,6 +57,7 @@
                     <th data-column-id="duration"
                         data-align="center"
                         data-header-align="center"
+                        data-sortable="false"
                         data-formatter="duration">Duration</th>
 
                     <th data-column-id="insert_by">Insert By</th>

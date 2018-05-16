@@ -25,7 +25,7 @@
                     <th data-column-id="hm" data-formatter="hm_km">KM/HM</th>
                     <th data-column-id="time_in">Time In</th>
                     <th data-column-id="time_out">Time Out</th>
-                    <th data-column-id="duration">Duration</th>
+                    <th data-column-id="duration" data-sortable="false">Duration</th>
                     <th data-column-id="diagnosa">Problem</th>
                     <th data-column-id="component_criteria">Component Criteria</th>
                     <th data-column-id="tindakan">Action</th>

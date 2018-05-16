@@ -20,7 +20,7 @@
                     <th data-column-id="location">Location</th>
                     <th data-column-id="warning_part">Warning Part</th>
                     <th data-column-id="time_in">Time In</th>
-                    <th data-column-id="duration">Duration</th>
+                    <th data-column-id="duration" data-sortable="false">Duration</th>
                     <th data-column-id="note">Note</th>
                     <!-- <th data-column-id="bd_status" data-formatter="bd_status">B/D Status</th> -->
                     <!-- <th data-column-id="status" data-formatter="status">Closed</th> -->

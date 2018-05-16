@@ -3,7 +3,6 @@ FOKUS ke breakdown & daily check!!!
 perhitungan durasi pakai moment.js
 validasi kalau waktu mundur (time_in & out untuk breakdown & daily check)
 parsing nilai untuk decimal ==> integer
-disable non sortable field
 
 Saran:
     - Bagaimana kalau leadtime breakdown unit disatuin sama breakdown PCR?

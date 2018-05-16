@@ -23,7 +23,7 @@
                     <th data-column-id="shift">Shift</th>
                     <th data-column-id="time_in">Time In</th>
                     <th data-column-id="time_out">Time Out</th>
-                    <th data-column-id="duration">Duration</th>
+                    <th data-column-id="duration" data-sortable="false">Duration</th>
                     <th data-column-id="description">Description</th>
                     <th data-column-id="hm">HM</th>
                     <!-- <th data-column-id="status" data-formatter="status">Closed</th> -->
