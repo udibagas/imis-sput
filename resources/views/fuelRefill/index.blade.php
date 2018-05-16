@@ -143,15 +143,18 @@
                     .replace(/\B(?=(\d{3})+(?!\d))/g, ",");
             },
             add: function() {
-                // reset the form
                 this.formTitle = "ADD FUEL REFILL";
-                this.formData = {
-                    date: '{{date("Y-m-d")}}',
-                    insert_via: 'web'
-                };
                 this.formErrors = {};
                 this.error = {};
-                // open form
+
+                this.formData = {
+                    date        : moment().format('YYYY-MM-DD'),
+                    shift       : (moment().format('h') >= 7 && moment().format('h') <= 19) ? 1 : 2,
+                    start_time  : moment().format('hh:mm'),
+                    finish_time : moment().add(3, 'minutes').format('hh:mm'),
+                    insert_via  : 'web',
+                };
+
                 $('#modal-form').modal('show');
             },
             store: function() {
@@ -275,7 +278,11 @@
                         return row.start_time + "-" + row.finish_time;
                     },
                     duration: function(column, row) {
-                        return '99:99';
+                        // masih salah
+                        var start = moment(row.start_time, "hh:ii");
+                        var finish = moment(row.finish_time, "hh:ii");
+                        var duration = moment.duration(finish.diff(start));
+                        return finish.utc(duration.asMilliseconds()).format("mm:ss");
                     },
                     total_real: function(column, row) {
                         return t.formatNumber(row.total_real);

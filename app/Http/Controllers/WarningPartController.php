@@ -4,8 +4,10 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\WarningPart;
+use App\Exports\WarningPartExport;
 use App\Http\Requests\WarningPartRequest;
 use Carbon\Carbon;
+use Excel;
 
 class WarningPartController extends Controller
 {
@@ -94,5 +96,11 @@ class WarningPartController extends Controller
         $input['user_id'] = auth()->user()->id;
         $warningPart->update($input);
         return $warningPart;
+    }
+
+    public function export(Request $request)
+    {
+        $this->authorize('export', WarningPart::class);
+        return Excel::download(new WarningPartExport($request), "warning-part-{$request->from}-to-{$request->to}.xlsx");
     }
 }

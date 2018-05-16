@@ -88,8 +88,10 @@ Route::group(['middleware' => 'auth'], function() {
     Route::resource('unit', 'UnitController')->except(['edit', 'create']);
     Route::resource('unitCategory', 'UnitCategoryController')->except(['edit', 'create']);
     Route::resource('user', 'UserController')->except(['edit', 'create']);
+
+    Route::get('warningPart/export', 'WarningPartController@export');
     Route::resource('warningPart', 'WarningPartController')->only(['index', 'show', 'update']);
-    // end of master data
+
     Route::get('pasangSurut', 'OperationController@pasangSurut');
     Route::get('game', 'OperationController@game');
 });

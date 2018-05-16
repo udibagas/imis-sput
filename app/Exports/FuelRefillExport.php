@@ -19,16 +19,21 @@ class FuelRefillExport implements FromQuery, WithHeadings
     {
         return [
             'Date',
-            'Trx',
-            'Status',
             'Fuel Tank',
-            'Flowmeter Start',
-            'Flowmeter End',
-            'Sounding Start',
-            'Sounding End',
-            'Volume By Flowmeter',
-            'Volume By Sounding',
-            'Selisih Volume'
+            'Unit',
+            'Unit Category',
+            'Shift',
+            'Qty',
+            'KM',
+            'HM',
+            'KM Last',
+            'HM Last',
+            'NRP',
+            'Employee Name',
+            'Start Time',
+            'Finish Time',
+            'Duration',
+            'Insert By',
         ];
     }
 
@@ -38,22 +43,31 @@ class FuelRefillExport implements FromQuery, WithHeadings
         $request = $this->request;
 
         return FuelRefill::selectRaw('
-                flow_meters.date AS date,
-                IF (flow_meters.flowmeter_start - flow_meters.flowmeter_end > 0 , "IN", "OUT") as trx,
-                flow_meters.status AS status,
+                fuel_refills.date AS date,
                 fuel_tanks.name AS fuel_tank,
-                flow_meters.flowmeter_start AS flowmeter_start,
-                flow_meters.flowmeter_end AS flowmeter_end,
-                flow_meters.sounding_start AS sounding_start,
-                flow_meters.sounding_end AS sounding_end,
-                (flow_meters.flowmeter_end - flow_meters.flowmeter_start) AS volume_by_flowmeter,
-                flow_meters.volume_by_sounding AS volume_by_sounding,
-                flow_meters.volume_by_sounding - (flow_meters.flowmeter_end - flowmeter_start) AS selisih
+                units.name AS unit,
+                unit_categories.name AS unit_category,
+                fuel_refills.shift AS shift,
+                fuel_refills.total_real AS total_real,
+                fuel_refills.km AS km,
+                fuel_refills.hm AS hm,
+                fuel_refills.km_last AS km_last,
+                fuel_refills.hm_last AS hm_last,
+                employees.nrp AS nrp,
+                employees.name AS employee_name,
+                fuel_refills.start_time AS start_time,
+                fuel_refills.finish_time AS finish_time,
+                NULL AS duration,
+                users.name AS insert_by
             ')
-            ->join('fuel_tanks', 'fuel_tanks.id', '=', 'flow_meters.fuel_tank_id')
+            ->join('units', 'units.id', '=', 'fuel_refills.unit_id')
+            ->join('fuel_tanks', 'fuel_tanks.id', '=', 'fuel_refills.fuel_tank_id')
+            ->join('employees', 'employees.id', '=', 'fuel_refills.employee_id')
+            ->join('users', 'users.id', '=', 'fuel_refills.user_id')
+            ->join('unit_categories', 'unit_categories.id', '=', 'units.unit_category_id')
             ->when($request, function($query) use ($request) {
                 return $query->whereRaw("`date` BETWEEN '{$request->from}' AND '{$request->to}'");
             })
-            ->orderBy('date', 'DESC');
+            ->orderBy('fuel_refills.date', 'DESC');
     }
 }
