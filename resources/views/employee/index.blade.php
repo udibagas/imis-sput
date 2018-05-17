@@ -12,6 +12,9 @@
             @can('export', App\Employee::class)
             <a href="{{url('employee/export')}}" class="btn btn-primary"><i class="icon-download"></i> EXPORT</a>
             @endcan
+            @can('export', App\Employee::class)
+            <a href="{{url('employee/generateNameTag')}}" class="btn btn-primary"><i class="icon-credit-card"></i> Generate Name Tag</a>
+            @endcan
         </span>
         <table class="table table-striped table-hover " id="bootgrid" style="border-top:2px solid #ddd">
             <thead>
@@ -23,9 +26,9 @@
                     <th data-column-id="position">Position</th>
                     <th data-column-id="owner">Owner</th>
                     <th data-column-id="office">Office</th>
-                    <th data-column-id="status">Status</th>
+                    <!-- <th data-column-id="status">Status</th> -->
                     @can('updateOrDelete', App\Employee::class)
-                    <th data-column-id="commands" data-width="5%"
+                    <th data-column-id="commands"
                         data-formatter="commands"
                         data-sortable="false"
                         data-align="right"
@@ -153,6 +156,9 @@
                     }
                 });
             },
+            generateNameTag: function(id) {
+                window.open('{{url("employee/generateNameTag")}}/' + id, '_blank');
+            }
         },
         mounted: function() {
 
@@ -181,8 +187,8 @@
                 formatters: {
                     "commands": function(column, row) {
                         return '@can("update", App\Employee::class) <a href="#" class="btn btn-info btn-xs c-edit" data-id="'+row.id+'"><i class="icon-pencil"></i></a> @endcan' +
-                            '@can("delete", App\Employee::class) <a href="#" class="btn btn-danger btn-xs c-delete" data-id="'+row.id+'"><i class="icon-trash"></i></a> @endcan';
-                    }
+                            '@can("delete", App\Employee::class) <a href="#" class="btn btn-danger btn-xs c-delete" data-id="'+row.id+'"><i class="icon-trash"></i></a> @endcan' + '@can("export", App\Employee::class) <a href="#" class="btn btn-success btn-xs c-name-tag" data-id="'+row.id+'"><i class="icon-credit-card"></i></a> @endcan';
+                    },
                 }
             }).on("loaded.rs.jquery.bootgrid", function() {
                 grid.find(".c-delete").on("click", function(e) {
@@ -191,6 +197,10 @@
 
                 grid.find(".c-edit").on("click", function(e) {
                     t.edit($(this).data("id"));
+                });
+
+                grid.find(".c-name-tag").on("click", function(e) {
+                    t.generateNameTag($(this).data("id"));
                 });
             });
 

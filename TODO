@@ -1,8 +1,8 @@
 Dropdown di daily check sesuai yang dijadwalkan. Perlu?
-FOKUS ke breakdown & daily check!!!
 perhitungan durasi pakai moment.js
 validasi kalau waktu mundur (time_in & out untuk breakdown & daily check)
 parsing nilai untuk decimal ==> integer
+HCGS => upload foto, generate QR-Code
 
 Saran:
     - Bagaimana kalau leadtime breakdown unit disatuin sama breakdown PCR?
@@ -34,22 +34,13 @@ PLANT:
 
 
 PR!!!
-    - hari ini ngejar breakdown!!!
     - redirect halaman setelah register
     - delete record lihat dulu kalau dia dipakai table lain (pake foreign key)
         BELUM:
         - terminal absensi (location_id)
-    - export to excel
     - import from excel
     - auth
         - form untuk update policy
-    - api semua controller yg dibutuhkan
-        - employee
-        - fuelTank
-        - prajob
-        - unit
-        - user
-    - catch error di semua axios (chart) tampilkan toaster error
     - bikin running text
         - ada menu ini di tiap module
     - responsive chart atau persistent collapse sidebar

@@ -45,6 +45,7 @@ Route::group(['middleware' => 'auth'], function() {
     Route::resource('department', 'DepartmentController')->except(['edit', 'create']);
     Route::resource('egi', 'EgiController')->except(['edit', 'create']);
 
+    Route::get('employee/generateNameTag/{employee}', 'EmployeeController@generateNameTag');
     Route::get('employee/export', 'EmployeeController@export');
     Route::resource('employee', 'EmployeeController')->except(['edit', 'create']);
 
@@ -94,6 +95,7 @@ Route::group(['middleware' => 'auth'], function() {
 
     Route::get('pasangSurut', 'OperationController@pasangSurut');
     Route::get('game', 'OperationController@game');
+    Route::get('test', 'OperationController@test');
 });
 
 View::composer('layouts._sidebar', function($view) {

@@ -47,4 +47,13 @@ class OperationController extends Controller
             ]
         ]);
     }
+
+    public function test()
+    {
+        return view('operation.test', [
+            'breadcrumbs' => [
+                'Test' => 'Test',
+            ]
+        ]);
+    }
 }
