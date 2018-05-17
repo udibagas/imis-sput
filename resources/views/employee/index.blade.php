@@ -13,7 +13,7 @@
             <a href="{{url('employee/export')}}" class="btn btn-primary"><i class="icon-download"></i> EXPORT</a>
             @endcan
             @can('export', App\Employee::class)
-            <a href="{{url('employee/generateNameTag')}}" class="btn btn-primary"><i class="icon-credit-card"></i> Generate Name Tag</a>
+            <a href="{{url('employee/generateNameTag')}}" class="btn btn-primary" target="_blank"><i class="icon-credit-card"></i> Generate Name Tag</a>
             @endcan
         </span>
         <table class="table table-striped table-hover " id="bootgrid" style="border-top:2px solid #ddd">

@@ -2,7 +2,6 @@ Dropdown di daily check sesuai yang dijadwalkan. Perlu?
 perhitungan durasi pakai moment.js
 validasi kalau waktu mundur (time_in & out untuk breakdown & daily check)
 parsing nilai untuk decimal ==> integer
-HCGS => upload foto, generate QR-Code
 
 Saran:
     - Bagaimana kalau leadtime breakdown unit disatuin sama breakdown PCR?

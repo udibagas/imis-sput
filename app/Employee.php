@@ -3,6 +3,7 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use QRCode;
 
 class Employee extends Model
 {
@@ -17,5 +18,13 @@ class Employee extends Model
 
     public function department() {
         return $this->belongsTo(Department::class);
+    }
+
+    public function getQrCodeAttribute()
+    {
+        return QRCode::text($this->nrp)
+            ->setMargin(2)
+            ->setSize(5)
+            ->svg();
     }
 }

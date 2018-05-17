@@ -119,9 +119,14 @@ class EmployeeController extends Controller
         return Excel::download(new EmployeeExportQuery($request), 'employees.xlsx');
     }
 
-    public function generateNameTag(Employee $employee)
+    public function generateNameTag(Employee $employee = null)
     {
         $this->authorize('export', Employee::class);
-        return view('employee.name_tag', ['employee' => $employee]);
+        
+        $employees = $employee
+            ? [$employee]
+            : Employee::orderBy('name', 'ASC')->get();
+
+        return view('employee.name_tag', ['employees' => $employees]);
     }
 }

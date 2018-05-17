@@ -46,6 +46,7 @@ Route::group(['middleware' => 'auth'], function() {
     Route::resource('egi', 'EgiController')->except(['edit', 'create']);
 
     Route::get('employee/generateNameTag/{employee}', 'EmployeeController@generateNameTag');
+    Route::get('employee/generateNameTag', 'EmployeeController@generateNameTag');
     Route::get('employee/export', 'EmployeeController@export');
     Route::resource('employee', 'EmployeeController')->except(['edit', 'create']);
 
