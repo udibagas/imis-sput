@@ -84,14 +84,20 @@ Route::group(['middleware' => 'auth'], function() {
     Route::resource('planCategory', 'PlanCategoryController')->except(['edit', 'create']);
     Route::resource('position', 'PositionController')->except(['edit', 'create']);
     Route::resource('problemProductivityCategory', 'ProblemProductivityCategoryController')->except(['edit', 'create']);
+
+    Route::resource('prajob', 'PrajobController')->except(['edit', 'create']);
+
     Route::resource('runningText', 'RunningTextController')->except(['edit', 'create']);
     Route::resource('seam', 'SeamController')->except(['edit', 'create']);
     Route::resource('staffCategory', 'StaffCategoryController')->except(['edit', 'create']);
     Route::resource('stopWorkingPrediction', 'StopWorkingPredictionController')->except(['edit', 'create']);
     Route::resource('supervisingPrediction', 'SupervisingPredictionController')->except(['edit', 'create']);
     Route::resource('terminalAbsensi', 'TerminalAbsensiController')->except(['edit', 'create']);
+
     Route::get('unit/remarkUnitByType', 'UnitController@remarkUnitByType');
+    Route::get('unit/export', 'UnitController@export');
     Route::resource('unit', 'UnitController')->except(['edit', 'create']);
+
     Route::resource('unitCategory', 'UnitCategoryController')->except(['edit', 'create']);
     Route::resource('user', 'UserController')->except(['edit', 'create']);
 
@@ -176,7 +182,7 @@ View::composer('layouts._sidebar', function($view) {
             'url' => [
                 'hcgs/dashboard' => 'Dashboard',
                 'absensi' => 'Absensi',
-                'praJob' => 'Pra Job & Fatique',
+                'prajob' => 'Pra Job & Fatique',
                 'prajob/approval' => 'Fatique Approval',
                 '<i class="fa fa-database"></i> Master Data' => [
                     'department' => 'Departments',
@@ -202,6 +208,7 @@ View::composer('layouts._sidebar', function($view) {
             'url'=> [
                 'user' => 'Users',
                 'authorization' => 'Authorization',
+                'backup' => 'Backup & Restore',
                 'runningText' => 'Running Text',
                 // 'setting' => 'Settings',
             ]

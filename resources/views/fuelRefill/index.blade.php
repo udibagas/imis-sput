@@ -104,13 +104,8 @@
             fuel_tanks: {!! App\FuelTank::selectRaw('id AS id, name AS text')->orderBy('name', 'ASC')->get() !!},
             employees: {!! App\Employee::selectRaw('id AS id, CONCAT(nrp, " - ", name) AS text')->orderBy('name', 'ASC')->get() !!},
         },
-        computed: {
-            unitId: function() {
-                return this.formData.unit_id;
-            }
-        },
         watch: {
-            unitId: function(val) {
+            'formData.unit_id': function(val) {
                 if (!val) {
                     return;
                 }

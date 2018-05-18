@@ -4,8 +4,10 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Unit;
+use App\Exports\UnitExport;
 use App\Http\Requests\UnitRequest;
 use DB;
+use Excel;
 
 class UnitController extends Controller
 {
@@ -119,5 +121,11 @@ class UnitController extends Controller
         ";
 
         return DB::select(DB::raw($sql));
+    }
+
+    public function export(Request $request)
+    {
+        $this->authorize('export', Unit::class);
+        return Excel::download(new UnitExport($request), 'units.xlsx');
     }
 }

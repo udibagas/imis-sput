@@ -5,11 +5,14 @@
 <div class="panel panel-primary" id="app">
     <div class="panel-body">
         <h3 class="pull-left text-primary">UNITS <small>Manage</small></h3>
-        @can('create', App\Unit::class)
         <span class="pull-right" style="margin:15px 0 15px 10px;">
+            @can('create', App\Unit::class)
             <a href="#" @click="add" class="btn btn-primary"><i class="icon-plus-circled"></i></a>
+            @endcan
+            @can('export', App\Unit::class)
+            <a href="{{url('unit/export')}}" class="btn btn-primary"><i class="icon-download"></i> EXPORT</a>
+            @endcan
         </span>
-        @endcan
         <table class="table table-striped table-hover " id="bootgrid" style="border-top:2px solid #ddd">
             <thead>
                 <tr>
@@ -18,7 +21,6 @@
                     <th data-column-id="category">Category</th>
                     <th data-column-id="owner">Owner</th>
                     <th data-column-id="egi">EGI</th>
-                    <th data-column-id="alocation">Alocation</th>
                     <th data-column-id="fc">FC</th>
                     <!-- <th data-column-id="status">Status</th> -->
                     @can('updateOrDelete', App\Unit::class)
@@ -51,7 +53,10 @@
             formData: {},
             formErrors: {},
             formTitle: '',
-            error: {}
+            error: {},
+            egis: {!! App\Egi::selectRaw('id AS id, name AS text')->orderBy('name', 'ASC')->get() !!},
+            unit_categories: {!! App\UnitCategory::selectRaw('id AS id, name AS text')->orderBy('name', 'ASC')->get() !!},
+            owners: {!! App\Owner::selectRaw('id AS id, name AS text')->orderBy('name', 'ASC')->get() !!},
         },
         methods: {
             add: function() {

@@ -2,6 +2,8 @@ Dropdown di daily check sesuai yang dijadwalkan. Perlu?
 perhitungan durasi pakai moment.js
 validasi kalau waktu mundur (time_in & out untuk breakdown & daily check)
 parsing nilai untuk decimal ==> integer
+validasi absen sudah
+dropdown employe sesuai sesuai dengan yg aktif
 
 Saran:
     - Bagaimana kalau leadtime breakdown unit disatuin sama breakdown PCR?

@@ -3,10 +3,10 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Prajobs;
-use App\Http\Requests\PrajobsRequest;
+use App\Prajob;
+use App\Http\Requests\PrajobRequest;
 
-class PrajobsController extends Controller
+class PrajobController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -15,7 +15,7 @@ class PrajobsController extends Controller
      */
     public function index(Request $request)
     {
-        $this->authorize('view', Prajobs::class);
+        $this->authorize('view', Prajob::class);
 
         if ($request->ajax())
         {
@@ -24,24 +24,15 @@ class PrajobsController extends Controller
             $sort = $request->sort ? key($request->sort) : 'prajobs.name';
             $dir = $request->sort ? $request->sort[$sort] : 'asc';
 
-            $prajob = Prajobs::selectRaw('
+            $prajob = Prajob::selectRaw('
                     prajobs.*,
-                    departments.name AS department,
-                    offices.name AS office,
-                    owners.name AS owner,
-                    positions.name AS position
+                    employees.name AS name,
+                    employees.nrp AS nrp
                 ')
-                ->join('departments', 'departments.id', '=', 'prajobs.department_id')
-                ->join('offices', 'offices.id', '=', 'prajobs.office_id', 'LEFT')
-                ->join('owners', 'owners.id', '=', 'prajobs.owner_id', 'LEFT')
-                ->join('positions', 'positions.id', '=', 'prajobs.position_id')
+                ->join('employees', 'employees.id', '=', 'prajobs.employee_id')
                 ->when($request->searchPhrase, function($query) use ($request) {
-                    return $query->where('prajobs.name', 'LIKE', '%'.$request->searchPhrase.'%')
-                        ->orWhere('prajobs.nrp', 'LIKE', '%'.$request->searchPhrase.'%')
-                        ->orWhere('departments.name', 'LIKE', '%'.$request->searchPhrase.'%')
-                        ->orWhere('offices.name', 'LIKE', '%'.$request->searchPhrase.'%')
-                        ->orWhere('owners.name', 'LIKE', '%'.$request->searchPhrase.'%')
-                        ->orWhere('positions.name', 'LIKE', '%'.$request->searchPhrase.'%');
+                    return $query->where('employees.name', 'LIKE', '%'.$request->searchPhrase.'%')
+                        ->orWhere('employees.nrp', 'LIKE', '%'.$request->searchPhrase.'%');
                 })->orderBy($sort, $dir)->paginate($pageSize);
 
             return [
@@ -67,10 +58,10 @@ class PrajobsController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(PrajobsRequest $request)
+    public function store(PrajobRequest $request)
     {
-        $this->authorize('create', Prajobs::class);
-        return Prajobs::create($request->all());
+        $this->authorize('create', Prajob::class);
+        return Prajob::create($request->all());
     }
 
     /**
@@ -79,9 +70,9 @@ class PrajobsController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show(Prajobs $prajob)
+    public function show(Prajob $prajob)
     {
-        $this->authorize('view', Prajobs::class);
+        $this->authorize('view', Prajob::class);
         return $prajob;
     }
 
@@ -92,9 +83,9 @@ class PrajobsController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(PrajobsRequest $request, Prajobs $prajob)
+    public function update(PrajobRequest $request, Prajob $prajob)
     {
-        $this->authorize('update', Prajobs::class);
+        $this->authorize('update', Prajob::class);
         $prajob->update($request->all());
         return $prajob;
     }
@@ -105,9 +96,9 @@ class PrajobsController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Prajobs $prajob)
+    public function destroy(Prajob $prajob)
     {
-        $this->authorize('delete', Prajobs::class);
+        $this->authorize('delete', Prajob::class);
         return ['success' => $prajob->delete()];
     }
 }

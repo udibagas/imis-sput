@@ -26,24 +26,18 @@
                         <label class="control-label col-md-3 col-sm-3 col-xs-12" for="unit_category_id">Category
                         </label>
                         <div class="col-md-9 col-sm-9 col-xs-12">
-                            <select class="form-control" v-model="formData.unit_category_id" data-placeholder="Category">
-                                @foreach (\App\UnitCategory::orderBy('name', 'ASC')->pluck('name', 'id') as $id => $name)
-                                <option value="{{$id}}">{{$name}}</option>
-                                @endforeach
-                            </select>
+                            <select2 :options="unit_categories" v-model="formData.unit_category_id" data-placeholder="Unit Category">
+                            </select2>
                             <span v-if="formErrors.unit_category_id" class="help-block">@{{formErrors.unit_category_id[0]}}</span>
                         </div>
                     </div>
 
                     <div class="form-group" :class="formErrors.owner_id ? 'has-error' : ''">
-                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="owner_id">Unit Owner
+                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="owner_id">Owner
                         </label>
                         <div class="col-md-9 col-sm-9 col-xs-12">
-                            <select class="form-control" v-model="formData.owner_id" data-placeholder="Owner">
-                                @foreach (\App\Owner::orderBy('name', 'ASC')->pluck('name', 'id') as $id => $name)
-                                <option value="{{$id}}">{{$name}}</option>
-                                @endforeach
-                            </select>
+                            <select2 :options="owners" v-model="formData.owner_id" data-placeholder="Owner">
+                            </select2>
                             <span v-if="formErrors.owner_id" class="help-block">@{{formErrors.owner_id[0]}}</span>
                         </div>
                     </div>
@@ -52,12 +46,25 @@
                         <label class="control-label col-md-3 col-sm-3 col-xs-12" for="egi_id">EGI
                         </label>
                         <div class="col-md-9 col-sm-9 col-xs-12">
-                            <select class="form-control" v-model="formData.egi_id" data-placeholder="EGI">
-                                @foreach (\App\Egi::orderBy('name', 'ASC')->pluck('name', 'id') as $id => $name)
-                                <option value="{{$id}}">{{$name}}</option>
-                                @endforeach
-                            </select>
+                            <select2 :options="egis" v-model="formData.egi_id" data-placeholder="EGI">
+                            </select2>
                             <span v-if="formErrors.egi_id" class="help-block">@{{formErrors.egi_id[0]}}</span>
+                        </div>
+                    </div>
+
+                    <div v-show="formData.id != undefined" class="form-group" :class="formErrors.status ? 'has-error' : ''">
+                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="status">Status
+                        </label>
+                        <div class="col-md-9 col-sm-9 col-xs-12">
+                            <div class="radio radio-inline radio-replace radio-success">
+								<input type="radio" v-model="formData.status" id="yes" value="1">
+								<label for="yes">OK</label>
+							</div>
+                            <div class="radio radio-inline radio-replace radio-danger">
+								<input type="radio" v-model="formData.status" id="no" value="0">
+								<label for="no">B/D</label>
+							</div>
+                            <span v-if="formErrors.status" class="help-block">@{{formErrors.status[0]}}</span>
                         </div>
                     </div>
 
