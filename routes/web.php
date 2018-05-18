@@ -16,6 +16,10 @@ Auth::routes();
 Route::group(['middleware' => 'auth'], function() {
     Route::get('/', 'HomeController@index')->name('home');
     Route::get('/home', 'HomeController@index')->name('home');
+
+    Route::get('absensi/export', 'AbsensiController@export');
+    Route::resource('absensi', 'AbsensiController')->except(['edit', 'create']);
+
     // Master data
     Route::resource('area', 'AreaController')->except(['edit', 'create']);
     Route::resource('subArea', 'SubAreaController')->except(['edit', 'create']);
@@ -171,7 +175,7 @@ View::composer('layouts._sidebar', function($view) {
             'icon' => 'users',
             'url' => [
                 'hcgs/dashboard' => 'Dashboard',
-                'absen' => 'Absensi',
+                'absensi' => 'Absensi',
                 'praJob' => 'Pra Job & Fatique',
                 'prajob/approval' => 'Fatique Approval',
                 '<i class="fa fa-database"></i> Master Data' => [

@@ -35,7 +35,6 @@ class BreakdownExport implements FromQuery, WithHeadings
         ];
     }
 
-
     public function query()
     {
         $request = $this->request;

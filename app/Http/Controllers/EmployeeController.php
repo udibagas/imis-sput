@@ -23,8 +23,8 @@ class EmployeeController extends Controller
         {
             $pageSize = $request->rowCount > 0 ? $request->rowCount : 1000000;
             $request['page'] = $request->current;
-            $sort = $request->sort ? key($request->sort) : 'employees.name';
-            $dir = $request->sort ? $request->sort[$sort] : 'asc';
+            $sort = $request->sort ? key($request->sort) : 'name';
+            $dir = $request->sort ? $request->sort[$sort] : 'ASC';
 
             $employee = Employee::selectRaw('
                     employees.*,
@@ -122,7 +122,7 @@ class EmployeeController extends Controller
     public function generateNameTag(Employee $employee = null)
     {
         $this->authorize('export', Employee::class);
-        
+
         $employees = $employee
             ? [$employee]
             : Employee::orderBy('name', 'ASC')->get();

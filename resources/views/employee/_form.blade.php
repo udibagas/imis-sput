@@ -87,7 +87,14 @@
                         <label class="control-label col-md-4 col-sm-4 col-xs-12" for="status">Status
                         </label>
                         <div class="col-md-8 col-sm-8 col-xs-12">
-                            <input type="text" v-model="formData.status" class="form-control" placeholder="Status">
+                            <div class="radio radio-inline radio-replace radio-success">
+								<input type="radio" v-model="formData.status" id="status_yes" value="1">
+								<label for="status_yes">ACTIVE</label>
+							</div>
+                            <div class="radio radio-inline radio-replace radio-danger">
+								<input type="radio" v-model="formData.status" id="status_no" value="0">
+								<label for="status_no">NON ACTIVE</label>
+							</div>
                             <span v-if="formErrors.status" class="help-block">@{{formErrors.status[0]}}</span>
                         </div>
                     </div>

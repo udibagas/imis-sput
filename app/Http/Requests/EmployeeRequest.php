@@ -34,8 +34,18 @@ class EmployeeRequest extends FormRequest
             'name' => 'required',
             'department_id' => 'required',
             'position_id' => 'required',
-            'owner_id' => 'required',
-            'office_id' => 'required',
+        ];
+    }
+
+    public function attributes()
+    {
+        return [
+            'name' => 'Name',
+            'nrp' => 'NRP',
+            'department_id' => 'Department',
+            'position_id' => 'Position',
+            'office_id' => 'Office',
+            'owner_id' => 'Owner'
         ];
     }
 }
