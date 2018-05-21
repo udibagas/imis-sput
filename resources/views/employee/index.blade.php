@@ -57,7 +57,11 @@
             formData: {},
             formErrors: {},
             formTitle: '',
-            error: {}
+            error: {},
+            positions: {!!App\Position::selectRaw('id AS id, name AS text')->orderBy('name', 'ASC')->get()!!},
+            owners: {!!App\Owner::selectRaw('id AS id, name AS text')->orderBy('name', 'ASC')->get()!!},
+            offices: {!!App\Office::selectRaw('id AS id, name AS text')->orderBy('name', 'ASC')->get()!!},
+            departments: {!!App\Department::selectRaw('id AS id, name AS text')->orderBy('name', 'ASC')->get()!!},
         },
         methods: {
             add: function() {

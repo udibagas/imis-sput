@@ -61,8 +61,8 @@ Route::group(['middleware' => 'auth'], function() {
     Route::put('fatiqueApproval/{prajob}', 'FatiqueApprovalController@update');
     Route::get('fatiqueApproval', 'FatiqueApprovalController@index');
 
-    Route::get('sm/literPerHm', 'SmController@literPerHm');
-    Route::get('sm/ratio', 'SmController@ratio');
+    Route::get('sm/fuelConsumption', 'SmController@fuelConsumption');
+    Route::get('sm/fuelRatio', 'SmController@fuelRatio');
     Route::get('sm/fuelStock', 'SmController@fuelStock');
     Route::get('sm', 'SmController@index');
 

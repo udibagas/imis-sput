@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Egi;
 use App\FuelTank;
+use DB;
 
 class SmController extends Controller
 {
@@ -24,12 +25,23 @@ class SmController extends Controller
         return FuelTank::orderBy('name', 'ASC')->get();
     }
 
-    public function literPerHm(Request $request)
+    public function fuelConsumption(Request $request)
     {
-        return [];
+        $sql = "SELECT
+                SUM(f.total_real) AS total_real,
+                SUM(f.hm - f.hm_last) AS total_hm,
+                e.name AS egi
+            FROM fuel_refills f
+            JOIN units u ON u.id = f.unit_id
+            JOIN egis e ON e.id = u.egi_id
+            WHERE f.date BETWEEN '$request->start' AND '$request->end'
+            GROUP BY e.name
+            ORDER BY e.name ASC";
+
+        return DB::select(DB::raw($sql));
     }
 
-    public function ratio(Request $request)
+    public function fuelRatio(Request $request)
     {
         if ($request->ajax())
         {

@@ -44,8 +44,8 @@
                         <tbody>
                             <tr v-for="f in fuelConsumptions">
                                 <td>@{{f.egi}}</td>
-                                <td>@{{f.today}}</td>
-                                <td>@{{f.avg}}</td>
+                                <td>@{{(f.total_real/f.total_hm).toFixed(2)}}</td>
+                                <td>@{{f.total_hm}}</td>
                             </tr>
                         </tbody>
                     </table>
@@ -79,11 +79,10 @@ const app = new Vue({
         }
     },
     methods: {
-        requestDataRatio: function() {
+        requestDataFuelRatio: function() {
             var _this = this;
-            axios.get('{{url("sm/ratio")}}').then(function(r) {
+            axios.get('{{url("sm/fuelRatio")}}').then(function(r) {
                 _this.chartRatio.setOption({series: r.data});
-                setTimeout(_this.requestDataRatio, 3000);
             })
 
             .catch(function(error) {
@@ -92,8 +91,10 @@ const app = new Vue({
                     toastr["error"](error.message + ". " + error.file + ":" + error.line)
                 }
             });
+
+            setTimeout(_this.requestDataFuelRatio, 3000);
         },
-        requestDataFuelStok: function() {
+        requestDataFuelStock: function() {
             var _this = this;
             axios.get('{{url("sm/fuelStock")}}').then(function(r) {
                 var dataCapacity = [];
@@ -120,7 +121,7 @@ const app = new Vue({
                     }]
                 });
 
-                setTimeout(_this.requestDataFuelStok, 3000);
+                setTimeout(_this.requestDataFuelStock, 3000);
             })
 
             .catch(function(error) {
@@ -138,6 +139,8 @@ const app = new Vue({
                 var error = error.response.data;
                 toastr["error"](error.message + ". " + error.file + ":" + error.line)
             });
+
+            setTimeout(_this.requestDataFuelConsumption, 3000);
         }
     },
     mounted: function() {
@@ -232,8 +235,9 @@ const app = new Vue({
             series: []
         });
 
-        this.requestDataRatio();
-        this.requestDataFuelStok();
+        this.requestDataFuelRatio();
+        this.requestDataFuelStock();
+        this.requestDataFuelConsumption();
     }
 });
 

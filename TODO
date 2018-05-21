@@ -2,7 +2,8 @@ Dropdown di daily check sesuai yang dijadwalkan. Perlu?
 perhitungan durasi pakai moment.js
 parsing nilai untuk decimal ==> integer
 dropdown employe sesuai sesuai dengan yg aktif?
-B/D type di form breakdown pake selec2
+dropdown pake select2 semua
+chart Fel Consumption
 
 Saran:
     - Bagaimana kalau leadtime breakdown unit disatuin sama breakdown PCR?

@@ -100,7 +100,8 @@ $doc_category = array(
         <input type="text" v-model="docNo" id="doc_no" class="form-control" placeholder="Document Number"><br>
         <table class="table table-striped">
             <tbody>
-                <tr v-for="d in docList">
+                <tr v-for="(d,i) in docList">
+                    <td style="width:30px;">@{{i+1}}.</td>
                     <td>
                         <input type="hidden" name="doc_no[]" :value="d">
                         @{{d}}
