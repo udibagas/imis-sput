@@ -31,7 +31,9 @@ class BreakdownExport implements FromQuery, WithHeadings
             'Component Criteria',
             'Action',
             'WO Number',
-            'Status'
+            'Status',
+            'Duration',
+            'Downtime'
         ];
     }
 

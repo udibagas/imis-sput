@@ -4,6 +4,9 @@ parsing nilai untuk decimal ==> integer
 dropdown employe sesuai sesuai dengan yg aktif?
 dropdown pake select2 semua
 chart Fel Consumption
+add last_login on login
+form class diganti ala vue
+cari lib table vue yg bagus
 
 Saran:
     - Bagaimana kalau leadtime breakdown unit disatuin sama breakdown PCR?
