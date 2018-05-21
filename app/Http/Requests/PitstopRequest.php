@@ -23,7 +23,7 @@ class PitstopRequest extends FormRequest
      *
      * @return array
      */
-    public function rules(Request $request)
+    public function rules()
     {
         $pitstop = $this->route('pitstop');
         // unit id tidak boleh kembar di hari yang sama
@@ -42,7 +42,18 @@ class PitstopRequest extends FormRequest
             'location_id' => 'required',
             'shift' => 'required',
             'time_in' => 'required',
-            'time_out' => 'required_if:status,1',
+            'time_out' => [
+                'required_if:status,1',
+                function($attribute, $value, $fail) {
+                    if ($value != '' && strtotime($value) <= strtotime($this->time_in)) {
+                        $fail("Time Out mundur.");
+                    }
+
+                    if (strtotime($value) > strtotime(now())) {
+                        $fail("Time Out di masa depan.");
+                    }
+                }
+            ],
             'description' => 'required_if:status,1',
             'hm' => 'required',
         ];

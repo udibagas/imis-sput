@@ -4,7 +4,7 @@
 
 <div class="panel panel-primary" id="app">
     <div class="panel-body">
-        <h3 class="pull-left text-primary">PRE JOB</h3>
+        <h3 class="pull-left text-primary">PRAJOB</h3>
         <span class="pull-right" style="margin:15px 0 15px 10px;">
             @can('create', App\Prajob::class)
             <a href="#" @click="add" class="btn btn-primary"><i class="icon-plus-circled"></i></a>
@@ -17,7 +17,7 @@
             <thead>
                 <tr>
                     <th data-column-id="id" data-width="3%">ID</th>
-                    <th data-column-id="date">Date</th>
+                    <th data-column-id="tgl">Date</th>
                     <th data-column-id="shift">Shift</th>
                     <th data-column-id="nrp">NRP</th>
                     <th data-column-id="name">Name</th>
@@ -42,7 +42,10 @@
                         data-header-align="center"
                         data-align="center">Siap Bekerja</th>
 
-                    <th data-column-id="status">Status Persetujuan</th>
+                    <th data-column-id="spo">SPO</th>
+                    <th data-column-id="bpm">BPM</th>
+
+                    <!-- <th data-column-id="approval_status">Status Persetujuan</th> -->
 
                     @can('updateOrDelete', App\Prajob::class)
                     <th data-column-id="commands" data-width="5%"
@@ -85,7 +88,7 @@
                 from: '{{date("Y-m-d")}}',
                 to: '{{date("Y-m-d")}}'
             },
-            prajobs: {!! App\Employee::selectRaw('id AS id, CONCAT(nrp, " - ", name) AS text')->orderBy('name', 'ASC')->get() !!},
+            employees: {!! App\Employee::selectRaw('id AS id, CONCAT(nrp, " - ", name) AS text')->orderBy('name', 'ASC')->get() !!},
         },
         methods: {
             openExportForm: function() {
@@ -97,12 +100,12 @@
                 window.location = '{{url("prajob/export")}}?from=' + this.exportRange.from + '&to=' + this.exportRange.to;
             },
             add: function() {
-                // reset the form
-                this.formTitle = "ADD PRE JOB";
-                this.formData = {};
+                this.formTitle = "ADD PRAJOB";
+                this.formData = {
+                    tgl: '{{date("Y-m-d")}}'
+                };
                 this.formErrors = {};
                 this.error = {};
-                // open form
                 $('#modal-form').modal('show');
             },
             store: function() {
@@ -119,16 +122,18 @@
                     unblock('form');
                     if (error.response.status == 422) {
                         t.formErrors = error.response.data.errors;
+                        t.error = {};
                     }
 
                     if (error.response.status == 500) {
                         t.error = error.response.data;
+                        t.formErrors = {};
                     }
                 });
             },
             edit: function(id) {
                 var t = this;
-                this.formTitle = "EDIT PRE JOB";
+                this.formTitle = "EDIT PRAJOB";
                 this.formErrors = {};
                 this.error = {};
 
@@ -153,15 +158,17 @@
                     toastr["success"]("Data berhasil diupdate");
                     $('#bootgrid').bootgrid('reload');
                 })
-                // validasi
+
                 .catch(function(error) {
                     unblock('form');
                     if (error.response.status == 422) {
                         t.formErrors = error.response.data.errors;
+                        t.error = {};
                     }
 
                     if (error.response.status == 500) {
                         t.error = error.response.data;
+                        t.formErrors = {};
                     }
                 });
             },
@@ -198,6 +205,12 @@
             var t = this;
 
             var grid = $('#bootgrid').bootgrid({
+                statusMapping: {
+                    0: 'default',
+                    1: 'success',
+                    2: 'warning',
+                    3: 'danger',
+                },
                 rowCount: [10,25,50,100],
                 ajax: true, url: '{{url('prajob')}}',
                 ajaxSettings: {
@@ -220,13 +233,13 @@
                     },
                     minum_obat: function(column, row) {
                         return row.minum_obat
-                            ? '<span class="label label-success">Y</span>'
-                            : '<span class="label label-danger">N</span>';
+                            ? '<span class="label label-danger">Y</span>'
+                            : '<span class="label label-success">N</span>';
                     },
                     ada_masalah: function(column, row) {
                         return row.ada_masalah
-                            ? '<span class="label label-success">Y</span>'
-                            : '<span class="label label-danger">N</span>';
+                            ? '<span class="label label-danger">Y</span>'
+                            : '<span class="label label-success">N</span>';
                     },
                     siap_bekerja: function(column, row) {
                         return row.siap_bekerja

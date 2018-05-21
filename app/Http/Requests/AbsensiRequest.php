@@ -4,6 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
+use App\Absensi;
 
 class AbsensiRequest extends FormRequest
 {
@@ -27,8 +28,28 @@ class AbsensiRequest extends FormRequest
         $absensi = $this->route('absensi');
 
         return [
-            'employee_id' => ['required'],
-            'in' => 'required'
+            'in' => ['required', function($attribute, $value, $fail) {
+                if (strtotime($value) > strtotime(now())) {
+                    $fail("Absen di masa depan?");
+                }
+            }],
+            'employee_id' => ['required', function($attribute, $value, $fail) use ($absensi) {
+                $in = date('Y-m-d', strtotime($this->in));
+
+                $sudah = Absensi::where('employee_id', $value)
+                    ->whereRaw("DATE(`in`) = '$in'")
+                    ->whereNotIn('id', [$absensi ? $absensi->id : 0])
+                    ->count();
+
+                if ($sudah) {
+                    $fail("Karyawan sudah absen hari ini");
+                }
+            }],
+            'out' => [function($attribute, $value, $fail) {
+                if ($value != '' && strtotime($value) <= strtotime($this->in)) {
+                    $fail("Time Out mundur.");
+                }
+            }],
         ];
     }
 }

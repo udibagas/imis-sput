@@ -95,5 +95,41 @@ class AuthServiceProvider extends ServiceProvider
                 ->where('user_id', $user->id)
                 ->where('update', 1)->count();
         });
+
+        Gate::define('view-hcgs', function($user) {
+            return Authorization::where('controller', 'Hcgs')
+                ->where('user_id', $user->id)
+                ->where('view', 1)->count();
+        });
+
+        Gate::define('view-backup', function($user) {
+            return Authorization::where('controller', 'Backup')
+                ->where('user_id', $user->id)
+                ->where('view', 1)->count();
+        });
+
+        Gate::define('export-backup', function($user) {
+            return Authorization::where('controller', 'Backup')
+                ->where('user_id', $user->id)
+                ->where('export', 1)->count();
+        });
+
+        Gate::define('import-backup', function($user) {
+            return Authorization::where('controller', 'Backup')
+                ->where('user_id', $user->id)
+                ->where('import', 1)->count();
+        });
+
+        Gate::define('create-backup', function($user) {
+            return Authorization::where('controller', 'Backup')
+                ->where('user_id', $user->id)
+                ->where('create', 1)->count();
+        });
+
+        Gate::define('delete-backup', function($user) {
+            return Authorization::where('controller', 'Backup')
+                ->where('user_id', $user->id)
+                ->where('delete', 1)->count();
+        });
     }
 }

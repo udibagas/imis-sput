@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Prajob;
 use App\Http\Requests\PrajobRequest;
+use App\Exports\PrajobExport;
+use Excel;
 
 class PrajobController extends Controller
 {
@@ -21,11 +23,12 @@ class PrajobController extends Controller
         {
             $pageSize = $request->rowCount > 0 ? $request->rowCount : 1000000;
             $request['page'] = $request->current;
-            $sort = $request->sort ? key($request->sort) : 'prajobs.name';
-            $dir = $request->sort ? $request->sort[$sort] : 'asc';
+            $sort = $request->sort ? key($request->sort) : 'prajobs.tgl';
+            $dir = $request->sort ? $request->sort[$sort] : 'DESC';
 
             $prajob = Prajob::selectRaw('
                     prajobs.*,
+                    prajobs.approval_status AS status,
                     employees.name AS name,
                     employees.nrp AS nrp
                 ')
@@ -45,9 +48,8 @@ class PrajobController extends Controller
 
         return view('prajob.index', [
             'breadcrumbs' => [
-                'hcgs/dashboard' => 'HCGS',
-                '#' => 'Master Data',
-                'praJob' => 'Pre Jobs'
+                'hcgs' => 'HCGS',
+                'prajob' => 'Prajob'
             ]
         ]);
     }
@@ -100,5 +102,11 @@ class PrajobController extends Controller
     {
         $this->authorize('delete', Prajob::class);
         return ['success' => $prajob->delete()];
+    }
+
+    public function export(Request $request)
+    {
+        $this->authorize('export', Prajob::class);
+        return Excel::download(new PrajobExport($request), "prajobs-{$request->from}-to-{$request->to}.xlsx");
     }
 }

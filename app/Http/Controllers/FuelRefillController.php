@@ -169,4 +169,9 @@ class FuelRefillController extends Controller
         $this->authorize('export', FuelRefill::class);
         return Excel::download(new FuelRefillExport($request), "fuel-refill-{$request->from}-to-{$request->to}.xlsx");
     }
+
+    public function downloadApp()
+    {
+        return "NOT AVAILABLE YET!";
+    }
 }

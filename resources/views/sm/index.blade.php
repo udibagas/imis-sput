@@ -28,10 +28,9 @@
         </div>
 
         <div class="col-md-6">
-            <div class="panel panel-primary">
+            <div class="panel panel-default">
                 <div class="panel-heading">
-                    <h3 class="panel-title text-center">FUEL CONSUMPTION</h3>
-                    <div class="clearfix"> </div>
+                    <span class="text-primary">FUEL CONSUMPTION</span>
                 </div>
                 <div class="panel-body" style="height:285px;overflow:auto;">
                     <table class="table table-striped table-hover">
@@ -43,13 +42,11 @@
                             </tr>
                         </thead>
                         <tbody>
-                            @foreach ($egi as $e)
-                            <tr>
-                                <td>{{$e->name}}</td>
-                                <td>{{''}}</td>
-                                <td>{{''}}</td>
+                            <tr v-for="f in fuelConsumptions">
+                                <td>@{{f.egi}}</td>
+                                <td>@{{f.today}}</td>
+                                <td>@{{f.avg}}</td>
                             </tr>
-                            @endforeach
                         </tbody>
                     </table>
                 </div>
@@ -68,7 +65,8 @@ const app = new Vue({
     data: {
         chartRatio: null,
         chartStock: null,
-        period: '{{date('Y-m-d')}}',
+        period: '{{date("Y-m-d")}}',
+        fuelConsumptions: [],
         labelOption: {
             show: true,
             position: 'top',
@@ -83,7 +81,7 @@ const app = new Vue({
     methods: {
         requestDataRatio: function() {
             var _this = this;
-            axios.get('{{url("fuelTank/ratio")}}').then(function(r) {
+            axios.get('{{url("sm/ratio")}}').then(function(r) {
                 _this.chartRatio.setOption({series: r.data});
                 setTimeout(_this.requestDataRatio, 3000);
             })
@@ -97,7 +95,7 @@ const app = new Vue({
         },
         requestDataFuelStok: function() {
             var _this = this;
-            axios.get('{{url("fuelTank/dashboard")}}').then(function(r) {
+            axios.get('{{url("sm/fuelStock")}}').then(function(r) {
                 var dataCapacity = [];
                 var dataStock = [];
 
@@ -131,8 +129,9 @@ const app = new Vue({
             });
         },
         requestDataFuelConsumption: function() {
-            axios.get('{{url('')}}').then(function(r) {
-
+            var _this = this;
+            axios.get('{{url("sm/fuelConsumption")}}').then(function(r) {
+                _this.fuelConsumptions = r.data;
             })
 
             .catch(function(error) {

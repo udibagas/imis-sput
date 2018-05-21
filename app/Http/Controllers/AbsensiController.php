@@ -61,6 +61,11 @@ class AbsensiController extends Controller
         ]);
     }
 
+    public function create()
+    {
+        return view('absensi.create');
+    }
+
     /**
      * Store a newly created resource in storage.
      *

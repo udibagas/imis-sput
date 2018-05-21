@@ -14,4 +14,12 @@ class Prajob extends Model
         'spo', 'bpm'
     ];
 
+    public function getJamTidurAttribute($v) {
+        return date('H:i', strtotime($v));
+    }
+
+    public function getJamBangunAttribute($v) {
+        return date('H:i', strtotime($v));
+    }
+
 }

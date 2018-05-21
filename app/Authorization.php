@@ -80,7 +80,7 @@ class Authorization extends Model
                 'id' => 'hcgs',
                 'text' => 'HCGS',
                 'children' => [
-                    ['id' => 'dashboard', 'text' => 'Dashboard'],
+                    ['id' => 'Hcgs', 'text' => 'Dashboard'],
                     ['id' => 'Absensi', 'text' => 'Absensi'],
                     ['id' => 'Prajob', 'text' => 'Pra Job & Fatique'],
                     ['id' => 'FatiqueApproval', 'text' => 'Fatique Approval'],

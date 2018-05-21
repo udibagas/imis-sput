@@ -18,7 +18,11 @@ Route::group(['middleware' => 'auth'], function() {
     Route::get('/home', 'HomeController@index')->name('home');
 
     Route::get('absensi/export', 'AbsensiController@export');
-    Route::resource('absensi', 'AbsensiController')->except(['edit', 'create']);
+    Route::resource('absensi', 'AbsensiController')->except(['edit']);
+
+    Route::get('backup/export', 'BackupController@export');
+    Route::get('backup/import', 'BackupController@import');
+    Route::resource('backup', 'BackupController')->except(['edit', 'create']);
 
     // Master data
     Route::resource('area', 'AreaController')->except(['edit', 'create']);
@@ -54,13 +58,19 @@ Route::group(['middleware' => 'auth'], function() {
     Route::get('employee/export', 'EmployeeController@export');
     Route::resource('employee', 'EmployeeController')->except(['edit', 'create']);
 
-    Route::get('fuelTank/ratio', 'FuelTankController@ratio');
-    Route::get('fuelTank/dashboard', 'FuelTankController@dashboard');
+    Route::put('fatiqueApproval/{prajob}', 'FatiqueApprovalController@update');
+    Route::get('fatiqueApproval', 'FatiqueApprovalController@index');
+
+    Route::get('sm/literPerHm', 'SmController@literPerHm');
+    Route::get('sm/ratio', 'SmController@ratio');
+    Route::get('sm/fuelStock', 'SmController@fuelStock');
+    Route::get('sm', 'SmController@index');
 
     Route::get('flowMeter/export', 'FlowMeterController@export');
     Route::resource('flowMeter', 'FlowMeterController')->except(['edit', 'create']);
 
     Route::get('fuelRefill/getLastRefill/{unit}', 'FuelRefillController@getLastRefill');
+    Route::get('fuelRefill/downloadApp', 'FuelRefillController@downloadApp');
     Route::get('fuelRefill/export', 'FuelRefillController@export');
     Route::resource('fuelRefill', 'FuelRefillController')->except(['edit', 'create']);
 
@@ -85,6 +95,7 @@ Route::group(['middleware' => 'auth'], function() {
     Route::resource('position', 'PositionController')->except(['edit', 'create']);
     Route::resource('problemProductivityCategory', 'ProblemProductivityCategoryController')->except(['edit', 'create']);
 
+    Route::get('prajob/export', 'PrajobController@export');
     Route::resource('prajob', 'PrajobController')->except(['edit', 'create']);
 
     Route::resource('runningText', 'RunningTextController')->except(['edit', 'create']);
@@ -107,6 +118,8 @@ Route::group(['middleware' => 'auth'], function() {
     Route::get('pasangSurut', 'OperationController@pasangSurut');
     Route::get('game', 'OperationController@game');
     Route::get('test', 'OperationController@test');
+
+    Route::get('hcgs', 'HcgsController@index');
 });
 
 View::composer('layouts._sidebar', function($view) {
@@ -138,7 +151,7 @@ View::composer('layouts._sidebar', function($view) {
         'SM' => [
             'icon' => 'map-marker',
             'url' => [
-                'fuelTank/dashboard' => 'Dashboard',
+                'sm' => 'Dashboard',
                 'flowMeter' => 'Flow Meter',
                 'fuelRefill' => 'Fuel Refill',
                 'warningPart' => 'Warning Parts',
@@ -180,10 +193,10 @@ View::composer('layouts._sidebar', function($view) {
         'HCGS' => [
             'icon' => 'users',
             'url' => [
-                'hcgs/dashboard' => 'Dashboard',
+                'hcgs' => 'Dashboard',
                 'absensi' => 'Absensi',
                 'prajob' => 'Pra Job & Fatique',
-                'prajob/approval' => 'Fatique Approval',
+                'fatiqueApproval' => 'Fatique Approval',
                 '<i class="fa fa-database"></i> Master Data' => [
                     'department' => 'Departments',
                     'employee' => 'Employees',
@@ -208,9 +221,12 @@ View::composer('layouts._sidebar', function($view) {
             'url'=> [
                 'user' => 'Users',
                 'authorization' => 'Authorization',
-                'backup' => 'Backup & Restore',
                 'runningText' => 'Running Text',
-                // 'setting' => 'Settings',
+                // todo
+                'backup' => 'Backup & Restore',
+                'update' => 'Update',
+                'log' => 'Logs', // log error aplikasi & status pembenahan
+                'setting' => 'Settings',
             ]
         ]
     ];

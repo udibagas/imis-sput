@@ -9,6 +9,7 @@
             @can('create', App\FuelRefill::class)
             <a href="#" @click="add" class="btn btn-primary"><i class="icon-plus-circled"></i></a>
             @endcan
+            <a href="{{url('fuelRefill/downloadApp')}}" class="btn btn-primary"><i class="fa fa-android"></i> DOWNLOAD APLIKASI</a>
             @can('export', App\FuelRefill::class)
             <a href="#" @click="openExportForm" class="btn btn-primary"><i class="icon-download"></i> EXPORT</a>
             @endcan
@@ -290,10 +291,10 @@
                         return t.formatNumber(row.hm);
                     },
                     km_last: function(column, row) {
-                        return t.formatNumber(row.km_last);
+                        return row.km_last ? t.formatNumber(row.km_last) : '';
                     },
                     hm_last: function(column, row) {
-                        return t.formatNumber(row.hm_last);
+                        return row.hm_last ? t.formatNumber(row.hm_last) : '';
                     },
                 }
             }).on("loaded.rs.jquery.bootgrid", function() {

@@ -4,6 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
+use Illuminate\Http\Request;
 
 class FuelRefillRequest extends FormRequest
 {
@@ -35,8 +36,16 @@ class FuelRefillRequest extends FormRequest
             'total_real' => 'required',
             'km' => 'required',
             'hm' => 'required',
-            'start_time' => 'required',
-            'finish_time' => 'required',
+            'start_time' => 'required|date_format:"H:i"',
+            'finish_time' => [
+                'required',
+                'date_format:"H:i"',
+                function($attribute, $value, $fail) {
+                    if (strtotime($value) <= strtotime($this->start_time)) {
+                        $fail("Waktu selesai mundur.");
+                    }
+                }
+            ],
         ];
     }
 
@@ -56,6 +65,14 @@ class FuelRefillRequest extends FormRequest
             'hm_last' => 'HM Last',
             'start_time' => 'Start Time',
             'finish_time' => 'Finish Time',
+        ];
+    }
+
+    public function messages()
+    {
+        return [
+            'start_time.date_format' => 'Harus dengan format jam:menit (contoh: 13:35)',
+            'start_time.date_format' => 'Harus dengan format jam:menit (contoh: 13:38)',
         ];
     }
 }

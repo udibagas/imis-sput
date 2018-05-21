@@ -32,7 +32,18 @@ class BreakdownRequest extends FormRequest
             'time_in' => 'required',
             'diagnosa' => 'required',
             'tindakan' => 'required_if:status,1',
-            'time_out' => 'required_if:status,1',
+            'time_out' => [
+                'required_if:status,1',
+                function($attribute, $value, $fail) {
+                    if ($value != '' && strtotime($value) <= strtotime($this->time_in)) {
+                        $fail("Time Out mundur.");
+                    }
+
+                    if (strtotime($value) > strtotime(now())) {
+                        $fail("Time Out di masa depan.");
+                    }
+                }
+            ],
             'component_criteria_id' => 'required_if:status,1',
             'warning_part' => 'required_if:status,1',
             'breakdown_status_id' => 'required_if:status,1',
