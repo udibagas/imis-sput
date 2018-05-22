@@ -132,6 +132,7 @@ class BreakdownController extends Controller
     public function destroy(Breakdown $breakdown)
     {
         $this->authorize('delete', Breakdown::class);
+        $breakdown->unit->update(['status' => 1]);
         return ['success' => $breakdown->delete()];
     }
 
