@@ -30,7 +30,7 @@ class UnitController extends Controller
             $units = Unit::selectRaw('
                     units.*,
                     owners.name AS owner,
-                    egis.name AS egi,
+                    egis.name AS egi_name,
                     egis.fc AS fc,
                     unit_categories.name AS category
                 ')

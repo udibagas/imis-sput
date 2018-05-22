@@ -102,7 +102,7 @@
                     </div>
 
                     <div class="form-group" :class="formErrors.total_real ? 'has-error' : ''">
-                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="hm">Total
+                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="hm">Total (Liter)
                         </label>
                         <div class="col-md-9 col-sm-9 col-xs-12">
                             <div class="row">

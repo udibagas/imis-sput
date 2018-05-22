@@ -120,6 +120,8 @@ Route::group(['middleware' => 'auth'], function() {
     Route::get('test', 'OperationController@test');
 
     Route::get('hcgs', 'HcgsController@index');
+    Route::get('doUpdate', 'AdminController@doUpdate');
+    Route::get('update', 'AdminController@update');
 });
 
 View::composer('layouts._sidebar', function($view) {

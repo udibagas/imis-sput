@@ -120,7 +120,27 @@
                 })
                 .catch(function(error) {
                     var error = error.response.data;
-                    toastr["error"](error.message + ". " + error.file + ":" + error.line)
+                    toastr["error"](error.message + ". " + error.file + ":" + error.line);
+                });
+
+                axios.get('{{url("unit")}}/' + val).then(function(r) {
+                    _this.formData.total_recommended = r.data.egi.fc * (_this.formData.hm - _this.formData.hm_last);
+                    _this.$forceUpdate();
+                })
+                .catch(function(error) {
+                    var error = error.response.data;
+                    toastr["error"](error.message + ". " + error.file + ":" + error.line);
+                });
+            },
+            'formData.hm': function(v) {
+                var _this = this;
+                axios.get('{{url("unit")}}/' + _this.formData.unit_id).then(function(r) {
+                    _this.formData.total_recommended = r.data.egi.fc * (v - _this.formData.hm_last);
+                    _this.$forceUpdate();
+                })
+                .catch(function(error) {
+                    var error = error.response.data;
+                    toastr["error"](error.message + ". " + error.file + ":" + error.line);
                 });
             }
         },

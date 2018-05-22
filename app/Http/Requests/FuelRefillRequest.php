@@ -34,8 +34,16 @@ class FuelRefillRequest extends FormRequest
             'employee_id' => 'required',
             'shift' => 'required',
             'total_real' => 'required',
-            'km' => 'required',
-            'hm' => 'required',
+            'km' => ['required', function($attribute, $value, $fail) {
+                if ($value <= $this->km_last) {
+                    $fail("KM Now harus lebih besar dari KM Last");
+                }
+            }],
+            'hm' => ['required', function($attribute, $value, $fail) {
+                if ($value <= $this->hm_last) {
+                    $fail("HM Now harus lebih besar dari HM Last");
+                }
+            }],
             'start_time' => 'required|date_format:"H:i"',
             'finish_time' => [
                 'required',

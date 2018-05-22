@@ -20,7 +20,7 @@
                     <th data-column-id="name">Name</th>
                     <th data-column-id="category">Category</th>
                     <th data-column-id="owner">Owner</th>
-                    <th data-column-id="egi">EGI</th>
+                    <th data-column-id="egi_name">EGI</th>
                     <th data-column-id="fc">FC</th>
                     <!-- <th data-column-id="status">Status</th> -->
                     @can('updateOrDelete', App\Unit::class)

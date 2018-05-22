@@ -10,4 +10,10 @@ class Unit extends Model
         'name', 'egi_id', 'owner_id', 'status',
         'unit_category_id'
     ];
+
+    protected $with = ['egi'];
+
+    public function egi() {
+        return $this->belongsTo(Egi::class);
+    }
 }
