@@ -79,6 +79,7 @@ const app = new Vue({
         breakdowns: [],
         formData: {},
         formErrors: {},
+        formTitle: "UPDATE BREAKDOWN PCR",
         error: {},
         rowClass: {
             ICM: 'danger',
@@ -108,6 +109,9 @@ const app = new Vue({
             });
 
             setTimeout(_this.getData, 3000);
+        },
+        store: function() {
+            return;
         },
         edit: function(id) {
             var _this = this;
