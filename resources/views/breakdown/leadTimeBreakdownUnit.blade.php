@@ -129,11 +129,6 @@ const app = new Vue({
             TRM: 'warning',
         }
     },
-    filters: {
-        downtime: function(time_in) {
-            secs = (new Date() - new Date(time_in))/1000;
-        }
-    },
     methods: {
         getData: function() {
             var _this = this;
@@ -146,7 +141,7 @@ const app = new Vue({
                 toastr["error"](error.message + ". " + error.file + ":" + error.line)
             });
 
-            setTimeout(_this.getData, 3000);
+            setTimeout(_this.getData, 5000);
         },
         getTodayPlan: function() {
             var _this = this;
@@ -181,7 +176,7 @@ const app = new Vue({
                 toastr["error"](error.message + ". " + error.file + ":" + error.line)
             });
 
-            setTimeout(_this.getDataRemarkUnitByType, 3000);
+            setTimeout(_this.getDataRemarkUnitByType, 5000);
         },
         getUnitReady: function() {
             var _this = this;
@@ -194,7 +189,7 @@ const app = new Vue({
                 toastr["error"](error.message + ". " + error.file + ":" + error.line)
             });
 
-            setTimeout(_this.getUnitReady, 3000);
+            setTimeout(_this.getUnitReady, 5000);
         },
     },
     mounted: function() {
