@@ -45,7 +45,7 @@ class BreakdownRequest extends FormRequest
                 }
             ],
             'component_criteria_id' => 'required_if:status,1',
-            'warning_part' => 'required_if:status,1',
+            // 'warning_part' => 'required_if:status,1',
             'breakdown_status_id' => 'required_if:status,1',
         ];
     }
@@ -56,7 +56,7 @@ class BreakdownRequest extends FormRequest
             'tindakan.required_if' => ':attribute harus diisi jika Close',
             'time_out.required_if' => ':attribute harus diisi jika Close',
             'component_criteria_id.required_if' => ':attribute harus diisi jika Close',
-            'warning_part.required_if' => ':attribute harus diisi jika Close',
+            // 'warning_part.required_if' => ':attribute harus diisi jika Close',
             'breakdown_status_id.required_if' => ':attribute harus diisi jika Close',
         ];
     }
