@@ -20,7 +20,7 @@
     <div class="col-md-4">
         <div class="panel panel-primary">
             <div class="panel-body">
-                <a href="{{url('fuelTank/dashboard')}}">
+                <a href="{{url('sm')}}">
                     <div class="stack-order">
                         <div class="fa fa-map-marker fa-3x"></div>
                         <h1 class="no-margins">SM</h1>
@@ -32,7 +32,7 @@
     <div class="col-md-4">
         <div class="panel panel-primary">
             <div class="panel-body">
-                <a href="{{url('operation/dashboard')}}">
+                <a href="{{url('operation')}}">
                     <div class="stack-order">
                         <div class="fa fa-cogs fa-3x"></div>
                         <h1 class="no-margins">OPERATION</h1>
