@@ -109,15 +109,38 @@ const app = new Vue({
                     series: [{
                         name: 'CAPACITY',
                         type: 'bar',
-                        barGap: 0,
+                        barGap: '-90%',
+                        barWidth: '50%',
                         label: _this.labelOption,
-                        data: dataCapacity
+                        data: dataCapacity,
+                        // itemStyle: {
+                        //     normal: {color: '#334B5C'}
+                        // }
                     }, {
                         name: 'STOCK',
                         type: 'bar',
-                        barGap: 0,
+                        barWidth: '40%',
                         label: _this.labelOption,
-                        data: dataStock
+                        data: dataStock,
+                        itemStyle: {
+                            normal: {
+                                color: new echarts.graphic.LinearGradient(
+                                    0, 0, 0, 1, [{
+                                            offset: 0,
+                                            color: '#00feff'
+                                        },
+                                        {
+                                            offset: 0.5,
+                                            color: '#027eff'
+                                        },
+                                        {
+                                            offset: 1,
+                                            color: '#0286ff'
+                                        }
+                                    ]
+                                )
+                            }
+                        },
                     }]
                 });
 
