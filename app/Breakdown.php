@@ -19,11 +19,10 @@ class Breakdown extends Model
 
     public function getDurationAttribute()
     {
-        $in = Carbon::parse($this->time_in);
-        $out = Carbon::parse($this->time_out);
-
         if ($this->time_out) {
-            return $in->diffForHumans($out, true);
+            $in = date_create($this->time_in);
+            $out = date_create($this->time_out);
+            return date_diff($in, $out)->format('%d hari %h jam %i menit');
         }
 
         return '';
@@ -40,12 +39,9 @@ class Breakdown extends Model
 
     public function getDowntimeAttribute()
     {
-        $in = Carbon::parse($this->time_in);
-        $downtime = Carbon::now()->diffInSeconds($in);
-        $jam = ($downtime-($downtime%3600))/3600;
-        $menit = (($downtime%3600) - ($downtime%60))/60;
-        $detik = $downtime%60;
-        return sprintf('%02d', $jam).":".sprintf('%02d', $menit).":".sprintf('%02d', $detik);
+        $in = date_create($this->time_in);
+        $now = date_create();
+        return date_diff($in, $now)->format('%d hari %h jam %i menit');
     }
 
     public function unit() {
