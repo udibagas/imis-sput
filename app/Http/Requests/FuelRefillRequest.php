@@ -35,12 +35,12 @@ class FuelRefillRequest extends FormRequest
             'shift' => 'required',
             'total_real' => 'required',
             'km' => ['required', function($attribute, $value, $fail) {
-                if ($value <= $this->km_last) {
+                if ($value <= $this->km_last && $this->km_last > 0) {
                     $fail("KM Now harus lebih besar dari KM Last");
                 }
             }],
             'hm' => ['required', function($attribute, $value, $fail) {
-                if ($value <= $this->hm_last) {
+                if ($value <= $this->hm_last  && $this->hm_last > 0) {
                     $fail("HM Now harus lebih besar dari HM Last");
                 }
             }],

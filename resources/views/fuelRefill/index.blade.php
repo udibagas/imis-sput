@@ -133,6 +133,10 @@
                 });
             },
             'formData.hm': function(v) {
+                if (!v) {
+                    return;
+                }
+
                 var _this = this;
                 axios.get('{{url("unit")}}/' + _this.formData.unit_id).then(function(r) {
                     _this.formData.total_recommended = r.data.egi.fc * (v - _this.formData.hm_last);
