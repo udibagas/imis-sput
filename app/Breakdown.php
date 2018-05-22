@@ -21,12 +21,21 @@ class Breakdown extends Model
     {
         $in = Carbon::parse($this->time_in);
         $out = Carbon::parse($this->time_out);
-        return $in->diffForHumans($out, true);
+
+        if ($this->time_out) {
+            return $in->diffForHumans($out, true);
+        }
+
+        return '';
     }
 
     public function getReadyTimeAttribute()
     {
-        return Carbon::parse($this->time_out)->diffForHumans();
+        if ($this->time_out) {
+            return Carbon::parse($this->time_out)->diffForHumans();
+        }
+
+        return '';
     }
 
     public function getDowntimeAttribute()
