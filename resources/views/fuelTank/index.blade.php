@@ -20,7 +20,7 @@
                     <th data-column-id="stock">Stock</th>
                     <th data-column-id="last_stock_time">Last Update Stock</th>
                     @can('updateOrDelete', App\FuelTank::class)
-                    <th data-column-id="commands" data-width="5%"
+                    <th data-column-id="commands"
                         data-formatter="commands"
                         data-sortable="false"
                         data-align="right"
