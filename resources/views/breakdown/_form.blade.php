@@ -36,11 +36,8 @@
                         <label class="control-label col-md-3 col-sm-3 col-xs-12" for="breakdown_category_id">B/D Type
                         </label>
                         <div class="col-md-9 col-sm-9 col-xs-12">
-                            <select class="form-control" v-model="formData.breakdown_category_id" data-placeholder="B/D Type">
-                                @foreach (\App\BreakdownCategory::selectRaw('id, CONCAT(name, " - ", description_en) AS code')->orderBy('code', 'ASC')->pluck('code', 'id') as $id => $code)
-                                <option value="{{$id}}">{{$code}}</option>
-                                @endforeach
-                            </select>
+                            <select2 :options="breakdownCategories" class="form-control" v-model="formData.breakdown_category_id" data-placeholder="B/D Type">
+                            </select2>
                             <span v-if="formErrors.breakdown_category_id" class="help-block">@{{formErrors.breakdown_category_id[0]}}</span>
                         </div>
                     </div>
@@ -49,11 +46,8 @@
                         <label class="control-label col-md-3 col-sm-3 col-xs-12" for="breakdown_status_id">B/D Status
                         </label>
                         <div class="col-md-9 col-sm-9 col-xs-12">
-                            <select class="form-control" v-model="formData.breakdown_status_id" data-placeholder="B/D Status">
-                                @foreach (\App\BreakdownStatus::selectRaw('id, CONCAT(code, " - ", description) AS code')->orderBy('code', 'ASC')->pluck('code', 'id') as $id => $code)
-                                <option value="{{$id}}">{{$code}}</option>
-                                @endforeach
-                            </select>
+                            <select2 :options="breakdownStatuses" class="form-control" v-model="formData.breakdown_status_id" data-placeholder="B/D Status">
+                            </select2>
                             <span v-if="formErrors.breakdown_status_id" class="help-block">@{{formErrors.breakdown_status_id[0]}}</span>
                         </div>
                     </div>

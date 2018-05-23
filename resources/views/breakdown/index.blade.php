@@ -73,6 +73,8 @@
             units: {!! App\Unit::selectRaw('id AS id, name AS text')->orderBy('name', 'ASC')->get() !!},
             component_criterias: {!!App\ComponentCriteria::selectRaw('id AS id, CONCAT(code, " - ", description) AS text')->orderBy('code', 'ASC')->get()!!},
             locations: {!! App\Location::selectRaw('id AS id, name AS text')->orderBy('name', 'ASC')->get() !!},
+            breakdownStatuses: {!! \App\BreakdownStatus::selectRaw('id as id, CONCAT(code, " - ", description) AS text')->orderBy('code', 'ASC')->get() !!},
+            breakdownCategories: {!! \App\BreakdownCategory::selectRaw('id AS id, CONCAT(name, " - ", description_en) AS text')->orderBy('name', 'ASC')->get() !!}
         },
         methods: {
             openExportForm: function() {
