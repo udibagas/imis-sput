@@ -110,7 +110,7 @@ class Authorization extends Model
                 'text' => 'Administration',
                 'children' => [
                     ['id' => 'User', 'text' => 'Users'],
-                    ['id' => 'Authorization', 'text' => 'Authorization'],
+                    // ['id' => 'Authorization', 'text' => 'Authorization'],
                     ['id' => 'RunningText', 'text' => 'Runnin Text'],
                 ]
             ]

@@ -13,7 +13,7 @@
         <table class="table table-striped table-hover " id="bootgrid" style="border-top:2px solid #ddd">
             <thead>
                 <tr>
-                    <th data-column-id="id" data-width="3%">ID</th>
+                    <th data-column-id="id">ID</th>
                     <th data-column-id="user">User</th>
                     <th data-column-id="controller">Controller</th>
                     <th data-column-id="view" data-formatter="view">View</th>
@@ -23,7 +23,7 @@
                     <th data-column-id="export" data-formatter="export">Export</th>
                     <th data-column-id="import" data-formatter="import">Import</th>
                     @can('updateOrDelete', App\Authorization::class)
-                    <th data-column-id="commands" data-width="5%"
+                    <th data-column-id="commands"
                         data-formatter="commands"
                         data-sortable="false"
                         data-align="right"
@@ -54,11 +54,10 @@
             formTitle: '',
             error: {},
             modules: {!! json_encode(App\Authorization::getModule()) !!},
-            users: {!! App\User::where('super_admin', 0)->orderBy('name', 'ASC')->selectRaw('name AS text, id AS id')->get() !!}
+            users: {!! App\User::where('super_admin', 0)->orderBy('name', 'ASC')->selectRaw('name AS text, id AS id')->get() !!},
         },
         methods: {
             add: function() {
-                // reset the form
                 this.formTitle = "ADD AUTHORIZATION";
                 this.formData = {
                     view: 1, create: 1, update: 1, delete: 1,
@@ -78,7 +77,7 @@
                     toastr["success"]("Data berhasil ditambahkan");
                     $('#bootgrid').bootgrid('reload');
                 })
-                // validasi
+
                 .catch(function(error) {
                     unblock('form');
 
@@ -118,7 +117,7 @@
                     toastr["success"]("Data berhasil diupdate");
                     $('#bootgrid').bootgrid('reload');
                 })
-                // validasi
+
                 .catch(function(error) {
                     unblock('form');
                     if (error.response.status == 422) {

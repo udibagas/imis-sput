@@ -47,34 +47,127 @@
     const app = new Vue({
         el: '#app',
         data: {
-            formData: {},
+            formData: {
+                active: 0,
+                super_admin: 0,
+                auth: {
+                    controller: [],
+                    view: [],
+                    create: [],
+                    update: [],
+                    delete: [],
+                    export: [],
+                    import: []
+                }
+            },
             formErrors: {},
             formTitle: '',
-            error: {}
+            error: {},
+            selectAll: {
+                view: 0,
+                create: 0,
+                update: 0,
+                delete: 0,
+                export: 0,
+                import: 0
+            },
+            modules: {!! json_encode(App\Authorization::getModule()) !!},
+            actions: ['view', 'create', 'update', 'delete', 'export', 'import'],
+        },
+        watch: {
+            'selectAll.view': function(v, o) {
+                for (i in this.formData.auth.view) {
+                    this.formData.auth.view[i] = v;
+                }
+            },
+            'selectAll.create': function(v, o) {
+                for (i in this.formData.auth.create) {
+                    this.formData.auth.create[i] = v;
+                }
+            },
+            'selectAll.update': function(v, o) {
+                for (i in this.formData.auth.update) {
+                    this.formData.auth.update[i] = v;
+                }
+            },
+            'selectAll.delete': function(v, o) {
+                for (i in this.formData.auth.delete) {
+                    this.formData.auth.delete[i] = v;
+                }
+            },
+            'selectAll.export': function(v, o) {
+                for (i in this.formData.auth.export) {
+                    this.formData.auth.export[i] = v;
+                }
+            },
+            'selectAll.import': function(v, o) {
+                for (i in this.formData.auth.import) {
+                    this.formData.auth.import[i] = v;
+                }
+            },
         },
         methods: {
             add: function() {
-                // reset the form
                 this.formTitle = "ADD USER";
+
+                this.selectAll = {
+                    view: 0,
+                    create: 0,
+                    update: 0,
+                    delete: 0,
+                    export: 0,
+                    import: 0
+                };
+
                 this.formData = {
                     active: 0,
-                    super_admin: 0
+                    super_admin: 0,
+                    auth: {
+                        controller: [],
+                        view: [],
+                        create: [],
+                        update: [],
+                        delete: [],
+                        export: [],
+                        import: []
+                    }
                 };
+
+                this.getDefaultAuth();
                 this.formErrors = {};
                 this.error = {};
-                // open form
                 $('#modal-form').modal('show');
+
+            },
+            getDefaultAuth: function() {
+                var idx = 0;
+
+                for (i in this.modules) {
+                    for (j in this.modules[i].children) {
+                        if (this.modules[i].children[j].id != undefined) {
+                            this.formData.auth.controller[idx] = this.modules[i].children[j].id;
+                            this.formData.auth.view[idx] = 0;
+                            this.formData.auth.create[idx] = 0;
+                            this.formData.auth.update[idx] = 0;
+                            this.formData.auth.delete[idx] = 0;
+                            this.formData.auth.export[idx] = 0;
+                            this.formData.auth.import[idx] = 0;
+                            idx++;
+                        }
+                    }
+                }
             },
             store: function() {
                 block('form');
                 var t = this;
+
                 axios.post('{{url("user")}}', this.formData).then(function(r) {
                     unblock('form');
                     $('#modal-form').modal('hide');
                     toastr["success"]("Data berhasil ditambahkan");
                     $('#bootgrid').bootgrid('reload');
                 })
-                // validasi
+
                 .catch(function(error) {
                     unblock('form');
                     if (error.response.status == 422) {
@@ -85,24 +178,64 @@
                         t.error = error.response.data;
                     }
                 });
+
             },
             edit: function(id) {
-                var t = this;
-                this.formTitle = "EDIT USER";
-                this.formErrors = {};
-                this.error = {};
+                var _this = this;
+                _this.formTitle = "EDIT USER";
+                _this.formErrors = {};
+                _this.error = {};
+
+                _this.selectAll = {
+                    view: 0,
+                    create: 0,
+                    update: 0,
+                    delete: 0,
+                    export: 0,
+                    import: 0
+                };
 
                 axios.get('{{url("user")}}/' + id).then(function(r) {
-                    t.formData = r.data;
-                    $('#modal-form').modal('show');
+                    _this.formData = r.data;
+                    _this.formData.auth = {
+                        controller: [],
+                        view: [],
+                        create: [],
+                        update: [],
+                        delete: [],
+                        export: [],
+                        import: []
+                    }
+
+                    axios.get('{{url("user/getAuth")}}/' + id).then(function(rr) {
+                        _this.getDefaultAuth();
+
+                        for (i in rr.data) {
+                            _this.formData.auth.controller[i] = rr.data[i].controller;
+                            _this.formData.auth.view[i] = rr.data[i].view;
+                            _this.formData.auth.create[i] = rr.data[i].create;
+                            _this.formData.auth.update[i] = rr.data[i].update;
+                            _this.formData.auth.delete[i] = rr.data[i].delete;
+                            _this.formData.auth.export[i] = rr.data[i].export;
+                            _this.formData.auth.import[i] = rr.data[i].import;
+                        }
+
+                        $('#modal-form').modal('show');
+                        _this.$forceUpdate();
+                    })
+
+                    .catch(function(error) {
+                        var error = error.response.data;
+                        toastr["error"](error.message + ". " + error.file + ":" + error.line)
+                    });
+
                 })
 
                 .catch(function(error) {
-                    if (error.response.status == 500) {
-                        var error = error.response.data;
-                        toastr["error"](error.message + ". " + error.file + ":" + error.line)
-                    }
+                    var error = error.response.data;
+                    toastr["error"](error.message + ". " + error.file + ":" + error.line)
                 });
+
             },
             update: function() {
                 block('form');
@@ -113,7 +246,7 @@
                     toastr["success"]("Data berhasil diupdate");
                     $('#bootgrid').bootgrid('reload');
                 })
-                // validasi
+
                 .catch(function(error) {
                     unblock('form');
                     if (error.response.status == 422) {
@@ -143,10 +276,8 @@
                             })
 
                             .catch(function(error) {
-                                if (error.response.status == 500) {
-                                    var error = error.response.data;
-                                    toastr["error"](error.message + ". " + error.file + ":" + error.line)
-                                }
+                                var error = error.response.data;
+                                toastr["error"](error.message + ". " + error.file + ":" + error.line);
                             });
                         }
                     }

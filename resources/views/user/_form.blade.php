@@ -80,6 +80,79 @@
                         </div>
                     </div>
 
+                    <br>
+
+                    <table v-show="formData.super_admin == 0" class="table table-striped table-condensed table-bordered" style="margin-bottom:0;">
+                        <thead>
+                            <tr>
+                                <th style="vertical-align:middle;" rowspan="2">Modules/Action</th>
+                                <th class="text-center" v-for="a in actions" style="width:60px;">
+                                    @{{a}}
+                                </th>
+                            </tr>
+                            <tr>
+                                <th class="text-center">
+                                    <input type="checkbox" v-model="selectAll.view" value="1">
+                                </th>
+                                <th class="text-center">
+                                    <input type="checkbox" v-model="selectAll.create" value="1">
+                                </th>
+                                <th class="text-center">
+                                    <input type="checkbox" v-model="selectAll.update" value="1">
+                                </th>
+                                <th class="text-center">
+                                    <input type="checkbox" v-model="selectAll.delete" value="1">
+                                </th>
+                                <th class="text-center">
+                                    <input type="checkbox" v-model="selectAll.export" value="1">
+                                </th>
+                                <th class="text-center">
+                                    <input type="checkbox" v-model="selectAll.import" value="1">
+                                </th>
+                            </tr>
+                        </thead>
+                    </table>
+
+                    <?php $index = 0; ?>
+                    @foreach(\App\Authorization::getModule() as $m)
+                    <table v-show="formData.super_admin == 0" class="table table-striped table-condensed table-bordered" style="margin-bottom:0;">
+                        <thead>
+                            <tr>
+                                <th colspan="7">{{$m['text']}}</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach($m['children'] as $c)
+                            <tr>
+                                <td>
+                                    <span v-html="formData.auth.controller[{{$index}}]"></span>
+                                    <input type="hidden" v-model="formData.auth.controller[{{$index}}]">
+                                </td>
+                                <td class="text-center" style="width:60px;">
+                                    <input type="checkbox" v-model="formData.auth.view[{{$index}}]" value="1">
+                                </td>
+                                <td class="text-center" style="width:60px;">
+                                    <input type="checkbox" v-model="formData.auth.create[{{$index}}]" value="1">
+                                </td>
+                                <td class="text-center" style="width:60px;">
+                                    <input type="checkbox" v-model="formData.auth.update[{{$index}}]" value="1">
+                                </td>
+                                <td class="text-center" style="width:60px;">
+                                    <input type="checkbox" v-model="formData.auth.delete[{{$index}}]" value="1">
+                                </td>
+                                <td class="text-center" style="width:60px;">
+                                    <input type="checkbox" v-model="formData.auth.export[{{$index}}]" value="1">
+                                </td>
+                                <td class="text-center" style="width:60px;">
+                                    <input type="checkbox" v-model="formData.auth.import[{{$index}}]" value="1">
+                                </td>
+                            </tr>
+                            <?php $index++ ?>
+                            @endforeach
+                        </tbody>
+                    </table>
+                    @endforeach
+
                 </div>
                 <div class="modal-footer">
                     <button type="submit" v-if="formData.id == undefined" class="btn btn-primary" @click="store"><i class="fa fa-floppy-o"></i> Save</button>

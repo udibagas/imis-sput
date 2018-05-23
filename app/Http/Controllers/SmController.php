@@ -27,14 +27,18 @@ class SmController extends Controller
 
     public function fuelConsumption(Request $request)
     {
+        $date = $request->date ? $request->date : date('Y-m-d');
+        return [];
+
+        // todo : menentukan tanggal
         $sql = "SELECT
-                SUM(f.total_real) AS total_real,
-                SUM(f.hm - f.hm_last) AS total_hm,
-                e.name AS egi
+                SUM(COALESCE(f.hm, 0) - COALESCE(f.hm_last, 0)) / SUM(COALESCE(f.total_real, 0)) AS t,
+                e.name AS egi,
+
             FROM fuel_refills f
             JOIN units u ON u.id = f.unit_id
             JOIN egis e ON e.id = u.egi_id
-            WHERE f.date BETWEEN '$request->start' AND '$request->end'
+            WHERE f.date = '$date'
             GROUP BY e.name
             ORDER BY e.name ASC";
 

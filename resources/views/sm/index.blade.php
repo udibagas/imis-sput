@@ -120,7 +120,16 @@ const app = new Vue({
                         name: 'STOCK',
                         type: 'bar',
                         barWidth: '40%',
-                        label: _this.labelOption,
+                        label: {
+                            show: true,
+                            color: '#000',
+                            formatter: function(v) {
+                                return parseFloat(v.value)
+                                    .toFixed(0)
+                                    .toString()
+                                    .replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+                            }
+                        },
                         data: dataStock,
                         itemStyle: {
                             normal: {

@@ -110,6 +110,8 @@ Route::group(['middleware' => 'auth'], function() {
     Route::resource('unit', 'UnitController')->except(['edit', 'create']);
 
     Route::resource('unitCategory', 'UnitCategoryController')->except(['edit', 'create']);
+
+    Route::get('user/getAuth/{user}', 'UserController@getAuth');
     Route::resource('user', 'UserController')->except(['edit', 'create']);
 
     Route::get('warningPart/export', 'WarningPartController@export');
@@ -222,7 +224,7 @@ View::composer('layouts._sidebar', function($view) {
             'icon' => 'sliders',
             'url'=> [
                 'user' => 'Users',
-                'authorization' => 'Authorization',
+                // 'authorization' => 'Authorization',
                 'runningText' => 'Running Text',
                 // todo
                 'backup' => 'Backup & Restore',

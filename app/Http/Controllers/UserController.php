@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\User;
+use App\Authorization;
 use App\Http\Requests\UserRequest;
 
 class UserController extends Controller
@@ -57,7 +58,25 @@ class UserController extends Controller
         $input = $request->all();
         $input['password'] = bcrypt($request->password);
         $input['api_token'] = str_random(60);
-        return User::create($input);
+        $user = User::create($input);
+        $authorizations = [];
+
+        foreach ($request->auth['controller'] as $i => $c)
+        {
+            $authorizations[] = [
+                'user_id' => $user->id,
+                'controller' => $c,
+                'view' => $request->auth['view'][$i],
+                'create' => $request->auth['create'][$i],
+                'update' => $request->auth['update'][$i],
+                'delete' => $request->auth['delete'][$i],
+                'export' => $request->auth['export'][$i],
+                'import' => $request->auth['import'][$i],
+            ];
+        }
+
+        Authorization::insert($authorizations);
+        return $user;
     }
 
     /**
@@ -89,6 +108,33 @@ class UserController extends Controller
         }
 
         $user->update($input);
+
+        foreach ($request->auth['controller'] as $i => $c)
+        {
+            $authorization = [
+                'view' => $request->auth['view'][$i],
+                'create' => $request->auth['create'][$i],
+                'update' => $request->auth['update'][$i],
+                'delete' => $request->auth['delete'][$i],
+                'export' => $request->auth['export'][$i],
+                'import' => $request->auth['import'][$i],
+            ];
+
+            $exists = Authorization::where('user_id', $user->id)
+                ->where('controller', $c)
+                ->first();
+
+            if ($exists) {
+                $exists->update($authorization);
+            }
+
+            else {
+                $authorization['user_id'] = $user->id;
+                $authorization['controller'] = $c;
+                Authorization::insert($authorization);
+            }
+        }
+
         return $user;
     }
 
@@ -101,6 +147,7 @@ class UserController extends Controller
     public function destroy(User $user)
     {
         $this->authorize('delete', User::class);
+        $user->authorizations()->delete();
         return ['success' => $user->delete()];
     }
 
@@ -111,7 +158,7 @@ class UserController extends Controller
         if ($request->update)
         {
             $input = $request->all();
-            
+
             if ($request->password) {
                 $input['password'] = bcrypt($request->password);
             }
@@ -122,5 +169,10 @@ class UserController extends Controller
         return view('user.profile', [
             'user' => $user
         ]);
+    }
+
+    public function getAuth(User $user)
+    {
+        return $user->authorizations;
     }
 }

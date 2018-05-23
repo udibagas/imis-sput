@@ -34,4 +34,8 @@ class User extends Authenticatable
             'SM', 'SHE', 'FAT', 'HCGS', 'Management', 'Customer'
         ];
     }
+
+    public function authorizations() {
+        return $this->hasMany(Authorization::class);
+    }
 }
