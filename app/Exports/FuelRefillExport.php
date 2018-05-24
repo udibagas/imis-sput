@@ -30,6 +30,8 @@ class FuelRefillExport implements FromQuery, WithHeadings
             'HM Last',
             'NRP',
             'Employee Name',
+            'FC',
+            'FC Real',
             'Start Time',
             'Finish Time',
             'Duration',
@@ -55,12 +57,15 @@ class FuelRefillExport implements FromQuery, WithHeadings
                 fuel_refills.hm_last AS hm_last,
                 employees.nrp AS nrp,
                 employees.name AS employee_name,
+                egis.fc AS fc,
+                IF(fuel_refills.hm_last, fuel_refills.total_real / (fuel_refills.hm - fuel_refills.hm_last), 0) AS fc_real,
                 fuel_refills.start_time AS start_time,
                 fuel_refills.finish_time AS finish_time,
-                NULL AS duration,
+                TIMEDIFF(fuel_refills.finish_time, fuel_refills.start_time) AS duration,
                 users.name AS insert_by
             ')
             ->join('units', 'units.id', '=', 'fuel_refills.unit_id')
+            ->join('egis', 'egis.id', '=', 'units.egi_id')
             ->join('fuel_tanks', 'fuel_tanks.id', '=', 'fuel_refills.fuel_tank_id')
             ->join('employees', 'employees.id', '=', 'fuel_refills.employee_id')
             ->join('users', 'users.id', '=', 'fuel_refills.user_id')

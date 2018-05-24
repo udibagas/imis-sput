@@ -50,7 +50,7 @@
                         data-formatter="hm_last">HM Last</th>
 
                     <th data-column-id="fc">FC</th>
-                    
+
                     <th data-column-id="fc_real"
                         data-formatter="fc_real"
                         data-sortable="false">FC Real</th>
@@ -306,11 +306,7 @@
                         return row.start_time + "-" + row.finish_time;
                     },
                     duration: function(column, row) {
-                        // masih salah
-                        var start = moment(row.start_time, "hh:ii");
-                        var finish = moment(row.finish_time, "hh:ii");
-                        var duration = moment.duration(finish.diff(start));
-                        return finish.utc(duration.asMilliseconds()).format("mm:ss");
+                        return row.duration.slice(0,5);
                     },
                     total_real: function(column, row) {
                         return t.formatNumber(row.total_real);

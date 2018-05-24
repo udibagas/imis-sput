@@ -37,7 +37,8 @@ class FuelRefillController extends Controller
                     fuel_tanks.name AS fuel_tank,
                     employees.name AS employee_name,
                     employees.nrp AS nrp,
-                    users.name AS insert_by
+                    users.name AS insert_by,
+                    TIMEDIFF(fuel_refills.finish_time, fuel_refills.start_time) AS duration
                 ')
                 ->join('units', 'units.id', '=', 'fuel_refills.unit_id')
                 ->join('egis', 'egis.id', '=', 'units.egi_id')
