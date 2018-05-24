@@ -18,7 +18,7 @@
                     <th data-column-id="description_id" data-title="description_id">Description ID</th>
                     <th data-column-id="description_en" data-title="description_en">Description EN</th>
                     @can('updateOrDelete', App\BreakdownCategory::class)
-                    <th data-column-id="commands" data-width="5%"
+                    <th data-column-id="commands"
                         data-formatter="commands"
                         data-sortable="false"
                         data-align="right"

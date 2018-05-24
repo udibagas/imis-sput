@@ -20,7 +20,7 @@
                     <th data-column-id="anchored" data-formatter="anchored">Anchored</th>
                     <th data-column-id="updated_at">Last Update</th>
                     @can('updateOrDelete', App\Barge::class)
-                    <th data-column-id="commands" data-width="5%"
+                    <th data-column-id="commands"
                         data-formatter="commands"
                         data-sortable="false"
                         data-align="right"

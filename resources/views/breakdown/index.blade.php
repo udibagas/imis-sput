@@ -32,7 +32,7 @@
                     <th data-column-id="wo_number">WO Number</th>
                     <!-- <th data-column-id="status" data-formatter="status">Closed</th> -->
                     @can('updateOrDelete', App\Breakdown::class)
-                    <th data-column-id="commands" data-width="5%"
+                    <th data-column-id="commands"
                         data-formatter="commands"
                         data-sortable="false"
                         data-align="right"

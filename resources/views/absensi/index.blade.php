@@ -37,7 +37,7 @@
                         data-header-align="center">Out</th>
 
                     @can('updateOrDelete', App\Absensi::class)
-                    <th data-column-id="commands" data-width="5%"
+                    <th data-column-id="commands"
                         data-formatter="commands"
                         data-sortable="false"
                         data-align="right"

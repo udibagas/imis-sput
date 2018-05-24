@@ -17,7 +17,7 @@
                     <th data-column-id="description">Description</th>
                     <th data-column-id="jam">Jam</th>
                     @can('updateOrDelete', App\SupervisingPrediction::class)
-                    <th data-column-id="commands" data-width="5%"
+                    <th data-column-id="commands"
                         data-formatter="commands"
                         data-sortable="false"
                         data-align="right"

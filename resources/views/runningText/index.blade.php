@@ -18,7 +18,7 @@
                     <th data-column-id="text">Text</th>
                     <th data-column-id="status" data-formatter="status">Show</th>
                     @can('updateOrDelete', App\RunningText::class)
-                    <th data-column-id="commands" data-width="5%"
+                    <th data-column-id="commands"
                         data-formatter="commands"
                         data-sortable="false"
                         data-align="right"

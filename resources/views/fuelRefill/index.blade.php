@@ -63,7 +63,7 @@
 
                     <th data-column-id="insert_by">Insert By</th>
                     @can('updateOrDelete', App\FuelRefill::class)
-                    <th data-column-id="commands" data-width="5%"
+                    <th data-column-id="commands"
                         data-formatter="commands"
                         data-sortable="false"
                         data-align="right"

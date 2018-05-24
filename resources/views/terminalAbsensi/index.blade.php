@@ -18,7 +18,7 @@
                     <th data-column-id="ip_address">IP Address</th>
                     <th data-column-id="location">Location</th>
                     @can('updateOrDelete', App\TerminalAbsensi::class)
-                    <th data-column-id="commands" data-width="5%"
+                    <th data-column-id="commands"
                         data-formatter="commands"
                         data-sortable="false"
                         data-align="right"

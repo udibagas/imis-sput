@@ -20,7 +20,7 @@
                     <th data-column-id="phone">Phone</th>
                     <th data-column-id="fax">Fax</th>
                     @can('updateOrDelete', App\Buyer::class)
-                    <th data-column-id="commands" data-width="5%"
+                    <th data-column-id="commands"
                         data-formatter="commands"
                         data-sortable="false"
                         data-align="right"

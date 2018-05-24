@@ -18,7 +18,7 @@
                     <th data-column-id="capacity">Capacity (Ton)</th>
                     <th data-column-id="description">Description</th>
                     @can('updateOrDelete', App\Area::class)
-                    <th data-column-id="commands" data-width="5%"
+                    <th data-column-id="commands"
                         data-formatter="commands"
                         data-sortable="false"
                         data-align="right"
