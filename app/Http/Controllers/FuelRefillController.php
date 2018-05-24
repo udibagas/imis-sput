@@ -32,6 +32,7 @@ class FuelRefillController extends Controller
             $fuelRefill = FuelRefill::selectRaw('
                     fuel_refills.*,
                     units.name AS unit,
+                    egis.fc AS fc,
                     unit_categories.name AS unit_category,
                     fuel_tanks.name AS fuel_tank,
                     employees.name AS employee_name,
@@ -39,6 +40,7 @@ class FuelRefillController extends Controller
                     users.name AS insert_by
                 ')
                 ->join('units', 'units.id', '=', 'fuel_refills.unit_id')
+                ->join('egis', 'egis.id', '=', 'units.egi_id')
                 ->join('fuel_tanks', 'fuel_tanks.id', '=', 'fuel_refills.fuel_tank_id')
                 ->join('employees', 'employees.id', '=', 'fuel_refills.employee_id')
                 ->join('users', 'users.id', '=', 'fuel_refills.user_id')

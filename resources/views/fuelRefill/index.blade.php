@@ -49,6 +49,13 @@
                         data-header-align="right"
                         data-formatter="hm_last">HM Last</th>
 
+                    <th data-column-id="fc">FC</th>
+                    
+                    <th data-column-id="fc_real"
+                        data-formatter="fc_real"
+                        data-sortable="false">FC Real</th>
+
+
                     <th data-column-id="employee_name">Employee</th>
                     <th data-column-id="start_time"
                         data-align="center"
@@ -319,6 +326,9 @@
                     },
                     hm_last: function(column, row) {
                         return row.hm_last ? t.formatNumber(row.hm_last) : '';
+                    },
+                    fc_real: function(column, row) {
+                        return row.hm_last ? (row.total_real / (row.hm - row.hm_last)).toFixed(2) : '';
                     },
                 }
             }).on("loaded.rs.jquery.bootgrid", function() {
