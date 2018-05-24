@@ -5,9 +5,9 @@
     <div class="panel panel-primary">
         <div class="panel-body">
             <form class="form-inline pull-right" action="" method="get" style="margin-bottom:0;">
-                <vue-datepicker v-model="period" placeholder="Periode">
+                <vue-datepicker v-model="date" placeholder="Date">
                 </vue-datepicker>
-                <button type="button" name="button" class="btn btn-primary"><i class="icon icon-search"></i></button>
+                <!-- <button type="button" name="button" class="btn btn-primary"><i class="icon icon-search"></i></button> -->
             </form>
             <div class="clearfix"> </div>
             <div class="" id="fuel-ratio" style="height:320px;">
@@ -44,8 +44,8 @@
                         <tbody>
                             <tr v-for="f in fuelConsumptions">
                                 <td>@{{f.egi}}</td>
-                                <td>@{{(f.total_real/f.total_hm).toFixed(2)}}</td>
-                                <td>@{{f.total_hm}}</td>
+                                <td>@{{f.fc | toFixed}}</td>
+                                <td>@{{f.fc_month | toFixed}}</td>
                             </tr>
                         </tbody>
                     </table>
@@ -65,7 +65,7 @@ const app = new Vue({
     data: {
         chartRatio: null,
         chartStock: null,
-        period: '{{date("Y-m-d")}}',
+        date: '{{date("Y-m-d")}}',
         fuelConsumptions: [],
         labelOption: {
             show: true,
@@ -78,10 +78,15 @@ const app = new Vue({
             }
         }
     },
+    filters: {
+        toFixed: function(v) {
+            return parseFloat(v).toFixed(2);
+        }
+    },
     methods: {
         requestDataFuelRatio: function() {
             var _this = this;
-            axios.get('{{url("sm/fuelRatio")}}').then(function(r) {
+            axios.get('{{url("sm/fuelRatio")}}', {params: {date:_this.date}}).then(function(r) {
                 _this.chartRatio.setOption({series: r.data});
             })
 
@@ -163,7 +168,7 @@ const app = new Vue({
         },
         requestDataFuelConsumption: function() {
             var _this = this;
-            axios.get('{{url("sm/fuelConsumption")}}').then(function(r) {
+            axios.get('{{url("sm/fuelConsumption")}}', {params:{date:_this.date}}).then(function(r) {
                 _this.fuelConsumptions = r.data;
             })
 
@@ -181,7 +186,7 @@ const app = new Vue({
         this.chartRatio.setOption({
             title: {
                 text: 'FUEL RATIO',
-                subtext: 'Periode: ' + this.period,
+                subtext: 'Periode: ' + this.date,
                 x: 'center'
             },
             grid: {
@@ -235,7 +240,7 @@ const app = new Vue({
         this.chartStock.setOption({
             title: {
                 text: 'FUEL STOCK',
-                subtext: '{{date("Y-m-d")}}',
+                // subtext: '{{date("Y-m-d")}}',
                 x: 'center'
             },
             tooltip: {

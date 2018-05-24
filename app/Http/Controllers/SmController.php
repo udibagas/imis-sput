@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Egi;
 use App\FuelTank;
-use DB;
+use App\FuelRefill;
 
 class SmController extends Controller
 {
@@ -28,21 +28,23 @@ class SmController extends Controller
     public function fuelConsumption(Request $request)
     {
         $date = $request->date ? $request->date : date('Y-m-d');
-        return [];
+        $firstDate = date('Y-m-01', strtotime($date));
 
-        // todo : menentukan tanggal
-        $sql = "SELECT
-                SUM(COALESCE(f.hm, 0) - COALESCE(f.hm_last, 0)) / SUM(COALESCE(f.total_real, 0)) AS t,
-                e.name AS egi,
+        $fc = FuelRefill::getFc($date, $date);
+        $fcMonth = FuelRefill::getFc($firstDate, $date);
 
-            FROM fuel_refills f
-            JOIN units u ON u.id = f.unit_id
-            JOIN egis e ON e.id = u.egi_id
-            WHERE f.date = '$date'
-            GROUP BY e.name
-            ORDER BY e.name ASC";
+        $data = [];
 
-        return DB::select(DB::raw($sql));
+        foreach ($fcMonth as $i => $f)
+        {
+            $data[] = [
+                'egi' => $f->egi,
+                'fc_month' => $f->fc,
+                'fc' => isset($fc[$i]) ? $fc[$i]->fc : 0
+            ];
+        }
+
+        return json_encode($data);
     }
 
     public function fuelRatio(Request $request)
