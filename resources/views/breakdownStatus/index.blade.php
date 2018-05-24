@@ -13,11 +13,11 @@
         <table class="table table-striped table-hover " id="bootgrid" style="border-top:2px solid #ddd">
             <thead>
                 <tr>
-                    <th data-column-id="id" data-width="3%">ID</th>
+                    <th data-column-id="id">ID</th>
                     <th data-column-id="code">Code</th>
                     <th data-column-id="description">Description</th>
                     @can('updateOrDelete', App\BreakdownStatus::class)
-                    <th data-column-id="commands" data-width="5%"
+                    <th data-column-id="commands"
                         data-formatter="commands"
                         data-sortable="false"
                         data-align="right"
