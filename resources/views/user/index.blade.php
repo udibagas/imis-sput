@@ -16,8 +16,17 @@
                     <th data-column-id="id">ID</th>
                     <th data-column-id="name">Name</th>
                     <th data-column-id="email">Email</th>
-                    <th data-column-id="super_admin" data-formatter="super_admin">Super Admin</th>
-                    <th data-column-id="active" data-formatter="active">Active</th>
+
+                    <th data-column-id="super_admin"
+                        data-formatter="super_admin"
+                        data-align="center"
+                        data-header-align="center">Super Admin</th>
+
+                    <th data-column-id="active"
+                        data-formatter="active"
+                        data-align="center"
+                        data-header-align="center">Active</th>
+
                     @can('updateOrDelete', App\User::class)
                     <th data-column-id="commands"
                         data-formatter="commands"
