@@ -13,7 +13,7 @@
                         @{{error.file}}:@{{error.line}}
                     </div>
 
-                    <div class="form-group" :class="formErrors.name ? 'has-error' : ''">
+                    <div :class="['form-group', formErrors.name ? 'has-error' : '']">
                         <label class="control-label col-md-3 col-sm-3 col-xs-12" for="name">Name
                         </label>
                         <div class="col-md-9 col-sm-9 col-xs-12">
@@ -22,33 +22,21 @@
                         </div>
                     </div>
 
-                    <div class="form-group" :class="formErrors.unit_category_id ? 'has-error' : ''">
-                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="unit_category_id">Category
+                    <div :class="['form-group', formErrors.description ? 'has-error' : '']">
+                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="description">Description
                         </label>
                         <div class="col-md-9 col-sm-9 col-xs-12">
-                            <select2 :options="unit_categories" v-model="formData.unit_category_id" data-placeholder="Unit Category">
-                            </select2>
-                            <span v-if="formErrors.unit_category_id" class="help-block">@{{formErrors.unit_category_id[0]}}</span>
+                            <input type="text" v-model="formData.description" class="form-control" placeholder="Description">
+                            <span v-if="formErrors.description" class="help-block">@{{formErrors.description[0]}}</span>
                         </div>
                     </div>
 
-                    <div class="form-group" :class="formErrors.owner_id ? 'has-error' : ''">
-                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="owner_id">Owner
+                    <div :class="['form-group', formErrors.total_room ? 'has-error' : '']">
+                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="total_room">Total Room
                         </label>
                         <div class="col-md-9 col-sm-9 col-xs-12">
-                            <select2 :options="owners" v-model="formData.owner_id" data-placeholder="Owner">
-                            </select2>
-                            <span v-if="formErrors.owner_id" class="help-block">@{{formErrors.owner_id[0]}}</span>
-                        </div>
-                    </div>
-
-                    <div class="form-group" :class="formErrors.egi_id ? 'has-error' : ''">
-                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="egi_id">EGI
-                        </label>
-                        <div class="col-md-9 col-sm-9 col-xs-12">
-                            <select2 :options="egis" v-model="formData.egi_id" data-placeholder="EGI">
-                            </select2>
-                            <span v-if="formErrors.egi_id" class="help-block">@{{formErrors.egi_id[0]}}</span>
+                            <input type="number" v-model="formData.total_room" class="form-control" placeholder="Total Room">
+                            <span v-if="formErrors.total_room" class="help-block">@{{formErrors.total_room[0]}}</span>
                         </div>
                     </div>
 
@@ -58,11 +46,11 @@
                         <div class="col-md-9 col-sm-9 col-xs-12">
                             <div class="radio radio-inline radio-replace radio-success">
 								<input type="radio" v-model="formData.status" id="yes" value="1">
-								<label for="yes">OK</label>
+								<label for="yes">AVAILABLE</label>
 							</div>
                             <div class="radio radio-inline radio-replace radio-danger">
 								<input type="radio" v-model="formData.status" id="no" value="0">
-								<label for="no">B/D</label>
+								<label for="no">NOT AVAILABLE</label>
 							</div>
                             <span v-if="formErrors.status" class="help-block">@{{formErrors.status[0]}}</span>
                         </div>

@@ -39,6 +39,7 @@ class SmController extends Controller
         {
             $data[] = [
                 'egi' => $f->egi,
+                'fc_standard' => $f->fc_standard,
                 'fc_month' => $f->fc,
                 'fc' => isset($fc[$i]) ? $fc[$i]->fc : 0
             ];

@@ -7,7 +7,6 @@
             <form class="form-inline pull-right" action="" method="get" style="margin-bottom:0;">
                 <vue-datepicker v-model="date" placeholder="Date">
                 </vue-datepicker>
-                <!-- <button type="button" name="button" class="btn btn-primary"><i class="icon icon-search"></i></button> -->
             </form>
             <div class="clearfix"> </div>
             <div class="" id="fuel-ratio" style="height:320px;">
@@ -31,21 +30,26 @@
             <div class="panel panel-default">
                 <div class="panel-heading">
                     <span class="text-primary">FUEL CONSUMPTION</span>
+                    <div class="pull-right">
+                        Date : @{{date}}
+                    </div>
                 </div>
-                <div class="panel-body" style="height:285px;overflow:auto;">
-                    <table class="table table-striped table-hover">
+                <div style="height:285px;overflow:auto;">
+                    <table class="table table-striped table-hover table-bordered">
                         <thead>
                             <tr>
                                 <th>EGI</th>
-                                <th>FC Today</th>
-                                <th>FC Month to Date</th>
+                                <th class="text-center">FC STANDARD</th>
+                                <th class="text-center">FC TODAY</th>
+                                <th class="text-center">FC MONTH TO DATE</th>
                             </tr>
                         </thead>
                         <tbody>
                             <tr v-for="f in fuelConsumptions">
                                 <td>@{{f.egi}}</td>
-                                <td>@{{f.fc | toFixed}}</td>
-                                <td>@{{f.fc_month | toFixed}}</td>
+                                <td class="text-center">@{{f.fc_standard | toInt}}</td>
+                                <td class="text-center">@{{f.fc | toFixed}}</td>
+                                <td class="text-center">@{{f.fc_month | toFixed}}</td>
                             </tr>
                         </tbody>
                     </table>
@@ -81,13 +85,21 @@ const app = new Vue({
     filters: {
         toFixed: function(v) {
             return parseFloat(v).toFixed(2);
+        },
+        toInt: function(v) {
+            return parseFloat(v).toFixed(0);
         }
     },
     methods: {
         requestDataFuelRatio: function() {
             var _this = this;
             axios.get('{{url("sm/fuelRatio")}}', {params: {date:_this.date}}).then(function(r) {
-                _this.chartRatio.setOption({series: r.data});
+                _this.chartRatio.setOption({
+                    title: {
+                        subtext: 'Periode: ' + _this.date,
+                    },
+                    series: r.data
+                });
             })
 
             .catch(function(error) {

@@ -29,6 +29,7 @@ class FuelRefill extends Model
     {
         $sql = "SELECT
                 e.name AS egi,
+                AVG(e.fc) AS fc_standard,
                 SUM(COALESCE(f.hm, 0) - COALESCE(f.hm_last, 0)) / SUM(COALESCE(f.total_real, 0)) AS fc
             FROM fuel_refills f
             JOIN units u ON u.id = f.unit_id

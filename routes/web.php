@@ -51,6 +51,7 @@ Route::group(['middleware' => 'auth'], function() {
     Route::get('dailyCheckSetting/tomorrowPlan', 'DailyCheckSettingController@tomorrowPlan');
     Route::resource('dailyCheckSetting', 'DailyCheckSettingController')->except(['edit', 'create']);
     Route::resource('department', 'DepartmentController')->except(['edit', 'create']);
+    Route::resource('dormitory', 'DormitoryController')->except(['edit', 'create']);
     Route::resource('egi', 'EgiController')->except(['edit', 'create']);
 
     Route::get('employee/generateNameTag/{employee}', 'EmployeeController@generateNameTag');
@@ -201,7 +202,13 @@ View::composer('layouts._sidebar', function($view) {
                 'absensi' => 'Absensi',
                 'prajob' => 'Pra Job & Fatique',
                 'fatiqueApproval' => 'Fatique Approval',
+                'assetManagement' => 'Asset Management',
+                'cateringManagement' => 'Catering Management',
+                'dormitoryManagement' => 'Dormitory Management',
+                'fuelManagement' => 'Fuel Management',
                 '<i class="fa fa-database"></i> Master Data' => [
+                    'asset' => 'Asset',
+                    'dormitory' => 'Dormitory',
                     'department' => 'Departments',
                     'employee' => 'Employees',
                     'jabatan' => 'Jabatan',

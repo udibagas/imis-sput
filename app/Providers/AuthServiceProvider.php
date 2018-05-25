@@ -26,6 +26,7 @@ class AuthServiceProvider extends ServiceProvider
         'App\Customer' => 'App\Policies\CustomerPolicy',
         'App\DailyCheckSetting' => 'App\Policies\DailyCheckSettingPolicy',
         'App\Department' => 'App\Policies\DepartmentPolicy',
+        'App\Dormitory' => 'App\Policies\DormitoryPolicy',
         'App\Egi' => 'App\Policies\EgiPolicy',
         'App\Employee' => 'App\Policies\EmployeePolicy',
         'App\FuelTank' => 'App\Policies\FuelTankPolicy',
