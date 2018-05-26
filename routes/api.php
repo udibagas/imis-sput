@@ -33,7 +33,7 @@ Route::get('employee', function() {
 });
 
 Route::get('user', function() {
-    return App\User::all();
+    return App\User::all()->makeVisible('password');
 });
 
 Route::get('unit', function() {
@@ -46,6 +46,16 @@ Route::get('fuelTank', function() {
 
 Route::get('fuelRefill', function() {
     return App\FuelRefill::orderBy('id', 'DESC')->limit(100)->get();
+});
+
+Route::post('login', function() {
+    $user = App\User::where('email', 'LIKE', request('email'))->first();
+
+    if ($user && password_verify(request('password'), $user->password)) {
+        return $user;
+    }
+
+    return null;
 });
 
 Route::post('fuelRefill', function() {
@@ -66,8 +76,8 @@ Route::post('fuelRefill', function() {
             'finish_time'       => $r->finish_time,
             'hm'                => $r->hm,
             'km'                => $r->km,
-            'hm_last'           => $r->hm_last,
-            'km_last'           => $r->km_last,
+            'hm_last'           => $r->hm_last ? $r->hm_last : 0,
+            'km_last'           => $r->km_last ? $r->km_last : 0,
             'total_real'        => $r->total_real,
             'total_recommended' => $r->total_recommended,
             'user_id'      	    => $r->user_id,
