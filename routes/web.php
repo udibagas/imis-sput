@@ -100,6 +100,7 @@ Route::group(['middleware' => 'auth'], function() {
     Route::resource('prajob', 'PrajobController')->except(['edit', 'create']);
 
     Route::resource('runningText', 'RunningTextController')->except(['edit', 'create']);
+    Route::resource('sadp', 'SadpController')->except(['edit', 'create']);
     Route::resource('seam', 'SeamController')->except(['edit', 'create']);
     Route::resource('staffCategory', 'StaffCategoryController')->except(['edit', 'create']);
     Route::resource('stopWorkingPrediction', 'StopWorkingPredictionController')->except(['edit', 'create']);
@@ -159,9 +160,11 @@ View::composer('layouts._sidebar', function($view) {
                 'sm' => 'Dashboard',
                 'flowMeter' => 'Flow Meter',
                 'fuelRefill' => 'Fuel Refill',
+                'fuelRestock' => 'Fuel Restock',
                 'warningPart' => 'Warning Parts',
                 '<i class="fa fa-database"></i> Master Data' => [
                     'fuelTank' => 'Fuel Tanks',
+                    'sadp' => 'SADP',
                 ]
             ]
         ],
@@ -200,11 +203,9 @@ View::composer('layouts._sidebar', function($view) {
             'url' => [
                 'hcgs' => 'Dashboard',
                 'absensi' => 'Absensi',
-                'prajob' => 'Pra Job & Fatique',
-                'fatiqueApproval' => 'Fatique Approval',
                 'assetManagement' => 'Asset Management',
                 'cateringManagement' => 'Catering Management',
-                'dormitoryManagement' => 'Dormitory Management',
+                'dormitory/manage' => 'Dormitory Management',
                 'fuelManagement' => 'Fuel Management',
                 '<i class="fa fa-database"></i> Master Data' => [
                     'asset' => 'Asset',
@@ -214,8 +215,6 @@ View::composer('layouts._sidebar', function($view) {
                     'jabatan' => 'Jabatan',
                     'office' => 'Offices',
                     'position' => 'Positions',
-                    'stopWorkingPrediction' => 'Stop Working Predictions',
-                    'supervisingPrediction' => 'Supervising Predictions',
                     'staffCategory' => 'Staff Categories',
                     'terminalAbsensi' => 'Terminal Absensi'
                 ]
@@ -224,15 +223,30 @@ View::composer('layouts._sidebar', function($view) {
         'SHE' => [
             'icon' => 'medkit',
             'url' => [
-                'operatorPerformance' => 'Operator Performance'
+                'prajob' => 'Pra Job & Fatique',
+                'fatiqueApproval' => 'Fatique Approval',
+                'operatorPerformance' => 'Operator Performance',
+                '<i class="fa fa-database"></i> Master Data' => [
+                    'stopWorkingPrediction' => 'Stop Working Predictions',
+                    'supervisingPrediction' => 'Supervising Predictions',
+                ]
+            ]
+        ],
+        'FAT' => [
+            'icon' => 'dollar',
+            'url' => [
+                'fat' => 'Dashboard',
+                '<i class="fa fa-database"></i> Master Data' => [
+                ]
             ]
         ],
         'ADMINISTRATION' => [
             'icon' => 'sliders',
             'url'=> [
                 'user' => 'Users',
+                'user/log' => 'User Logs',
                 // 'authorization' => 'Authorization',
-                'runningText' => 'Running Text',
+                // 'runningText' => 'Running Text',
                 // todo
                 'backup' => 'Backup & Restore',
                 'update' => 'Update',

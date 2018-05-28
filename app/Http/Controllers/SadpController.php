@@ -3,10 +3,10 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Bagian;
-use App\Http\Requests\BagianRequest;
+use App\Sadp;
+use App\Http\Requests\SadpRequest;
 
-class BagianController extends Controller
+class SadpController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -15,7 +15,7 @@ class BagianController extends Controller
      */
     public function index(Request $request)
     {
-        $this->authorize('view', Bagian::class);
+        $this->authorize('view', Sadp::class);
 
         if ($request->ajax())
         {
@@ -24,24 +24,24 @@ class BagianController extends Controller
             $sort = $request->sort ? key($request->sort) : 'name';
             $dir = $request->sort ? $request->sort[$sort] : 'asc';
 
-            $bagian = Bagian::when($request->searchPhrase, function($query) use ($request) {
+            $sadp = Sadp::when($request->searchPhrase, function($query) use ($request) {
                     return $query->where('name', 'LIKE', '%'.$request->searchPhrase.'%')
                         ->orWhere('description', 'LIKE', '%'.$request->searchPhrase.'%');
                 })->orderBy($sort, $dir)->paginate($pageSize);
 
             return [
-                'rowCount' => $bagian->perPage(),
-                'total' => $bagian->total(),
-                'current' => $bagian->currentPage(),
-                'rows' => $bagian->items(),
+                'rowCount' => $sadp->perPage(),
+                'total' => $sadp->total(),
+                'current' => $sadp->currentPage(),
+                'rows' => $sadp->items(),
             ];
         }
 
-        return view('bagian.index', [
+        return view('sadp.index', [
             'breadcrumbs' => [
                 'plant/dashboard' => 'Plant',
                 '#' => 'Master Data',
-                'bagian' => 'Bagian'
+                'sadp' => 'Sadp'
             ]
         ]);
     }
@@ -52,10 +52,10 @@ class BagianController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(BagianRequest $request)
+    public function store(SadpRequest $request)
     {
-        $this->authorize('create', Bagian::class);
-        return Bagian::create($request->all());
+        $this->authorize('create', Sadp::class);
+        return Sadp::create($request->all());
     }
 
     /**
@@ -64,10 +64,10 @@ class BagianController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show(Bagian $bagian)
+    public function show(Sadp $sadp)
     {
-        $this->authorize('view', Bagian::class);
-        return $bagian;
+        $this->authorize('view', Sadp::class);
+        return $sadp;
     }
 
     /**
@@ -77,11 +77,11 @@ class BagianController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(BagianRequest $request, Bagian $bagian)
+    public function update(SadpRequest $request, Sadp $sadp)
     {
-        $this->authorize('update', Bagian::class);
-        $bagian->update($request->all());
-        return $bagian;
+        $this->authorize('update', Sadp::class);
+        $sadp->update($request->all());
+        return $sadp;
     }
 
     /**
@@ -90,9 +90,9 @@ class BagianController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Bagian $bagian)
+    public function destroy(Sadp $sadp)
     {
-        $this->authorize('delete', Bagian::class);
-        return ['success' => $bagian->delete()];
+        $this->authorize('delete', Sadp::class);
+        return ['success' => $sadp->delete()];
     }
 }

@@ -16,18 +16,15 @@
                     <th>Unit</th>
                     <th>Unit Category</th>
                     <th>B/D Type</th>
-                    <th>B/D Status</th>
+                    <!-- <th>B/D Status</th> -->
                     <th>Location</th>
-                    <th>HM</th>
-                    <th>KM</th>
+                    <th>HM/KM</th>
                     <th>Time In</th>
-                    <!-- <th>Time Out</th> -->
-                    <th>Duration</th>
                     <th>Problem</th>
                     <th>Component Criteria</th>
-                    <!-- <th>Tindakan</th> -->
                     <th>Warning Part</th>
                     <th>WO Number</th>
+                    <th>Downtime</th>
                     @can('update-breakdown-pcr')
                     <th></th>
                     @endcan
@@ -41,18 +38,15 @@
                     <td :class="rowClass[b.breakdown_category]">
                         @{{b.breakdown_category}}
                     </td>
-                    <td>@{{b.breakdown_status}}</td>
+                    <!-- <td>@{{b.breakdown_status}}</td> -->
                     <td>@{{b.location}}</td>
-                    <td>@{{b.hm}}</td>
-                    <td>@{{b.km}}</td>
+                    <td>@{{b.hm}}/@{{b.km}}</td>
                     <td>@{{b.time_in}}</td>
-                    <!-- <td>@{{b.time_out}}</td> -->
-                    <td></td>
                     <td>@{{b.diagnosa}}</td>
                     <td>@{{b.component_criteria}}</td>
-                    <!-- <td>@{{b.tindakan}}</td> -->
                     <td :class="cellClass[b.part_status]">@{{b.warning_part}}</td>
                     <td>@{{b.wo_number}}</td>
+                    <td>@{{b.downtime}}</td>
                     @can('update-breakdown-pcr')
                     <td class="text-right">
                         <a href="#" @click="edit(b.id)" class="btn btn-primary btn-xs"><i class="icon icon-pencil"></i></a>
