@@ -21,9 +21,6 @@ Route::group(['middleware' => 'auth:api'], function() {
 
 });
 
-// ga perlu auth
-Route::get('runningText', 'Api\RunningTextController@index');
-
 Route::get('ping', function() {
     return ['status' => true];
 });

@@ -31,12 +31,12 @@
                         </div>
                     </div>
 
-                    <div :class="['form-group', formErrors.total_room ? 'has-error' : '']">
-                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="total_room">Total Room
+                    <div :class="['form-group', formErrors.pic ? 'has-error' : '']">
+                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="pic">PIC
                         </label>
                         <div class="col-md-9 col-sm-9 col-xs-12">
-                            <input type="number" v-model="formData.total_room" class="form-control" placeholder="Total Room">
-                            <span v-if="formErrors.total_room" class="help-block">@{{formErrors.total_room[0]}}</span>
+                            <input type="text" v-model="formData.pic" class="form-control" placeholder="PIC">
+                            <span v-if="formErrors.pic" class="help-block">@{{formErrors.pic[0]}}</span>
                         </div>
                     </div>
 
@@ -55,6 +55,45 @@
                             <span v-if="formErrors.status" class="help-block">@{{formErrors.status[0]}}</span>
                         </div>
                     </div>
+
+                    <br>
+
+                    <table class="table table-striped table-hover table-bordered">
+                        <thead>
+                            <tr>
+                                <th>#</th>
+                                <th>Room Name</th>
+                                <th>Capacity</th>
+                                <th>PIC</th>
+                                <th>Available</th>
+                                <th><a href="#" @click="addRoom" class="btn btn-xs btn-primary"><i class="icon-plus"></i></a></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr v-for="(r,i) in formData.rooms" :class="formData.rooms[i].status == 0 ? 'danger' : ''">
+                                <td> @{{i+1}} </td>
+                                <td>
+                                    <input type="hidden" v-model="formData.rooms[i].id">
+                                    <input type="text" class="form-control" v-model="formData.rooms[i].name" style="width:80px;">
+                                </td>
+                                <td>
+                                    <input type="number" class="form-control" v-model="formData.rooms[i].capacity" style="width:80px;">
+                                </td>
+                                <td>
+                                    <input type="text" class="form-control" v-model="formData.rooms[i].pic">
+                                </td>
+                                <td>
+                                    <select class="form-control" v-model="formData.rooms[i].status">
+                                        <option value="1">YES</option>
+                                        <option value="0">NO</option>
+                                    </select>
+                                </td>
+                                <td>
+                                    <a href="#" @click="removeRoom(i)" class="btn btn-xs btn-danger"><i class="icon-trash"></i></a>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
 
                 </div>
                 <div class="modal-footer">

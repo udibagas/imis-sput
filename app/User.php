@@ -38,4 +38,8 @@ class User extends Authenticatable
     public function authorizations() {
         return $this->hasMany(Authorization::class);
     }
+
+    public function mealLocatins() {
+        return $this->hasMany(MealLocation::class);
+    }
 }

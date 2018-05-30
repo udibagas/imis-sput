@@ -5,7 +5,7 @@ namespace App\Http\Requests;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
 
-class DormitoryRequest extends FormRequest
+class MealLocationRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -24,13 +24,13 @@ class DormitoryRequest extends FormRequest
      */
     public function rules()
     {
-        $dormitory = $this->route('dormitory');
+        $mealLocation = $this->route('mealLocation');
 
         return [
-            'pic' => 'required',
+            'user_id' => 'required',
             'name' => [
                 'required',
-                Rule::unique('dormitories')->ignore($dormitory ? $dormitory->id : 0)
+                Rule::unique('meal_locations')->ignore($mealLocation ? $mealLocation->id : 0)
             ]
         ];
     }

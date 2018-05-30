@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Dormitory;
+use App\DormitoryRoom;
 use App\Http\Requests\DormitoryRequest;
 
 class DormitoryController extends Controller
@@ -55,7 +56,13 @@ class DormitoryController extends Controller
     public function store(DormitoryRequest $request)
     {
         $this->authorize('create', Dormitory::class);
-        return Dormitory::create($request->all());
+        $dormitory = Dormitory::create($request->all());
+
+        foreach ($request->rooms as $r) {
+            $dormitory->rooms()->create($r);
+        }
+
+        return $dormitory;
     }
 
     /**
@@ -81,6 +88,18 @@ class DormitoryController extends Controller
     {
         $this->authorize('update', Dormitory::class);
         $dormitory->update($request->all());
+
+        foreach ($request->rooms as $r)
+        {
+            if (isset($r['id'])) {
+                DormitoryRoom::find($r['id'])->update($r);
+            }
+
+            else {
+                $dormitory->rooms()->create($r);
+            }
+        }
+
         return $dormitory;
     }
 
@@ -93,6 +112,12 @@ class DormitoryController extends Controller
     public function destroy(Dormitory $dormitory)
     {
         $this->authorize('delete', Dormitory::class);
+        $dormitory->rooms()->delete();
         return ['success' => $dormitory->delete()];
+    }
+
+    public function getAllData()
+    {
+        return Dormitory::all();
     }
 }

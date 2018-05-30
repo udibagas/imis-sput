@@ -4,8 +4,8 @@
 
 <div class="panel panel-primary" id="app">
     <div class="panel-body">
-        <h3 class="pull-left text-primary">DORMITORY <small>Manage</small></h3>
-        @can('create', App\Dormitory::class)
+        <h3 class="pull-left text-primary">MEAL LOCATION <small>Manage</small></h3>
+        @can('create', App\MealLocation::class)
         <span class="pull-right" style="margin:15px 0 15px 10px;">
             <a href="#" @click="add" class="btn btn-primary"><i class="icon-plus-circled"></i></a>
         </span>
@@ -13,13 +13,10 @@
         <table class="table table-striped table-hover " id="bootgrid" style="border-top:2px solid #ddd">
             <thead>
                 <tr>
-                    <th data-column-id="id">ID</th>
+                    <th data-column-id="id" data-width="3%">ID</th>
                     <th data-column-id="name">Name</th>
-                    <th data-column-id="description">Description</th>
-                    <th data-column-id="total_room" data-sortable="false">Total Room</th>
-                    <th data-column-id="capacity" data-sortable="false">Capacity</th>
-                    <th data-column-id="pic">PIC</th>
-                    @can('updateOrDelete', App\Dormitory::class)
+                    <th data-column-id="user">Penanggungjawab</th>
+                    @can('updateOrDelete', App\MealLocation::class)
                     <th data-column-id="commands"
                         data-formatter="commands"
                         data-sortable="false"
@@ -31,8 +28,8 @@
         </table>
     </div>
 
-    @can('createOrUpdate', App\Dormitory::class)
-    @include('dormitory._form')
+    @can('createOrUpdate', App\MealLocation::class)
+    @include('mealLocation._form')
     @endcan
 
 </div>
@@ -46,76 +43,32 @@
     const app = new Vue({
         el: '#app',
         data: {
-            formData: {rooms: []},
+            formData: {},
             formErrors: {},
             formTitle: '',
-            error: {}
+            error: {},
+            users: {!! \App\User::selectRaw('id AS id, name AS text')->orderBy('name', 'ASC')->get() !!}
         },
         methods: {
-            addRoom: function() {
-                if (!this.formData.rooms) {
-                    this.formData.rooms = [];
-                }
-
-                this.formData.rooms.push({
-                    name: 'R-X', capacity: 4, status: 1, pic: ''
-                });
-
-                this.$forceUpdate();
-            },
-            removeRoom: function(i) {
-                var _this = this;
-
-                if (_this.formData.rooms[i].id != undefined) {
-                    bootbox.confirm({
-                        title: "Konfirmasi",
-                        message: "Anda yakin akan menghapus ruangan ini?",
-                        callback: function(r) {
-                            if (r == true) {
-                                axios.delete('{{url("dormitoryRoom")}}/' + _this.formData.rooms[i].id)
-
-                                .then(function(r) {
-                                    _this.formData.rooms.splice(i, 1);
-                                })
-
-                                .catch(function(error) {
-                                    var error = error.response.data;
-                                    toastr["error"](error.message + ". " + error.file + ":" + error.line)
-                                });
-                            }
-                        }
-                    });
-
-                }
-
-                else {
-                    this.formData.rooms.splice(i, 1);
-                }
-
-                this.$forceUpdate();
-            },
             add: function() {
-                this.formTitle = "ADD DORMITORY";
-                this.formData = {
-                    status: 1,
-                    total_room: 1,
-                    capacity: 4,
-                    rooms: [{name: 'R-X', capacity: 4, pic: '', status: 1 }]
-                };
+                // reset the form
+                this.formTitle = "ADD MEAL LOCATION";
+                this.formData = {};
                 this.formErrors = {};
                 this.error = {};
+                // open form
                 $('#modal-form').modal('show');
             },
             store: function() {
                 block('form');
                 var t = this;
-                axios.post('{{url("dormitory")}}', this.formData).then(function(r) {
+                axios.post('{{url("mealLocation")}}', this.formData).then(function(r) {
                     unblock('form');
                     $('#modal-form').modal('hide');
                     toastr["success"]("Data berhasil ditambahkan");
                     $('#bootgrid').bootgrid('reload');
                 })
-
+                // validasi
                 .catch(function(error) {
                     unblock('form');
                     if (error.response.status == 422) {
@@ -129,30 +82,30 @@
             },
             edit: function(id) {
                 var t = this;
-                this.formTitle = "EDIT DORMITORY";
+                this.formTitle = "EDIT MEAL LOCATION";
                 this.formErrors = {};
                 this.error = {};
 
-                axios.get('{{url("dormitory")}}/' + id).then(function(r) {
+                axios.get('{{url("mealLocation")}}/' + id).then(function(r) {
                     t.formData = r.data;
                     $('#modal-form').modal('show');
                 })
 
                 .catch(function(error) {
                     var error = error.response.data;
-                    toastr["error"](error.message + ". " + error.file + ":" + error.line)
+                    toastr["error"](error.message + ". " + error.file + ":" + error.line);
                 });
             },
             update: function() {
                 block('form');
                 var t = this;
-                axios.put('{{url("dormitory")}}/' + this.formData.id, this.formData).then(function(r) {
+                axios.put('{{url("mealLocation")}}/' + this.formData.id, this.formData).then(function(r) {
                     unblock('form');
                     $('#modal-form').modal('hide');
                     toastr["success"]("Data berhasil diupdate");
                     $('#bootgrid').bootgrid('reload');
                 })
-
+                // validasi
                 .catch(function(error) {
                     unblock('form');
                     if (error.response.status == 422) {
@@ -170,7 +123,7 @@
                     message: "Anda yakin akan menghapus data ini?",
                     callback: function(r) {
                         if (r == true) {
-                            axios.delete('{{url("dormitory")}}/' + id)
+                            axios.delete('{{url("mealLocation")}}/' + id)
 
                             .then(function(r) {
                                 if (r.data.success == true) {
@@ -183,7 +136,7 @@
 
                             .catch(function(error) {
                                 var error = error.response.data;
-                                toastr["error"](error.message + ". " + error.file + ":" + error.line)
+                                toastr["error"](error.message + ". " + error.file + ":" + error.line);
                             });
                         }
                     }
@@ -195,12 +148,8 @@
             var t = this;
 
             var grid = $('#bootgrid').bootgrid({
-                statusMapping: {
-                    0: 'danger',
-                    1: 'default'
-                },
                 rowCount: [10,25,50,100],
-                ajax: true, url: '{{url('dormitory')}}',
+                ajax: true, url: '{{url('mealLocation')}}',
                 ajaxSettings: {
                     method: 'GET', cache: false,
                     statusCode: {
@@ -215,9 +164,9 @@
                     header: '<div id="@{{ctx.id}}" class="pull-right @{{css.header}}"><div class="actionBar"><p class="@{{css.search}}"></p><p class="@{{css.actions}}"></p></div></div>'
                 },
                 formatters: {
-                    commands: function(column, row) {
-                        return '@can("update", App\Dormitory::class) <a href="#" class="btn btn-info btn-xs c-edit" data-id="'+row.id+'"><i class="icon-pencil"></i></a> @endcan' +
-                            '@can("delete", App\Dormitory::class) <a href="#" class="btn btn-danger btn-xs c-delete" data-id="'+row.id+'"><i class="icon-trash"></i></a> @endcan';
+                    "commands": function(column, row) {
+                        return '@can("update", App\MealLocation::class) <a href="#" class="btn btn-info btn-xs c-edit" data-id="'+row.id+'"><i class="icon-pencil"></i></a> @endcan' +
+                            '@can("delete", App\MealLocation::class) <a href="#" class="btn btn-danger btn-xs c-delete" data-id="'+row.id+'"><i class="icon-trash"></i></a> @endcan';
                     }
                 }
             }).on("loaded.rs.jquery.bootgrid", function() {

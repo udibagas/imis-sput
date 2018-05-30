@@ -51,7 +51,17 @@ Route::group(['middleware' => 'auth'], function() {
     Route::get('dailyCheckSetting/tomorrowPlan', 'DailyCheckSettingController@tomorrowPlan');
     Route::resource('dailyCheckSetting', 'DailyCheckSettingController')->except(['edit', 'create']);
     Route::resource('department', 'DepartmentController')->except(['edit', 'create']);
+
+    Route::get('dormitory/getAllData', 'DormitoryController@getAllData');
     Route::resource('dormitory', 'DormitoryController')->except(['edit', 'create']);
+
+    Route::get('dormitoryRoom/getCurrentReservation/{dormitoryRoom}', 'DormitoryRoomController@getCurrentReservation');
+    Route::resource('dormitoryRoom', 'DormitoryRoomController')->only(['show', 'destroy']);
+
+    Route::get('dormitoryReservation/export', 'DormitoryReservationController@export');
+    Route::get('dormitoryReservation/lewatMasaCuti', 'DormitoryReservationController@lewatMasaCuti');
+    Route::resource('dormitoryReservation', 'DormitoryReservationController')->except(['edit', 'create']);
+
     Route::resource('egi', 'EgiController')->except(['edit', 'create']);
 
     Route::get('employee/generateNameTag/{employee}', 'EmployeeController@generateNameTag');
@@ -61,11 +71,6 @@ Route::group(['middleware' => 'auth'], function() {
 
     Route::put('fatiqueApproval/{prajob}', 'FatiqueApprovalController@update');
     Route::get('fatiqueApproval', 'FatiqueApprovalController@index');
-
-    Route::get('sm/fuelConsumption', 'SmController@fuelConsumption');
-    Route::get('sm/fuelRatio', 'SmController@fuelRatio');
-    Route::get('sm/fuelStock', 'SmController@fuelStock');
-    Route::get('sm', 'SmController@index');
 
     Route::get('flowMeter/export', 'FlowMeterController@export');
     Route::resource('flowMeter', 'FlowMeterController')->except(['edit', 'create']);
@@ -85,6 +90,7 @@ Route::group(['middleware' => 'auth'], function() {
     Route::resource('location', 'LocationController')->except(['edit', 'create']);
     Route::resource('lostTimeCategory', 'LostTimeCategoryController')->except(['edit', 'create']);
     Route::resource('material', 'MaterialController')->except(['edit', 'create']);
+    Route::resource('mealLocation', 'MealLocationController')->except(['edit', 'create']);
     Route::resource('office', 'OfficeController')->except(['edit', 'create']);
     Route::resource('owner', 'OwnerController')->except(['edit', 'create']);
 
@@ -104,6 +110,12 @@ Route::group(['middleware' => 'auth'], function() {
     Route::resource('seam', 'SeamController')->except(['edit', 'create']);
     Route::resource('staffCategory', 'StaffCategoryController')->except(['edit', 'create']);
     Route::resource('stopWorkingPrediction', 'StopWorkingPredictionController')->except(['edit', 'create']);
+
+    Route::get('sm/fuelConsumption', 'SmController@fuelConsumption');
+    Route::get('sm/fuelRatio', 'SmController@fuelRatio');
+    Route::get('sm/fuelStock', 'SmController@fuelStock');
+    Route::get('sm', 'SmController@index');
+
     Route::resource('supervisingPrediction', 'SupervisingPredictionController')->except(['edit', 'create']);
     Route::resource('terminalAbsensi', 'TerminalAbsensiController')->except(['edit', 'create']);
 
@@ -205,7 +217,7 @@ View::composer('layouts._sidebar', function($view) {
                 'absensi' => 'Absensi',
                 'assetManagement' => 'Asset Management',
                 'cateringManagement' => 'Catering Management',
-                'dormitory/manage' => 'Dormitory Management',
+                'dormitoryReservation' => 'Dormitory Management',
                 'fuelManagement' => 'Fuel Management',
                 '<i class="fa fa-database"></i> Master Data' => [
                     'asset' => 'Asset',
@@ -213,6 +225,7 @@ View::composer('layouts._sidebar', function($view) {
                     'department' => 'Departments',
                     'employee' => 'Employees',
                     'jabatan' => 'Jabatan',
+                    'mealLocation' => 'Meal Location',
                     'office' => 'Offices',
                     'position' => 'Positions',
                     'staffCategory' => 'Staff Categories',
