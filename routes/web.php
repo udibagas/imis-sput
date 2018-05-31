@@ -94,6 +94,8 @@ Route::group(['middleware' => 'auth'], function() {
     Route::resource('office', 'OfficeController')->except(['edit', 'create']);
     Route::resource('owner', 'OwnerController')->except(['edit', 'create']);
 
+    Route::resource('p2h', 'P2hController')->except(['edit', 'create']);
+
     Route::get('pitstop/export', 'PitstopController@export');
     Route::get('pitstop/achievementDailyCheck', 'PitstopController@achievementDailyCheck');
     Route::resource('pitstop', 'PitstopController')->except(['edit', 'create']);
@@ -206,7 +208,6 @@ View::composer('layouts._sidebar', function($view) {
                     'planCategory' => 'Plan Category',
                     'problemProductivityCategory' => 'Problem Productivity Categories',
                     'seam' => 'Seam',
-                    'subArea' => 'Sub Area',
                 ]
             ]
         ],
@@ -219,6 +220,7 @@ View::composer('layouts._sidebar', function($view) {
                 'cateringManagement' => 'Catering Management',
                 'dormitoryReservation' => 'Dormitory Management',
                 'fuelManagement' => 'Fuel Management',
+                'p2h' => 'P2H',
                 '<i class="fa fa-database"></i> Master Data' => [
                     'asset' => 'Asset',
                     'dormitory' => 'Dormitory',

@@ -58,7 +58,7 @@
 
                     <br>
 
-                    <table class="table table-striped table-hover table-bordered">
+                    <table class="table table-striped table-hover" style="margin-bottom:0;">
                         <thead>
                             <tr>
                                 <th>#</th>
@@ -66,7 +66,7 @@
                                 <th>Capacity</th>
                                 <th>PIC</th>
                                 <th>Available</th>
-                                <th><a href="#" @click="addRoom" class="btn btn-xs btn-primary"><i class="icon-plus"></i></a></th>
+                                <th><a href="#" @click="addRoom" class="btn btn-primary"><i class="icon-plus"></i></a></th>
                             </tr>
                         </thead>
                         <tbody>
@@ -74,10 +74,10 @@
                                 <td> @{{i+1}} </td>
                                 <td>
                                     <input type="hidden" v-model="formData.rooms[i].id">
-                                    <input type="text" class="form-control" v-model="formData.rooms[i].name" style="width:80px;">
+                                    <input type="text" class="form-control" v-model="formData.rooms[i].name">
                                 </td>
                                 <td>
-                                    <input type="number" class="form-control" v-model="formData.rooms[i].capacity" style="width:80px;">
+                                    <input type="number" class="form-control" v-model="formData.rooms[i].capacity">
                                 </td>
                                 <td>
                                     <input type="text" class="form-control" v-model="formData.rooms[i].pic">
@@ -89,7 +89,7 @@
                                     </select>
                                 </td>
                                 <td>
-                                    <a href="#" @click="removeRoom(i)" class="btn btn-xs btn-danger"><i class="icon-trash"></i></a>
+                                    <a href="#" @click="removeRoom(i)" class="btn btn-danger"><i class="icon-trash"></i></a>
                                 </td>
                             </tr>
                         </tbody>

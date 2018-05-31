@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Area;
+use App\SubArea;
 use App\Http\Requests\AreaRequest;
 
 class AreaController extends Controller
@@ -55,7 +56,13 @@ class AreaController extends Controller
     public function store(AreaRequest $request)
     {
         $this->authorize('create', Area::class);
-        return Area::create($request->all());
+        $area = Area::create($request->all());
+
+        foreach ($request->sub_area as $r) {
+            $area->subArea()->create($r);
+        }
+
+        return $area;
     }
 
     /**
@@ -81,6 +88,18 @@ class AreaController extends Controller
     {
         $this->authorize('update', Area::class);
         $area->update($request->all());
+
+        foreach ($request->sub_area as $r)
+        {
+            if (isset($r['id'])) {
+                SubArea::find($r['id'])->update($r);
+            }
+
+            else {
+                $area->subArea()->create($r);
+            }
+        }
+
         return $area;
     }
 
@@ -93,6 +112,7 @@ class AreaController extends Controller
     public function destroy(Area $area)
     {
         $this->authorize('delete', Area::class);
+        $area->subArea()->delete();
         return ['success' => $area->delete()];
     }
 }

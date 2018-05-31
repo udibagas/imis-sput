@@ -74,7 +74,6 @@ class Authorization extends Model
                     ['id' => 'PlanCategory', 'text' => 'Plan Categories'],
                     ['id' => 'ProblemProductivityCategory', 'text' => 'Problem Productivity Categories'],
                     ['id' => 'Seam', 'text' => 'Seam'],
-                    ['id' => 'SubArea', 'text' => 'Sub Area'],
                 ]
             ], [
                 'id' => 'hcgs',

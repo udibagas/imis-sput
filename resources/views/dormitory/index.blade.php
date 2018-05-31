@@ -66,33 +66,25 @@
             removeRoom: function(i) {
                 var _this = this;
 
-                if (_this.formData.rooms[i].id != undefined) {
-                    bootbox.confirm({
-                        title: "Konfirmasi",
-                        message: "Anda yakin akan menghapus ruangan ini?",
-                        callback: function(r) {
-                            if (r == true) {
-                                axios.delete('{{url("dormitoryRoom")}}/' + _this.formData.rooms[i].id)
-
-                                .then(function(r) {
-                                    _this.formData.rooms.splice(i, 1);
-                                })
-
-                                .catch(function(error) {
-                                    var error = error.response.data;
-                                    toastr["error"](error.message + ". " + error.file + ":" + error.line)
-                                });
-                            }
-                        }
-                    });
-
+                // kalau belum ada di database langsung hapus aja ak masalah
+                if (_this.formData.rooms[i].id == undefined) {
+                    _this.formData.rooms.splice(i,1);
+                    return;
                 }
 
-                else {
-                    this.formData.rooms.splice(i, 1);
+                // kalau sudah ada di database harus konfirmasi
+                if (!confirm('Anda yakin?')) {
+                    return;
                 }
 
-                this.$forceUpdate();
+                axios.delete('{{url("dormitoryRoom")}}/' + _this.formData.rooms[i].id).then(function(r) {
+                    _this.formData.rooms.splice(i,1);
+                })
+
+                .catch(function(error) {
+                    var error = error.response.data;
+                    toastr["error"](error.message + ". " + error.file + ":" + error.line);
+                });
             },
             add: function() {
                 this.formTitle = "ADD DORMITORY";

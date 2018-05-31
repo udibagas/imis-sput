@@ -31,6 +31,16 @@
                         </div>
                     </div>
 
+                    <div class="form-group" :class="formErrors.color ? 'has-error' : ''">
+                        <label class="control-label col-md-4 col-sm-4 col-xs-12" for="color">Color
+                        </label>
+                        <div class="col-md-8 col-sm-8 col-xs-12">
+                            <colorpicker v-model="formData.color">
+                            </colorpicker>
+                            <span v-if="formErrors.color" class="help-block">@{{formErrors.color[0]}}</span>
+                        </div>
+                    </div>
+
                 </div>
                 <div class="modal-footer">
                     <button type="submit" v-if="formData.id == undefined" class="btn btn-primary" @click="store"><i class="fa fa-floppy-o"></i> Save</button>

@@ -16,6 +16,7 @@
                     <th data-column-id="id" data-width="3%">ID</th>
                     <th data-column-id="name">Name</th>
                     <th data-column-id="description">Description</th>
+                    <th data-column-id="color" data-formatter="color">Color</th>
                     @can('updateOrDelete', App\Seam::class)
                     <th data-column-id="commands"
                         data-formatter="commands"
@@ -167,9 +168,14 @@
                     header: '<div id="@{{ctx.id}}" class="pull-right @{{css.header}}"><div class="actionBar"><p class="@{{css.search}}"></p><p class="@{{css.actions}}"></p></div></div>'
                 },
                 formatters: {
-                    "commands": function(column, row) {
+                    commands: function(column, row) {
                         return '@can("update", App\Seam::class) <a href="#" class="btn btn-info btn-xs c-edit" data-id="'+row.id+'"><i class="icon-pencil"></i></a> @endcan' +
                             '@can("delete", App\Seam::class) <a href="#" class="btn btn-danger btn-xs c-delete" data-id="'+row.id+'"><i class="icon-trash"></i></a> @endcan';
+                    },
+                    color: function(column, row) {
+                        if (row.color) {
+                            return '<span style="color:white;padding:5px;background-color:'+row.color+'">'+row.color+'</span>';
+                        }
                     }
                 }
             }).on("loaded.rs.jquery.bootgrid", function() {

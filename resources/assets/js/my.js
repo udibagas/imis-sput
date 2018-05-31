@@ -114,3 +114,26 @@ Vue.component('vue-datepicker', {
         $(this.$el).off().datepicker('destroy');
     }
 });
+
+Vue.component('colorpicker', {
+    props: ['value'],
+    watch: {
+        value: function (value) {
+            $(this.$el).val(value).trigger('change');
+        },
+    },
+    template: '<input type="text" class="form-control" data-format="hex">',
+    mounted: function () {
+        var vm = this;
+
+        $(this.$el).colorpicker()
+        .val(this.value)
+        .trigger('change')
+        .on('changeColor', function (e) {
+            vm.$emit('input', this.value);
+        });
+    },
+    destroyed: function () {
+        $(this.$el).off().colorpicker('destroy');
+    }
+});

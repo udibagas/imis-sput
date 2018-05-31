@@ -53,15 +53,45 @@
             add: function() {
                 // reset the form
                 this.formTitle = "ADD AREA";
-                this.formData = {};
+                this.formData = {
+                    sub_area: [{name: 'XX', capacity: 1000, description: ''}]
+                };
                 this.formErrors = {};
                 this.error = {};
                 // open form
                 $('#modal-form').modal('show');
             },
+            addSubArea: function() {
+                this.formData.sub_area.push({name: 'XX', capacity: 1000, description: ''});
+            },
+            delSubArea: function(i) {
+                var _this = this;
+
+                // kalau belum ada di database langsung hapus aja ak masalah
+                if (_this.formData.sub_area[i].id == undefined) {
+                    _this.formData.sub_area.splice(i,1);
+                    return;
+                }
+
+                // kalau sudah ada di database harus konfirmasi
+                if (!confirm('Anda yakin?')) {
+                    return;
+                }
+
+                axios.delete('{{url("subArea")}}/' + _this.formData.sub_area[i].id).then(function(r) {
+                    _this.formData.sub_area.splice(i,1);
+                })
+
+                .catch(function(error) {
+                    var error = error.response.data;
+                    toastr["error"](error.message + ". " + error.file + ":" + error.line);
+                });
+            },
             store: function() {
                 block('form');
                 var t = this;
+
+                // TODO: validasi kalau nama ada yg kembar
 
                 axios.post('{{url("area")}}', this.formData).then(function(r) {
                     unblock('form');
@@ -94,10 +124,8 @@
                 })
 
                 .catch(function(error) {
-                    if (error.response.status == 500) {
-                        var error = error.response.data;
-                        toastr["error"](error.message + ". " + error.file + ":" + error.line)
-                    }
+                    var error = error.response.data;
+                    toastr["error"](error.message + ". " + error.file + ":" + error.line);
                 });
             },
             update: function() {

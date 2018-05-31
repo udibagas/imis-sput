@@ -40,6 +40,38 @@
                         </div>
                     </div>
 
+                    <table class="table table-striped table-hover" style="margin-bottom:0;">
+                        <thead>
+                            <tr>
+                                <th>#</th>
+                                <th>Subarea</th>
+                                <th>Capacity</th>
+                                <th>Description</th>
+                                <th class="text-right">
+                                    <a href="#" @click="addSubArea" class="btn btn-primary"><i class="icon-plus"></i></a>
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr v-for="(s,i) in formData.sub_area">
+                                <td>@{{i+1}}</td>
+                                <td>
+                                    <input type="hidden" v-model="formData.sub_area[i].id">
+                                    <input type="text" v-model="formData.sub_area[i].name" class="form-control">
+                                </td>
+                                <td>
+                                    <input type="text" v-model="formData.sub_area[i].capacity" class="form-control">
+                                </td>
+                                <td>
+                                    <input type="text" v-model="formData.sub_area[i].description" class="form-control">
+                                </td>
+                                <td class="text-right">
+                                    <a href="#" @click="delSubArea(i)" class="btn btn-danger"><i class="icon-trash"></i></a>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+
                 </div>
                 <div class="modal-footer">
                     <button type="submit" v-if="formData.id == undefined" class="btn btn-primary" @click="store"><i class="fa fa-floppy-o"></i> Save</button>

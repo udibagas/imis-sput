@@ -27,6 +27,7 @@ class SeamRequest extends FormRequest
         $seam = $this->route('seam');
 
         return [
+            'color' => 'required',
             'name' => [
                 'required',
                 Rule::unique('seams')->ignore($seam ? $seam->id : 0)
