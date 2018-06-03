@@ -10,7 +10,7 @@
             <a href="#" @click="add" class="btn btn-primary"><i class="icon-plus-circled"></i></a>
             @endcan
             @can('export', App\Asset::class)
-            <a href="#" @click="openExportForm" class="btn btn-primary"><i class="fa fa-file-excel-o"></i> EXPORT</a>
+            <a href="{{url('asset/export')}}" target="_blank" class="btn btn-primary"><i class="fa fa-file-excel-o"></i> EXPORT</a>
             @endcan
             @can('export', App\Asset::class)
             <a href="{{url('asset/generateQrCode')}}" class="btn btn-primary" target="_blank"><i class="fa fa-qrcode"></i> Generate QR Code</a>
@@ -46,10 +46,6 @@
     @include('asset._form')
     @endcan
 
-    @can('export', App\Asset::class)
-    @include('asset._form_export')
-    @endcan
-
 </div>
 
 @endsection
@@ -67,20 +63,8 @@
             error: {},
             statuses: {!! App\AssetStatus::selectRaw('id AS id, CONCAT(code, " - ", description) AS text')->orderBy('code', 'ASC')->get() !!},
             locations: {!! App\AssetLocation::selectRaw('id AS id, name AS text')->orderBy('name', 'ASC')->get() !!},
-            exportRange: {
-                from: '{{date("Y-m-d")}}',
-                to: '{{date("Y-m-d")}}'
-            },
         },
         methods: {
-            openExportForm: function() {
-                $('#modal-form-export').modal('show');
-            },
-            doExport: function() {
-                // TODO: validate input first
-                $('#modal-form-export').modal('hide');
-                window.location = '{{url("dormitoryReservation/export")}}?from=' + this.exportRange.from + '&to=' + this.exportRange.to;
-            },
             add: function() {
                 this.formTitle = "ADD ASSET";
                 this.formData = {};

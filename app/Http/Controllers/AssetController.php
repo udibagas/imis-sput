@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Asset;
 use App\Http\Requests\AssetRequest;
+use App\Exports\AssetExport;
+use Excel;
 
 class AssetController extends Controller
 {
@@ -104,6 +106,12 @@ class AssetController extends Controller
     {
         $this->authorize('delete', Asset::class);
         return ['success' => $asset->delete()];
+    }
+
+    public function export(Request $request)
+    {
+        $this->authorize('export', Asset::class);
+        return Excel::download(new AssetExport($request), 'assets.xlsx');
     }
 
     public function generateQrCode(Asset $asset = null)
