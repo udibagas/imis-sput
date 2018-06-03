@@ -26,6 +26,11 @@ Route::group(['middleware' => 'auth'], function() {
 
     // Master data
     Route::resource('area', 'AreaController')->except(['edit', 'create']);
+
+    Route::get('asset/generateQrCode/{asset}', 'AssetController@generateQrCode');
+    Route::get('asset/generateQrCode', 'AssetController@generateQrCode');
+    Route::resource('asset', 'AssetController')->except(['edit', 'create']);
+
     Route::resource('assetLocation', 'AssetLocationController')->except(['edit', 'create']);
     Route::resource('assetStatus', 'AssetStatusController')->except(['edit', 'create']);
     Route::resource('subArea', 'SubAreaController')->only(['destroy']);
@@ -226,6 +231,7 @@ View::composer('layouts._sidebar', function($view) {
                 'hcgs' => 'Dashboard',
                 'absensi' => 'Absensi',
                 'asset' => 'Asset Management',
+                'assetTaking' => 'Asset Taking',
                 'cateringManagement' => 'Catering Management',
                 'dormitoryReservation' => 'Dormitory Management',
                 'fuelManagement' => 'Fuel Management',

@@ -16,6 +16,7 @@ class AuthServiceProvider extends ServiceProvider
     protected $policies = [
         'App\Absensi' => 'App\Policies\AbsensiPolicy',
         'App\Area' => 'App\Policies\AreaPolicy',
+        'App\Asset' => 'App\Policies\AssetPolicy',
         'App\AssetLocation' => 'App\Policies\AssetLocationPolicy',
         'App\AssetStatus' => 'App\Policies\AssetStatusPolicy',
         'App\Authorization' => 'App\Policies\AuthorizationPolicy',
