@@ -19,6 +19,7 @@ class AuthServiceProvider extends ServiceProvider
         'App\Asset' => 'App\Policies\AssetPolicy',
         'App\AssetLocation' => 'App\Policies\AssetLocationPolicy',
         'App\AssetStatus' => 'App\Policies\AssetStatusPolicy',
+        'App\AssetTaking' => 'App\Policies\AssetTakingPolicy',
         'App\Authorization' => 'App\Policies\AuthorizationPolicy',
         'App\Barge' => 'App\Policies\BargePolicy',
         'App\Breakdown' => 'App\Policies\BreakdownPolicy',
