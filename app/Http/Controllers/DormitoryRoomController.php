@@ -35,7 +35,7 @@ class DormitoryRoomController extends Controller
             ->join('positions', 'positions.id', '=', 'employees.position_id')
             ->join('dormitory_rooms', 'dormitory_rooms.id', '=', 'dormitory_reservations.dormitory_room_id')
             ->join('dormitories', 'dormitories.id', '=', 'dormitory_rooms.dormitory_id')
-            ->where('dormitory_room_id', $dormitoryRoom->id)
+            ->where('dormitory_reservations.dormitory_room_id', $dormitoryRoom->id)
             ->whereRaw("((DATE(NOW()) BETWEEN check_in AND check_out AND is_checked_out = 0) OR is_checked_out = 0)")
             ->orderBy('employees.name', 'ASC')
             ->get();

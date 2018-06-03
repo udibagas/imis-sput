@@ -64,6 +64,8 @@
 @push('scripts')
 <script type="text/javascript">
 
+$('.page-container').addClass('sidebar-collapsed');
+
 const app = new Vue({
     el: '#app',
     data: {
@@ -193,100 +195,103 @@ const app = new Vue({
         }
     },
     mounted: function() {
-
-        this.chartRatio = echarts.init(document.getElementById('fuel-ratio'));
-        this.chartRatio.setOption({
-            title: {
-                text: 'FUEL RATIO',
-                subtext: 'Periode: ' + this.date,
-                x: 'center'
-            },
-            grid: {
-                left: '3%',
-                right: '3%',
-                bottom: '10%',
-                containLabel: true
-            },
-            legend: {
-                enabled: true,
-                data:['Fuel Ratio', 'Duration'],
-                bottom: 'bottom',
-            },
-            tooltip: {
-                trigger: 'axis',
-                axisPointer: {
-                    type: 'cross',
-                    crossStyle: {
-                        color: '#999'
+        var _this = this;
+        setTimeout(function() {
+            _this.chartRatio = echarts.init(document.getElementById('fuel-ratio'));
+            _this.chartRatio.setOption({
+                title: {
+                    text: 'FUEL RATIO',
+                    subtext: 'Periode: ' + _this.date,
+                    x: 'center'
+                },
+                grid: {
+                    left: '3%',
+                    right: '3%',
+                    bottom: '10%',
+                    containLabel: true
+                },
+                legend: {
+                    enabled: true,
+                    data:['Fuel Ratio', 'Duration'],
+                    bottom: 'bottom',
+                },
+                tooltip: {
+                    trigger: 'axis',
+                    axisPointer: {
+                        type: 'cross',
+                        crossStyle: {
+                            color: '#999'
+                        }
                     }
-                }
-            },
-            xAxis: {
-                type: 'category',
-                data: [
-                    '05.00','06.00','07.00','08.00','09.00','10.00','11.00','12.00',
-                    '13.00','14.00','15.00','16.00','17.00','18.00','19.00','20.00',
-                    '21.00','22.00','23.00','00.00','01.00','02.00','03.00','04.00'
-                ],
-            },
-            yAxis: [{
-                type: 'value',
-                name: 'DURATION',
-                min: 0,
-                max: 10,
-                interval: 2,
-                axisLabel: {
-                    formatter: '{value}'
-                }
-            }, {
-                type: 'value',
-                name: 'LITER/TONASE',
-                min: 0,
-                max: 5,
-                interval: 1,
-            }],
-            series: []
-        });
+                },
+                xAxis: {
+                    type: 'category',
+                    data: [
+                        '05.00','06.00','07.00','08.00','09.00','10.00','11.00','12.00',
+                        '13.00','14.00','15.00','16.00','17.00','18.00','19.00','20.00',
+                        '21.00','22.00','23.00','00.00','01.00','02.00','03.00','04.00'
+                    ],
+                },
+                yAxis: [{
+                    type: 'value',
+                    name: 'DURATION',
+                    min: 0,
+                    max: 10,
+                    interval: 2,
+                    axisLabel: {
+                        formatter: '{value}'
+                    }
+                }, {
+                    type: 'value',
+                    name: 'LITER/TONASE',
+                    min: 0,
+                    max: 5,
+                    interval: 1,
+                }],
+                series: []
+            });
 
-        this.chartStock = echarts.init(document.getElementById('fuel-stock'));
-        this.chartStock.setOption({
-            title: {
-                text: 'FUEL STOCK',
-                // subtext: '{{date("Y-m-d")}}',
-                x: 'center'
-            },
-            tooltip: {
-                trigger: 'axis',
-                axisPointer: {
-                    type: 'shadow'
-                }
-            },
-            legend: {
-                enabled: true,
-                data:['CAPACITY', 'STOCK'],
-                bottom: 'bottom',
-            },
-            grid: {
-                left: '3%',
-                right: '3%',
-                bottom: '10%',
-                containLabel: true
-            },
-            xAxis: {
-                type: 'category',
-                boundaryGap: true,
-                data:{!! App\FuelTank::orderBy('name', 'ASC')->pluck('name') !!},
-            },
-            yAxis: {
-                type: 'value',
-                name: 'LITER'
-            },
-            series: []
-        });
+            _this.chartStock = echarts.init(document.getElementById('fuel-stock'));
+            _this.chartStock.setOption({
+                title: {
+                    text: 'FUEL STOCK',
+                    // subtext: '{{date("Y-m-d")}}',
+                    x: 'center'
+                },
+                tooltip: {
+                    trigger: 'axis',
+                    axisPointer: {
+                        type: 'shadow'
+                    }
+                },
+                legend: {
+                    enabled: true,
+                    data:['CAPACITY', 'STOCK'],
+                    bottom: 'bottom',
+                },
+                grid: {
+                    left: '3%',
+                    right: '3%',
+                    bottom: '10%',
+                    containLabel: true
+                },
+                xAxis: {
+                    type: 'category',
+                    boundaryGap: true,
+                    data:{!! App\FuelTank::orderBy('name', 'ASC')->pluck('name') !!},
+                },
+                yAxis: {
+                    type: 'value',
+                    name: 'LITER'
+                },
+                series: []
+            });
 
-        this.requestDataFuelRatio();
-        this.requestDataFuelStock();
-        this.requestDataFuelConsumption();
+            _this.requestDataFuelRatio();
+            _this.requestDataFuelStock();
+            _this.requestDataFuelConsumption();
+
+        }, 1000);
     }
 });
 

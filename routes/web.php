@@ -26,7 +26,8 @@ Route::group(['middleware' => 'auth'], function() {
 
     // Master data
     Route::resource('area', 'AreaController')->except(['edit', 'create']);
-    Route::resource('subArea', 'SubAreaController')->except(['edit', 'create']);
+    Route::resource('assetLocation', 'AssetLocationController')->except(['edit', 'create']);
+    Route::resource('subArea', 'SubAreaController')->only(['destroy']);
     Route::resource('authorization', 'AuthorizationController')->except(['edit', 'create']);
     Route::get('barge/getAnchored', 'BargeController@getAnchored');
     Route::get('barge/resume', 'BargeController@resume');
@@ -121,6 +122,8 @@ Route::group(['middleware' => 'auth'], function() {
     Route::resource('supervisingPrediction', 'SupervisingPredictionController')->except(['edit', 'create']);
     Route::resource('terminalAbsensi', 'TerminalAbsensiController')->except(['edit', 'create']);
 
+    Route::resource('tugboat', 'TugboatController')->except(['edit', 'create']);
+
     Route::get('unit/remarkUnitByType', 'UnitController@remarkUnitByType');
     Route::get('unit/export', 'UnitController@export');
     Route::resource('unit', 'UnitController')->except(['edit', 'create']);
@@ -140,6 +143,10 @@ Route::group(['middleware' => 'auth'], function() {
     Route::get('hcgs', 'HcgsController@index');
     Route::get('doUpdate', 'AdminController@doUpdate');
     Route::get('update', 'AdminController@update');
+
+    // untuk ketinggian sungai
+    Route::get('baseSurface', 'BaseSurfaceController@index');
+    Route::get('transSurface', 'TransSurfaceController@index');
 });
 
 View::composer('layouts._sidebar', function($view) {
@@ -208,6 +215,7 @@ View::composer('layouts._sidebar', function($view) {
                     'planCategory' => 'Plan Category',
                     'problemProductivityCategory' => 'Problem Productivity Categories',
                     'seam' => 'Seam',
+                    'tugboat' => 'Tugboat',
                 ]
             ]
         ],
@@ -223,6 +231,7 @@ View::composer('layouts._sidebar', function($view) {
                 'p2h' => 'P2H',
                 '<i class="fa fa-database"></i> Master Data' => [
                     'asset' => 'Asset',
+                    'assetLocation' => 'Asset Location',
                     'dormitory' => 'Dormitory',
                     'department' => 'Departments',
                     'employee' => 'Employees',

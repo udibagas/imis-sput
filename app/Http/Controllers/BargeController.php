@@ -39,7 +39,7 @@ class BargeController extends Controller
 
         return view('barge.index', [
             'breadcrumbs' => [
-                'plant/dashboard' => 'Plant',
+                'operation' => 'Operation',
                 '#' => 'Master Data',
                 'barge' => 'Barge'
             ]

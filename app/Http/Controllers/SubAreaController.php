@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\SubArea;
+use App\Area;
 use App\Http\Requests\SubAreaRequest;
 
 class SubAreaController extends Controller
@@ -50,44 +51,6 @@ class SubAreaController extends Controller
     }
 
     /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(SubAreaRequest $request)
-    {
-        $this->authorize('create', SubArea::class);
-        return SubArea::create($request->all());
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show(SubArea $subArea)
-    {
-        $this->authorize('view', SubArea::class);
-        return $subArea;
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(SubAreaRequest $request, SubArea $subArea)
-    {
-        $this->authorize('update', SubArea::class);
-        $subArea->update($request->all());
-        return $subArea;
-    }
-
-    /**
      * Remove the specified resource from storage.
      *
      * @param  int  $id
@@ -95,7 +58,7 @@ class SubAreaController extends Controller
      */
     public function destroy(SubArea $subArea)
     {
-        $this->authorize('delete', SubArea::class);
+        $this->authorize('delete', Area::class);
         return ['success' => $subArea->delete()];
     }
 }

@@ -12,7 +12,7 @@ class DormitoryReservation extends Model
         'check_in', 'check_out', 'need', 'is_checked_out'
     ];
 
-    protected $appends = ['status', 'cuti'];
+    protected $appends = ['cuti', 'status'];
 
     public function getStatusAttribute()
     {
@@ -39,6 +39,10 @@ class DormitoryReservation extends Model
     {
         $out = date_create($this->check_out);
         return date_diff($out, now())->format('%R%d');
+    }
+
+    public function employee() {
+        return $this->belongsTo(Employee::class);
     }
 
     public function scopeCurrent($query)

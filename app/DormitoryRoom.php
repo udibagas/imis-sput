@@ -10,19 +10,19 @@ class DormitoryRoom extends Model
         'name', 'dormitory_id', 'capacity', 'status', 'pic'
     ];
 
-    protected $appends = ['kosong', 'terisi'];
+    protected $appends = ['available', 'reserved'];
 
-    public function getTerisiAttribute()
+    public function getReservedAttribute()
     {
-        return DormitoryReservation::selectRaw('COUNT(id) AS terisi')
+        return DormitoryReservation::selectRaw('COUNT(id) AS reserved')
             ->where('dormitory_room_id', $this->id)
             ->whereRaw("((DATE(NOW()) BETWEEN check_in AND check_out AND is_checked_out = 0) OR is_checked_out = 0)")
-            ->first()->terisi;
+            ->first()->reserved;
     }
 
-    public function getKosongAttribute()
+    public function getAvailableAttribute()
     {
-        return $this->capacity - $this->terisi;
+        return $this->capacity - $this->reserved;
     }
 
     public function reservations() {

@@ -3,31 +3,54 @@
 @section('content')
 <div id="app" class="row">
     <div class="col-md-3">
+
+        <div class="panel minimal panel-primary">
+            <div class="panel-heading text-center">
+                ROOM AVAILABILITY
+            </div>
+            <div class="panel-body">
+                <div class="row col-with-divider">
+                    <div class="col-xs-4 text-center stack-order text-primary">
+                        <h1 class="no-margins">@{{capacity}}</h1>
+                        CAPACITY
+                    </div>
+                    <div class="col-xs-4 text-center stack-order text-danger">
+                        <h1 class="no-margins">@{{reserved}}</h1>
+                        RESERVED
+                    </div>
+                    <div class="col-xs-4 text-center stack-order text-success">
+                        <h1 class="no-margins">@{{capacity - reserved}}</h1>
+                        AVAILABLE
+                    </div>
+                </div>
+            </div>
+        </div>
+
         <div v-for="d in dormitories" :class="['panel', d.status ? 'panel-success' : 'panel-danger']">
-            <div class="panel-heading text-center text-bold">
+            <div class="panel-heading text-center">
                 @{{d.name}}
             </div>
             <table class="table table-striped table-hover table-bordered">
                 <thead>
                     <tr>
-                        <th class="text-center">Kamar</th>
-                        <th class="text-center">Kapasitas</th>
-                        <th class="text-center">Terisi</th>
-                        <th class="text-center">Kosong</th>
+                        <th class="text-center">Room</th>
+                        <th class="text-center">Capacity</th>
+                        <th class="text-center">Reserved</th>
+                        <th class="text-center">Available</th>
                         <th v-if="d.status != 0"></th>
                     </tr>
                 </thead>
                 <tbody>
-                    <tr v-for="r in d.rooms" :class="r.kosong == 0 || r.status == 0 ? 'danger' : ''">
+                    <tr v-for="r in d.rooms" :class="r.available == 0 || r.status == 0 ? 'danger' : ''">
                         <td class="text-center">@{{r.name}}</td>
                         <td class="text-center">@{{r.capacity}}</td>
-                        <td class="text-center">@{{r.terisi}}</td>
-                        <td class="text-center">@{{r.kosong}}</td>
+                        <td class="text-center">@{{r.reserved}}</td>
+                        <td class="text-center">@{{r.available}}</td>
                         <td class="text-right" v-if="d.status != 0">
 
-                            <a v-show="r.terisi > 0" href="#" class="btn btn-primary btn-xs" @click="roomDetail(r,d)" title="Room Detail"><i class="icon-list"></i></a>
+                            <button v-show="r.reserved > 0" type="button" class="btn btn-primary btn-xs" @click="roomDetail(r,d)" title="Room Detail"><i class="icon-list"></i></button>
 
-                            <a v-show="r.kosong > 0 && d.status == 1 && r.status == 1" href="#" class="btn btn-primary btn-xs" @click="add(r)" title="Add Reservation"><i class="icon-plus"></i></a>
+                            <button v-show="r.available > 0 && d.status == 1 && r.status == 1" type="button" class="btn btn-primary btn-xs" @click="add(r)" title="Add Reservation"><i class="icon-plus"></i></button>
                         </td>
                     </tr>
                 </tbody>
@@ -35,8 +58,8 @@
                     <tr>
                         <th class="text-center">TOTAL</th>
                         <th class="text-center">@{{d.capacity}}</th>
-                        <th class="text-center">@{{d.terisi}}</th>
-                        <th class="text-center">@{{d.kosong}}</th>
+                        <th class="text-center">@{{d.reserved}}</th>
+                        <th class="text-center">@{{d.available}}</th>
                         <th v-if="d.status != 0" class="text-center"></th>
                     </tr>
                 </tfoot>
@@ -109,6 +132,8 @@
 @push('scripts')
 <script type="text/javascript">
 
+$('.page-container').addClass('sidebar-collapsed');
+
 const app = new Vue({
     el: '#app',
     data: {
@@ -132,7 +157,18 @@ const app = new Vue({
             2: 'success',
             3: 'default'
         },
-        dataFilter: 'current'
+        dataFilter: 'current',
+        capacity: 0,
+        reserved: 0
+    },
+    watch: {
+        dormitories: function(v, o) {
+            console.log(v[1].capacity);
+            for (var i = 0; i < v.length; i++) {
+                this.capacity += parseInt(v[i].capacity);
+                this.reserved += parseInt(v[i].reserved);
+            }
+        }
     },
     methods: {
         getDormitoryData: function() {

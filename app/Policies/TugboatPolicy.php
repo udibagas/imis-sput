@@ -3,19 +3,19 @@
 namespace App\Policies;
 
 use App\User;
-use App\SubArea;
+use App\Tugboat;
 use App\Authorization;
 use Illuminate\Auth\Access\HandlesAuthorization;
 
-class SubAreaPolicy
+class TugboatPolicy
 {
     use HandlesAuthorization;
 
     /**
-     * Determine whether the user can view the subArea.
+     * Determine whether the user can view the tugboat.
      *
      * @param  \App\User  $user
-     * @param  \App\SubArea  $subArea
+     * @param  \App\Tugboat  $tugboat
      * @return mixed
      */
     public function view(User $user)
@@ -24,13 +24,13 @@ class SubAreaPolicy
             return true;
         }
 
-        return Authorization::where('controller', 'SubArea')
+        return Authorization::where('controller', 'Tugboat')
                 ->where('user_id', $user->id)
                 ->where('view', 1)->count();
     }
 
     /**
-     * Determine whether the user can create subAreas.
+     * Determine whether the user can create tugboats.
      *
      * @param  \App\User  $user
      * @return mixed
@@ -41,16 +41,16 @@ class SubAreaPolicy
             return true;
         }
 
-        return Authorization::where('controller', 'SubArea')
+        return Authorization::where('controller', 'Tugboat')
                 ->where('user_id', $user->id)
                 ->where('create', 1)->count();
     }
 
     /**
-     * Determine whether the user can update the subArea.
+     * Determine whether the user can update the tugboat.
      *
      * @param  \App\User  $user
-     * @param  \App\SubArea  $subArea
+     * @param  \App\Tugboat  $tugboat
      * @return mixed
      */
     public function update(User $user)
@@ -59,16 +59,16 @@ class SubAreaPolicy
             return true;
         }
 
-        return Authorization::where('controller', 'SubArea')
+        return Authorization::where('controller', 'Tugboat')
                 ->where('user_id', $user->id)
                 ->where('update', 1)->count();
     }
 
     /**
-     * Determine whether the user can delete the subArea.
+     * Determine whether the user can delete the tugboat.
      *
      * @param  \App\User  $user
-     * @param  \App\SubArea  $subArea
+     * @param  \App\Tugboat  $tugboat
      * @return mixed
      */
     public function delete(User $user)
@@ -77,7 +77,7 @@ class SubAreaPolicy
             return true;
         }
 
-        return Authorization::where('controller', 'SubArea')
+        return Authorization::where('controller', 'Tugboat')
                 ->where('user_id', $user->id)
                 ->where('delete', 1)->count();
     }

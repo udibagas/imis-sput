@@ -10,7 +10,7 @@ class Dormitory extends Model
         'name', 'description', 'status', 'pic'
     ];
 
-    protected $appends = ['total_room', 'capacity', 'kosong', 'terisi'];
+    protected $appends = ['total_room', 'capacity', 'available', 'reserved'];
 
     protected $with = ['rooms'];
 
@@ -28,18 +28,18 @@ class Dormitory extends Model
             ->first()->capacity;
     }
 
-    public function getTerisiAttribute()
+    public function getReservedAttribute()
     {
-        return DormitoryReservation::selectRaw('COUNT(dormitory_reservations.id) AS terisi')
+        return DormitoryReservation::selectRaw('COUNT(dormitory_reservations.id) AS reserved')
             ->join('dormitory_rooms', 'dormitory_rooms.id', '=', 'dormitory_reservations.dormitory_room_id')
             ->join('dormitories', 'dormitories.id', '=', 'dormitory_rooms.dormitory_id')
             ->where('dormitory_rooms.dormitory_id', $this->id)
             ->whereRaw("((DATE(NOW()) BETWEEN check_in AND check_out AND is_checked_out = 0) OR is_checked_out = 0)")
-            ->first()->terisi;
+            ->first()->reserved;
     }
 
-    public function getKosongAttribute()
+    public function getAvailableAttribute()
     {
-        return $this->capacity - $this->terisi;
+        return $this->capacity - $this->reserved;
     }
 }

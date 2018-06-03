@@ -68,19 +68,44 @@ class DormitoryReservationController extends Controller
     public function store(DormitoryReservationRequest $request)
     {
         $this->authorize('create', DormitoryReservation::class);
-        return DormitoryReservation::create($request->all());
+        $dormitoryReservation = DormitoryReservation::create($request->all());
+
+        $dormitoryReservation->employee()->update([
+            'dormitory_room_id' => $request->dormitory_room_id
+        ]);
+
+        return $dormitoryReservation;
     }
 
     public function update(DormitoryReservationRequest $request, DormitoryReservation $dormitoryReservation)
     {
         $this->authorize('update', DormitoryReservation::class);
         $dormitoryReservation->update($request->all());
+
+        if ($dormitoryReservation->is_checked_out)
+        {
+            $dormitoryReservation->employee()->update([
+                'dormitory_room_id' => NULL
+            ]);
+        }
+
+        else {
+            $dormitoryReservation->employee()->update([
+                'dormitory_room_id' => $request->dormitory_room_id
+            ]);
+        }
+
         return $dormitoryReservation;
     }
 
     public function destroy(DormitoryReservation $dormitoryReservation)
     {
         $this->authorize('delete', DormitoryReservation::class);
+
+        $dormitoryReservation->employee()->update([
+            'dormitory_room_id' => NULL
+        ]);
+
         return ['success' => $dormitoryReservation->delete()];
     }
 

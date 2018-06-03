@@ -13,46 +13,37 @@
                         @{{error.file}}:@{{error.line}}
                     </div>
 
-                    <div :class="['form-group', formErrors.name ? 'has-error' : '']">
-                        <label class="control-label col-md-4 col-sm-4 col-xs-12" for="name">Name
+                    <div class="form-group" :class="formErrors.name ? 'has-error' : ''">
+                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="name">Name
                         </label>
-                        <div class="col-md-8 col-sm-8 col-xs-12">
+                        <div class="col-md-9 col-sm-9 col-xs-12">
                             <input type="text" v-model="formData.name" class="form-control" placeholder="Name">
                             <span v-if="formErrors.name" class="help-block">@{{formErrors.name[0]}}</span>
                         </div>
                     </div>
 
-                    <div :class="['form-group', formErrors.capacity ? 'has-error' : '']">
-                        <label class="control-label col-md-4 col-sm-4 col-xs-12" for="capacity">Capacity
+                    <div class="form-group" :class="formErrors.description ? 'has-error' : ''">
+                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="description">Description
                         </label>
-                        <div class="col-md-8 col-sm-8 col-xs-12">
-                            <input type="text" v-model="formData.capacity" class="form-control" placeholder="Capacity">
-                            <span v-if="formErrors.capacity" class="help-block">@{{formErrors.capacity[0]}}</span>
-                        </div>
-                    </div>
-
-                    <div :class="['form-group', formErrors.description ? 'has-error' : '']">
-                        <label class="control-label col-md-4 col-sm-4 col-xs-12" for="description">Description
-                        </label>
-                        <div class="col-md-8 col-sm-8 col-xs-12">
+                        <div class="col-md-9 col-sm-9 col-xs-12">
                             <input type="text" v-model="formData.description" class="form-control" placeholder="Description">
                             <span v-if="formErrors.description" class="help-block">@{{formErrors.description[0]}}</span>
                         </div>
                     </div>
 
-                    <div :class="['form-group', formErrors.anchored ? 'has-error' : '']">
-                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="anchored">Anchored
+                    <div class="form-group" :class="formErrors.status ? 'has-error' : ''">
+                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="status">Status
                         </label>
                         <div class="col-md-9 col-sm-9 col-xs-12">
                             <div class="radio radio-inline radio-replace radio-success">
-								<input type="radio" v-model="formData.anchored" id="yes" value="1">
+								<input type="radio" v-model="formData.status" id="yes" value="1">
 								<label for="yes">YES</label>
 							</div>
                             <div class="radio radio-inline radio-replace radio-danger">
-								<input type="radio" v-model="formData.anchored" id="no" value="0">
+								<input type="radio" v-model="formData.status" id="no" value="0">
 								<label for="no">NO</label>
 							</div>
-                            <span v-if="formErrors.anchored" class="help-block">@{{formErrors.anchored[0]}}</span>
+                            <span v-if="formErrors.status" class="help-block">@{{formErrors.status[0]}}</span>
                         </div>
                     </div>
 

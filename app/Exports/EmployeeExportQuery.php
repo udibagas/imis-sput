@@ -23,7 +23,9 @@ class EmployeeExportQuery implements FromQuery, WithHeadings
             'Department',
             'Position',
             'Office',
-            'Owner'
+            'Owner',
+            'Dormitory',
+            'Room'
         ];
     }
 
@@ -37,7 +39,9 @@ class EmployeeExportQuery implements FromQuery, WithHeadings
                 departments.name AS department,
                 positions.name AS position,
                 offices.name AS office,
-                owners.name AS owner
+                owners.name AS owner,
+                dormitories.name AS dormitory,
+                dormitory_rooms.name AS room
             ')
             ->when($request, function($query) use ($request) {
                 return $query->where('employees.name', 'LIKE', "%{$request->q}%");
@@ -46,6 +50,8 @@ class EmployeeExportQuery implements FromQuery, WithHeadings
             ->join('offices', 'offices.id', '=', 'employees.office_id', 'LEFT')
             ->join('owners', 'owners.id', '=', 'employees.owner_id', 'LEFT')
             ->join('positions', 'positions.id', '=', 'employees.position_id')
-            ->orderBy('name', 'ASC');
+            ->join('dormitory_rooms', 'dormitory_rooms.id', '=', 'employees.dormitory_room_id', 'LEFT')
+            ->join('dormitories', 'dormitories.id', '=', 'dormitory_rooms.dormitory_id', 'LEFT')
+            ->orderBy('employees.name', 'ASC');
     }
 }

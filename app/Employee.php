@@ -8,7 +8,7 @@ use QRCode;
 class Employee extends Model
 {
     protected $fillable = [
-        'nrp', 'name', 'department_id',
+        'nrp', 'name', 'department_id', 'dormitory_room_id',
         'position_id', 'owner_id', 'office_id', 'status'
     ];
 

@@ -18,3 +18,7 @@ window.Vue = require('vue');
  */
 
 // Vue.component('example-component', require('./components/ExampleComponent.vue'));
+
+// Vue.component('vue-dd', require('./components/Dd.vue'));
+// Vue.component('vue-card', require('./components/Card.vue'));
+Vue.component('daily-check-setting', require('./components/DailyCheckSetting.vue'));

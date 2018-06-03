@@ -9,13 +9,13 @@
 			</div>
 			<div class="panel-body">
 				<div class="row col-with-divider">
-					<div class="col-xs-6 text-center stack-order">
+					<div class="col-xs-6 text-center stack-order text-danger">
 						<h1 class="no-margins">@{{achievement.plan}}</h1>
-						<strong>PLAN</strong>
+						PLAN
 					</div>
-					<div class="col-xs-6 text-center stack-order">
+					<div class="col-xs-6 text-center stack-order text-success">
 						<h1 class="no-margins">@{{achievement.actual}}</h1>
-						<strong>ACTUAL</strong>
+						ACTUAL
 					</div>
 				</div>
 			</div>
@@ -82,6 +82,8 @@
 
 @push('scripts')
 <script type="text/javascript">
+
+$('.page-container').addClass('sidebar-collapsed');
 
 const app = new Vue({
     el: '#app',

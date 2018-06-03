@@ -31,19 +31,25 @@ class EmployeeController extends Controller
                     departments.name AS department,
                     offices.name AS office,
                     owners.name AS owner,
-                    positions.name AS position
+                    positions.name AS position,
+                    dormitory_rooms.name AS room,
+                    dormitories.name AS dormitory
                 ')
                 ->join('departments', 'departments.id', '=', 'employees.department_id')
                 ->join('offices', 'offices.id', '=', 'employees.office_id', 'LEFT')
                 ->join('owners', 'owners.id', '=', 'employees.owner_id', 'LEFT')
                 ->join('positions', 'positions.id', '=', 'employees.position_id')
+                ->join('dormitory_rooms', 'dormitory_rooms.id', '=', 'employees.dormitory_room_id', 'LEFT')
+                ->join('dormitories', 'dormitories.id', '=', 'dormitory_rooms.dormitory_id', 'LEFT')
                 ->when($request->searchPhrase, function($query) use ($request) {
                     return $query->where('employees.name', 'LIKE', '%'.$request->searchPhrase.'%')
                         ->orWhere('employees.nrp', 'LIKE', '%'.$request->searchPhrase.'%')
                         ->orWhere('departments.name', 'LIKE', '%'.$request->searchPhrase.'%')
                         ->orWhere('offices.name', 'LIKE', '%'.$request->searchPhrase.'%')
                         ->orWhere('owners.name', 'LIKE', '%'.$request->searchPhrase.'%')
-                        ->orWhere('positions.name', 'LIKE', '%'.$request->searchPhrase.'%');
+                        ->orWhere('positions.name', 'LIKE', '%'.$request->searchPhrase.'%')
+                        ->orWhere('dormitories.name', 'LIKE', '%'.$request->searchPhrase.'%')
+                        ->orWhere('dormitory_rooms.name', 'LIKE', '%'.$request->searchPhrase.'%');
                 })->orderBy($sort, $dir)->paginate($pageSize);
 
             return [
