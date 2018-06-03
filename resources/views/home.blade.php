@@ -68,10 +68,10 @@
     <div class="col-md-4">
         <div class="panel panel-primary">
             <div class="panel-body">
-                <a href="{{url('admin')}}">
+                <a href="{{url('fat')}}">
                     <div class="stack-order">
-                        <div class="fa fa-sliders fa-3x"></div>
-                        <h1 class="no-margins">ADMIN</h1>
+                        <div class="fa fa-dollar fa-3x"></div>
+                        <h1 class="no-margins">FAT</h1>
                     </div>
                 </a>
             </div>
@@ -79,3 +79,9 @@
     </div>
 </div>
 @endsection
+
+@push('scripts')
+<script type="text/javascript">
+$('.page-container').addClass('sidebar-collapsed');
+</script>
+@endpush()
