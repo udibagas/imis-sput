@@ -41,9 +41,9 @@ class AssetLocationController extends Controller
 
         return view('assetLocation.index', [
             'breadcrumbs' => [
-                'plant/dashboard' => 'Plant',
+                'hcgs' => 'HCGS',
                 '#' => 'Master Data',
-                'assetLocation' => 'AssetLocation'
+                'assetLocation' => 'Asset Location'
             ]
         ]);
     }

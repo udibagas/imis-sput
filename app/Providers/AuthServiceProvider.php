@@ -17,6 +17,7 @@ class AuthServiceProvider extends ServiceProvider
         'App\Absensi' => 'App\Policies\AbsensiPolicy',
         'App\Area' => 'App\Policies\AreaPolicy',
         'App\AssetLocation' => 'App\Policies\AssetLocationPolicy',
+        'App\AssetStatus' => 'App\Policies\AssetStatusPolicy',
         'App\Authorization' => 'App\Policies\AuthorizationPolicy',
         'App\Barge' => 'App\Policies\BargePolicy',
         'App\Breakdown' => 'App\Policies\BreakdownPolicy',

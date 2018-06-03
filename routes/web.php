@@ -27,6 +27,7 @@ Route::group(['middleware' => 'auth'], function() {
     // Master data
     Route::resource('area', 'AreaController')->except(['edit', 'create']);
     Route::resource('assetLocation', 'AssetLocationController')->except(['edit', 'create']);
+    Route::resource('assetStatus', 'AssetStatusController')->except(['edit', 'create']);
     Route::resource('subArea', 'SubAreaController')->only(['destroy']);
     Route::resource('authorization', 'AuthorizationController')->except(['edit', 'create']);
     Route::get('barge/getAnchored', 'BargeController@getAnchored');
@@ -224,14 +225,15 @@ View::composer('layouts._sidebar', function($view) {
             'url' => [
                 'hcgs' => 'Dashboard',
                 'absensi' => 'Absensi',
-                'assetManagement' => 'Asset Management',
+                'asset' => 'Asset Management',
                 'cateringManagement' => 'Catering Management',
                 'dormitoryReservation' => 'Dormitory Management',
                 'fuelManagement' => 'Fuel Management',
                 'p2h' => 'P2H',
                 '<i class="fa fa-database"></i> Master Data' => [
-                    'asset' => 'Asset',
+                    // 'asset' => 'Asset',
                     'assetLocation' => 'Asset Location',
+                    'assetStatus' => 'Asset Status',
                     'dormitory' => 'Dormitory',
                     'department' => 'Departments',
                     'employee' => 'Employees',
