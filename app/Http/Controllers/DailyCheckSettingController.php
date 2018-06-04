@@ -20,26 +20,13 @@ class DailyCheckSettingController extends Controller
 
         if ($request->ajax())
         {
-            $pageSize = $request->rowCount > 0 ? $request->rowCount : 1000000;
-            $request['page'] = $request->current;
-            $sort = $request->sort ? key($request->sort) : 'day';
-            $dir = $request->sort ? $request->sort[$sort] : 'asc';
-
-            $dailyCheckSetting = DailyCheckSetting::selectRaw('
+            return DailyCheckSetting::selectRaw('
                     daily_check_settings.*,
                     units.name AS unit
                 ')
                 ->join('units', 'units.id', '=', 'daily_check_settings.unit_id')
-                ->when($request->searchPhrase, function($query) use ($request) {
-                    return $query->where('units.name', 'LIKE', '%'.$request->searchPhrase.'%');
-                })->orderBy($sort, $dir)->paginate($pageSize);
-
-            return [
-                'rowCount' => $dailyCheckSetting->perPage(),
-                'total' => $dailyCheckSetting->total(),
-                'current' => $dailyCheckSetting->currentPage(),
-                'rows' => $dailyCheckSetting->items(),
-            ];
+                ->orderBy('units.name', 'ASC')
+                ->get();
         }
 
         return view('dailyCheckSetting.index', [
@@ -105,27 +92,11 @@ class DailyCheckSettingController extends Controller
         return ['success' => $dailyCheckSetting->delete()];
     }
 
-    public function getData()
-    {
-        $this->authorize('view', DailyCheckSetting::class);
-
-        $sql = "SELECT DISTINCT(day),
-                (SELECT GROUP_CONCAT(units.name)
-                    FROM daily_check_settings
-                    JOIN units ON units.id = daily_check_settings.unit_id
-                    WHERE daily_check_settings.day = d.day
-                    ORDER BY units.name ASC) AS units
-            FROM daily_check_settings d
-            ORDER BY day ASC";
-
-        return DB::select(DB::raw($sql));
-    }
-
     public function unScheduled()
     {
         $this->authorize('view', DailyCheckSetting::class);
 
-        $sql = "SELECT units.name AS unit
+        $sql = "SELECT id, name
             FROM units
             WHERE id NOT IN (SELECT unit_id FROM daily_check_settings)";
 

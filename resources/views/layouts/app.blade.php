@@ -121,10 +121,10 @@ const runningText = new Vue({
                     _this.text = null;
                 }
 
-                for (var i = 0; i < r.data.length; i++) {
+                r.data.forEach(function(d) {
                     _this.text += " :: ";
-                    _this.text += r.data[i].text;
-                }
+                    _this.text += d.text;
+                });
 
             });
 

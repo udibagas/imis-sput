@@ -25,7 +25,8 @@
         @foreach ($assets as $a)
         <div class="qrcode-container">
             {!!$a->qrCode!!}
-            {{$a->reg_no}}
+            <strong>{{$a->reg_no}}</strong><br>
+            <small>{{$a->name}}</small>
         </div>
         @endforeach
     </body>

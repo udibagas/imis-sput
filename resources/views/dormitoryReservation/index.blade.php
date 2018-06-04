@@ -161,15 +161,6 @@ const app = new Vue({
         capacity: 0,
         reserved: 0
     },
-    watch: {
-        dormitories: function(v, o) {
-            console.log(v[1].capacity);
-            for (var i = 0; i < v.length; i++) {
-                this.capacity += parseInt(v[i].capacity);
-                this.reserved += parseInt(v[i].reserved);
-            }
-        }
-    },
     methods: {
         getDormitoryData: function() {
             var _this = this;

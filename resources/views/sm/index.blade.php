@@ -119,10 +119,10 @@ const app = new Vue({
                 var dataCapacity = [];
                 var dataStock = [];
 
-                for (i in r.data) {
-                    dataCapacity.push(r.data[i].capacity);
-                    dataStock.push(r.data[i].stock);
-                }
+                r.data.forEach(function(d) {
+                    dataCapacity.push(d.capacity);
+                    dataStock.push(d.stock);
+                });
 
                 _this.chartStock.setOption({
                     series: [{

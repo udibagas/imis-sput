@@ -33043,6 +33043,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
 
 
 
@@ -33057,19 +33059,82 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         };
     },
     methods: {
-        drop: function drop(e) {
-            console.log(e);
+        getUnit: function getUnit(day) {
+            var _this = this;
+            return function (index) {
+                return day == -1 ? _this.unscheduled[index] : _this.dailyCheckSettings[day][index];
+            };
         },
-        dragStart: function dragStart(e) {
-            // console.log(e);
+        assign: function assign(day, dropResult) {
+            if (dropResult.addedIndex !== null) {
+
+                if (dropResult.payload.unit_id == undefined) {
+                    this.create({
+                        day: day,
+                        unit_id: dropResult.payload.id
+                    });
+                } else {
+                    this.update(dropResult.payload.id, {
+                        day: day,
+                        unit_id: dropResult.payload.unit_id
+                    });
+                }
+            }
         },
-        dragEnd: function dragEnd(e) {
-            console.log(e);
+        create: function create(data) {
+            var _this = this;
+            axios.post('dailyCheckSetting', data).then(function (r) {
+                _this.getData();
+                _this.getUnscheduled();
+            }).catch(function (error) {
+                if (error.response.status == 422) {
+                    toastr["error"](JSON.stringify(error.response.data.errors));
+                }
+
+                if (error.response.status == 500) {
+                    var error = error.response.data;
+                    toastr["error"](error.message + ". " + error.file + ":" + error.line);
+                }
+            });
+        },
+        update: function update(id, data) {
+            var _this = this;
+            axios.put('dailyCheckSetting/' + id, data).then(function (r) {
+                _this.getData();
+                _this.getUnscheduled();
+            }).catch(function (error) {
+                if (error.response.status == 422) {
+                    toastr["error"](JSON.stringify(error.response.data.errors));
+                }
+
+                if (error.response.status == 500) {
+                    var error = error.response.data;
+                    toastr["error"](error.message + ". " + error.file + ":" + error.line);
+                }
+            });
+        },
+        del: function del(id) {
+            var _this = this;
+            axios.delete('dailyCheckSetting/' + id).then(function (r) {
+                if (r.data.success == true) {
+                    _this.getData();
+                    _this.getUnscheduled();
+                } else {
+                    toastr["error"]("Data gagal disimpan. " + r.data.message);
+                }
+            }).catch(function (error) {
+                var error = error.response.data;
+                toastr["error"](error.message + ". " + error.file + ":" + error.line);
+            });
         },
         getData: function getData() {
             var _this = this;
-            axios.get('dailyCheckSetting/getData').then(function (r) {
-                _this.dailyCheckSettings = r.data;
+            axios.get('dailyCheckSetting').then(function (r) {
+                for (var i = 0; i <= 6; i++) {
+                    _this.dailyCheckSettings[i] = r.data.filter(function (s) {
+                        return s.day === i;
+                    });
+                }
             }).catch(function (error) {
                 var error = error.response.data;
                 toastr["error"](error.message + ". " + error.file + ":" + error.line);
@@ -33082,30 +33147,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             }).catch(function (error) {
                 var error = error.response.data;
                 toastr["error"](error.message + ". " + error.file + ":" + error.line);
-            });
-        },
-        del: function del(id) {
-            var _this = this;
-            bootbox.confirm({
-                title: "Konfirmasi",
-                message: "Anda yakin akan menghapus data ini?",
-                callback: function callback(r) {
-                    if (r == true) {
-                        axios.delete('dailyCheckSetting/' + id).then(function (r) {
-                            if (r.data.success == true) {
-                                toastr["success"]("Data berhasil dihapus");
-                                $('#bootgrid').bootgrid('reload');
-                                _this.getData();
-                                _this.getUnscheduled();
-                            } else {
-                                toastr["error"]("Data gagal dihapus. " + r.data.message);
-                            }
-                        }).catch(function (error) {
-                            var error = error.response.data;
-                            toastr["error"](error.message + ". " + error.file + ":" + error.line);
-                        });
-                    }
-                }
             });
         }
     },
@@ -33123,129 +33164,152 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", { staticClass: "panel panel-primary" }, [
-    _c("div", { staticClass: "panel-heading" }, [
-      _vm._v("\n        DAILY CHECK SETTING\n    ")
-    ]),
-    _vm._v(" "),
-    _c("table", { staticClass: "table table-bordered" }, [
-      _c("thead", [
-        _c(
-          "tr",
-          [
-            _c("th", { staticClass: "text-center" }, [
-              _vm._v("UNIT BELUM TERJADWAL")
-            ]),
-            _vm._v(" "),
-            _vm._l(_vm.dailyCheckSettings, function(d) {
-              return _c(
-                "th",
-                { staticClass: "text-center", staticStyle: { width: "195px" } },
-                [_vm._v(_vm._s(_vm.days[d.day]))]
-              )
-            })
-          ],
-          2
-        )
+  return _c(
+    "div",
+    { staticClass: "panel panel-primary" },
+    [
+      _c("div", { staticClass: "panel-heading" }, [
+        _vm._v("\n        DAILY CHECK SETTING\n    ")
       ]),
       _vm._v(" "),
-      _c("tbody", [
+      _c("Container", [
         _c(
-          "tr",
+          "table",
+          {
+            staticClass: "table table-bordered",
+            staticStyle: { "margin-bottom": "0" }
+          },
           [
-            _c(
-              "td",
-              [
-                _c(
-                  "Container",
-                  {
-                    on: {
-                      drop: _vm.drop,
-                      "drag-start": _vm.dragStart,
-                      "drag-end": _vm.dragEnd
-                    }
-                  },
-                  _vm._l(_vm.unscheduled, function(u) {
+            _c("thead", [
+              _c(
+                "tr",
+                [
+                  _c("th", { staticClass: "text-center" }, [
+                    _vm._v("UNIT BELUM TERJADWAL")
+                  ]),
+                  _vm._v(" "),
+                  _vm._l(_vm.dailyCheckSettings, function(d, i) {
                     return _c(
-                      "Draggable",
+                      "th",
                       {
-                        key: u.id,
-                        staticClass: "label label-default",
-                        staticStyle: {
-                          "margin-bottom": "3px",
-                          "text-align": "left"
-                        }
+                        staticClass: "text-center",
+                        staticStyle: { width: "195px" }
                       },
-                      [
-                        _vm._v(
-                          "\n                            " +
-                            _vm._s(u.unit) +
-                            "\n                        "
-                        )
-                      ]
+                      [_vm._v(_vm._s(_vm.days[i]))]
                     )
                   })
-                )
-              ],
-              1
-            ),
+                ],
+                2
+              )
+            ]),
             _vm._v(" "),
-            _vm._l(_vm.dailyCheckSettings, function(d) {
-              return _c(
-                "td",
+            _c("tbody", [
+              _c(
+                "tr",
                 [
                   _c(
-                    "Container",
-                    {
-                      on: {
-                        drop: _vm.drop,
-                        "drag-start": _vm.dragStart,
-                        "drag-end": _vm.dragEnd
-                      }
-                    },
-                    _vm._l(d.units.split(","), function(u) {
-                      return _c(
-                        "Draggable",
+                    "td",
+                    [
+                      _c(
+                        "Container",
                         {
-                          key: u.split(":")[0],
-                          staticClass: "label label-default",
-                          staticStyle: {
-                            "margin-bottom": "3px",
-                            "text-align": "left"
+                          attrs: {
+                            "group-name": "day",
+                            "get-child-payload": _vm.getUnit(-1)
                           }
                         },
-                        [
-                          _c(
-                            "a",
+                        _vm._l(_vm.unscheduled, function(u) {
+                          return _c(
+                            "Draggable",
                             {
-                              attrs: { href: "#" },
-                              on: {
-                                click: function($event) {
-                                  _vm.del(u.split(":")[0])
-                                }
+                              key: u.id,
+                              staticClass: "label label-danger",
+                              staticStyle: {
+                                "margin-bottom": "3px",
+                                "text-align": "left"
                               }
                             },
-                            [_c("i", { staticClass: "fa fa-remove" })]
-                          ),
-                          _vm._v(
-                            " " +
-                              _vm._s(u.split(":")[1]) +
-                              "\n                    "
+                            [
+                              _vm._v(
+                                "\n                                " +
+                                  _vm._s(u.name) +
+                                  "\n                            "
+                              )
+                            ]
                           )
-                        ]
+                        })
                       )
-                    })
-                  )
+                    ],
+                    1
+                  ),
+                  _vm._v(" "),
+                  _vm._l(_vm.dailyCheckSettings, function(d, i) {
+                    return _c(
+                      "td",
+                      [
+                        _c(
+                          "Container",
+                          {
+                            staticStyle: { "min-height": "200px" },
+                            attrs: {
+                              "group-name": "day",
+                              "get-child-payload": _vm.getUnit(i)
+                            },
+                            on: {
+                              drop: function($event) {
+                                _vm.assign(i, $event)
+                              }
+                            }
+                          },
+                          _vm._l(d, function(s) {
+                            return _c(
+                              "Draggable",
+                              {
+                                key: s.unit_id,
+                                staticClass: "label label-info",
+                                staticStyle: {
+                                  "margin-bottom": "3px",
+                                  "text-align": "left"
+                                }
+                              },
+                              [
+                                _c(
+                                  "a",
+                                  {
+                                    staticClass: "pull-right",
+                                    attrs: { href: "#" },
+                                    on: {
+                                      click: function($event) {
+                                        $event.preventDefault()
+                                        _vm.del(s.id)
+                                      }
+                                    }
+                                  },
+                                  [_c("i", { staticClass: "fa fa-remove" })]
+                                ),
+                                _vm._v(
+                                  " " +
+                                    _vm._s(s.unit) +
+                                    "\n                            "
+                                )
+                              ]
+                            )
+                          })
+                        )
+                      ],
+                      1
+                    )
+                  })
                 ],
-                1
+                2
               )
-            })
-          ],
-          2
+            ])
+          ]
         )
       ])
-    ])
-  ])
+    ],
+    1
+  )
 }
 var staticRenderFns = []
 render._withStripped = true

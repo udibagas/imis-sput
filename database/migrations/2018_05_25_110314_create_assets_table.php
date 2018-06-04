@@ -20,9 +20,9 @@ class CreateAssetsTable extends Migration
             $table->string('trademark');
             $table->string('version');
             $table->string('sn');
-            $table->string('lifetime');
-            $table->decimal('price');
-            $table->string('year', 4);
+            $table->tinyInteger('lifetime');
+            $table->integer('price');
+            $table->smallInteger('year');
             $table->integer('asset_location_id')->unsigned();
             $table->integer('asset_status_id')->unsigned();
             $table->timestamps();

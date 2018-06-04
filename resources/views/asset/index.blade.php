@@ -25,11 +25,27 @@
                     <th data-column-id="trademark">Trademark</th>
                     <th data-column-id="version">Version</th>
                     <th data-column-id="sn">SN</th>
-                    <th data-column-id="lifetime">Lifetime</th>
-                    <th data-column-id="price">Price</th>
-                    <th data-column-id="year">Year</th>
+
+                    <th data-column-id="lifetime"
+                        data-formatter="lifetime"
+                        data-align="center"
+                        data-header-align="center">Lifetime</th>
+
+                    <th data-column-id="price"
+                        data-formatter="price"
+                        data-header-align="right"
+                        data-align="right">Price</th>
+
+                    <th data-column-id="year"
+                        data-align="center"
+                        data-header-align="center">Year</th>
+
                     <th data-column-id="location">Location</th>
-                    <th data-column-id="status">Status</th>
+
+                    <th data-column-id="status"
+                        data-align="center"
+                        data-header-align="center">Status</th>
+
                     @can('updateOrDelete', App\Asset::class)
                     <th data-column-id="commands"
                         data-formatter="commands"
@@ -157,7 +173,13 @@
             },
             generateQrCode: function(id) {
                 window.open('{{url("asset/generateQrCode")}}/' + id, '_blank');
-            }
+            },
+            formatNumber: function(v) {
+                return parseFloat(v)
+                    .toFixed(0)
+                    .toString()
+                    .replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+            },
         },
         mounted: function() {
 
@@ -186,10 +208,16 @@
                     header: '<div id="@{{ctx.id}}" class="pull-right @{{css.header}}"><div class="actionBar"><p class="@{{css.search}}"></p><p class="@{{css.actions}}"></p></div></div>'
                 },
                 formatters: {
-                    "commands": function(column, row) {
+                    commands: function(column, row) {
                         return '@can("update", App\Asset::class) <a href="#" class="btn btn-info btn-xs c-edit" data-id="'+row.id+'"><i class="icon-pencil"></i></a> @endcan' +
                             '@can("delete", App\Asset::class) <a href="#" class="btn btn-danger btn-xs c-delete" data-id="'+row.id+'"><i class="icon-trash"></i></a> @endcan' +
                             '@can("view", App\Employee::class) <a href="#" title="Generate QR Code" class="btn btn-success btn-xs c-qrcode" data-id="'+row.id+'"><i class="fa fa-qrcode"></i></a> @endcan';
+                    },
+                    price: function(column, row) {
+                        return t.formatNumber(row.price);
+                    },
+                    lifetime: function(column, row) {
+                        return row.lifetime + ' tahun';
                     }
                 }
             }).on("loaded.rs.jquery.bootgrid", function() {

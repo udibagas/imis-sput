@@ -21,6 +21,20 @@ Route::group(['middleware' => 'auth:api'], function() {
 
 });
 
+Route::resource('assetTaking', 'Api\AssetTakingController');
+
+Route::get('asset', function() {
+    return App\Asset::orderBy('reg_no', 'ASC')->get();
+});
+
+Route::get('assetLocation', function() {
+    return App\AssetLocation::orderBy('name', 'ASC')->get();
+});
+
+Route::get('assetStatus', function() {
+    return App\AssetStatus::orderBy('code', 'ASC')->get();
+});
+
 Route::get('ping', function() {
     return ['status' => true];
 });

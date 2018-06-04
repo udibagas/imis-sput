@@ -59,10 +59,10 @@
                     </div>
 
                     <div :class="['form-group', formErrors.lifetime ? 'has-error' : '']">
-                        <label class="control-label col-md-4 col-sm-4 col-xs-12" for="lifetime">Lifetime
+                        <label class="control-label col-md-4 col-sm-4 col-xs-12" for="lifetime">Lifetime (Tahun)
                         </label>
                         <div class="col-md-8 col-sm-8 col-xs-12">
-                            <input type="text" v-model="formData.lifetime" class="form-control" placeholder="Lifetime">
+                            <input type="number" v-model="formData.lifetime" class="form-control" placeholder="Lifetime (Tahun)">
                             <span v-if="formErrors.lifetime" class="help-block">@{{formErrors.lifetime[0]}}</span>
                         </div>
                     </div>
@@ -71,7 +71,7 @@
                         <label class="control-label col-md-4 col-sm-4 col-xs-12" for="price">Price
                         </label>
                         <div class="col-md-8 col-sm-8 col-xs-12">
-                            <input type="text" v-model="formData.price" class="form-control" placeholder="Price">
+                            <input type="number" v-model="formData.price" class="form-control" placeholder="Price">
                             <span v-if="formErrors.price" class="help-block">@{{formErrors.price[0]}}</span>
                         </div>
                     </div>
@@ -80,7 +80,7 @@
                         <label class="control-label col-md-4 col-sm-4 col-xs-12" for="year">Year
                         </label>
                         <div class="col-md-8 col-sm-8 col-xs-12">
-                            <input type="text" v-model="formData.year" class="form-control" placeholder="Year">
+                            <input type="number" v-model="formData.year" class="form-control" placeholder="Year">
                             <span v-if="formErrors.year" class="help-block">@{{formErrors.year[0]}}</span>
                         </div>
                     </div>
