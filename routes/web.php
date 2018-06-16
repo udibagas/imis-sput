@@ -90,7 +90,7 @@ Route::group(['middleware' => 'auth'], function() {
     Route::resource('fuelRefill', 'FuelRefillController')->except(['edit', 'create']);
 
     Route::resource('fuelTank', 'FuelTankController')->except(['edit', 'create']);
-    Route::resource('jabatan', 'JabatanController')->except(['edit', 'create']);
+    // Route::resource('jabatan', 'JabatanController')->except(['edit', 'create']);
     Route::get('jetty/productivity', 'JettyController@productivity');
     Route::get('jetty/dwellingTime', 'JettyController@dwellingTime');
     Route::resource('jetty', 'JettyController')->except(['edit', 'create']);
@@ -99,6 +99,9 @@ Route::group(['middleware' => 'auth'], function() {
     Route::resource('location', 'LocationController')->except(['edit', 'create']);
     Route::resource('lostTimeCategory', 'LostTimeCategoryController')->except(['edit', 'create']);
     Route::resource('material', 'MaterialController')->except(['edit', 'create']);
+    Route::get('meal/summary', 'MealController@summary');
+    Route::put('meal/confirm', 'MealController@confirm');
+    Route::resource('meal', 'MealController')->except(['edit', 'create', 'update', 'destroy']);
     Route::resource('mealLocation', 'MealLocationController')->except(['edit', 'create']);
     Route::resource('office', 'OfficeController')->except(['edit', 'create']);
     Route::resource('owner', 'OwnerController')->except(['edit', 'create']);
@@ -234,8 +237,9 @@ View::composer('layouts._sidebar', function($view) {
                 'absensi' => 'Absensi',
                 'asset' => 'Asset Management',
                 'assetTaking' => 'Asset Taking',
-                'cateringManagement' => 'Catering Management',
+                'meal' => 'Catering Management',
                 'dormitoryReservation' => 'Dormitory Management',
+                'employee' => 'Employee Managemet',
                 'fuelManagement' => 'Fuel Management',
                 'p2h' => 'P2H',
                 '<i class="fa fa-database"></i> Master Data' => [
@@ -244,8 +248,7 @@ View::composer('layouts._sidebar', function($view) {
                     'assetStatus' => 'Asset Status',
                     'dormitory' => 'Dormitory',
                     'department' => 'Departments',
-                    'employee' => 'Employees',
-                    'jabatan' => 'Jabatan',
+                    // 'jabatan' => 'Jabatan',
                     'mealLocation' => 'Meal Location',
                     'office' => 'Offices',
                     'position' => 'Positions',

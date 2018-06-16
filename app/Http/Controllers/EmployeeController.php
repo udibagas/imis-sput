@@ -30,7 +30,7 @@ class EmployeeController extends Controller
                     employees.*,
                     departments.name AS department,
                     offices.name AS office,
-                    owners.name AS owner,
+                    owners.name AS employer,
                     positions.name AS position,
                     dormitory_rooms.name AS room,
                     dormitories.name AS dormitory
@@ -63,8 +63,7 @@ class EmployeeController extends Controller
         return view('employee.index', [
             'breadcrumbs' => [
                 'hcgs/dashboard' => 'HCGS',
-                '#' => 'Master Data',
-                'employee' => 'Employee'
+                '#' => 'Employee Management'
             ]
         ]);
     }

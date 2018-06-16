@@ -10,7 +10,7 @@
             <a href="#" @click="add" class="btn btn-primary"><i class="icon-plus-circled"></i></a>
             @endcan
             @can('export', App\Employee::class)
-            <a href="{{url('employee/export')}}" class="btn btn-primary"><i class="icon-download"></i> EXPORT</a>
+            <a href="{{url('employee/export')}}" class="btn btn-primary"><i class="fa fa-file-excel-o"></i> EXPORT</a>
             @endcan
             @can('export', App\Employee::class)
             <a href="{{url('employee/generateNameTag')}}" class="btn btn-primary" target="_blank"><i class="icon-credit-card"></i> Generate Name Tag</a>
@@ -24,7 +24,7 @@
                     <th data-column-id="nrp">NRP</th>
                     <th data-column-id="department">Department</th>
                     <th data-column-id="position">Position</th>
-                    <th data-column-id="owner">Owner</th>
+                    <th data-column-id="employer">Employer</th>
                     <th data-column-id="office">Office</th>
                     <th data-column-id="dormitory">Dormitory</th>
                     <th data-column-id="room">Room</th>
@@ -61,7 +61,7 @@
             formTitle: '',
             error: {},
             positions: {!!App\Position::selectRaw('id AS id, name AS text')->orderBy('name', 'ASC')->get()!!},
-            owners: {!!App\Owner::selectRaw('id AS id, name AS text')->orderBy('name', 'ASC')->get()!!},
+            employers: {!!App\Owner::selectRaw('id AS id, name AS text')->orderBy('name', 'ASC')->get()!!},
             offices: {!!App\Office::selectRaw('id AS id, name AS text')->orderBy('name', 'ASC')->get()!!},
             departments: {!!App\Department::selectRaw('id AS id, name AS text')->orderBy('name', 'ASC')->get()!!},
         },

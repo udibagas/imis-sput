@@ -45,7 +45,7 @@ class EmployeeRequest extends FormRequest
             'department_id' => 'Department',
             'position_id' => 'Position',
             'office_id' => 'Office',
-            'owner_id' => 'Owner'
+            'owner_id' => 'Employer'
         ];
     }
 }

@@ -52,10 +52,10 @@
                     </div>
 
                     <div :class="['form-group', formErrors.owner_id ? 'has-error' : '']">
-                        <label class="control-label col-md-4 col-sm-4 col-xs-12" for="owner_id">Owner
+                        <label class="control-label col-md-4 col-sm-4 col-xs-12" for="owner_id">Employer
                         </label>
                         <div class="col-md-8 col-sm-8 col-xs-12">
-                            <select2 :options="owners" v-model="formData.owner_id" data-placeholder="Owner">
+                            <select2 :options="employers" v-model="formData.owner_id" data-placeholder="Employer">
                             </select2>
                             <span v-if="formErrors.owner_id" class="help-block">@{{formErrors.owner_id[0]}}</span>
                         </div>

@@ -42,6 +42,7 @@ class AuthServiceProvider extends ServiceProvider
         'App\Location' => 'App\Policies\LocationPolicy',
         'App\LostTimeCategory' => 'App\Policies\LostTimeCategoryPolicy',
         'App\Material' => 'App\Policies\MaterialPolicy',
+        'App\Meal' => 'App\Policies\MealPolicy',
         'App\MealLocation' => 'App\Policies\MealLocationPolicy',
         'App\Office' => 'App\Policies\OfficePolicy',
         'App\Owner' => 'App\Policies\OwnerPolicy',

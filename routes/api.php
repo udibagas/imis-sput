@@ -111,3 +111,29 @@ Route::post('fuelRefill', function() {
 
     return json_encode($ret);
 });
+
+// untuk game operational
+
+Route::get('area', function() {
+    return App\Area::with('subArea')->get();
+});
+
+Route::get('barge', function() {
+    return App\Barge::all();
+});
+
+Route::get('customer', function() {
+    return App\Customer::all();
+});
+
+Route::get('jetty', function() {
+    return App\Jetty::all();
+});
+
+Route::get('seam', function() {
+    return App\Seam::all();
+});
+
+Route::get('tugboat', function() {
+    return App\Tugboat::all();
+});

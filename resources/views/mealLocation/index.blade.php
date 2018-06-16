@@ -13,9 +13,9 @@
         <table class="table table-striped table-hover " id="bootgrid" style="border-top:2px solid #ddd">
             <thead>
                 <tr>
-                    <th data-column-id="id" data-width="3%">ID</th>
+                    <th data-column-id="id">ID</th>
                     <th data-column-id="name">Name</th>
-                    <th data-column-id="user">Penanggungjawab</th>
+                    <th data-column-id="user">PIC</th>
                     @can('updateOrDelete', App\MealLocation::class)
                     <th data-column-id="commands"
                         data-formatter="commands"

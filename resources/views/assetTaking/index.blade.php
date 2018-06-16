@@ -9,6 +9,9 @@
             @can('create', App\AssetTaking::class)
             <a href="#" @click="add" class="btn btn-primary"><i class="icon-plus-circled"></i></a>
             @endcan
+            @can('export', App\AssetTaking::class)
+            <a href="{{url('assetTaking/export')}}" class="btn btn-primary"><i class="fa fa-file-excel-o"></i> EXPORT</a>
+            @endcan
             <a href="{{url('assetTaking/downloadApp')}}" class="btn btn-primary"><i class="fa fa-android"></i> DOWNLOAD APLIKASI</a>
         </span>
         <table class="table table-striped table-hover " id="bootgrid" style="border-top:2px solid #ddd">

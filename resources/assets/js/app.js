@@ -22,3 +22,4 @@ window.Vue = require('vue');
 // Vue.component('vue-dd', require('./components/Dd.vue'));
 // Vue.component('vue-card', require('./components/Card.vue'));
 Vue.component('daily-check-setting', require('./components/DailyCheckSetting.vue'));
+Vue.component('game', require('./components/Game.vue'));

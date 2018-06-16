@@ -68,7 +68,7 @@
                         this.update(dropResult.payload.id, {
                             day: day,
                             unit_id: dropResult.payload.unit_id
-                        })
+                        });
                     }
 
                 }
