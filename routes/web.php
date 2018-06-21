@@ -100,7 +100,9 @@ Route::group(['middleware' => 'auth'], function() {
     Route::resource('lostTimeCategory', 'LostTimeCategoryController')->except(['edit', 'create']);
     Route::resource('material', 'MaterialController')->except(['edit', 'create']);
     Route::get('meal/summary', 'MealController@summary');
+    Route::get('meal/summary1', 'MealController@summary1');
     Route::put('meal/confirm', 'MealController@confirm');
+    Route::put('meal/confirmAll', 'MealController@confirmAll');
     Route::resource('meal', 'MealController')->except(['edit', 'create', 'update', 'destroy']);
     Route::resource('mealLocation', 'MealLocationController')->except(['edit', 'create']);
     Route::resource('office', 'OfficeController')->except(['edit', 'create']);
@@ -236,7 +238,7 @@ View::composer('layouts._sidebar', function($view) {
                 'hcgs' => 'Dashboard',
                 'absensi' => 'Absensi',
                 'asset' => 'Asset Management',
-                'assetTaking' => 'Asset Taking',
+                // 'assetTaking' => 'Asset Taking',
                 'meal' => 'Catering Management',
                 'dormitoryReservation' => 'Dormitory Management',
                 'employee' => 'Employee Managemet',

@@ -3,9 +3,28 @@
 @section('content')
 
 <div class="row" id="app">
-    <div class="col-md-3">
-        <div class="panel panel-primary">
+    <div class="col-md-4">
+        <div class="panel minimal panel-default">
+            <div class="panel-body">
+                <div class="row col-with-divider">
+                    <div class="col-xs-4 text-center stack-order text-danger">
+                        <h1 class="no-margins">@{{summary.unconfirmed}}</h1>
+						UNCONFIRMED
+					</div>
+                    <div class="col-xs-4 text-center stack-order text-success">
+                        <h1 class="no-margins">@{{summary.confirmed}}</h1>
+						CONFIRMED
+                    </div>
+                    <div class="col-xs-4 text-center stack-order text-primary">
+                        <h1 class="no-margins">@{{summary.total}}</h1>
+						TOTAL
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="panel panel-default">
             <div class="panel-heading">
+                <a href="#" class="pull-right btn btn-primary btn-sm btn-outline"><i class="fa fa-file-excel-o"></i> EXPORT</a>
                 SUMMARY BY LOCATION
             </div>
             <table class="table table-striped table-hover table-bordered">
@@ -42,8 +61,9 @@
             </table>
         </div>
 
-        <div class="panel panel-primary">
+        <div class="panel panel-default">
             <div class="panel-heading">
+                <a href="#" class="pull-right btn btn-primary btn-sm btn-outline"><i class="fa fa-file-excel-o"></i> EXPORT</a>
                 SUMMARY BY DEPARTMENT
             </div>
             <table class="table table-striped table-hover table-bordered">
@@ -80,8 +100,9 @@
             </table>
         </div>
 
-        <div class="panel panel-primary">
+        <div class="panel panel-default">
             <div class="panel-heading">
+                <a href="#" class="pull-right btn btn-primary btn-sm btn-outline"><i class="fa fa-file-excel-o"></i> EXPORT</a>
                 SUMMARY BY LOCATION & DEPARTMENT
             </div>
             <table class="table table-striped table-hover table-bordered">
@@ -128,49 +149,54 @@
             T = Total <br />
         </div>
     </div>
-    <div class="col-md-9">
-        <div class="panel panel-primary">
+    <div class="col-md-8">
+        <div class="panel panel-default">
             <div class="panel-body">
                 <h3 class="pull-left text-primary">CATERING MANAGEMENT</h3>
                 <form class="form-inline text-right">
                     <vue-datepicker v-model="date" placeholder="Date">
                     </vue-datepicker>
+                    <a href="#" class="btn btn-primary btn-outline" @click.prevent="reload"><i class="fa fa-refresh"></i> RELOAD</a>
                     @can('export', App\Meal::class)
-                    <a href="#" @click.prevent="openExportForm" class="btn btn-primary"><i class="fa fa-file-excel-o"></i> EXPORT</a>
+                    <a href="#" @click.prevent="openExportForm" class="btn btn-primary  btn-outline"><i class="fa fa-file-excel-o"></i> EXPORT</a>
                     @endcan
                 </form>
                 <hr>
-                <h3>Tanggal: @{{date}}</h3>
+                <h3 class="text-danger">Date: @{{date}}</h3>
                 <table class="table table-striped table-hover " id="bootgrid" style="border-top:2px solid #ddd">
                     <thead>
                         <tr>
-                            <th>NRP</th>
-                            <th>Name</th>
-                            <th>Department</th>
-                            <th>Position</th>
-                            <th>Employer</th>
+                            <!-- <th>NRP</th> -->
+                            <th>NRP/Name</th>
+                            <th>Department/Position</th>
+                            <!-- <th>Position</th> -->
+                            <!-- <th>Employer</th> -->
                             <th class="text-center">Breakfast</th>
                             <th class="text-center">Lunch</th>
                             <th class="text-center">Dinner</th>
                             <th class="text-center">Supper</th>
-                            <th class="text-center">
+                            <!-- <th class="text-center">
                                 <input type="checkbox" value="1" v-model="checkAll">
-                            </th>
-                            <th class="text-center">
-                                <a href="#" title="Confirm (@{{checkMe.filter(s => s == true).length}})" class="btn btn-primary" :disabled="checkMe.filter(s => s == true).length == 0" @click.prevent="confirmSelected"><i class="icon-check"></i></a>
+                            </th> -->
+                            <th class="text-right">
+                                <a href="#" title="Confirm All" class="btn btn-xs btn-primary" @click.prevent="confirmAll" v-show="summary.unconfirmed > 0"><i class="icon-check"></i></a>
                             </th>
                         </tr>
                     </thead>
                     <tbody>
                         <tr v-for="(d,i) in mealData">
+                            <!-- <td> @{{d.nrp}} </td> -->
                             <td>
                                 <input type="hidden" v-model="formData.employee_id[i]">
-                                @{{d.nrp}}
+                                <small class="text-muted">@{{d.nrp}}</small> <br> @{{d.name}}
                             </td>
-                            <td>@{{d.name}}</td>
-                            <td>@{{d.department}}</td>
-                            <td>@{{d.position}}</td>
-                            <td>@{{d.employer}}</td>
+                            <td>
+                                @{{d.department}} <br>
+                                <small class="text-muted">@{{d.position}}</small> <br>
+                                <strong>@{{d.employer}}</strong>
+                            </td>
+                            <!-- <td>@{{d.position}}</td> -->
+                            <!-- <td>@{{d.employer}}</td> -->
                             <td :class="['text-center', formData.b_status[i] ? 'success' : 'danger']">
                                 <select class="form-control input-sm" v-model="formData.b[i]" @change="save('b', d.employee_id, formData.b[i])">
                                     <option value="">NO</option>
@@ -195,11 +221,11 @@
                                     <option v-for="l in mealLocations" :value="l.id">@{{l.text}}</option>
                                 </select>
                             </td>
-                            <td class="text-center">
+                            <!-- <td class="text-center">
                                 <input type="checkbox" v-model="checkMe[i]" value="1">
-                            </td>
-                            <td class="text-center">
-                                <a href="#" title="Confirm" @click.prevent="confirm(formData.employee_id[i])" class="btn-sm btn-primary"><i class="icon-check"></i></a>
+                            </td> -->
+                            <td class="text-right">
+                                <a href="#" title="Confirm" @click.prevent="confirm(formData.employee_id[i])" class="btn-xs btn-primary"><i class="icon-check"></i></a>
                             </td>
                         </tr>
                     </tbody>
@@ -225,6 +251,11 @@ $('.page-container').addClass('sidebar-collapsed');
 const app = new Vue({
     el: '#app',
     data: {
+        summary: {
+            total: 0,
+            confirmed: 0,
+            unconfirmed: 0
+        },
         checkAll: 0,
         total: {
             breakfast: 0,
@@ -269,10 +300,7 @@ const app = new Vue({
     },
     watch: {
         date: function(v, o) {
-            this.getData();
-            this.getSummary();
-            this.getSummary('department');
-            this.getSummary('location');
+            this.reload();
         },
         checkAll: function(v, o) {
             for (i in this.checkMe) {
@@ -304,6 +332,15 @@ const app = new Vue({
 
             .catch(function(error) {
                 // unblock('table');
+                var error = error.response.data;
+                toastr["error"](error.message + ". " + error.file + ":" + error.line);
+            });
+        },
+        getSummary1: function() {
+            var _this = this;
+            axios.get('{{url("meal/summary1")}}?date=' + _this.date).then(function(r) {
+                _this.summary = r.data[0];
+            }).catch(function(error) {
                 var error = error.response.data;
                 toastr["error"](error.message + ". " + error.file + ":" + error.line);
             });
@@ -384,34 +421,33 @@ const app = new Vue({
             window.location = '{{url("meal/export")}}?from=' + this.exportRange.from + '&to=' + this.exportRange.to;
         },
         confirm: function(employee_id) {
-                var _this = this;
-                var data = {
-                    employee_id: employee_id,
-                    date: this.date
-                };
+            var _this = this;
+            var data = {
+                employee_id: employee_id,
+                date: this.date
+            };
 
-                axios.put('{{url("meal/confirm")}}', data).then(function(r) {
-                    _this.getData();
-                    _this.getSummary();
-                    _this.getSummary('location');
-                    _this.getSummary('department');
+            axios.put('{{url("meal/confirm")}}', data).then(function(r) {
+                _this.reload();
+            })
+
+            .catch(function(error) {
+                var error = error.response.data;
+                toastr["error"](error.message + ". " + error.file + ":" + error.line);
+            });
+        },
+        confirmAll: function() {
+            if (confirm('Anda yakin?')) {
+                var _this = this;
+                axios.put('{{url("meal/confirmAll")}}?date=' + _this.date).then(function(r) {
+                    _this.reload();
                 })
 
                 .catch(function(error) {
                     var error = error.response.data;
                     toastr["error"](error.message + ". " + error.file + ":" + error.line);
                 });
-        },
-        confirmSelected: function() {
-            var selection = this.checkMe;
-
-            for (i in selection) {
-                if (selection[i] == false) {
-                    selection.slice(i,1);
-                }
             }
-
-            console.log(selection);
         },
         save: function(type, employee_id, location) {
             var _this = this;
@@ -427,10 +463,7 @@ const app = new Vue({
 
             axios.post('{{url("meal")}}', data).then(function(r) {
                 // toastr["success"]("Data berhasil ditambahkan");
-                _this.getData();
-                _this.getSummary();
-                _this.getSummary('location');
-                _this.getSummary('department');
+                _this.reload();
             })
 
             .catch(function(error) {
@@ -438,12 +471,16 @@ const app = new Vue({
                 toastr["error"](error.message + ". " + error.file + ":" + error.line);
             });
         },
+        reload: function() {
+            this.getData();
+            this.getSummary1();
+            this.getSummary();
+            this.getSummary('location');
+            this.getSummary('department');
+        }
     },
     mounted: function() {
-        this.getData();
-        this.getSummary();
-        this.getSummary('location');
-        this.getSummary('department');
+        this.reload();
     }
 });
 

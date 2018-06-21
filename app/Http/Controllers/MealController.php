@@ -175,6 +175,15 @@ class MealController extends Controller
         return ['status' => $status];
     }
 
+    public function confirmAll(Request $request)
+    {
+        $date   = $request->date ? $request->date : date("Y-m-d");
+        $status = Meal::where('date', $date)
+            ->update(['status' => 1]);
+
+        return ['status' => $status];
+    }
+
     public function summary(Request $request)
     {
         $date   = $request->date ? $request->date : date("Y-m-d");
@@ -209,6 +218,18 @@ class MealController extends Controller
             GROUP BY {$group}
             ORDER BY {$order}
         ";
+
+        return DB::select(DB::raw($sql));
+    }
+
+    public function summary1(Request $request)
+    {
+        $date = $request->date ? $request->date : date("Y-m-d");
+        $sql  = "SELECT COUNT(id) AS total,
+                COUNT(IF(status = 1, 1, NULL)) AS confirmed,
+                COUNT(IF(status = 0, 1, NULL)) AS unconfirmed
+            FROM meals
+            WHERE `date` = '{$date}'";
 
         return DB::select(DB::raw($sql));
     }
