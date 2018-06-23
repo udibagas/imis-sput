@@ -17,7 +17,7 @@
 
     <div class="row">
 
-        <div class="col-md-6">
+        <div class="col-md-7">
             <div class="panel panel-primary">
                 <div class="panel-body">
                     <div class="" id="fuel-stock" style="height:300px;">
@@ -26,7 +26,7 @@
             </div>
         </div>
 
-        <div class="col-md-6">
+        <div class="col-md-5">
             <div class="panel panel-default">
                 <div class="panel-heading">
                     <span class="text-primary">FUEL CONSUMPTION</span>
