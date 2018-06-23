@@ -33072,8 +33072,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         create: function create(data) {
             var _this = this;
             axios.post('dailyCheckSetting', data).then(function (r) {
-                _this.getData();
-                _this.getUnscheduled();
+                _this.sync();
             }).catch(function (error) {
                 if (error.response.status == 422) {
                     toastr["error"](JSON.stringify(error.response.data.errors));
@@ -33088,8 +33087,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         update: function update(id, data) {
             var _this = this;
             axios.put('dailyCheckSetting/' + id, data).then(function (r) {
-                _this.getData();
-                _this.getUnscheduled();
+                _this.sync();
             }).catch(function (error) {
                 if (error.response.status == 422) {
                     toastr["error"](JSON.stringify(error.response.data.errors));
@@ -33105,8 +33103,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             var _this = this;
             axios.delete('dailyCheckSetting/' + id).then(function (r) {
                 if (r.data.success == true) {
-                    _this.getData();
-                    _this.getUnscheduled();
+                    _this.sync();
                 } else {
                     toastr["error"]("Data gagal disimpan. " + r.data.message);
                 }
@@ -33136,11 +33133,15 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                 var error = error.response.data;
                 toastr["error"](error.message + ". " + error.file + ":" + error.line);
             });
+        },
+        sync: function sync() {
+            this.getData();
+            this.getUnscheduled();
         }
     },
     mounted: function mounted() {
-        this.getData();
-        this.getUnscheduled();
+        this.sync();
+        this.$forceUpdate();
     }
 });
 
