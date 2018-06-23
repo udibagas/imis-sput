@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Http\Request;
+use Carbon\Carbon;
 
 /*
 |--------------------------------------------------------------------------
@@ -102,7 +103,13 @@ Route::post('fuelRefill', function() {
             continue;
         }
 
-        App\FuelRefill::insert($data);
+        $fuelRefill = App\FuelRefill::insert($data);
+
+        // update stock fuel tank
+        $fuelRefill->fuelTank->update([
+            'stock' => $fuelRefill->fuelTank->stock - $request->total_real,
+            'last_stock_time' => Carbon::now()
+        ]);
     }
 
     $ret = (count($ids) > 0)

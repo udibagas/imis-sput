@@ -69,6 +69,7 @@
                         data-formatter="duration">Duration</th>
 
                     <th data-column-id="insert_by">Insert By</th>
+                    <th data-column-id="insert_via">Insert Via</th>
                     @can('updateOrDelete', App\FuelRefill::class)
                     <th data-column-id="commands"
                         data-formatter="commands"

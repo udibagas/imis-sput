@@ -44,9 +44,13 @@ class BreakdownController extends Controller
                 ->join('component_criterias', 'component_criterias.id', '=', 'breakdowns.component_criteria_id', 'LEFT')
                 ->when($request->searchPhrase, function($query) use ($request) {
                     return $query->where('units.name', 'LIKE', '%'.$request->searchPhrase.'%')
-                        ->where('locations.name', 'LIKE', '%'.$request->searchPhrase.'%')
-                        ->where('breakdown_categories.name', 'LIKE', '%'.$request->searchPhrase.'%')
-                        ->where('breakdown_statuses.code', 'LIKE', '%'.$request->searchPhrase.'%');
+                        ->orWhere('breakdowns.wo_number', 'LIKE', '%'.$request->searchPhrase.'%')
+                        ->orWhere('unit_categories.name', 'LIKE', '%'.$request->searchPhrase.'%')
+                        ->orWhere('locations.name', 'LIKE', '%'.$request->searchPhrase.'%')
+                        ->orWhere('breakdown_categories.name', 'LIKE', '%'.$request->searchPhrase.'%')
+                        ->orWhere('breakdown_statuses.code', 'LIKE', '%'.$request->searchPhrase.'%')
+                        ->orWhere('component_criterias.code', 'LIKE', '%'.$request->searchPhrase.'%')
+                        ->orWhere('component_criterias.description', 'LIKE', '%'.$request->searchPhrase.'%');
                 })->orderBy($sort, $dir)->paginate($pageSize);
 
             return [
@@ -59,8 +63,8 @@ class BreakdownController extends Controller
 
         return view('breakdown.index', [
             'breadcrumbs' => [
-                'plant/dashboard' => 'Plant',
-                'breakdown' => 'Workshop'
+                'plant/dashboard' => 'Operation',
+                'breakdown' => 'Breakdown OCR'
             ]
         ]);
     }

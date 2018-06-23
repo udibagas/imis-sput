@@ -48,6 +48,7 @@ class FuelRefillController extends Controller
                 ->join('unit_categories', 'unit_categories.id', '=', 'units.unit_category_id')
                 ->when($request->searchPhrase, function($query) use ($request) {
                     return $query->where('units.name', 'LIKE', '%'.$request->searchPhrase.'%')
+                        ->orWhere('fuel_refills.insert_via', 'LIKE', '%'.$request->searchPhrase.'%')
                         ->orWhere('fuel_tanks.name', 'LIKE', '%'.$request->searchPhrase.'%')
                         ->orWhere('employees.nrp', 'LIKE', '%'.$request->searchPhrase.'%')
                         ->orWhere('users.name', 'LIKE', '%'.$request->searchPhrase.'%')
@@ -82,6 +83,7 @@ class FuelRefillController extends Controller
         $this->authorize('create', FuelRefill::class);
         $input = $request->all();
         $input['user_id'] = auth()->user()->id;
+        $input['insert_via'] = 'web';
         $fuelRefill = FuelRefill::create($input);
 
         $fuelRefill->fuelTank->update([
