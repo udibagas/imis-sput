@@ -76,8 +76,7 @@
             create: function(data) {
                 var _this = this;
                 axios.post('dailyCheckSetting', data).then(function(r) {
-                    _this.getData();
-                    _this.getUnscheduled();
+                    _this.sync();
                 })
 
                 .catch(function(error) {
@@ -94,8 +93,7 @@
             update: function(id, data) {
                 var _this = this;
                 axios.put('dailyCheckSetting/' + id, data).then(function(r) {
-                    _this.getData();
-                    _this.getUnscheduled();
+                    _this.sync();
                 })
 
                 .catch(function(error) {
@@ -113,8 +111,7 @@
                 var _this = this;
                 axios.delete('dailyCheckSetting/' + id).then(function(r) {
                     if (r.data.success == true) {
-                        _this.getData();
-                        _this.getUnscheduled();
+                        _this.sync();
                     } else {
                         toastr["error"]("Data gagal disimpan. " + r.data.message);
                     }
@@ -149,10 +146,14 @@
                     toastr["error"](error.message + ". " + error.file + ":" + error.line);
                 });
             },
+            sync: function() {
+                this.getData();
+                this.getUnscheduled();
+            }
         },
         mounted: function() {
-            this.getData();
-            this.getUnscheduled();
+            this.sync();
+            this.$forceUpdate();
         }
     }
 </script>
