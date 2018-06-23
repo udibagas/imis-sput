@@ -4,9 +4,10 @@
 <div class="panel panel-default" id="app">
     <div class="panel-heading">
         <div class="pull-right">
-            <a href="#"><i class="fa fa-filter"></i></a>
+            <input type="text" v-model="searchPhrase" class="form-control" placeholder="Search">
         </div>
-        <span class="text-primary">DAILY BREADOWN REPORT</span>
+        <div class="panel-title text-primary">DAILY BREADOWN REPORT</div>
+        <div class="clearfix"> </div>
     </div>
     <div class="table-responsive">
         <table class="table table-hover">
@@ -72,6 +73,7 @@ $('.page-container').addClass('sidebar-collapsed');
 const app = new Vue({
     el: '#app',
     data: {
+        searchPhrase: "",
         breakdowns: [],
         formData: {},
         formErrors: {},
@@ -97,7 +99,7 @@ const app = new Vue({
     methods: {
         getData: function() {
             var _this = this;
-            axios.get('{{url("breakdownPcr")}}').then(function(r) {
+            axios.get('{{url("breakdownPcr")}}?searchPhrase=' + _this.searchPhrase).then(function(r) {
                 _this.breakdowns = r.data;
             })
 

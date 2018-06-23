@@ -36,6 +36,16 @@ class BreakdownPcrController extends Controller
                 ->join('component_criterias', 'component_criterias.id', '=', 'breakdowns.component_criteria_id', 'LEFT')
                 ->join('warning_parts', 'warning_parts.breakdown_id', '=', 'breakdowns.id', 'LEFT')
                 ->where('breakdowns.status', 0)
+                ->when($request->searchPhrase, function($query) use ($request) {
+                    return $query->where('units.name', 'LIKE', '%'.$request->searchPhrase.'%')
+                        ->orWhere('breakdowns.wo_number', 'LIKE', '%'.$request->searchPhrase.'%')
+                        ->orWhere('unit_categories.name', 'LIKE', '%'.$request->searchPhrase.'%')
+                        ->orWhere('locations.name', 'LIKE', '%'.$request->searchPhrase.'%')
+                        ->orWhere('breakdown_categories.name', 'LIKE', '%'.$request->searchPhrase.'%')
+                        ->orWhere('breakdown_statuses.code', 'LIKE', '%'.$request->searchPhrase.'%')
+                        ->orWhere('component_criterias.code', 'LIKE', '%'.$request->searchPhrase.'%')
+                        ->orWhere('component_criterias.description', 'LIKE', '%'.$request->searchPhrase.'%');
+                })
                 ->orderBy('created_at', 'DESC')
                 ->get();
         }
