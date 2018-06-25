@@ -10,7 +10,7 @@ class FuelRefill extends Model
     protected $fillable = [
         'fuel_tank_id', 'unit_id', 'date', 'employee_id',
         'km', 'hm', 'km_last', 'hm_last', 'total_recommended',
-        'total_real', 'user_id', 'shift', 'start_time', 'finish_time'
+        'total_real', 'user_id', 'shift', 'start_time', 'finish_time', 'insert_via'
     ];
 
     public function fuelTank() {
