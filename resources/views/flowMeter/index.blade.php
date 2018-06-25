@@ -18,13 +18,10 @@
                 <tr>
                     <th data-column-id="id" data-width="3%">ID</th>
                     <th data-column-id="date">Date</th>
-
-                    <th data-column-id="trx"
-                        data-formatter="trx"
-                        data-sortable="false">Trx</th>
-
+                    <th data-column-id="shift">Shift</th>
+                    <th data-column-id="fuel_tank" data-formatter="fuel_tank">Fuel Tank</th>
                     <th data-column-id="status" data-formatter="status">Status</th>
-                    <th data-column-id="fuel_tank">Fuel Tank</th>
+                    <th data-column-id="transfer_to">To</th>
 
                     <th data-column-id="flowmeter_start"
                         data-align="right"
@@ -103,10 +100,10 @@
             },
             statuses: {
                 'T': 'Transfer',
-                'R': 'Receive',
-                'I': 'Issued'
+                'S': 'Stock Awal',
             },
             fuel_tanks: {!! App\FuelTank::selectRaw('id AS id, name AS text')->orderBy('name', 'ASC')->get() !!},
+            sadps: {!! App\Sadp::selectRaw('id AS id, name AS text')->orderBy('name', 'ASC')->get() !!},
         },
         methods: {
             openExportForm: function() {
@@ -250,9 +247,6 @@
                         return '@can("update", App\FlowMeter::class) <a href="#" class="btn btn-info btn-xs c-edit" data-id="'+row.id+'"><i class="icon-pencil"></i></a> @endcan' +
                             '@can("delete", App\FlowMeter::class) <a href="#" class="btn btn-danger btn-xs c-delete" data-id="'+row.id+'"><i class="icon-trash"></i></a> @endcan';
                     },
-                    "trx": function(column, row) {
-                        return row.flowmeter_start - row.flowmeter_end > 0 ? 'IN' : 'OUT';
-                    },
                     "volume_by_flowmeter": function(column, row) {
                         return t.formatNumber(row.flowmeter_end - row.flowmeter_start);
                     },
@@ -261,6 +255,9 @@
                     },
                     "status": function(column, row) {
                         return t.statuses[row.status];
+                    },
+                    fuel_tank: function(column, row) {
+                        return row.fuel_tank ? row.fuel_tank : row.sadp;
                     },
                     flowmeter_start: function(column, row) {
                         return t.formatNumber(row.flowmeter_start);

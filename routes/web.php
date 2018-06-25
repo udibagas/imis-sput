@@ -194,7 +194,6 @@ View::composer('layouts._sidebar', function($view) {
                 'sm' => 'Dashboard',
                 'flowMeter' => 'Flow Meter',
                 'fuelRefill' => 'Fuel Refill',
-                'fuelRestock' => 'Fuel Restock',
                 'warningPart' => 'Warning Parts',
                 '<i class="fa fa-database"></i> Master Data' => [
                     'fuelTank' => 'Fuel Tanks',

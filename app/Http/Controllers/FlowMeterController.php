@@ -29,10 +29,14 @@ class FlowMeterController extends Controller
 
             $flowMeter = FlowMeter::selectRaw('
                     flow_meters.*,
+                    sadps.name AS sadp,
+                    t.name AS transfer_to,
                     fuel_tanks.name AS fuel_tank,
                     users.name AS insert_by
                 ')
-                ->join('fuel_tanks', 'fuel_tanks.id', '=', 'flow_meters.fuel_tank_id')
+                ->join('fuel_tanks', 'fuel_tanks.id', '=', 'flow_meters.fuel_tank_id', 'LEFT')
+                ->join('fuel_tanks AS t', 't.id', '=', 'flow_meters.transfer_to_fuel_tank_id', 'LEFT')
+                ->join('sadps', 'sadps.id', '=', 'flow_meters.sadp_id', 'LEFT')
                 ->join('users', 'users.id', '=', 'flow_meters.user_id', 'LEFT')
                 ->when($request->searchPhrase, function($query) use ($request) {
                     return $query->where('fuel_tanks.name', 'LIKE', '%'.$request->searchPhrase.'%');
@@ -67,10 +71,19 @@ class FlowMeterController extends Controller
         $input['user_id'] = auth()->user()->id;
         $flowMeter = FlowMeter::create($input);
 
-        $flowMeter->fuelTank->update([
-            'stock' => $request->volume_by_sounding,
-            'last_stock_time' => Carbon::now()
-        ]);
+        if ($flowMeter->status == 'S' && $flowMeter->fuelTank) {
+            $flowMeter->fuelTank->update([
+                'stock' => $request->volume_by_sounding,
+                'last_stock_time' => Carbon::now()
+            ]);
+        }
+
+        if ($flowMeter->status == 'T') {
+            \App\FuelTank::where('id', $request->transfer_to_fuel_tank_id)->update([
+                'stock' => $request->volume_by_sounding,
+                'last_stock_time' => Carbon::now()
+            ]);
+        }
 
         return $flowMeter;
     }
@@ -99,10 +112,19 @@ class FlowMeterController extends Controller
         $this->authorize('update', FlowMeter::class);
         $flowMeter->update($request->all());
 
-        $flowMeter->fuelTank->update([
-            'stock' => $request->volume_by_sounding,
-            'last_stock_time' => Carbon::now()
-        ]);
+        if ($flowMeter->status == 'S' && $flowMeter->fuelTank) {
+            $flowMeter->fuelTank->update([
+                'stock' => $request->volume_by_sounding,
+                'last_stock_time' => Carbon::now()
+            ]);
+        }
+
+        if ($flowMeter->status == 'T') {
+            \App\FuelTank::where('id', $request->transfer_to_fuel_tank_id)->update([
+                'stock' => $request->volume_by_sounding,
+                'last_stock_time' => Carbon::now()
+            ]);
+        }
 
         return $flowMeter;
     }

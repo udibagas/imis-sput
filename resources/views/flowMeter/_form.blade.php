@@ -14,49 +14,71 @@
                     </div>
 
                     <div class="form-group" :class="formErrors.date ? 'has-error' : ''">
-                        <label class="control-label col-md-4 col-sm-4 col-xs-12" for="date">Date
+                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="date">Date
                         </label>
-                        <div class="col-md-8 col-sm-8 col-xs-12">
+                        <div class="col-md-9 col-sm-9 col-xs-12">
                             <vue-datepicker v-model="formData.date" placeholder="Date">
                             </vue-datepicker>
                             <span v-if="formErrors.date" class="help-block">@{{formErrors.date[0]}}</span>
                         </div>
                     </div>
 
-                    <div class="form-group" :class="formErrors.fuel_tank_id ? 'has-error' : ''">
-                        <label class="control-label col-md-4 col-sm-4 col-xs-12" for="fuel_tank_id">Fuel Tank
+                    <div :class="['form-group', formErrors.shift ? 'has-error' : '']">
+                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="shift">Shift
                         </label>
-                        <div class="col-md-8 col-sm-8 col-xs-12">
-                            <select2 :options="fuel_tanks" v-model="formData.fuel_tank_id" data-placeholder="Fuel Tank">
-                            </select2>
-                            <span v-if="formErrors.fuel_tank_id" class="help-block">@{{formErrors.fuel_tank_id[0]}}</span>
+                        <div class="col-md-9 col-sm-9 col-xs-12">
+                            <div class="radio radio-inline radio-replace radio-success">
+								<input type="radio" v-model="formData.shift" id="shift_1" value="1">
+								<label for="shift_1">1</label>
+							</div>
+                            <div class="radio radio-inline radio-replace radio-success">
+								<input type="radio" v-model="formData.shift" id="shift_2" value="2">
+								<label for="shift_2">2</label>
+							</div>
+                            <span v-if="formErrors.shift" class="help-block">@{{formErrors.shift[0]}}</span>
                         </div>
                     </div>
 
-                    <div class="form-group" :class="formErrors.status ? 'has-error' : ''">
-                        <label class="control-label col-md-4 col-sm-4 col-xs-12" for="status">Status
+                    <div :class="['form-group', formErrors.fuel_tank_id || formErrors.sadp_id ? 'has-error' : '']">
+                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="fuel_tank_id">Fuel Tank / SADP
                         </label>
-                        <div class="col-md-8 col-sm-8 col-xs-12">
+                        <div class="col-md-5 col-sm-5 col-xs-12">
+                            <select2 data-allow-clear="true" :options="fuel_tanks" v-model="formData.fuel_tank_id" data-placeholder="Fuel Tank">
+                            </select2>
+                            <span v-if="formErrors.fuel_tank_id" class="help-block">@{{formErrors.fuel_tank_id[0]}}</span>
+                        </div>
+                        <div class="col-md-4 col-sm-4 col-xs-12">
+                            <select2 :options="sadps" v-model="formData.sadp_id" data-placeholder="SADP">
+                            </select2>
+                            <span v-if="formErrors.sadp_id" class="help-block">@{{formErrors.sadp_id[0]}}</span>
+                        </div>
+                    </div>
+
+                    <div :class="['form-group', formErrors.status || formErrors.transfer_to_fuel_tank_id ? 'has-error' : '']">
+                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="status">Status
+                        </label>
+                        <div class="col-md-5 col-sm-5 col-xs-12">
                             <div class="radio radio-inline radio-replace radio-success">
-								<input type="radio" v-model="formData.status" id="status_r" value="R">
-								<label for="status_r">Receive</label>
+								<input type="radio" v-model="formData.status" id="status_s" value="S">
+								<label for="status_s">Stock Awal</label>
 							</div>
                             <div class="radio radio-inline radio-replace radio-success">
 								<input type="radio" v-model="formData.status" id="status_t" value="T">
-								<label for="status_t">Transfer</label>
-							</div>
-                            <div class="radio radio-inline radio-replace radio-success">
-								<input type="radio" v-model="formData.status" id="status_i" value="I">
-								<label for="status_i">Issued</label>
+								<label for="status_t">Transfer To </label>
 							</div>
                             <span v-if="formErrors.status" class="help-block">@{{formErrors.status[0]}}</span>
+                        </div>
+                        <div v-show="formData.status == 'T'" class="col-md-4 col-sm-4 col-xs-12">
+                            <select2 :options="fuel_tanks" data-allow-clear="true" v-model="formData.transfer_to_fuel_tank_id" data-placeholder="Fuel Tank">
+                            </select2>
+                            <span v-if="formErrors.transfer_to_fuel_tank_id" class="help-block">@{{formErrors.transfer_to_fuel_tank_id[0]}}</span>
                         </div>
                     </div>
 
                     <div class="form-group" :class="formErrors.flowmeter_start || formErrors.flowmeter_end ? 'has-error' : ''">
-                        <label class="control-label col-md-4 col-sm-4 col-xs-12" for="flowmeter_start">Flow Meter
+                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="flowmeter_start">Flow Meter
                         </label>
-                        <div class="col-md-8 col-sm-8 col-xs-12">
+                        <div class="col-md-9 col-sm-9 col-xs-12">
                             <div class="row">
                                 <div class="col-sm-6">
                                     <input type="number" v-model="formData.flowmeter_start" class="form-control" placeholder="Flow Meter Start">
@@ -71,9 +93,9 @@
                     </div>
 
                     <div class="form-group" :class="formErrors.sounding_start || formErrors.sounding_end ? 'has-error' : ''">
-                        <label class="control-label col-md-4 col-sm-4 col-xs-12" for="sounding_start">Sounding
+                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="sounding_start">Sounding
                         </label>
-                        <div class="col-md-8 col-sm-8 col-xs-12">
+                        <div class="col-md-9 col-sm-9 col-xs-12">
                             <div class="row">
                                 <div class="col-sm-6">
                                     <input type="number" v-model="formData.sounding_start" class="form-control" placeholder="Sounding Start">
@@ -88,9 +110,9 @@
                     </div>
 
                     <div class="form-group" :class="formErrors.volume_by_sounding ? 'has-error' : ''">
-                        <label class="control-label col-md-4 col-sm-4 col-xs-12" for="volume_by_sounding">Volume By Sounding (Liter)
+                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="volume_by_sounding">Volume By Sounding (Liter)
                         </label>
-                        <div class="col-md-8 col-sm-8 col-xs-12">
+                        <div class="col-md-9 col-sm-9 col-xs-12">
                             <input type="number" class="form-control" v-model="formData.volume_by_sounding" placeholder="Volume By Sounding (Liter)">
                             <span v-if="formErrors.volume_by_sounding" class="help-block">@{{formErrors.volume_by_sounding[0]}}</span>
                         </div>
