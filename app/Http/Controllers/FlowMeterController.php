@@ -78,11 +78,22 @@ class FlowMeterController extends Controller
             ]);
         }
 
-        if ($flowMeter->status == 'T') {
-            \App\FuelTank::where('id', $request->transfer_to_fuel_tank_id)->update([
-                'stock' => $request->volume_by_sounding,
+        if ($flowMeter->status == 'T')
+        {
+            // tambah stock tujuan
+            $fuelTankTo = \App\FuelTank::find($request->transfer_to_fuel_tank_id);
+            $fuelTankTo->update([
+                'stock' => $fuelTankTo->stock + $request->volume_by_sounding,
                 'last_stock_time' => Carbon::now()
             ]);
+
+            // kurangi stock asal
+            if ($flowMeter->fuelTank) {
+                $flowMeter->fuelTank->update([
+                    'stock' => $flowMeter->fuelTank->stock - $request->volume_by_sounding,
+                    'last_stock_time' => Carbon::now()
+                ]);
+            }
         }
 
         return $flowMeter;
@@ -119,11 +130,22 @@ class FlowMeterController extends Controller
             ]);
         }
 
-        if ($flowMeter->status == 'T') {
-            \App\FuelTank::where('id', $request->transfer_to_fuel_tank_id)->update([
-                'stock' => $request->volume_by_sounding,
+        if ($flowMeter->status == 'T')
+        {
+            // tambah stock tujuan
+            $fuelTankTo = \App\FuelTank::find($request->transfer_to_fuel_tank_id);
+            $fuelTankTo->update([
+                'stock' => $fuelTankTo->stock + $request->volume_by_sounding,
                 'last_stock_time' => Carbon::now()
             ]);
+
+            // kurangi stock asal
+            if ($flowMeter->fuelTank) {
+                $flowMeter->fuelTank->update([
+                    'stock' => $flowMeter->fuelTank->stock - $request->volume_by_sounding,
+                    'last_stock_time' => Carbon::now()
+                ]);
+            }
         }
 
         return $flowMeter;
