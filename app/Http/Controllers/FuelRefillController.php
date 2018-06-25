@@ -177,6 +177,6 @@ class FuelRefillController extends Controller
 
     public function downloadApp()
     {
-        return "NOT AVAILABLE YET!";
+        return response()->download('imis-fuel.apk');
     }
 }
