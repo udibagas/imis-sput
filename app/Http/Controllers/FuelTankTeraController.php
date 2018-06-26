@@ -22,7 +22,7 @@ class FuelTankTeraController extends Controller
         {
             $pageSize = $request->rowCount > 0 ? $request->rowCount : 1000000;
             $request['page'] = $request->current;
-            $sort = $request->sort ? key($request->sort) : 'depth';
+            $sort = $request->sort ? key($request->sort) : 'id';
             $dir = $request->sort ? $request->sort[$sort] : 'asc';
 
             $fuelTankTera = FuelTankTera::selectRaw('fuel_tank_teras.*, fuel_tanks.name AS fuel_tank')
