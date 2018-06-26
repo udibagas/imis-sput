@@ -12,4 +12,8 @@ class FuelTank extends Model
         'latitude', 'longitude', 'altitude',
         'heading', 'speed', 'accuracy'
     ];
+
+    public function tera() {
+        return $this->hasMany(FuelTankTera::class);
+    }
 }

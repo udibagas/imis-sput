@@ -75,37 +75,21 @@
                         </div>
                     </div>
 
-                    <div class="form-group" :class="formErrors.flowmeter_start || formErrors.flowmeter_end ? 'has-error' : ''">
-                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="flowmeter_start">Flow Meter
+                    <div class="form-group" :class="formErrors.flowmeter || formErrors.flowmeter_end ? 'has-error' : ''">
+                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="flowmeter">Flowmeter (Liter)
                         </label>
                         <div class="col-md-9 col-sm-9 col-xs-12">
-                            <div class="row">
-                                <div class="col-sm-6">
-                                    <input type="number" v-model="formData.flowmeter_start" class="form-control" placeholder="Flow Meter Start">
-                                    <span v-if="formErrors.flowmeter_start" class="help-block">@{{formErrors.flowmeter_start[0]}}</span>
-                                </div>
-                                <div class="col-sm-6">
-                                    <input type="number" v-model="formData.flowmeter_end" class="form-control" placeholder="Flow Meter End">
-                                    <span v-if="formErrors.flowmeter_end" class="help-block">@{{formErrors.flowmeter_end[0]}}</span>
-                                </div>
-                            </div>
+                            <input type="number" v-model="formData.flowmeter" class="form-control" placeholder="Flowmeter" step="any">
+                            <span v-if="formErrors.flowmeter" class="help-block">@{{formErrors.flowmeter[0]}}</span>
                         </div>
                     </div>
 
-                    <div class="form-group" :class="formErrors.sounding_start || formErrors.sounding_end ? 'has-error' : ''">
-                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="sounding_start">Sounding
+                    <div class="form-group" :class="formErrors.sounding || formErrors.sounding_end ? 'has-error' : ''">
+                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="sounding">Sounding (CM)
                         </label>
                         <div class="col-md-9 col-sm-9 col-xs-12">
-                            <div class="row">
-                                <div class="col-sm-6">
-                                    <input type="number" v-model="formData.sounding_start" class="form-control" placeholder="Sounding Start">
-                                    <span v-if="formErrors.sounding_start" class="help-block">@{{formErrors.sounding_start[0]}}</span>
-                                </div>
-                                <div class="col-sm-6">
-                                    <input type="number" v-model="formData.sounding_end" class="form-control" placeholder="Sounding End">
-                                    <span v-if="formErrors.sounding_end" class="help-block">@{{formErrors.sounding_end[0]}}</span>
-                                </div>
-                            </div>
+                            <input type="number" v-model="formData.sounding" class="form-control" placeholder="Sounding" step="any">
+                            <span v-if="formErrors.sounding" class="help-block">@{{formErrors.sounding[0]}}</span>
                         </div>
                     </div>
 
@@ -113,7 +97,7 @@
                         <label class="control-label col-md-3 col-sm-3 col-xs-12" for="volume_by_sounding">Volume By Sounding (Liter)
                         </label>
                         <div class="col-md-9 col-sm-9 col-xs-12">
-                            <input type="number" class="form-control" v-model="formData.volume_by_sounding" placeholder="Volume By Sounding (Liter)">
+                            <input type="number" class="form-control" v-model="formData.volume_by_sounding" placeholder="Volume By Sounding (Liter)" step="any">
                             <span v-if="formErrors.volume_by_sounding" class="help-block">@{{formErrors.volume_by_sounding[0]}}</span>
                         </div>
                     </div>

@@ -89,8 +89,9 @@ Route::group(['middleware' => 'auth'], function() {
     Route::get('fuelRefill/export', 'FuelRefillController@export');
     Route::resource('fuelRefill', 'FuelRefillController')->except(['edit', 'create']);
 
+    Route::get('fuelTank/getTera', 'FuelTankController@getTera');
     Route::resource('fuelTank', 'FuelTankController')->except(['edit', 'create']);
-    // Route::resource('jabatan', 'JabatanController')->except(['edit', 'create']);
+    Route::resource('fuelTankTera', 'FuelTankTeraController')->except(['edit', 'create']);
     Route::get('jetty/productivity', 'JettyController@productivity');
     Route::get('jetty/dwellingTime', 'JettyController@dwellingTime');
     Route::resource('jetty', 'JettyController')->except(['edit', 'create']);
@@ -197,6 +198,7 @@ View::composer('layouts._sidebar', function($view) {
                 'warningPart' => 'Warning Parts',
                 '<i class="fa fa-database"></i> Master Data' => [
                     'fuelTank' => 'Fuel Tanks',
+                    'fuelTankTera' => 'Fuel Tanks Tera Table',
                     'sadp' => 'SADP',
                 ]
             ]

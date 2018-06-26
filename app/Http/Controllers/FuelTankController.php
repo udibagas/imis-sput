@@ -96,4 +96,12 @@ class FuelTankController extends Controller
         $this->authorize('delete', FuelTank::class);
         return ['success' => $fuelTank->delete()];
     }
+
+    public function getTera(Request $request)
+    {
+        return \App\FuelTankTera::where([
+            'fuel_tank_id' => $request->fuel_tank_id,
+            'depth' => $request->depth
+        ])->first();
+    }
 }

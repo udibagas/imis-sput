@@ -18,46 +18,35 @@
                 <tr>
                     <th data-column-id="id" data-width="3%">ID</th>
                     <th data-column-id="date">Date</th>
-                    <th data-column-id="shift">Shift</th>
+                    
+                    <th data-column-id="shift"
+                        data-width="5%" data-align="center"
+                        data-header-align="center">Shift</th>
+
                     <th data-column-id="fuel_tank" data-formatter="fuel_tank">Fuel Tank</th>
                     <th data-column-id="status" data-formatter="status">Status</th>
                     <th data-column-id="transfer_to">To</th>
 
-                    <th data-column-id="flowmeter_start"
+                    <th data-column-id="sounding"
                         data-align="right"
-                        data-formatter="flowmeter_start"
-                        data-header-align="right">Flowmeter Start</th>
+                        data-formatter="sounding"
+                        data-header-align="center">Sounding (CM)</th>
 
-                    <th data-column-id="flowmeter_end"
-                        data-align="right"
-                        data-formatter="flowmeter_end"
-                        data-header-align="right">Flowmeter End</th>
-
-                    <th data-column-id="sounding_start"
-                        data-align="right"
-                        data-formatter="sounding_start"
-                        data-header-align="right">Sounding Start</th>
-
-                    <th data-column-id="sounding_end"
-                        data-align="right"
-                        data-formatter="sounding_end"
-                        data-header-align="right">Sounding End</th>
-
-                    <th data-column-id="volume_by_flowmeter"
-                        data-formatter="volume_by_flowmeter"
+                    <th data-column-id="flowmeter"
+                        data-formatter="flowmeter"
                         data-align="right"
                         data-sortable="false"
-                        data-header-align="right">Volume By FLow Meter</th>
+                        data-header-align="center">Flowmeter (Liter)</th>
 
                     <th data-column-id="volume_by_sounding"
                         data-align="right"
                         data-formatter="volume_by_sounding"
-                        data-header-align="right">Volume By Sounding</th>
+                        data-header-align="center">Volume By Sounding (Liter)</th>
 
                     <th data-sortable="false"
                         data-formatter="selisih"
                         data-align="right"
-                        data-header-align="right">Selisih Volume</th>
+                        data-header-align="center">Selisih Volume (Liter)</th>
 
                     @can('updateOrDelete', App\FlowMeter::class)
                     <th data-column-id="commands"
@@ -105,7 +94,30 @@
             fuel_tanks: {!! App\FuelTank::selectRaw('id AS id, name AS text')->orderBy('name', 'ASC')->get() !!},
             sadps: {!! App\Sadp::selectRaw('id AS id, name AS text')->orderBy('name', 'ASC')->get() !!},
         },
+        watch: {
+            'formData.fuel_tank_id': function(v, o) {
+                this.getTera();
+            },
+            'formData.sounding': function(v, o) {
+                this.getTera();
+            },
+        },
         methods: {
+            getTera: function() {
+                if (this.formData.fuel_tank_id > 0 && this.formData.sounding > 0) {
+                    var _this = this;
+                    axios.get('{{url("fuelTank/getTera")}}?fuel_tank_id=' + this.formData.fuel_tank_id + '&depth=' + this.formData.sounding)
+                    .then(function(r) {
+                        _this.formData.volume_by_sounding = r.data ? r.data.volume : 0;
+                        _this.$forceUpdate();
+                    })
+
+                    .catch(function(error) {
+                        var error = error.response.data;
+                        toastr["error"](error.message + ". " + error.file + ":" + error.line)
+                    });
+                }
+            },
             openExportForm: function() {
                 $('#modal-form-export').modal('show');
             },
@@ -116,7 +128,7 @@
             },
             formatNumber: function(v) {
                 return parseFloat(v)
-                    .toFixed(0)
+                    .toFixed(2)
                     .toString()
                     .replace(/\B(?=(\d{3})+(?!\d))/g, ",");
             },
@@ -247,29 +259,20 @@
                         return '@can("update", App\FlowMeter::class) <a href="#" class="btn btn-info btn-xs c-edit" data-id="'+row.id+'"><i class="icon-pencil"></i></a> @endcan' +
                             '@can("delete", App\FlowMeter::class) <a href="#" class="btn btn-danger btn-xs c-delete" data-id="'+row.id+'"><i class="icon-trash"></i></a> @endcan';
                     },
-                    "volume_by_flowmeter": function(column, row) {
-                        return t.formatNumber(row.flowmeter_end - row.flowmeter_start);
+                    flowmeter: function(column, row) {
+                        return t.formatNumber(row.flowmeter);
                     },
-                    "selisih": function(column, row) {
-                        return t.formatNumber(row.volume_by_sounding - (row.flowmeter_end - row.flowmeter_start));
+                    selisih: function(column, row) {
+                        return t.formatNumber(row.volume_by_sounding - row.flowmeter);
                     },
-                    "status": function(column, row) {
+                    status: function(column, row) {
                         return t.statuses[row.status];
                     },
                     fuel_tank: function(column, row) {
                         return row.fuel_tank ? row.fuel_tank : row.sadp;
                     },
-                    flowmeter_start: function(column, row) {
-                        return t.formatNumber(row.flowmeter_start);
-                    },
-                    flowmeter_end: function(column, row) {
-                        return t.formatNumber(row.flowmeter_end);
-                    },
-                    sounding_start: function(column, row) {
-                        return t.formatNumber(row.sounding_start);
-                    },
-                    sounding_end: function(column, row) {
-                        return t.formatNumber(row.sounding_end);
+                    sounding: function(column, row) {
+                        return t.formatNumber(row.sounding);
                     },
                     volume_by_sounding: function(column, row) {
                         return t.formatNumber(row.volume_by_sounding);

@@ -23,11 +23,8 @@ class FlowMeterExport implements FromQuery, WithHeadings
             'Fuel Tank/SADP',
             'Status',
             'To',
-            'Flowmeter Start',
-            'Flowmeter End',
-            'Sounding Start',
-            'Sounding End',
-            'Volume By Flowmeter',
+            'Flowmeter',
+            'Sounding',
             'Volume By Sounding',
             'Selisih Volume'
         ];
@@ -47,13 +44,10 @@ class FlowMeterExport implements FromQuery, WithHeadings
                 END,
                 IF(flow_meters.status = "S", "Stock Awal", "Transfer"),
                 t.name AS transfer_to,
-                flow_meters.flowmeter_start AS flowmeter_start,
-                flow_meters.flowmeter_end AS flowmeter_end,
-                flow_meters.sounding_start AS sounding_start,
-                flow_meters.sounding_end AS sounding_end,
-                (flow_meters.flowmeter_end - flow_meters.flowmeter_start) AS volume_by_flowmeter,
+                flow_meters.flowmeter AS flowmeter,
+                flow_meters.sounding AS sounding,
                 flow_meters.volume_by_sounding AS volume_by_sounding,
-                flow_meters.volume_by_sounding - (flow_meters.flowmeter_end - flowmeter_start) AS selisih
+                flow_meters.volume_by_sounding - flow_meters.flowmeter AS selisih
             ')
             ->join('fuel_tanks', 'fuel_tanks.id', '=', 'flow_meters.fuel_tank_id', 'LEFT')
             ->join('fuel_tanks AS t', 't.id', '=', 'flow_meters.transfer_to_fuel_tank_id', 'LEFT')
