@@ -1,5 +1,5 @@
 <div id="modal-form" class="modal fade" role="dialog">
-    <div class="modal-dialog">
+    <div class="modal-dialog" style="width:800px;">
         <div class="modal-content">
             <form class="form-horizontal" role="form" @submit.prevent="formData.id == undefined ? store : update">
                 <div class="modal-header">
@@ -17,10 +17,10 @@
                     </div>
 
                     <div class="form-group" :class="formErrors.capacity ? 'has-error' : ''">
-                        <label class="control-label col-md-4 col-sm-4 col-xs-12" for="capacity">Capacity
+                        <label class="control-label col-md-4 col-sm-4 col-xs-12" for="capacity">Capacity (Ton)
                         </label>
                         <div class="col-md-8 col-sm-8 col-xs-12">
-                            <input type="text" v-model="formData.capacity" class="form-control" placeholder="Capacity">
+                            <input type="number" v-model="formData.capacity" class="form-control" placeholder="Capacity (Ton)">
                             <span v-if="formErrors.capacity" class="help-block">@{{formErrors.capacity[0]}}</span>
                         </div>
                     </div>
@@ -33,6 +33,78 @@
                             <span v-if="formErrors.description" class="help-block">@{{formErrors.description[0]}}</span>
                         </div>
                     </div>
+
+                    <div :class="['form-group', formErrors.order ? 'has-error' : '']">
+                        <label class="control-label col-md-4 col-sm-4 col-xs-12" for="order">Order
+                        </label>
+                        <div class="col-md-8 col-sm-8 col-xs-12">
+                            <input type="number" v-model="formData.order" class="form-control" placeholder="Order">
+                            <span v-if="formErrors.order" class="help-block">@{{formErrors.order[0]}}</span>
+                        </div>
+                    </div>
+
+                    <div :class="['form-group', formErrors.status ? 'has-error' : '']">
+                        <label class="control-label col-md-4 col-sm-4 col-xs-12" for="status">Status
+                        </label>
+                        <div class="col-md-8 col-sm-8 col-xs-12">
+                            <div class="radio radio-inline radio-replace radio-success">
+								<input type="radio" v-model="formData.status" id="status_yes" value="1">
+								<label for="status_yes">OK</label>
+							</div>
+                            <div class="radio radio-inline radio-replace radio-danger">
+								<input type="radio" v-model="formData.status" id="status_no" value="0">
+								<label for="status_no">BREAKDOWN</label>
+							</div>
+                            <span v-if="formErrors.status" class="help-block">@{{formErrors.status[0]}}</span>
+                        </div>
+                    </div>
+
+                    <table class="table table-striped table-hover" style="margin-bottom:0;">
+                        <thead>
+                            <tr>
+                                <th>Stock Area</th>
+                                <th>Capacity</th>
+                                <th>Stock</th>
+                                <th>Age</th>
+                                <th>Position</th>
+                                <th>Order</th>
+                                <th class="text-right">
+                                    <a href="#" @click="addStockArea" class="btn btn-primary"><i class="icon-plus"></i></a>
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr v-for="(s,i) in formData.stock_area">
+                                <td>
+                                    <input type="hidden" v-model="formData.stock_area[i].id">
+                                    <input type="text" class="form-control" v-model="formData.stock_area[i].name">
+                                </td>
+                                <td>
+                                    <input type="number" class="form-control" v-model="formData.stock_area[i].capacity">
+                                </td>
+                                <td>
+                                    <input type="number" class="form-control" v-model="formData.stock_area[i].stock">
+                                </td>
+                                <td>
+                                    <input type="number" class="form-control" v-model="formData.stock_area[i].age">
+                                </td>
+                                <td>
+                                    <select class="form-control" v-model="formData.stock_area[i].position" name="">
+                                        <option value="l">Left</option>
+                                        <option value="r">Right</option>
+                                        <option value="c">Center</option>
+                                        <option value="o">Outside</option>
+                                    </select>
+                                </td>
+                                <td>
+                                    <input type="number" class="form-control" v-model="formData.stock_area[i].order">
+                                </td>
+                                <td class="text-right">
+                                    <a href="#" @click="delStockArea(i)" class="btn btn-danger"><i class="icon-trash"></i></a>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
 
                 </div>
                 <div class="modal-footer">

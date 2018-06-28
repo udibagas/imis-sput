@@ -27,6 +27,7 @@ class JettyRequest extends FormRequest
         $jetty = $this->route('jetty');
 
         return [
+            'order' => 'required|numeric',
             'name' => [
                 'required',
                 Rule::unique('jetties')->ignore($jetty ? $jetty->id : 0)

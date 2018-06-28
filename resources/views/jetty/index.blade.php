@@ -15,8 +15,15 @@
                 <tr>
                     <th data-column-id="id" data-width="3%">ID</th>
                     <th data-column-id="name">Name</th>
-                    <th data-column-id="capacity">Capacity</th>
+                    <th data-column-id="capacity">Capacity (TON)</th>
                     <th data-column-id="description">Description</th>
+
+                    <th data-column-id="order"
+                        data-align="center"
+                        data-header-align="center">Order</th>
+
+                    <th data-column-id="status">Status</th>
+
                     @can('updateOrDelete', App\Jetty::class)
                     <th data-column-id="commands"
                         data-formatter="commands"
@@ -50,6 +57,39 @@
             error: {}
         },
         methods: {
+            addStockArea: function() {
+                this.formData.stock_area.push({
+                    name: 'XX',
+                    capacity: 0,
+                    stock: 0,
+                    age: 0,
+                    position: 'l',
+                    order: 0
+                });
+            },
+            delStockArea: function(i) {
+                var _this = this;
+
+                // kalau belum ada di database langsung hapus aja ak masalah
+                if (_this.formData.stock_area[i].id == undefined) {
+                    _this.formData.stock_area.splice(i,1);
+                    return;
+                }
+
+                // kalau sudah ada di database harus konfirmasi
+                if (!confirm('Anda yakin?')) {
+                    return;
+                }
+
+                axios.delete('{{url("stockArea")}}/' + _this.formData.stock_area[i].id).then(function(r) {
+                    _this.formData.stock_area.splice(i,1);
+                })
+
+                .catch(function(error) {
+                    var error = error.response.data;
+                    toastr["error"](error.message + ". " + error.file + ":" + error.line);
+                });
+            },
             add: function() {
                 // reset the form
                 this.formTitle = "ADD JETTY";
@@ -154,6 +194,11 @@
             var t = this;
 
             var grid = $('#bootgrid').bootgrid({
+                statusMapping: {
+                    0: 'danger',
+                    1: 'success',
+                    2: 'info'
+                },
                 rowCount: [10,25,50,100],
                 ajax: true, url: '{{url('jetty')}}',
                 ajaxSettings: {

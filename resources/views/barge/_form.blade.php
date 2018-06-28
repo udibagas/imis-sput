@@ -41,9 +41,9 @@
                     </div>
 
                     <div :class="['form-group', formErrors.anchored ? 'has-error' : '']">
-                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="anchored">Anchored
+                        <label class="control-label col-md-4 col-sm-4 col-xs-12" for="anchored">Anchored
                         </label>
-                        <div class="col-md-9 col-sm-9 col-xs-12">
+                        <div class="col-md-8 col-sm-8 col-xs-12">
                             <div class="radio radio-inline radio-replace radio-success">
 								<input type="radio" v-model="formData.anchored" id="yes" value="1">
 								<label for="yes">YES</label>
@@ -53,6 +53,16 @@
 								<label for="no">NO</label>
 							</div>
                             <span v-if="formErrors.anchored" class="help-block">@{{formErrors.anchored[0]}}</span>
+                        </div>
+                    </div>
+
+                    <div :class="['form-group', formErrors.jetty ? 'has-error' : '']">
+                        <label class="control-label col-md-4 col-sm-4 col-xs-12" for="jetty">Jetty
+                        </label>
+                        <div class="col-md-8 col-sm-8 col-xs-12">
+                            <select2 :options="jetties" v-model="formData.jetty_id" data-placeholder="Jetty" data-allow-clear="true">
+                            </select2>
+                            <span v-if="formErrors.jetty" class="help-block">@{{formErrors.jetty[0]}}</span>
                         </div>
                     </div>
 

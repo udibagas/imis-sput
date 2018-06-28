@@ -32,6 +32,15 @@
                         </div>
                     </div>
 
+                    <div class="form-group" :class="formErrors.type ? 'has-error' : ''">
+                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="type">Type
+                        </label>
+                        <div class="col-md-9 col-sm-9 col-xs-12">
+                            <input type="text" v-model="formData.type" class="form-control" placeholder="Type">
+                            <span v-if="formErrors.type" class="help-block">@{{formErrors.type[0]}}</span>
+                        </div>
+                    </div>
+
                     <div class="form-group" :class="formErrors.owner_id ? 'has-error' : ''">
                         <label class="control-label col-md-3 col-sm-3 col-xs-12" for="owner_id">Owner
                         </label>
@@ -65,6 +74,24 @@
 								<label for="no">B/D</label>
 							</div>
                             <span v-if="formErrors.status" class="help-block">@{{formErrors.status[0]}}</span>
+                        </div>
+                    </div>
+
+                    <div :class="['form-group', formErrors.ton_pen_rit_hi ? 'has-error' : '']">
+                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="ton_pen_rit_hi">Ton/Rit (Hi)
+                        </label>
+                        <div class="col-md-9 col-sm-9 col-xs-12">
+                            <input type="number" v-model="formData.ton_pen_rit_hi" class="form-control" placeholder="Ton/Rit (Hi)" step="any">
+                            <span v-if="formErrors.ton_pen_rit_hi" class="help-block">@{{formErrors.ton_pen_rit_hi[0]}}</span>
+                        </div>
+                    </div>
+
+                    <div :class="['form-group', formErrors.ton_pen_rit_lo ? 'has-error' : '']">
+                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="ton_pen_rit_lo">Ton/Rit (Lo)
+                        </label>
+                        <div class="col-md-9 col-sm-9 col-xs-12">
+                            <input type="number" v-model="formData.ton_pen_rit_lo" class="form-control" placeholder="Ton/Rit (Lo)" step="any">
+                            <span v-if="formErrors.ton_pen_rit_lo" class="help-block">@{{formErrors.ton_pen_rit_lo[0]}}</span>
                         </div>
                     </div>
 

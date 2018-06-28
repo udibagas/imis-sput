@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Jetty;
+use App\StockArea;
 use App\Http\Requests\JettyRequest;
 
 class JettyController extends Controller
@@ -55,7 +56,13 @@ class JettyController extends Controller
     public function store(JettyRequest $request)
     {
         $this->authorize('create', Jetty::class);
-        return Jetty::create($request->all());
+        $jetty = Jetty::create($request->all());
+
+        foreach ($request->stock_area as $r) {
+            $jetty->stockArea()->create($r);
+        }
+
+        return $jetty;
     }
 
     /**
@@ -81,6 +88,18 @@ class JettyController extends Controller
     {
         $this->authorize('update', Jetty::class);
         $jetty->update($request->all());
+
+        foreach ($request->stock_area as $r)
+        {
+            if (isset($r['id'])) {
+                StockArea::find($r['id'])->update($r);
+            }
+
+            else {
+                $jetty->stockArea()->create($r);
+            }
+        }
+
         return $jetty;
     }
 

@@ -33402,7 +33402,7 @@ exports = module.exports = __webpack_require__(46)(false);
 
 
 // module
-exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
+exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
 
 // exports
 
@@ -33774,6 +33774,59 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 
@@ -33782,6 +33835,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     components: { Container: __WEBPACK_IMPORTED_MODULE_0_vue_smooth_dnd__["Container"], Draggable: __WEBPACK_IMPORTED_MODULE_0_vue_smooth_dnd__["Draggable"] },
     data: function data() {
         return {
+            charts: null,
             units: [],
             areas: [],
             seams: [],
@@ -33792,10 +33846,27 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         };
     },
     methods: {
+        bargeAction: function bargeAction(b) {
+            alert(JSON.stringify(b));
+        },
+        unitAction: function unitAction(u) {
+            alert(JSON.stringify(u));
+        },
+        tugboatAction: function tugboatAction(t) {
+            alert(JSON.stringify(t));
+        },
+        jettyAction: function jettyAction(j) {
+            alert(JSON.stringify(j));
+        },
+        bargeJettyAction: function bargeJettyAction(b) {
+            alert(JSON.stringify(b));
+        },
         getUnit: function getUnit() {
             var _this = this;
             axios.get('api/unit').then(function (r) {
-                _this.units = r.data;
+                _this.units = r.data.filter(function (u) {
+                    return u.name.toLowerCase().match('wl') || u.name.toLowerCase().match('ld');
+                });
             }).catch(function (error) {
                 var error = error.response.data;
                 toastr["error"](error.message + ". " + error.file + ":" + error.line);
@@ -33854,16 +33925,53 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                 var error = error.response.data;
                 toastr["error"](error.message + ". " + error.file + ":" + error.line);
             });
+        },
+        requestDataJetty: function requestDataJetty() {},
+        sync: function sync() {
+            this.getUnit();
+            this.getArea();
+            this.getBarge();
+            this.getCustomer();
+            this.getJetty();
+            this.getSeam();
+            this.getTugboat();
         }
     },
     mounted: function mounted() {
-        this.getUnit();
-        this.getArea();
-        this.getBarge();
-        this.getCustomer();
-        this.getJetty();
-        this.getSeam();
-        this.getTugboat();
+        this.sync();
+
+        this.chart = echarts.init(document.getElementById('chart'));
+        this.chart.setOption({
+            title: {
+                text: 'RESUME BARGING DAILY',
+                subtext: '{{date("Y-m-d")}}',
+                x: 'center'
+            },
+            tooltip: {
+                trigger: 'axis'
+            },
+            grid: {
+                left: '3%',
+                right: '3%',
+                bottom: '10%',
+                containLabel: true
+            },
+            legend: {
+                data: ['JETTY H', 'JETTY J', 'JETTY K', 'JETTY U'],
+                bottom: 'bottom'
+            },
+            xAxis: {
+                type: 'category',
+                boundaryGap: true,
+                data: ['00:00', '01:00', '02:00', '03:00', '04:00', '05:00', '06:00', '07:00', '08:00', '09:00', '10:00', '11:00', '12:00', '13:00', '14:00', '15:00', '16:00', '17:00', '18:00', '19:00', '20:00', '21:00', '22:00', '23:00']
+            },
+            yAxis: {
+                type: 'value'
+            },
+            series: []
+        });
+
+        this.requestDataJetty();
     }
 });
 
@@ -33875,33 +33983,242 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c(
-    "div",
-    [
+  return _c("div", [
+    _c(
+      "div",
+      { staticClass: "row" },
       _vm._l(_vm.jetties, function(j) {
-        return _c(
-          "div",
-          {
-            staticStyle: { border: "1px solid #ddd", "margin-bottom": "10px" }
-          },
-          [_c("h1", [_vm._v(_vm._s(j.name))])]
-        )
-      }),
+        return _c("div", { staticClass: "col-md-3" }, [
+          _c(
+            "div",
+            { class: ["panel", j.status ? "panel-success" : "panel-danger"] },
+            [
+              _c("div", { staticClass: "panel-heading" }, [
+                _c("div", { staticClass: "pull-right" }, [
+                  _c(
+                    "a",
+                    {
+                      attrs: { href: "#" },
+                      on: {
+                        click: function($event) {
+                          $event.preventDefault()
+                          _vm.jettyAction(j)
+                        }
+                      }
+                    },
+                    [_c("i", { staticClass: "icon-cog" })]
+                  )
+                ]),
+                _vm._v(
+                  "\n                    JETTY " +
+                    _vm._s(j.name) +
+                    "\n                "
+                )
+              ]),
+              _vm._v(" "),
+              _c(
+                "div",
+                {
+                  staticClass: "panel-body text-center",
+                  staticStyle: { height: "500px" }
+                },
+                [
+                  j.barge
+                    ? _c(
+                        "button",
+                        {
+                          staticClass: "btn btn-info btn-lg",
+                          staticStyle: { "margin-bottom": "5px" },
+                          attrs: { type: "button" },
+                          on: {
+                            click: function($event) {
+                              _vm.bargeJettyAction(j.barge)
+                            }
+                          }
+                        },
+                        [
+                          _vm._v(
+                            "\n                        " +
+                              _vm._s(j.barge.name) +
+                              "\n                    "
+                          )
+                        ]
+                      )
+                    : _vm._e(),
+                  _vm._v(" "),
+                  j.barge
+                    ? _c(
+                        "div",
+                        {
+                          staticClass: "progress",
+                          staticStyle: { height: "5px" }
+                        },
+                        [_vm._m(0, true)]
+                      )
+                    : _vm._e(),
+                  _vm._v(" "),
+                  _vm._l(j.stock_area, function(s) {
+                    return _c("div", {}, [
+                      _vm._v(
+                        "\n                        " +
+                          _vm._s(s.name) +
+                          "\n                    "
+                      )
+                    ])
+                  }),
+                  _vm._v(" "),
+                  _c(
+                    "div",
+                    {
+                      staticStyle: { height: "200px" },
+                      attrs: { id: "chart-" + j.id }
+                    },
+                    [
+                      _vm._v(
+                        "\n                        chart untuk jetty " +
+                          _vm._s(j.name) +
+                          "\n                    "
+                      )
+                    ]
+                  )
+                ],
+                2
+              )
+            ]
+          )
+        ])
+      })
+    ),
+    _vm._v(" "),
+    _c("table", { staticClass: "table table-bordered" }, [
+      _vm._m(1),
       _vm._v(" "),
-      _c("div", { staticClass: "row" }, [
+      _c("tbody", [
+        _c("tr", [
+          _c(
+            "td",
+            _vm._l(_vm.barges, function(b) {
+              return _c(
+                "button",
+                {
+                  staticClass: "btn btn-info",
+                  staticStyle: { margin: "0 5px 5px 0" },
+                  attrs: { type: "button" },
+                  on: {
+                    click: function($event) {
+                      _vm.bargeAction(b)
+                    }
+                  }
+                },
+                [
+                  _c("i", { staticClass: "fa fa-anchor" }),
+                  _vm._v(" " + _vm._s(b.name) + "\n                    ")
+                ]
+              )
+            })
+          ),
+          _vm._v(" "),
+          _c(
+            "td",
+            _vm._l(_vm.tugboats, function(t) {
+              return _c(
+                "button",
+                {
+                  staticClass: "btn btn-info",
+                  staticStyle: { margin: "0 5px 5px 0" },
+                  attrs: { type: "button" },
+                  on: {
+                    click: function($event) {
+                      _vm.tugboatAction(t)
+                    }
+                  }
+                },
+                [
+                  _c("i", { staticClass: "fa fa-ship" }),
+                  _vm._v(" " + _vm._s(t.name) + "\n                    ")
+                ]
+              )
+            })
+          ),
+          _vm._v(" "),
+          _c(
+            "td",
+            _vm._l(_vm.units, function(u) {
+              return _c(
+                "button",
+                {
+                  staticClass: "btn btn-info",
+                  staticStyle: { margin: "0 5px 5px 0" },
+                  attrs: { type: "button" },
+                  on: {
+                    click: function($event) {
+                      _vm.unitAction(u)
+                    }
+                  }
+                },
+                [
+                  _c("i", { staticClass: "fa fa-truck" }),
+                  _vm._v(" " + _vm._s(u.name) + "\n                    ")
+                ]
+              )
+            })
+          )
+        ])
+      ])
+    ])
+  ])
+}
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c(
+      "div",
+      {
+        staticClass: "progress-bar progress-bar-success progress-bar-striped",
+        staticStyle: { width: "80%" },
+        attrs: {
+          role: "progressbar",
+          "aria-valuenow": "80",
+          "aria-valuemin": "0",
+          "aria-valuemax": "100"
+        }
+      },
+      [
+        _c("span", { staticClass: "sr-only" }, [
+          _vm._v("40% Complete (success)")
+        ])
+      ]
+    )
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("thead", [
+      _c("tr", [
         _c(
-          "div",
-          { staticClass: "col-md-3" },
-          _vm._l(_vm.barges, function(b) {
-            return _c("div", [_c("h3", [_vm._v(_vm._s(b.name))])])
-          })
+          "th",
+          { staticClass: "success text-center", attrs: { width: "34%" } },
+          [_vm._v("BARGES")]
+        ),
+        _vm._v(" "),
+        _c(
+          "th",
+          { staticClass: "success text-center", attrs: { width: "33%" } },
+          [_vm._v("TUGBOATS")]
+        ),
+        _vm._v(" "),
+        _c(
+          "th",
+          { staticClass: "success text-center", attrs: { width: "33%" } },
+          [_vm._v("UNITS")]
         )
       ])
-    ],
-    2
-  )
-}
-var staticRenderFns = []
+    ])
+  }
+]
 render._withStripped = true
 module.exports = { render: render, staticRenderFns: staticRenderFns }
 if (false) {

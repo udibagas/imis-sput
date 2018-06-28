@@ -18,7 +18,7 @@
                 <tr>
                     <th data-column-id="id" data-width="3%">ID</th>
                     <th data-column-id="date">Date</th>
-                    
+
                     <th data-column-id="shift"
                         data-width="5%" data-align="center"
                         data-header-align="center">Shift</th>

@@ -18,6 +18,7 @@
                     <th data-column-id="capacity">Capacity</th>
                     <th data-column-id="description">Description</th>
                     <th data-column-id="anchored" data-formatter="anchored">Anchored</th>
+                    <th data-column-id="jetty">Jetty</th>
                     <th data-column-id="updated_at">Last Update</th>
                     @can('updateOrDelete', App\Barge::class)
                     <th data-column-id="commands"
@@ -49,7 +50,8 @@
             formData: {},
             formErrors: {},
             formTitle: '',
-            error: {}
+            error: {},
+            jetties: {!! App\Jetty::selectRaw('id AS id, name AS text')->orderBy('name', 'ASC')->get() !!}
         },
         methods: {
             add: function() {

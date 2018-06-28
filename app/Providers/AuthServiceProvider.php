@@ -57,6 +57,7 @@ class AuthServiceProvider extends ServiceProvider
         'App\Seam' => 'App\Policies\SeamPolicy',
         'App\StaffCategory' => 'App\Policies\StaffCategoryPolicy',
         'App\StopWorkingPrediction' => 'App\Policies\StopWorkingPredictionPolicy',
+        'App\StockArea' => 'App\Policies\JettyPolicy',
         'App\SubArea' => 'App\Policies\AreaPolicy',
         'App\SupervisingPrediction' => 'App\Policies\SupervisingPredictionPolicy',
         'App\TerminalAbsensi' => 'App\Policies\TerminalAbsensiPolicy',

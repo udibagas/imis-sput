@@ -35,6 +35,7 @@ Route::group(['middleware' => 'auth'], function() {
     Route::resource('assetLocation', 'AssetLocationController')->except(['edit', 'create']);
     Route::resource('assetStatus', 'AssetStatusController')->except(['edit', 'create']);
     Route::resource('assetTaking', 'AssetTakingController')->except(['edit', 'create']);
+    Route::resource('stockArea', 'StockAreaController')->only(['destroy']);
     Route::resource('subArea', 'SubAreaController')->only(['destroy']);
     Route::resource('authorization', 'AuthorizationController')->except(['edit', 'create']);
     Route::get('barge/getAnchored', 'BargeController@getAnchored');

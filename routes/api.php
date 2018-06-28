@@ -134,7 +134,7 @@ Route::get('customer', function() {
 });
 
 Route::get('jetty', function() {
-    return App\Jetty::all();
+    return App\Jetty::orderBy('order', 'ASC')->get();
 });
 
 Route::get('seam', function() {

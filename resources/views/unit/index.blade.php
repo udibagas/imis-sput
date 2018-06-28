@@ -19,9 +19,12 @@
                     <th data-column-id="id" data-width="3%">ID</th>
                     <th data-column-id="name">Name</th>
                     <th data-column-id="category">Category</th>
+                    <th data-column-id="type">Type</th>
                     <th data-column-id="owner">Owner</th>
                     <th data-column-id="egi_name">EGI</th>
                     <th data-column-id="fc">FC</th>
+                    <th data-column-id="ton_pen_rit_hi">Ton/Rit (HI)</th>
+                    <th data-column-id="ton_pen_rit_lo">Ton/Rit (LO)</th>
                     <!-- <th data-column-id="status">Status</th> -->
                     @can('updateOrDelete', App\Unit::class)
                     <th data-column-id="commands"
@@ -174,7 +177,7 @@
                         }
                     }
                 },
-                searchSettings: { delay: 100, characters: 3 },
+                searchSettings: { delay: 100, characters: 2 },
                 templates: {
                     header: '<div id="@{{ctx.id}}" class="pull-right @{{css.header}}"><div class="actionBar"><p class="@{{css.search}}"></p><p class="@{{css.actions}}"></p></div></div>'
                 },
