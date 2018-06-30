@@ -7,6 +7,7 @@
 
 require('./bootstrap');
 
+window.echarts = require('echarts');
 window.Vue = require('vue');
 
 // import datetime from 'vuejs-datetimepicker';

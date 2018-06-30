@@ -57,7 +57,19 @@ Route::get('fuelTank', function() {
 });
 
 Route::get('fuelRefill', function() {
-    return App\FuelRefill::orderBy('id', 'DESC')->limit(100)->get();
+    return App\FuelRefill::selectRaw('
+        fuel_refills.*, units.name AS unit,
+        employees.name AS operator
+    ')
+    ->join('units', 'units.id', '=', 'fuel_refills.unit_id')
+    ->join('employees', 'employees.id', '=', 'fuel_refills.employee_id')
+    ->when(request('fuel_tank_id'), function($query) {
+        return $query->where('fuel_tank_id', request('fuel_tank_id'));
+    })
+    ->when(request('date'), function($query) {
+        return $query->where('date', request('date'));
+    })
+    ->orderBy('id', 'DESC')->limit(100)->get();
 });
 
 Route::post('login', function() {

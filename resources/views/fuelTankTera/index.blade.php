@@ -14,7 +14,7 @@
             <thead>
                 <tr>
                     <th data-column-id="id" data-width="3%">ID</th>
-                    <th data-column-id="fuel_tank">Name</th>
+                    <th data-column-id="fuel_tank">Fuel Tank</th>
                     <th data-column-id="depth">Depth (CM)</th>
                     <th data-column-id="volume">Volume (Liter)</th>
                     @can('updateOrDelete', App\FuelTankTera::class)
