@@ -72,9 +72,12 @@
         <div class="panel panel-default">
             <div class="panel-heading">
                 <div class="pull-right">
-                    <a href="#"><i class="fa fa-filter"></i></a>
+                    <input type="text" v-model="searchPhrase" class="form-control" placeholder="Search">
                 </div>
                 <span class="text-primary">STATUS & LEAD TIME B/D UNIT</span>
+                <div class="clearfix">
+
+                </div>
             </div>
             <table class="table table-striped">
                 <thead>
@@ -124,6 +127,7 @@ const app = new Vue({
         todayPlan: [],
         tomorrowPlan: [],
         unitready: [],
+        searchPhrase: '',
         rowClass: {
             ICM: 'danger',
             USM: 'warning',
@@ -134,7 +138,7 @@ const app = new Vue({
     methods: {
         getData: function() {
             var _this = this;
-            axios.get('{{url("leadTimeBreakdownUnit")}}').then(function(r) {
+            axios.get('{{url("leadTimeBreakdownUnit")}}?searchPhrase=' + _this.searchPhrase).then(function(r) {
                 _this.breakdowns = r.data;
             })
 
@@ -143,7 +147,7 @@ const app = new Vue({
                 toastr["error"](error.message + ". " + error.file + ":" + error.line)
             });
 
-            setTimeout(_this.getData, 5000);
+            setTimeout(_this.getData, 3000);
         },
         getTodayPlan: function() {
             var _this = this;
