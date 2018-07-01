@@ -23,8 +23,15 @@ class LeadTimeDailyCheckController extends Controller
                 ')
                 ->join('units', 'units.id', '=', 'pitstops.unit_id')
                 ->join('locations', 'locations.id', '=', 'pitstops.location_id')
+                ->join('unit_categories', 'unit_categories.id', '=', 'units.unit_category_id')
                 ->where('pitstops.status', 0)
-                ->orderBy('created_at', 'DESC')->get();
+                ->when($request->searchPhrase, function($query) use ($request) {
+                    return $query->where('locations.name', 'LIKE', '%'.$request->searchPhrase.'%')
+                        ->orWhere('units.name', 'LIKE', '%'.$request->searchPhrase.'%')
+                        ->orWhere('unit_categories.name', 'LIKE', '%'.$request->searchPhrase.'%')
+                        ->orWhere('locations.name', 'LIKE', '%'.$request->searchPhrase.'%')
+                        ->orWhere('pitstops.description', 'LIKE', '%'.$request->searchPhrase.'%');
+                })->orderBy('pitstops.created_at', 'DESC')->get();
         }
 
         return view('pitstop.leadTimeDailyCheck', [

@@ -43,9 +43,17 @@
 		</div>
     </div>
     <div class="col-md-9">
-        <div class="panel panel-primary">
+        <div class="panel panel-default">
             <div class="panel-heading">
-                LEAD TIME DAILY CHECK
+                <div class="pull-right">
+                    <input type="text" v-model="searchPhrase" class="form-control" placeholder="Search">
+                </div>
+                <div class="panel-title text-primary">
+                    LEAD TIME DAILY CHECK
+                </div>
+                <div class="clearfix">
+
+                </div>
             </div>
             <table class="table table-striped">
                 <thead>
@@ -88,6 +96,7 @@ $('.page-container').addClass('sidebar-collapsed');
 const app = new Vue({
     el: '#app',
     data: {
+        searchPhrase: '',
         pitstops: [],
         achievement: {
             plan: 0,
@@ -98,7 +107,7 @@ const app = new Vue({
     methods: {
         getData: function() {
             var _this = this;
-            axios.get('{{url("leadTimeDailyCheck")}}').then(function(r) {
+            axios.get('{{url("leadTimeDailyCheck")}}?searchPhrase=' + _this.searchPhrase).then(function(r) {
                 _this.pitstops = r.data;
             })
 
