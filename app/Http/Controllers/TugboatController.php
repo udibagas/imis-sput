@@ -21,12 +21,14 @@ class TugboatController extends Controller
         {
             $pageSize = $request->rowCount > 0 ? $request->rowCount : 1000000;
             $request['page'] = $request->current;
-            $sort = $request->sort ? key($request->sort) : 'name';
+            $sort = $request->sort ? key($request->sort) : 'tugboats.name';
             $dir = $request->sort ? $request->sort[$sort] : 'asc';
 
-            $tugboat = Tugboat::when($request->searchPhrase, function($query) use ($request) {
-                    return $query->where('name', 'LIKE', '%'.$request->searchPhrase.'%')
-                        ->orWhere('description', 'LIKE', '%'.$request->searchPhrase.'%');
+            $tugboat = Tugboat::selectRaw('tugboats.*, jetties.name AS jetty')
+                ->join('jetties', 'jetties.id', '=', 'tugboats.jetty_id', 'LEFT')
+                ->when($request->searchPhrase, function($query) use ($request) {
+                    return $query->where('tugboats.name', 'LIKE', '%'.$request->searchPhrase.'%')
+                        ->orWhere('tugboats.description', 'LIKE', '%'.$request->searchPhrase.'%');
                 })->orderBy($sort, $dir)->paginate($pageSize);
 
             return [

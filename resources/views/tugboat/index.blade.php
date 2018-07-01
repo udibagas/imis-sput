@@ -17,6 +17,7 @@
                     <th data-column-id="name">Name</th>
                     <th data-column-id="description">Description</th>
                     <th data-column-id="status" data-formatter="status">Status</th>
+                    <th data-column-id="jetty">Jetty</th>
                     <th data-column-id="updated_at">Last Update</th>
                     @can('updateOrDelete', App\Tugboat::class)
                     <th data-column-id="commands"
@@ -48,7 +49,8 @@
             formData: {},
             formErrors: {},
             formTitle: '',
-            error: {}
+            error: {},
+            jetties: {!! App\Jetty::selectRaw('id AS id, name AS text')->orderBy('name', 'ASC')->get() !!}
         },
         methods: {
             add: function() {

@@ -56,7 +56,7 @@
                         </div>
                     </div>
 
-                    <div :class="['form-group', formErrors.jetty ? 'has-error' : '']">
+                    <div v-show="formData.anchored" :class="['form-group', formErrors.jetty ? 'has-error' : '']">
                         <label class="control-label col-md-4 col-sm-4 col-xs-12" for="jetty">Jetty
                         </label>
                         <div class="col-md-8 col-sm-8 col-xs-12">

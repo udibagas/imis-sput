@@ -25,6 +25,7 @@
                     <th data-column-id="fc">FC</th>
                     <th data-column-id="ton_pen_rit_hi">Ton/Rit (HI)</th>
                     <th data-column-id="ton_pen_rit_lo">Ton/Rit (LO)</th>
+                    <th data-column-id="jetty">Jetty</th>
                     <!-- <th data-column-id="status">Status</th> -->
                     @can('updateOrDelete', App\Unit::class)
                     <th data-column-id="commands"
@@ -60,6 +61,7 @@
             egis: {!! App\Egi::selectRaw('id AS id, name AS text')->orderBy('name', 'ASC')->get() !!},
             unit_categories: {!! App\UnitCategory::selectRaw('id AS id, name AS text')->orderBy('name', 'ASC')->get() !!},
             owners: {!! App\Owner::selectRaw('id AS id, name AS text')->orderBy('name', 'ASC')->get() !!},
+            jetties: {!! App\Jetty::selectRaw('id AS id, name AS text')->orderBy('name', 'ASC')->get() !!}
         },
         methods: {
             add: function() {

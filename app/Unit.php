@@ -9,7 +9,7 @@ class Unit extends Model
     protected $fillable = [
         'name', 'egi_id', 'owner_id', 'status',
         'unit_category_id', 'type', 'ton_pen_rit_hi',
-        'ton_pen_rit_lo'
+        'ton_pen_rit_lo', 'jetty_id'
     ];
 
     protected $with = ['egi'];
