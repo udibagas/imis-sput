@@ -120,6 +120,8 @@ Route::group(['middleware' => 'auth'], function() {
     Route::resource('position', 'PositionController')->except(['edit', 'create']);
     Route::resource('problemProductivityCategory', 'ProblemProductivityCategoryController')->except(['edit', 'create']);
 
+    Route::resource('productivityPlan', 'ProductivityPlanController')->except(['edit', 'create']);
+
     Route::get('prajob/export', 'PrajobController@export');
     Route::resource('prajob', 'PrajobController')->except(['edit', 'create']);
 
@@ -142,6 +144,8 @@ Route::group(['middleware' => 'auth'], function() {
     Route::get('unit/remarkUnitByType', 'UnitController@remarkUnitByType');
     Route::get('unit/export', 'UnitController@export');
     Route::resource('unit', 'UnitController')->except(['edit', 'create']);
+
+    Route::resource('unitActivity', 'UnitActivityController')->except(['edit', 'create']);
 
     Route::resource('unitCategory', 'UnitCategoryController')->except(['edit', 'create']);
 
@@ -227,10 +231,12 @@ View::composer('layouts._sidebar', function($view) {
                     'jetty' => 'Jetties',
                     'lostTimeCategory' => 'Lost Time Categories',
                     'material' => 'Materials',
+                    'productivityPlan' => 'Productivity Plan',
                     'planCategory' => 'Plan Category',
                     'problemProductivityCategory' => 'Problem Productivity Categories',
                     'seam' => 'Seam',
                     'tugboat' => 'Tugboat',
+                    'unitActivity' => 'Unit Activities',
                 ]
             ]
         ],

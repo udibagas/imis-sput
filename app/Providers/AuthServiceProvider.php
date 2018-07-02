@@ -52,6 +52,7 @@ class AuthServiceProvider extends ServiceProvider
         'App\Position' => 'App\Policies\PositionPolicy',
         'App\Prajob' => 'App\Policies\PrajobPolicy',
         'App\ProblemProductivityCategory' => 'App\Policies\ProblemProductivityCategoryPolicy',
+        'App\ProductivityPlan' => 'App\Policies\ProductivityPlanPolicy',
         'App\RunningText' => 'App\Policies\RunningTextPolicy',
         'App\Sadp' => 'App\Policies\SadpPolicy',
         'App\Seam' => 'App\Policies\SeamPolicy',
@@ -64,6 +65,7 @@ class AuthServiceProvider extends ServiceProvider
         'App\Tugboat' => 'App\Policies\TugboatPolicy',
         'App\Unit' => 'App\Policies\UnitPolicy',
         'App\UnitCategory' => 'App\Policies\UnitCategoryPolicy',
+        'App\UnitActivity' => 'App\Policies\UnitActivityPolicy',
         'App\User' => 'App\Policies\UserPolicy',
         'App\WarningPart' => 'App\Policies\WarningPartPolicy',
     ];
