@@ -115,11 +115,11 @@ Route::post('fuelRefill', function() {
             continue;
         }
 
-        $fuelRefill = App\FuelRefill::insert($data);
+        $fuelRefill = App\FuelRefill::create($data);
 
         // update stock fuel tank
         $fuelRefill->fuelTank->update([
-            'stock' => $fuelRefill->fuelTank->stock - $request->total_real,
+            'stock' => $fuelRefill->fuelTank->stock - $fuelRefill->total_real,
             'last_stock_time' => Carbon::now()
         ]);
     }
