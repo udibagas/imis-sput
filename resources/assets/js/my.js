@@ -103,7 +103,11 @@ Vue.component('vue-datepicker', {
     mounted: function () {
         var vm = this;
 
-        $(this.$el).datepicker({format:'yyyy-mm-dd', autoclose:true})
+        $(this.$el).datepicker({
+            format:'yyyy-mm-dd',
+            autoclose:true,
+            todayHighlight: true
+        })
         .val(this.value)
         .trigger('change')
         .on('change', function (e) {
