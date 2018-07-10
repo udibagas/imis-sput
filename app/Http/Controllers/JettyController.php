@@ -119,32 +119,30 @@ class JettyController extends Controller
     {
         if ($request->ajax())
         {
-            $jetties = Jetty::orderBy('name', 'ASC')->get();
+            // $jetties = Jetty::orderBy('name', 'ASC')->get();
             $series = [];
 
-            foreach ($jetties as $j)
-            {
-                $data = [];
-                for ($i = 0; $i < 24; $i++) {
-                    $data[] = rand(3000,5000);
-                }
-
-                $series[] = [
-                    'name' => 'JETTY '.$j->name,
-                    'data' => $data,
-                    'type' => 'line',
-                    'label' => [
-                        'show' => true,
-                        'position' => 'top'
-                    ]
-                ];
+            $data = [];
+            for ($i = 0; $i < 24; $i++) {
+                $data[] = rand(3000,5000);
             }
+
+            $series[] = [
+                // 'name' => 'JETTY '.$j->name,
+                'data' => $data,
+                'type' => 'line',
+                'label' => [
+                    'show' => true,
+                    'position' => 'top'
+                ]
+            ];
 
             return $series;
         }
 
         else {
             return view('jetty.productivity', [
+                'jetties' => Jetty::orderBy('order', 'ASC')->get(),
                 'breadcrumbs' => [
                     'operation/dashboard' => 'Operation',
                     '#' => 'Status Jetty',
