@@ -54,15 +54,37 @@
                 })
 
                 .catch(function(error) {
-                    if (error.response.status == 500) {
-                        var error = error.response.data;
-                        toastr["error"](error.message + ". " + error.file + ":" + error.line)
-                    }
+                    var error = error.response.data;
+                    toastr["error"](error.message + ". " + error.file + ":" + error.line);
                 });
 
                 // recusrive
                 setTimeout(this.getAnchoredBarges, 3000);
-            }
+            },
+            geBaseSurfaceData: function() {
+                axios.get('{{url("baseSurface")}}').then(function(r) {
+                    // parsing ke grafik
+                })
+
+                .catch(function(error) {
+                    var error = error.response.data;
+                    toastr["error"](error.message + ". " + error.file + ":" + error.line);
+                });
+
+                setTimeout(this.geBaseSurfaceData, 60000);
+            },
+            geTransSurfaceData: function() {
+                axios.get('{{url("baseSurface")}}').then(function(r) {
+                    // parsing ke grafik
+                })
+
+                .catch(function(error) {
+                    var error = error.response.data;
+                    toastr["error"](error.message + ". " + error.file + ":" + error.line);
+                });
+
+                setTimeout(this.geTransSurfaceData, 60000);
+            },
         },
         mounted: function() {
             var _this = this;
@@ -71,7 +93,7 @@
             _this.chart.setOption({
                 title: {
                     text: 'ESTIMASI TINGGI AIR (meter)',
-                    subtext: '{{date("Y-m-d")}}',
+                    // subtext: '{{date("Y-m-d")}}',
                     x: 'center'
                 },
                 xAxis: {
@@ -96,7 +118,7 @@
                     containLabel: true
                 },
                 series: [{
-                    name: 'Estimasi Tinggi Air (meter)',
+                    name: 'SUNGAI PUTING',
                     type: 'line',
                     color: '#00B8FF',
                     areaStyle: {

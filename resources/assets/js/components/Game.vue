@@ -2,6 +2,13 @@
     <div>
         <div class="row">
             <div v-for="j in jetties" class="col-md-3">
+                <div :id="'chart-' +j.id" style="height:200px;">
+                    chart untuk jetty {{j.name}}
+                </div>
+
+                <div :id="'chartStock-' +j.id" style="height:200px;">
+                    chartStock untuk jetty {{j.name}}
+                </div>
 
                 <div :class="['panel', j.status ? 'panel-success' : 'panel-danger']">
                     <div class="panel-heading">
@@ -10,51 +17,47 @@
                         </div>
                         JETTY {{j.name}}
                     </div>
-                    <div class="panel-body text-center" style="height:400px;">
-                        <button v-if="j.barge" type="button" class="btn btn-info btn-lg" style="margin-bottom:5px;" @click="bargeJettyAction(j.barge)">
-                            {{j.barge.name}}
-                        </button>
+                    <table class="table table-hover">
+                        <tbody>
+                            <tr>
+                                <td>Barge/Tugboat</td>
+                                <td>
+                                    <button v-if="j.barge" type="button" class="btn btn-info" @click="bargeJettyAction(j.barge)">
+                                        {{j.barge.name}}
+                                    </button>
 
-                        <button v-if="j.tugboat" type="button" class="btn btn-info btn-lg" style="margin-bottom:5px;">
-                            {{j.tugboat.name}}
-                        </button>
-
-                        <div v-if="j.barge" class="progress" style="height:5px;">
-                            <div class="progress-bar progress-bar-success progress-bar-striped" role="progressbar" aria-valuenow="80" aria-valuemin="0" aria-valuemax="100" style="width: 80%;">
-                                <span class="sr-only">40% Complete (success)</span>
-                            </div>
-                        </div>
-
-                        <div class="" v-for="s in j.stock_area">
-                            {{s.name}}
-                        </div>
-
-                        <hr>
-
-                        <div class="" v-for="u in j.units">
-                            {{u.name}}
-                        </div>
-
-                        <hr>
-
-                        <div :id="'chart11-' +j.id" style="height:200px;">
-                            chart untuk jetty {{j.name}}
-                        </div>
-
-                    </div>
+                                    <button v-if="j.tugboat" type="button" class="btn btn-info">
+                                        {{j.tugboat.name}}
+                                    </button>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>Unit on Location</td>
+                                <td>
+                                    <button class="btn btn-success" type="button" v-for="u in j.units" style="margin-right:5px;" @click="unitJettyAction(u)">
+                                        <i class="fa fa-truck"></i> {{u.name}}
+                                    </button>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>Barging Progress</td>
+                                <td>
+                                    <div class="progress">
+                                        <div class="progress-bar progress-bar-success progress-bar-striped" role="progressbar" aria-valuenow="80" aria-valuemin="0" aria-valuemax="100" style="width: 80%;">
+                                            <span class="sr-only">40% Complete (success)</span>
+                                        </div>
+                                    </div>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
                 </div>
-
-
             </div>
         </div>
 
-        <!-- <div id="chart-1" style="height:300px;">
-
-        </div> -->
-
         <div class="row">
             <div class="col-md-3">
-                <div class="panel panel-default" style="height:250px;">
+                <div class="panel panel-default">
                     <div class="panel-heading">
                         BARGES
                     </div>
@@ -66,7 +69,7 @@
                 </div>
             </div>
             <div class="col-md-3">
-                <div class="panel panel-default" style="height:250px;">
+                <div class="panel panel-default">
                     <div class="panel-heading">
                         TUGBOATS
                     </div>
@@ -78,7 +81,7 @@
                 </div>
             </div>
             <div class="col-md-3">
-                <div class="panel panel-default" style="height:250px;">
+                <div class="panel panel-default">
                     <div class="panel-heading">
                         WHEEL LOADERS
                     </div>
@@ -90,7 +93,7 @@
                 </div>
             </div>
             <div class="col-md-3">
-                <div class="panel panel-default" style="height:250px;">
+                <div class="panel panel-default">
                     <div class="panel-heading">
                         DUMP TRUCKS
                     </div>
@@ -113,7 +116,7 @@ export default {
     components: { Container, Draggable },
     data: function() {
         return {
-            charts: null,
+            charts: [],
             wheelLoaders: [],
             dumpTrucks: [],
             areas: [],
@@ -121,7 +124,8 @@ export default {
             barges: [],
             jetties: [],
             tugboats: [],
-            customers: []
+            customers: [],
+            chartStock: []
         }
     },
     methods: {
@@ -129,6 +133,9 @@ export default {
             alert(JSON.stringify(b));
         },
         unitAction: function(u) {
+            alert(JSON.stringify(u));
+        },
+        unitJettyAction: function(u) {
             alert(JSON.stringify(u));
         },
         tugboatAction: function(t) {
@@ -233,40 +240,98 @@ export default {
         }
     },
     mounted: function() {
-        this.sync();
+        var _this = this;
+        _this.sync();
 
         setTimeout(function() {
-            var chart = echarts.init(document.getElementById('chart-1'));
-            chart.setOption({
-                title: {
-                    text: 'RESUME BARGING DAILY',
-                    x: 'center'
-                },
-                tooltip: {
-                    trigger: 'axis'
-                },
-                grid: {
-                    left: '3%',
-                    right: '3%',
-                    bottom: '10%',
-                    containLabel: true
-                },
-                xAxis: {
-                    type: 'category',
-                    boundaryGap: true,
-                    data: [
-                        '00:00','01:00','02:00','03:00','04:00','05:00','06:00','07:00',
-                        '08:00','09:00','10:00','11:00','12:00', '13:00','14:00','15:00',
-                        '16:00','17:00','18:00','19:00','20:00', '21:00','22:00','23:00'
+            // untuk chart barging per jetty
+            _this.jetties.forEach(function(j) {
+                var barge = j.barge ? ' - ' + j.barge.name : '';
+                var tugboat = j.tugboat ? ' - ' + j.tugboat.name : '';
+                _this.charts[j.id] = echarts.init(document.getElementById('chart-' + j.id));
+                _this.charts[j.id].setOption({
+                    title: {
+                        text: 'JETTY ' + j.name + barge + tugboat,
+                        x: 'center'
+                    },
+                    tooltip: {
+                        trigger: 'axis'
+                    },
+                    grid: {
+                        left: '3%',
+                        right: '3%',
+                        bottom: '10%',
+                        containLabel: true
+                    },
+                    xAxis: {
+                        type: 'category',
+                        boundaryGap: true,
+                        // data: [
+                        //     '00:00','01:00','02:00','03:00','04:00','05:00','06:00','07:00',
+                        //     '08:00','09:00','10:00','11:00','12:00', '13:00','14:00','15:00',
+                        //     '16:00','17:00','18:00','19:00','20:00', '21:00','22:00','23:00'
+                        // ]
+                    },
+                    yAxis: {
+                        type: 'value'
+                    },
+                    series: [
+                        {type: 'line', data: [3,4,5,6,3,4,5,7,4,2,1,8,9,3,4,6,2,7]}
                     ]
-                },
-                yAxis: {
-                    type: 'value'
-                },
-                series: []
+                });
             });
 
-            // this.requestDataJetty();
+            // untuk chart stock
+            _this.jetties.forEach(function(j) {
+                var stock_area = []
+                var dataStock = []
+
+                j.stock_area.forEach(function(s) {
+                    stock_area.push(s.name);
+                    var rand = Math.random() * 10;
+                    dataStock.push(rand.toFixed(2));
+                });
+
+                _this.chartStock[j.id] = echarts.init(document.getElementById('chartStock-' + j.id));
+                _this.chartStock[j.id].setOption({
+                    title: {
+                        text: 'STOCK AREA JETTY ' + j.name,
+                        x: 'center'
+                    },
+                    tooltip: {
+                        trigger: 'axis'
+                    },
+                    grid: {
+                        left: '3%',
+                        right: '3%',
+                        bottom: '10%',
+                        containLabel: true
+                    },
+                    xAxis: {
+                        type: 'category',
+                        boundaryGap: true,
+                        data: stock_area,
+                    },
+                    yAxis: {
+                        type: 'value'
+                    },
+                    series: [
+                        {
+                            type: 'bar',
+                            data: dataStock,
+                            color: '#722345',
+                            label: {
+                                show: true,
+                                position: 'top',
+                                formatter: function(v) {
+                                    return v.value + 'T/4d'
+                                }
+                            }
+                        }
+                    ]
+                });
+            });
+
         }, 1000);
     }
 }

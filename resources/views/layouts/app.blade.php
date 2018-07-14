@@ -9,6 +9,7 @@
 <!-- CSRF Token -->
 <meta name="csrf-token" content="{{ csrf_token() }}">
 <title>{{ config('app.name', 'IMIS - SPUT') }}</title>
+<link href="{{ asset('css/app.css') }}" rel="stylesheet">
 <link href="{{ asset('css/theme.css') }}" rel="stylesheet">
 
 <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->

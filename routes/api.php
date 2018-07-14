@@ -45,7 +45,7 @@ Route::get('employee', function() {
 });
 
 Route::get('user', function() {
-    return App\User::all()->makeVisible('password');
+    return App\User::all();
 });
 
 Route::get('unit', function() {
