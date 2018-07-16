@@ -109,7 +109,13 @@ Route::post('fuelRefill', function() {
         ];
 
         // check duplikasi
-        $exists = App\FuelRefill::where($data)->first();
+        $exists = App\FuelRefill::where('date', $r->date)
+            ->where('shift', $r->shift)
+            ->where('fuel_tank_id', $r->fuel_tank_id)
+            ->where('unit_id', $r->unit_id)
+            ->where('employee_id', $r->employee_id)
+            ->where('km', $r->km)
+            ->first();
 
         if ($exists) {
             continue;
