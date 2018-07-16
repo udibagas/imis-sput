@@ -16,7 +16,7 @@ class DeleteDuplicateEntryFuelRefill extends Migration
     {
         Schema::table('fuel_refills', function (Blueprint $table) {
             // pilih dari tanggal 1
-            $fuelRefills = FuelRefill::whereRaw('`date` >= "2018-07-01"')->orderBy('id', 'ASC');
+            $fuelRefills = FuelRefill::whereRaw('`date` >= "2018-07-01"')->orderBy('id', 'ASC')->get();
 
             foreach ($fuelRefills as $f) {
                 $exists = App\FuelRefill::selectRaw('GROUP_CONCAT(id) AS ids')
