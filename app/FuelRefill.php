@@ -34,7 +34,9 @@ class FuelRefill extends Model
             FROM fuel_refills f
             JOIN units u ON u.id = f.unit_id
             JOIN egis e ON e.id = u.egi_id
-            WHERE f.date BETWEEN '$start' AND '$end'
+            WHERE
+                f.date BETWEEN '$start' AND '$end'
+                AND e.is_utama = 1
             GROUP BY e.name
             ORDER BY e.name ASC";
 

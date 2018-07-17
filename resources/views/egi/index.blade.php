@@ -13,10 +13,11 @@
         <table class="table table-striped table-hover " id="bootgrid" style="border-top:2px solid #ddd">
             <thead>
                 <tr>
-                    <th data-column-id="id" data-width="3%">ID</th>
+                    <th data-column-id="id">ID</th>
                     <th data-column-id="name">Name</th>
                     <th data-column-id="description">Description</th>
                     <th data-column-id="fc">FC</th>
+                    <th data-column-id="is_utama" data-formatter="is_utama">Utama</th>
                     @can('updateOrDelete', App\Egi::class)
                     <th data-column-id="commands"
                         data-formatter="commands"
@@ -172,9 +173,14 @@
                     header: '<div id="@{{ctx.id}}" class="pull-right @{{css.header}}"><div class="actionBar"><p class="@{{css.search}}"></p><p class="@{{css.actions}}"></p></div></div>'
                 },
                 formatters: {
-                    "commands": function(column, row) {
-                        return '@can("update", App\Egi::class) <a href="#" class="btn btn-info btn-xs c-edit" data-id="'+row.id+'"><i class="icon-pencil"></i></a> @endcan' +
-                            '@can("delete", App\Egi::class) <a href="#" class="btn btn-danger btn-xs c-delete" data-id="'+row.id+'"><i class="icon-trash"></i></a> @endcan';
+                    commands: function(c, r) {
+                        return '@can("update", App\Egi::class) <a href="#" class="btn btn-info btn-xs c-edit" data-id="'+r.id+'"><i class="icon-pencil"></i></a> @endcan' +
+                            '@can("delete", App\Egi::class) <a href="#" class="btn btn-danger btn-xs c-delete" data-id="'+r.id+'"><i class="icon-trash"></i></a> @endcan';
+                    },
+                    is_utama: function(c, r) {
+                        return r.is_utama
+                            ? '<span class="label label-success">Y</span>'
+                            : '<span class="label label-default">N</span>'
                     }
                 }
             }).on("loaded.rs.jquery.bootgrid", function() {

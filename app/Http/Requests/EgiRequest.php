@@ -27,10 +27,18 @@ class EgiRequest extends FormRequest
         $egi = $this->route('egi');
 
         return [
+            'is_utama' => 'required',
             'name' => [
                 'required',
                 Rule::unique('egis')->ignore($egi ? $egi->id : 0)
             ]
+        ];
+    }
+
+    public function attributes()
+    {
+        return [
+            'is_utama' => 'Utama'
         ];
     }
 }

@@ -40,6 +40,22 @@
                         </div>
                     </div>
 
+                    <div class="form-group" :class="formErrors.is_utama ? 'has-error' : ''">
+                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="is_utama">Utama
+                        </label>
+                        <div class="col-md-9 col-sm-9 col-xs-12">
+                            <div class="radio radio-inline radio-replace radio-success">
+								<input type="radio" v-model="formData.is_utama" id="is_utama_yes" value="1">
+								<label for="is_utama_yes">YES</label>
+							</div>
+                            <div class="radio radio-inline radio-replace radio-danger">
+								<input type="radio" v-model="formData.is_utama" id="is_utama_no" value="0">
+								<label for="is_utama_no">NO</label>
+							</div>
+                            <span v-if="formErrors.is_utama" class="help-block">@{{formErrors.super_admin[0]}}</span>
+                        </div>
+                    </div>
+
                 </div>
                 <div class="modal-footer">
                     <button type="submit" v-if="formData.id == undefined" class="btn btn-primary" @click="store"><i class="fa fa-floppy-o"></i> Save</button>
