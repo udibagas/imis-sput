@@ -28,7 +28,7 @@ class OperationController extends Controller
         ]);
     }
 
-    public function dashboard()
+    public function index()
     {
         return view('operation.dashboard', [
             'breadcrumbs' => [
@@ -38,7 +38,7 @@ class OperationController extends Controller
         ]);
     }
 
-    public function game()
+    public function dashboard()
     {
         return view('operation.game', [
             'breadcrumbs' => [

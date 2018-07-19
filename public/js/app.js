@@ -53220,6 +53220,10 @@ __webpack_require__(196);
 window.echarts = __webpack_require__(233);
 window.Vue = __webpack_require__(532);
 
+Vue.filter('formatNumber', function (v) {
+  return parseFloat(v).toFixed(2).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+});
+
 /**
  * Next, we will create a fresh Vue application instance and attach it to
  * the page. Then, you may begin adding components to this application
@@ -53229,7 +53233,7 @@ window.Vue = __webpack_require__(532);
 // Vue.component('vue-dd', require('./components/Dd.vue'));
 // Vue.component('vue-card', require('./components/Card.vue'));
 Vue.component('daily-check-setting', __webpack_require__(535));
-Vue.component('game', __webpack_require__(539));
+Vue.component('operation-dashboard', __webpack_require__(567));
 
 /***/ }),
 /* 196 */
@@ -137034,97 +137038,9 @@ if (false) {
 }
 
 /***/ }),
-/* 539 */
-/***/ (function(module, exports, __webpack_require__) {
-
-var disposed = false
-function injectStyle (ssrContext) {
-  if (disposed) return
-  __webpack_require__(540)
-}
-var normalizeComponent = __webpack_require__(192)
-/* script */
-var __vue_script__ = __webpack_require__(545)
-/* template */
-var __vue_template__ = __webpack_require__(546)
-/* template functional */
-var __vue_template_functional__ = false
-/* styles */
-var __vue_styles__ = injectStyle
-/* scopeId */
-var __vue_scopeId__ = null
-/* moduleIdentifier (server only) */
-var __vue_module_identifier__ = null
-var Component = normalizeComponent(
-  __vue_script__,
-  __vue_template__,
-  __vue_template_functional__,
-  __vue_styles__,
-  __vue_scopeId__,
-  __vue_module_identifier__
-)
-Component.options.__file = "resources/assets/js/components/Game.vue"
-
-/* hot reload */
-if (false) {(function () {
-  var hotAPI = require("vue-hot-reload-api")
-  hotAPI.install(require("vue"), false)
-  if (!hotAPI.compatible) return
-  module.hot.accept()
-  if (!module.hot.data) {
-    hotAPI.createRecord("data-v-fff8b8ae", Component.options)
-  } else {
-    hotAPI.reload("data-v-fff8b8ae", Component.options)
-  }
-  module.hot.dispose(function (data) {
-    disposed = true
-  })
-})()}
-
-module.exports = Component.exports
-
-
-/***/ }),
-/* 540 */
-/***/ (function(module, exports, __webpack_require__) {
-
-// style-loader: Adds some css to the DOM by adding a <style> tag
-
-// load the styles
-var content = __webpack_require__(541);
-if(typeof content === 'string') content = [[module.i, content, '']];
-if(content.locals) module.exports = content.locals;
-// add the styles to the DOM
-var update = __webpack_require__(543)("1f1b18bd", content, false, {});
-// Hot Module Replacement
-if(false) {
- // When the styles change, update the <style> tags
- if(!content.locals) {
-   module.hot.accept("!!../../../../node_modules/css-loader/index.js!../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-fff8b8ae\",\"scoped\":false,\"hasInlineConfig\":true}!../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./Game.vue", function() {
-     var newContent = require("!!../../../../node_modules/css-loader/index.js!../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-fff8b8ae\",\"scoped\":false,\"hasInlineConfig\":true}!../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./Game.vue");
-     if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
-     update(newContent);
-   });
- }
- // When the module is disposed, remove the <style> tags
- module.hot.dispose(function() { update(); });
-}
-
-/***/ }),
-/* 541 */
-/***/ (function(module, exports, __webpack_require__) {
-
-exports = module.exports = __webpack_require__(542)(false);
-// imports
-
-
-// module
-exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
-
-// exports
-
-
-/***/ }),
+/* 539 */,
+/* 540 */,
+/* 541 */,
 /* 542 */
 /***/ (function(module, exports) {
 
@@ -137468,13 +137384,557 @@ module.exports = function listToStyles (parentId, list) {
 
 
 /***/ }),
-/* 545 */
+/* 545 */,
+/* 546 */,
+/* 547 */
+/***/ (function(module, exports) {
+
+// removed by extract-text-webpack-plugin
+
+/***/ }),
+/* 548 */,
+/* 549 */,
+/* 550 */,
+/* 551 */,
+/* 552 */,
+/* 553 */,
+/* 554 */,
+/* 555 */,
+/* 556 */,
+/* 557 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var disposed = false
+function injectStyle (ssrContext) {
+  if (disposed) return
+  __webpack_require__(558)
+}
+var normalizeComponent = __webpack_require__(192)
+/* script */
+var __vue_script__ = __webpack_require__(560)
+/* template */
+var __vue_template__ = __webpack_require__(561)
+/* template functional */
+var __vue_template_functional__ = false
+/* styles */
+var __vue_styles__ = injectStyle
+/* scopeId */
+var __vue_scopeId__ = "data-v-da0bf722"
+/* moduleIdentifier (server only) */
+var __vue_module_identifier__ = null
+var Component = normalizeComponent(
+  __vue_script__,
+  __vue_template__,
+  __vue_template_functional__,
+  __vue_styles__,
+  __vue_scopeId__,
+  __vue_module_identifier__
+)
+Component.options.__file = "resources/assets/js/components/Stock.vue"
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-da0bf722", Component.options)
+  } else {
+    hotAPI.reload("data-v-da0bf722", Component.options)
+  }
+  module.hot.dispose(function (data) {
+    disposed = true
+  })
+})()}
+
+module.exports = Component.exports
+
+
+/***/ }),
+/* 558 */
+/***/ (function(module, exports, __webpack_require__) {
+
+// style-loader: Adds some css to the DOM by adding a <style> tag
+
+// load the styles
+var content = __webpack_require__(559);
+if(typeof content === 'string') content = [[module.i, content, '']];
+if(content.locals) module.exports = content.locals;
+// add the styles to the DOM
+var update = __webpack_require__(543)("84cc05d4", content, false, {});
+// Hot Module Replacement
+if(false) {
+ // When the styles change, update the <style> tags
+ if(!content.locals) {
+   module.hot.accept("!!../../../../node_modules/css-loader/index.js!../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-da0bf722\",\"scoped\":true,\"hasInlineConfig\":true}!../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./Stock.vue", function() {
+     var newContent = require("!!../../../../node_modules/css-loader/index.js!../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-da0bf722\",\"scoped\":true,\"hasInlineConfig\":true}!../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./Stock.vue");
+     if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
+     update(newContent);
+   });
+ }
+ // When the module is disposed, remove the <style> tags
+ module.hot.dispose(function() { update(); });
+}
+
+/***/ }),
+/* 559 */
+/***/ (function(module, exports, __webpack_require__) {
+
+exports = module.exports = __webpack_require__(542)(false);
+// imports
+
+
+// module
+exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
+
+// exports
+
+
+/***/ }),
+/* 560 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+//
+//
+//
+//
+//
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+    name: 'Stock',
+    props: ['id', 'jetty'],
+    data: function data() {
+        return {
+            chart: null
+        };
+    },
+    methods: {},
+    mounted: function mounted() {
+        var stock_area = [];
+        var dataStock = [];
+        var dataCapacity = [];
+        var dataAge = [];
+
+        this.jetty.stock_area.forEach(function (s) {
+            stock_area.push(s.name);
+            dataStock.push(s.stock);
+            dataCapacity.push(s.capacity);
+            dataAge.push(s.age);
+        });
+
+        var _this = this;
+
+        _this.chart = echarts.init(document.getElementById('stock-' + _this.id));
+        _this.chart.setOption({
+            title: {
+                // text: 'STOCK AREA JETTY ' + _this.jetty.name,
+                x: 'center'
+            },
+            tooltip: {
+                trigger: 'axis'
+            },
+            legend: {
+                enabled: true,
+                data: ['CAPACITY', 'STOCK'],
+                bottom: 'bottom'
+            },
+            grid: {
+                left: '3%',
+                right: '3%',
+                bottom: '15%',
+                containLabel: true
+            },
+            xAxis: {
+                type: 'category',
+                boundaryGap: true,
+                data: stock_area
+            },
+            yAxis: {
+                type: 'value',
+                name: 'TON'
+            },
+            series: [{
+                name: 'CAPACITY',
+                type: 'bar',
+                barGap: '-90%',
+                barWidth: '80%',
+                color: '#722345',
+                data: dataCapacity,
+                itemStyle: {
+                    opacity: 0.5
+                },
+                label: {
+                    show: true,
+                    position: 'top'
+                }
+            }, {
+                name: 'STOCK',
+                type: 'bar',
+                data: dataStock,
+                barWidth: '65%',
+                color: '#722345',
+                label: {
+                    show: true,
+                    color: '#fff',
+                    formatter: function formatter(v) {
+                        return v.value;
+                    }
+                }
+            }]
+        });
+    }
+});
+
+/***/ }),
+/* 561 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c("div", {
+    staticStyle: { height: "200px", "margin-bottom": "15px" },
+    attrs: { id: "stock-" + _vm.id },
+    model: {
+      value: _vm.jetty,
+      callback: function($$v) {
+        _vm.jetty = $$v
+      },
+      expression: "jetty"
+    }
+  })
+}
+var staticRenderFns = []
+render._withStripped = true
+module.exports = { render: render, staticRenderFns: staticRenderFns }
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+    require("vue-hot-reload-api")      .rerender("data-v-da0bf722", module.exports)
+  }
+}
+
+/***/ }),
+/* 562 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var disposed = false
+function injectStyle (ssrContext) {
+  if (disposed) return
+  __webpack_require__(563)
+}
+var normalizeComponent = __webpack_require__(192)
+/* script */
+var __vue_script__ = __webpack_require__(565)
+/* template */
+var __vue_template__ = __webpack_require__(566)
+/* template functional */
+var __vue_template_functional__ = false
+/* styles */
+var __vue_styles__ = injectStyle
+/* scopeId */
+var __vue_scopeId__ = "data-v-16afb9c7"
+/* moduleIdentifier (server only) */
+var __vue_module_identifier__ = null
+var Component = normalizeComponent(
+  __vue_script__,
+  __vue_template__,
+  __vue_template_functional__,
+  __vue_styles__,
+  __vue_scopeId__,
+  __vue_module_identifier__
+)
+Component.options.__file = "resources/assets/js/components/Barging.vue"
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-16afb9c7", Component.options)
+  } else {
+    hotAPI.reload("data-v-16afb9c7", Component.options)
+  }
+  module.hot.dispose(function (data) {
+    disposed = true
+  })
+})()}
+
+module.exports = Component.exports
+
+
+/***/ }),
+/* 563 */
+/***/ (function(module, exports, __webpack_require__) {
+
+// style-loader: Adds some css to the DOM by adding a <style> tag
+
+// load the styles
+var content = __webpack_require__(564);
+if(typeof content === 'string') content = [[module.i, content, '']];
+if(content.locals) module.exports = content.locals;
+// add the styles to the DOM
+var update = __webpack_require__(543)("409695a1", content, false, {});
+// Hot Module Replacement
+if(false) {
+ // When the styles change, update the <style> tags
+ if(!content.locals) {
+   module.hot.accept("!!../../../../node_modules/css-loader/index.js!../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-16afb9c7\",\"scoped\":true,\"hasInlineConfig\":true}!../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./Barging.vue", function() {
+     var newContent = require("!!../../../../node_modules/css-loader/index.js!../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-16afb9c7\",\"scoped\":true,\"hasInlineConfig\":true}!../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./Barging.vue");
+     if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
+     update(newContent);
+   });
+ }
+ // When the module is disposed, remove the <style> tags
+ module.hot.dispose(function() { update(); });
+}
+
+/***/ }),
+/* 564 */
+/***/ (function(module, exports, __webpack_require__) {
+
+exports = module.exports = __webpack_require__(542)(false);
+// imports
+
+
+// module
+exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
+
+// exports
+
+
+/***/ }),
+/* 565 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+//
+//
+//
+//
+//
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+    name: 'Barging',
+    props: ['id', 'jetty'],
+    data: function data() {
+        return {
+            chart: null
+        };
+    },
+    methods: {},
+    mounted: function mounted() {
+        var dataBarging = [];
+        var xData = [];
+
+        for (var i = 0; i <= 300; i++) {
+            var rand = Math.random() * 10;
+            xData.push(i);
+            dataBarging.push(rand.toFixed(2));
+        }
+
+        var _this = this;
+        var barge = _this.jetty.barge ? _this.jetty.barge.name : '';
+        var tugboat = _this.jetty.tugboat ? ' - ' + _this.jetty.tugboat.name : '';
+
+        _this.chart = echarts.init(document.getElementById('barging-' + _this.id));
+        _this.chart.setOption({
+            title: {
+                text: 'JETTY ' + _this.jetty.name,
+                subtext: barge + tugboat,
+                x: 'center'
+            },
+            tooltip: {
+                trigger: 'axis'
+            },
+            grid: {
+                left: '3%',
+                right: '3%',
+                bottom: '10%',
+                containLabel: true
+            },
+            xAxis: {
+                type: 'category',
+                boundaryGap: true,
+                data: xData
+            },
+            yAxis: {
+                type: 'value',
+                name: 'TON/HOUR'
+            },
+            series: [{
+                type: 'line',
+                data: dataBarging,
+                color: '#722345'
+            }]
+        });
+
+        // buat bikin efek progress
+        setInterval(function () {
+            var dataBarging = [];
+            var xData = [];
+
+            for (var i = 0; i <= 300; i++) {
+                var rand = Math.random() * 10;
+                xData.push(i);
+                dataBarging.push(rand.toFixed(2));
+            }
+
+            _this.chart.setOption({
+                xAxis: {
+                    data: xData
+                },
+                series: [{
+                    type: 'line',
+                    data: dataBarging
+                }]
+            });
+        }, 3000);
+    }
+});
+
+/***/ }),
+/* 566 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c("div", {
+    staticStyle: { height: "200px" },
+    attrs: { id: "barging-" + _vm.id },
+    model: {
+      value: _vm.jetty,
+      callback: function($$v) {
+        _vm.jetty = $$v
+      },
+      expression: "jetty"
+    }
+  })
+}
+var staticRenderFns = []
+render._withStripped = true
+module.exports = { render: render, staticRenderFns: staticRenderFns }
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+    require("vue-hot-reload-api")      .rerender("data-v-16afb9c7", module.exports)
+  }
+}
+
+/***/ }),
+/* 567 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var disposed = false
+function injectStyle (ssrContext) {
+  if (disposed) return
+  __webpack_require__(568)
+}
+var normalizeComponent = __webpack_require__(192)
+/* script */
+var __vue_script__ = __webpack_require__(570)
+/* template */
+var __vue_template__ = __webpack_require__(571)
+/* template functional */
+var __vue_template_functional__ = false
+/* styles */
+var __vue_styles__ = injectStyle
+/* scopeId */
+var __vue_scopeId__ = null
+/* moduleIdentifier (server only) */
+var __vue_module_identifier__ = null
+var Component = normalizeComponent(
+  __vue_script__,
+  __vue_template__,
+  __vue_template_functional__,
+  __vue_styles__,
+  __vue_scopeId__,
+  __vue_module_identifier__
+)
+Component.options.__file = "resources/assets/js/components/OperationDashboard.vue"
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-75a618e4", Component.options)
+  } else {
+    hotAPI.reload("data-v-75a618e4", Component.options)
+  }
+  module.hot.dispose(function (data) {
+    disposed = true
+  })
+})()}
+
+module.exports = Component.exports
+
+
+/***/ }),
+/* 568 */
+/***/ (function(module, exports, __webpack_require__) {
+
+// style-loader: Adds some css to the DOM by adding a <style> tag
+
+// load the styles
+var content = __webpack_require__(569);
+if(typeof content === 'string') content = [[module.i, content, '']];
+if(content.locals) module.exports = content.locals;
+// add the styles to the DOM
+var update = __webpack_require__(543)("4d31e4d0", content, false, {});
+// Hot Module Replacement
+if(false) {
+ // When the styles change, update the <style> tags
+ if(!content.locals) {
+   module.hot.accept("!!../../../../node_modules/css-loader/index.js!../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-75a618e4\",\"scoped\":false,\"hasInlineConfig\":true}!../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./OperationDashboard.vue", function() {
+     var newContent = require("!!../../../../node_modules/css-loader/index.js!../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-75a618e4\",\"scoped\":false,\"hasInlineConfig\":true}!../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./OperationDashboard.vue");
+     if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
+     update(newContent);
+   });
+ }
+ // When the module is disposed, remove the <style> tags
+ module.hot.dispose(function() { update(); });
+}
+
+/***/ }),
+/* 569 */
+/***/ (function(module, exports, __webpack_require__) {
+
+exports = module.exports = __webpack_require__(542)(false);
+// imports
+
+
+// module
+exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
+
+// exports
+
+
+/***/ }),
+/* 570 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vue_smooth_dnd__ = __webpack_require__(193);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vue_smooth_dnd___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_vue_smooth_dnd__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__Stock_vue__ = __webpack_require__(557);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__Stock_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1__Stock_vue__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__Barging_vue__ = __webpack_require__(562);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__Barging_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2__Barging_vue__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__BargingProgress_vue__ = __webpack_require__(572);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__BargingProgress_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3__BargingProgress_vue__);
 //
 //
 //
@@ -137571,26 +138031,15 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
+
+
+
 
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
-    name: "Game",
-    components: { Container: __WEBPACK_IMPORTED_MODULE_0_vue_smooth_dnd__["Container"], Draggable: __WEBPACK_IMPORTED_MODULE_0_vue_smooth_dnd__["Draggable"] },
+    name: "OperationDashboard",
+    components: { Container: __WEBPACK_IMPORTED_MODULE_0_vue_smooth_dnd__["Container"], Draggable: __WEBPACK_IMPORTED_MODULE_0_vue_smooth_dnd__["Draggable"], Stock: __WEBPACK_IMPORTED_MODULE_1__Stock_vue___default.a, Barging: __WEBPACK_IMPORTED_MODULE_2__Barging_vue___default.a, BargingProgress: __WEBPACK_IMPORTED_MODULE_3__BargingProgress_vue___default.a },
     data: function data() {
         return {
             charts: [],
@@ -137707,97 +138156,11 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     mounted: function mounted() {
         var _this = this;
         _this.sync();
-
-        setTimeout(function () {
-            // untuk chart barging per jetty
-            _this.jetties.forEach(function (j) {
-                var barge = j.barge ? ' - ' + j.barge.name : '';
-                var tugboat = j.tugboat ? ' - ' + j.tugboat.name : '';
-                _this.charts[j.id] = echarts.init(document.getElementById('chart-' + j.id));
-                _this.charts[j.id].setOption({
-                    title: {
-                        text: 'JETTY ' + j.name + barge + tugboat,
-                        x: 'center'
-                    },
-                    tooltip: {
-                        trigger: 'axis'
-                    },
-                    grid: {
-                        left: '3%',
-                        right: '3%',
-                        bottom: '10%',
-                        containLabel: true
-                    },
-                    xAxis: {
-                        type: 'category',
-                        boundaryGap: true
-                        // data: [
-                        //     '00:00','01:00','02:00','03:00','04:00','05:00','06:00','07:00',
-                        //     '08:00','09:00','10:00','11:00','12:00', '13:00','14:00','15:00',
-                        //     '16:00','17:00','18:00','19:00','20:00', '21:00','22:00','23:00'
-                        // ]
-                    },
-                    yAxis: {
-                        type: 'value'
-                    },
-                    series: [{ type: 'line', data: [3, 4, 5, 6, 3, 4, 5, 7, 4, 2, 1, 8, 9, 3, 4, 6, 2, 7] }]
-                });
-            });
-
-            // untuk chart stock
-            _this.jetties.forEach(function (j) {
-                var stock_area = [];
-                var dataStock = [];
-
-                j.stock_area.forEach(function (s) {
-                    stock_area.push(s.name);
-                    var rand = Math.random() * 10;
-                    dataStock.push(rand.toFixed(2));
-                });
-
-                _this.chartStock[j.id] = echarts.init(document.getElementById('chartStock-' + j.id));
-                _this.chartStock[j.id].setOption({
-                    title: {
-                        text: 'STOCK AREA JETTY ' + j.name,
-                        x: 'center'
-                    },
-                    tooltip: {
-                        trigger: 'axis'
-                    },
-                    grid: {
-                        left: '3%',
-                        right: '3%',
-                        bottom: '10%',
-                        containLabel: true
-                    },
-                    xAxis: {
-                        type: 'category',
-                        boundaryGap: true,
-                        data: stock_area
-                    },
-                    yAxis: {
-                        type: 'value'
-                    },
-                    series: [{
-                        type: 'bar',
-                        data: dataStock,
-                        color: '#722345',
-                        label: {
-                            show: true,
-                            position: 'top',
-                            formatter: function formatter(v) {
-                                return v.value + 'T/4d';
-                            }
-                        }
-                    }]
-                });
-            });
-        }, 1000);
     }
 });
 
 /***/ }),
-/* 546 */
+/* 571 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var render = function() {
@@ -137809,330 +138172,360 @@ var render = function() {
       "div",
       { staticClass: "row" },
       _vm._l(_vm.jetties, function(j) {
-        return _c("div", { staticClass: "col-md-3" }, [
-          _c(
-            "div",
-            {
-              staticStyle: { height: "200px" },
-              attrs: { id: "chart-" + j.id }
-            },
-            [
-              _vm._v(
-                "\n                chart untuk jetty " +
-                  _vm._s(j.name) +
-                  "\n            "
-              )
-            ]
-          ),
-          _vm._v(" "),
-          _c(
-            "div",
-            {
-              staticStyle: { height: "200px" },
-              attrs: { id: "chartStock-" + j.id }
-            },
-            [
-              _vm._v(
-                "\n                chartStock untuk jetty " +
-                  _vm._s(j.name) +
-                  "\n            "
-              )
-            ]
-          ),
-          _vm._v(" "),
-          _c(
-            "div",
-            { class: ["panel", j.status ? "panel-success" : "panel-danger"] },
-            [
-              _c("div", { staticClass: "panel-heading" }, [
-                _c("div", { staticClass: "pull-right" }, [
-                  _c(
-                    "a",
-                    {
-                      attrs: { href: "#" },
-                      on: {
-                        click: function($event) {
-                          $event.preventDefault()
-                          _vm.jettyAction(j)
+        return _c(
+          "div",
+          { staticClass: "col-md-3" },
+          [
+            _c("barging", { attrs: { id: j.id, jetty: j } }),
+            _vm._v(" "),
+            _c("stock", { attrs: { id: j.id, jetty: j } }),
+            _vm._v(" "),
+            _c(
+              "div",
+              { class: ["panel", j.status ? "panel-success" : "panel-danger"] },
+              [
+                _c("div", { staticClass: "panel-heading" }, [
+                  _c("div", { staticClass: "pull-right" }, [
+                    _c(
+                      "a",
+                      {
+                        attrs: { href: "#" },
+                        on: {
+                          click: function($event) {
+                            $event.preventDefault()
+                            _vm.jettyAction(j)
+                          }
                         }
-                      }
-                    },
-                    [_c("i", { staticClass: "icon-cog" })]
+                      },
+                      [_c("i", { staticClass: "icon-cog" })]
+                    )
+                  ]),
+                  _vm._v(
+                    "\n                    JETTY " +
+                      _vm._s(j.name) +
+                      "\n                "
                   )
                 ]),
-                _vm._v(
-                  "\n                    JETTY " +
-                    _vm._s(j.name) +
-                    "\n                "
-                )
-              ]),
-              _vm._v(" "),
-              _c("table", { staticClass: "table table-hover" }, [
-                _c("tbody", [
-                  _c("tr", [
-                    _c("td", [_vm._v("Barge/Tugboat")]),
+                _vm._v(" "),
+                _c("table", { staticClass: "table table-hover" }, [
+                  _c("tbody", [
+                    _c("tr", [
+                      _c("td", [_vm._v("Barge/Tugboat")]),
+                      _vm._v(" "),
+                      _c("td", [
+                        j.barge
+                          ? _c(
+                              "button",
+                              {
+                                staticClass: "btn btn-info",
+                                attrs: { type: "button" },
+                                on: {
+                                  click: function($event) {
+                                    _vm.bargeJettyAction(j.barge)
+                                  }
+                                }
+                              },
+                              [
+                                _vm._v(
+                                  "\n                                    " +
+                                    _vm._s(j.barge.name) +
+                                    "\n                                "
+                                )
+                              ]
+                            )
+                          : _vm._e(),
+                        _vm._v(" "),
+                        j.tugboat
+                          ? _c(
+                              "button",
+                              {
+                                staticClass: "btn btn-info",
+                                attrs: { type: "button" }
+                              },
+                              [
+                                _vm._v(
+                                  "\n                                    " +
+                                    _vm._s(j.tugboat.name) +
+                                    "\n                                "
+                                )
+                              ]
+                            )
+                          : _vm._e()
+                      ])
+                    ]),
                     _vm._v(" "),
-                    _c("td", [
-                      j.barge
-                        ? _c(
+                    _c("tr", [
+                      _c("td", [_vm._v("Unit on Location")]),
+                      _vm._v(" "),
+                      _c(
+                        "td",
+                        _vm._l(j.units, function(u) {
+                          return _c(
                             "button",
                             {
-                              staticClass: "btn btn-info",
+                              staticClass: "btn btn-success",
+                              staticStyle: { "margin-right": "5px" },
                               attrs: { type: "button" },
                               on: {
                                 click: function($event) {
-                                  _vm.bargeJettyAction(j.barge)
+                                  _vm.unitJettyAction(u)
                                 }
                               }
                             },
                             [
+                              _c("i", { staticClass: "fa fa-truck" }),
                               _vm._v(
-                                "\n                                    " +
-                                  _vm._s(j.barge.name) +
+                                " " +
+                                  _vm._s(u.name) +
                                   "\n                                "
                               )
                             ]
                           )
-                        : _vm._e(),
-                      _vm._v(" "),
-                      j.tugboat
-                        ? _c(
-                            "button",
-                            {
-                              staticClass: "btn btn-info",
-                              attrs: { type: "button" }
-                            },
-                            [
-                              _vm._v(
-                                "\n                                    " +
-                                  _vm._s(j.tugboat.name) +
-                                  "\n                                "
-                              )
-                            ]
-                          )
-                        : _vm._e()
+                        })
+                      )
                     ])
-                  ]),
-                  _vm._v(" "),
-                  _c("tr", [
-                    _c("td", [_vm._v("Unit on Location")]),
-                    _vm._v(" "),
-                    _c(
-                      "td",
-                      _vm._l(j.units, function(u) {
-                        return _c(
-                          "button",
-                          {
-                            staticClass: "btn btn-success",
-                            staticStyle: { "margin-right": "5px" },
-                            attrs: { type: "button" },
-                            on: {
-                              click: function($event) {
-                                _vm.unitJettyAction(u)
-                              }
-                            }
-                          },
-                          [
-                            _c("i", { staticClass: "fa fa-truck" }),
-                            _vm._v(
-                              " " +
-                                _vm._s(u.name) +
-                                "\n                                "
-                            )
-                          ]
-                        )
-                      })
-                    )
-                  ]),
-                  _vm._v(" "),
-                  _vm._m(0, true)
+                  ])
                 ])
-              ])
-            ]
-          )
-        ])
+              ]
+            )
+          ],
+          1
+        )
       })
-    ),
-    _vm._v(" "),
-    _c("div", { staticClass: "row" }, [
-      _c("div", { staticClass: "col-md-3" }, [
-        _c("div", { staticClass: "panel panel-default" }, [
-          _c("div", { staticClass: "panel-heading" }, [
-            _vm._v("\n                    BARGES\n                ")
-          ]),
-          _vm._v(" "),
-          _c(
-            "div",
-            { staticClass: "panel-body" },
-            _vm._l(_vm.barges, function(b) {
-              return _c(
-                "button",
-                {
-                  staticClass: "btn btn-info",
-                  staticStyle: { margin: "0 5px 5px 0" },
-                  attrs: { type: "button" },
-                  on: {
-                    click: function($event) {
-                      _vm.bargeAction(b)
-                    }
-                  }
-                },
-                [
-                  _c("i", { staticClass: "fa fa-anchor" }),
-                  _vm._v(" " + _vm._s(b.name) + "\n                    ")
-                ]
-              )
-            })
-          )
-        ])
-      ]),
-      _vm._v(" "),
-      _c("div", { staticClass: "col-md-3" }, [
-        _c("div", { staticClass: "panel panel-default" }, [
-          _c("div", { staticClass: "panel-heading" }, [
-            _vm._v("\n                    TUGBOATS\n                ")
-          ]),
-          _vm._v(" "),
-          _c(
-            "div",
-            { staticClass: "panel-body" },
-            _vm._l(_vm.tugboats, function(t) {
-              return _c(
-                "button",
-                {
-                  staticClass: "btn btn-info",
-                  staticStyle: { margin: "0 5px 5px 0" },
-                  attrs: { type: "button" },
-                  on: {
-                    click: function($event) {
-                      _vm.tugboatAction(t)
-                    }
-                  }
-                },
-                [
-                  _c("i", { staticClass: "fa fa-ship" }),
-                  _vm._v(" " + _vm._s(t.name) + "\n                    ")
-                ]
-              )
-            })
-          )
-        ])
-      ]),
-      _vm._v(" "),
-      _c("div", { staticClass: "col-md-3" }, [
-        _c("div", { staticClass: "panel panel-default" }, [
-          _c("div", { staticClass: "panel-heading" }, [
-            _vm._v("\n                    WHEEL LOADERS\n                ")
-          ]),
-          _vm._v(" "),
-          _c(
-            "div",
-            { staticClass: "panel-body" },
-            _vm._l(_vm.wheelLoaders, function(wl) {
-              return _c(
-                "button",
-                {
-                  staticClass: "btn btn-info",
-                  staticStyle: { margin: "0 5px 5px 0" },
-                  attrs: { type: "button" },
-                  on: {
-                    click: function($event) {
-                      _vm.unitAction(wl)
-                    }
-                  }
-                },
-                [
-                  _c("i", { staticClass: "fa fa-truck" }),
-                  _vm._v(" " + _vm._s(wl.name) + "\n                    ")
-                ]
-              )
-            })
-          )
-        ])
-      ]),
-      _vm._v(" "),
-      _c("div", { staticClass: "col-md-3" }, [
-        _c("div", { staticClass: "panel panel-default" }, [
-          _c("div", { staticClass: "panel-heading" }, [
-            _vm._v("\n                    DUMP TRUCKS\n                ")
-          ]),
-          _vm._v(" "),
-          _c(
-            "div",
-            { staticClass: "panel-body" },
-            _vm._l(_vm.dumpTrucks, function(dt) {
-              return _c(
-                "button",
-                {
-                  staticClass: "btn btn-info",
-                  staticStyle: { margin: "0 5px 5px 0" },
-                  attrs: { type: "button" },
-                  on: {
-                    click: function($event) {
-                      _vm.unitAction(dt)
-                    }
-                  }
-                },
-                [
-                  _c("i", { staticClass: "fa fa-truck" }),
-                  _vm._v(" " + _vm._s(dt.name) + "\n                    ")
-                ]
-              )
-            })
-          )
-        ])
-      ])
-    ])
+    )
   ])
 }
-var staticRenderFns = [
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("tr", [
-      _c("td", [_vm._v("Barging Progress")]),
-      _vm._v(" "),
-      _c("td", [
-        _c("div", { staticClass: "progress" }, [
-          _c(
-            "div",
-            {
-              staticClass:
-                "progress-bar progress-bar-success progress-bar-striped",
-              staticStyle: { width: "80%" },
-              attrs: {
-                role: "progressbar",
-                "aria-valuenow": "80",
-                "aria-valuemin": "0",
-                "aria-valuemax": "100"
-              }
-            },
-            [
-              _c("span", { staticClass: "sr-only" }, [
-                _vm._v("40% Complete (success)")
-              ])
-            ]
-          )
-        ])
-      ])
-    ])
-  }
-]
+var staticRenderFns = []
 render._withStripped = true
 module.exports = { render: render, staticRenderFns: staticRenderFns }
 if (false) {
   module.hot.accept()
   if (module.hot.data) {
-    require("vue-hot-reload-api")      .rerender("data-v-fff8b8ae", module.exports)
+    require("vue-hot-reload-api")      .rerender("data-v-75a618e4", module.exports)
   }
 }
 
 /***/ }),
-/* 547 */
-/***/ (function(module, exports) {
+/* 572 */
+/***/ (function(module, exports, __webpack_require__) {
 
-// removed by extract-text-webpack-plugin
+var disposed = false
+function injectStyle (ssrContext) {
+  if (disposed) return
+  __webpack_require__(573)
+}
+var normalizeComponent = __webpack_require__(192)
+/* script */
+var __vue_script__ = __webpack_require__(575)
+/* template */
+var __vue_template__ = __webpack_require__(576)
+/* template functional */
+var __vue_template_functional__ = false
+/* styles */
+var __vue_styles__ = injectStyle
+/* scopeId */
+var __vue_scopeId__ = "data-v-8c9b5ad8"
+/* moduleIdentifier (server only) */
+var __vue_module_identifier__ = null
+var Component = normalizeComponent(
+  __vue_script__,
+  __vue_template__,
+  __vue_template_functional__,
+  __vue_styles__,
+  __vue_scopeId__,
+  __vue_module_identifier__
+)
+Component.options.__file = "resources/assets/js/components/BargingProgress.vue"
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-8c9b5ad8", Component.options)
+  } else {
+    hotAPI.reload("data-v-8c9b5ad8", Component.options)
+  }
+  module.hot.dispose(function (data) {
+    disposed = true
+  })
+})()}
+
+module.exports = Component.exports
+
+
+/***/ }),
+/* 573 */
+/***/ (function(module, exports, __webpack_require__) {
+
+// style-loader: Adds some css to the DOM by adding a <style> tag
+
+// load the styles
+var content = __webpack_require__(574);
+if(typeof content === 'string') content = [[module.i, content, '']];
+if(content.locals) module.exports = content.locals;
+// add the styles to the DOM
+var update = __webpack_require__(543)("425c77a2", content, false, {});
+// Hot Module Replacement
+if(false) {
+ // When the styles change, update the <style> tags
+ if(!content.locals) {
+   module.hot.accept("!!../../../../node_modules/css-loader/index.js!../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-8c9b5ad8\",\"scoped\":true,\"hasInlineConfig\":true}!../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./BargingProgress.vue", function() {
+     var newContent = require("!!../../../../node_modules/css-loader/index.js!../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-8c9b5ad8\",\"scoped\":true,\"hasInlineConfig\":true}!../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./BargingProgress.vue");
+     if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
+     update(newContent);
+   });
+ }
+ // When the module is disposed, remove the <style> tags
+ module.hot.dispose(function() { update(); });
+}
+
+/***/ }),
+/* 574 */
+/***/ (function(module, exports, __webpack_require__) {
+
+exports = module.exports = __webpack_require__(542)(false);
+// imports
+
+
+// module
+exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
+
+// exports
+
+
+/***/ }),
+/* 575 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+//
+//
+//
+//
+//
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+    name: 'BargingProgress',
+    props: ['id', 'jetty'],
+    data: function data() {
+        return {
+            chart: null
+        };
+    },
+    methods: {},
+    mounted: function mounted() {
+        var dataBarging = [];
+        var xData = [];
+
+        for (var i = 0; i <= 300; i++) {
+            var rand = Math.random() * 10;
+            xData.push(i);
+            dataBarging.push(rand.toFixed(2));
+        }
+
+        var _this = this;
+        var barge = _this.jetty.barge ? _this.jetty.barge.name : '';
+        var tugboat = _this.jetty.tugboat ? ' - ' + _this.jetty.tugboat.name : '';
+
+        _this.chart = echarts.init(document.getElementById('barging-progress-' + _this.id));
+        _this.chart.setOption({
+            title: {
+                text: '80%',
+                x: 'center',
+                y: 'center',
+                textStyle: {
+                    fontWeight: 'normal',
+                    color: '#722345',
+                    fontSize: '20'
+                }
+            },
+            color: ['rgba(176, 212, 251, 1)'],
+            // legend: {
+            //     show: true,
+            //     itemGap: 12,
+            //     data: ['01', '02']
+            // },
+
+            series: [{
+                name: 'Line 1',
+                type: 'pie',
+                clockWise: true,
+                radius: ['50%', '66%'],
+                itemStyle: {
+                    normal: {
+                        label: {
+                            show: false
+                        },
+                        labelLine: {
+                            show: false
+                        }
+                    }
+                },
+                hoverAnimation: false,
+                data: [{
+                    value: 80,
+                    name: '01',
+                    itemStyle: {
+                        normal: {
+                            color: {
+                                colorStops: [{
+                                    offset: 0,
+                                    color: '#00cefc'
+                                }, {
+                                    offset: 1,
+                                    color: '#367bec'
+                                }]
+                            },
+                            label: {
+                                show: false
+                            },
+                            labelLine: {
+                                show: false
+                            }
+                        }
+                    }
+                }, {
+                    name: '02',
+                    value: 20
+                }]
+            }]
+        });
+    }
+});
+
+/***/ }),
+/* 576 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c("div", {
+    staticStyle: { height: "150px" },
+    attrs: { id: "barging-progress-" + _vm.id },
+    model: {
+      value: _vm.jetty,
+      callback: function($$v) {
+        _vm.jetty = $$v
+      },
+      expression: "jetty"
+    }
+  })
+}
+var staticRenderFns = []
+render._withStripped = true
+module.exports = { render: render, staticRenderFns: staticRenderFns }
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+    require("vue-hot-reload-api")      .rerender("data-v-8c9b5ad8", module.exports)
+  }
+}
 
 /***/ })
 /******/ ]);

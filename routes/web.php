@@ -130,6 +130,7 @@ Route::group(['middleware' => 'auth'], function() {
     Route::resource('seam', 'SeamController')->except(['edit', 'create']);
     Route::resource('staffCategory', 'StaffCategoryController')->except(['edit', 'create']);
     Route::resource('stopWorkingPrediction', 'StopWorkingPredictionController')->except(['edit', 'create']);
+    Route::resource('stockDumping', 'StockDumpingController')->except(['edit', 'create']);
 
     Route::get('sm/fuelConsumption', 'SmController@fuelConsumption');
     Route::get('sm/fuelRatio', 'SmController@fuelRatio');
@@ -156,7 +157,7 @@ Route::group(['middleware' => 'auth'], function() {
     Route::resource('warningPart', 'WarningPartController')->only(['index', 'show', 'update']);
 
     Route::get('pasangSurut', 'OperationController@pasangSurut');
-    Route::get('game', 'OperationController@game');
+    Route::get('operation', 'OperationController@index');
     Route::get('test', 'OperationController@test');
 
     Route::get('hcgs', 'HcgsController@index');
@@ -211,7 +212,9 @@ View::composer('layouts._sidebar', function($view) {
         'OPERATION' => [
             'icon' => 'cogs',
             'url' => [
+                'operation' => 'Dahsboard',
                 'breakdown' => 'Breakdown OCR',
+                'stockDumping' => 'Stock Dumping',
                 'stockBalanced' => 'Stock Balanced',
                 'pasangSurut' => 'Hourly Monitoring Barging',
                 // 'Hourly Monitoring Barging' => [

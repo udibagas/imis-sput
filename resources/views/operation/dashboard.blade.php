@@ -2,7 +2,7 @@
 
 @section('content')
 <div id="app">
-    <game></game>
+    <operation-dashboard></operation-dashboard>
 </div>
 @endsection
 
