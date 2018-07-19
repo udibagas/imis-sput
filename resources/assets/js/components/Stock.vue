@@ -33,7 +33,7 @@ export default {
         _this.chart = echarts.init(document.getElementById('stock-' + _this.id));
         _this.chart.setOption({
             title: {
-                // text: 'STOCK AREA JETTY ' + _this.jetty.name,
+                text: 'STOCK AREA JETTY ' + _this.jetty.name,
                 x: 'center'
             },
             tooltip: {

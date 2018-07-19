@@ -8,18 +8,7 @@
 
 @push('scripts')
 <script type="text/javascript">
-
 $('.page-container').addClass('sidebar-collapsed');
-
-const app = new Vue({
-    el: '#app',
-    data: {
-    },
-    methods: {
-    },
-    mounted: function() {
-
-    }
-});
+const app = new Vue({el: '#app'});
 </script>
 @endpush

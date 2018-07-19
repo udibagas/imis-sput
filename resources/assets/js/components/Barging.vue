@@ -20,7 +20,7 @@ export default {
         var xData = [];
 
         for (var i = 0; i <= 300; i++) {
-            var rand = Math.random() * 10;
+            var rand = Math.random() * 1000;
             xData.push(i);
             dataBarging.push(rand.toFixed(2));
         }
@@ -52,7 +52,7 @@ export default {
             },
             yAxis: {
                 type: 'value',
-                name: 'TON/HOUR'
+                name: 'TPH'
             },
             series: [
                 {
@@ -69,7 +69,7 @@ export default {
             var xData = [];
 
             for (var i = 0; i <= 300; i++) {
-                var rand = Math.random() * 10;
+                var rand = Math.random() * 1000;
                 xData.push(i);
                 dataBarging.push(rand.toFixed(2));
             }

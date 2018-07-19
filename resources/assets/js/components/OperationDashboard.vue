@@ -1,96 +1,41 @@
 <template>
-    <div>
-        <div class="row">
-            <div v-for="j in jetties" class="col-md-3">
-                <barging :id="j.id" :jetty="j"> </barging>
-                <!-- <barging-progress :id="j.id" :jetty="j"> </barging-progress> -->
-                <stock :id="j.id" :jetty="j"> </stock>
-
-                <div :class="['panel', j.status ? 'panel-success' : 'panel-danger']">
-                    <div class="panel-heading">
-                        <div class="pull-right">
-                            <a href="#" @click.prevent="jettyAction(j)"><i class="icon-cog"></i></a>
-                        </div>
-                        JETTY {{j.name}}
+    <div class="row">
+        <div class="col-md-4">
+            <div v-for="j in jetties" :class="['panel', j.status ? 'panel-success' : 'panel-danger']">
+                <div  class="panel-heading">
+                    <div class="pull-right">
+                        <a href="#" @click.prevent="jettyAction(j)"><i class="icon-cog"></i></a>
                     </div>
-                    <table class="table table-hover">
-                        <tbody>
-                            <tr>
-                                <td>Barge/Tugboat</td>
-                                <td>
-                                    <button v-if="j.barge" type="button" class="btn btn-info" @click="bargeJettyAction(j.barge)">
-                                        {{j.barge.name}}
-                                    </button>
-
-                                    <button v-if="j.tugboat" type="button" class="btn btn-info">
-                                        {{j.tugboat.name}}
-                                    </button>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>Unit on Location</td>
-                                <td>
-                                    <button class="btn btn-success" type="button" v-for="u in j.units" style="margin-right:5px;" @click="unitJettyAction(u)">
-                                        <i class="fa fa-truck"></i> {{u.name}}
-                                    </button>
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
+                    JETTY {{j.name}}
+                </div>
+                <div class="panel-body">
+                    <div class="row">
+                        <div class="col-md-4 text-center">
+                            <barging-progress :id="j.id" :jetty="j"> </barging-progress>
+                            <h4>Barging Progress</h4>
+                        </div>
+                        <div class="col-md-8">
+                            <button class="btn btn-success" type="button" v-for="u in j.units" style="margin:0 5px 5px 0" @click="unitJettyAction(u)">
+                                <i class="fa fa-truck"></i> {{u.name}}
+                            </button>
+                            <br>
+                            <button v-if="j.barge" type="button" class="btn btn-info" @click="bargeJettyAction(j.barge)">
+                                {{j.barge.name}}
+                            </button>
+                            <button v-if="j.tugboat" type="button" class="btn btn-warning">
+                                {{j.tugboat.name}}
+                            </button>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
-
-        <!-- <div class="row">
-            <div class="col-md-3">
-                <div class="panel panel-default">
-                    <div class="panel-heading">
-                        BARGES
-                    </div>
-                    <div class="panel-body">
-                        <button type="button" style="margin:0 5px 5px 0" class="btn btn-info" v-for="b in barges" @click="bargeAction(b)">
-                            <i class="fa fa-anchor"></i> {{b.name}}
-                        </button>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-3">
-                <div class="panel panel-default">
-                    <div class="panel-heading">
-                        TUGBOATS
-                    </div>
-                    <div class="panel-body">
-                        <button type="button" style="margin:0 5px 5px 0" class="btn btn-info" v-for="t in tugboats" @click="tugboatAction(t)">
-                            <i class="fa fa-ship"></i> {{t.name}}
-                        </button>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-3">
-                <div class="panel panel-default">
-                    <div class="panel-heading">
-                        WHEEL LOADERS
-                    </div>
-                    <div class="panel-body">
-                        <button type="button" style="margin:0 5px 5px 0" class="btn btn-info" v-for="wl in wheelLoaders" @click="unitAction(wl)">
-                            <i class="fa fa-truck"></i> {{wl.name}}
-                        </button>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-3">
-                <div class="panel panel-default">
-                    <div class="panel-heading">
-                        DUMP TRUCKS
-                    </div>
-                    <div class="panel-body">
-                        <button type="button" style="margin:0 5px 5px 0" class="btn btn-info" v-for="dt in dumpTrucks" @click="unitAction(dt)">
-                            <i class="fa fa-truck"></i> {{dt.name}}
-                        </button>
-                    </div>
-                </div>
-            </div>
-        </div> -->
+        <div class="col-md-4">
+            <barging v-for="j in jetties" :key="j.id" :id="j.id" :jetty="j"> </barging>
+        </div>
+        <div class="col-md-4">
+            <stock v-for="j in jetties" :key="j.id" :id="j.id" :jetty="j"> </stock>
+        </div>
     </div>
 </template>
 

@@ -10,6 +10,13 @@ require('./bootstrap');
 window.echarts = require('echarts');
 window.Vue = require('vue');
 
+Vue.filter('formatNumber', function(v) {
+    return parseFloat(v)
+        .toFixed(2)
+        .toString()
+        .replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+});
+
 /**
  * Next, we will create a fresh Vue application instance and attach it to
  * the page. Then, you may begin adding components to this application
@@ -19,4 +26,4 @@ window.Vue = require('vue');
 // Vue.component('vue-dd', require('./components/Dd.vue'));
 // Vue.component('vue-card', require('./components/Card.vue'));
 Vue.component('daily-check-setting', require('./components/DailyCheckSetting.vue'));
-Vue.component('game', require('./components/Game.vue'));
+Vue.component('operation-dashboard', require('./components/OperationDashboard.vue'));
