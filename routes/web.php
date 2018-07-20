@@ -118,6 +118,7 @@ Route::group(['middleware' => 'auth'], function() {
 
     Route::resource('planCategory', 'PlanCategoryController')->except(['edit', 'create']);
     Route::resource('position', 'PositionController')->except(['edit', 'create']);
+    Route::resource('portActivity', 'PortActivityController')->except(['edit', 'create']);
     Route::resource('problemProductivityCategory', 'ProblemProductivityCategoryController')->except(['edit', 'create']);
 
     Route::resource('productivityPlan', 'ProductivityPlanController')->except(['edit', 'create']);
@@ -214,6 +215,7 @@ View::composer('layouts._sidebar', function($view) {
             'url' => [
                 'operation' => 'Dahsboard',
                 'breakdown' => 'Breakdown OCR',
+                'portActivity' => 'Port Activity',
                 'stockDumping' => 'Stock Dumping',
                 'stockBalanced' => 'Stock Balanced',
                 'pasangSurut' => 'Hourly Monitoring Barging',
@@ -233,7 +235,7 @@ View::composer('layouts._sidebar', function($view) {
                     'customer' => 'Customers',
                     'jetty' => 'Jetties',
                     'lostTimeCategory' => 'Lost Time Categories',
-                    'material' => 'Materials',
+                    // 'material' => 'Materials',
                     'productivityPlan' => 'Productivity Plan',
                     'planCategory' => 'Plan Category',
                     'problemProductivityCategory' => 'Problem Productivity Categories',
