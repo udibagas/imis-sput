@@ -100,7 +100,8 @@ Route::group(['middleware' => 'auth'], function() {
     Route::get('leadTimeDailyCheck', 'LeadTimeDailyCheckController@index');
     Route::resource('location', 'LocationController')->except(['edit', 'create']);
     Route::resource('lostTimeCategory', 'LostTimeCategoryController')->except(['edit', 'create']);
-    Route::resource('material', 'MaterialController')->except(['edit', 'create']);
+    // Route::resource('material', 'MaterialController')->except(['edit', 'create']);
+    Route::resource('materialStock', 'MaterialStockController')->except(['edit', 'create']);
     Route::get('meal/summary', 'MealController@summary');
     Route::get('meal/summary1', 'MealController@summary1');
     Route::put('meal/confirm', 'MealController@confirm');
@@ -215,14 +216,9 @@ View::composer('layouts._sidebar', function($view) {
             'url' => [
                 'operation' => 'Dahsboard',
                 'breakdown' => 'Breakdown OCR',
-                'portActivity' => 'Port Activity',
                 'stockDumping' => 'Stock Dumping',
-                'stockBalanced' => 'Stock Balanced',
-                'pasangSurut' => 'Hourly Monitoring Barging',
-                // 'Hourly Monitoring Barging' => [
-                //     'stockBalanced' => 'Stock Balanced',
-                //     'anchoredBarge' => 'Anchored Barge',
-                // ],
+                'portActivity' => 'Port Activity',
+                'materialStock' => 'Material Stock Balanced',
                 'Status Jetty' => [
                     'jetty/dwellingTime' => 'Dwelling Time',
                     'barge/resume' => 'Resume Barging Daily',

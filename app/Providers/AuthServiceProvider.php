@@ -42,7 +42,7 @@ class AuthServiceProvider extends ServiceProvider
         'App\Jetty' => 'App\Policies\JettyPolicy',
         'App\Location' => 'App\Policies\LocationPolicy',
         'App\LostTimeCategory' => 'App\Policies\LostTimeCategoryPolicy',
-        'App\Material' => 'App\Policies\MaterialPolicy',
+        'App\MaterialStock' => 'App\Policies\MaterialStockPolicy',
         'App\Meal' => 'App\Policies\MealPolicy',
         'App\MealLocation' => 'App\Policies\MealLocationPolicy',
         'App\Office' => 'App\Policies\OfficePolicy',

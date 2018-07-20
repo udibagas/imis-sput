@@ -30,6 +30,7 @@ class PortActivityController extends Controller
                     CONCAT("Jetty ", jetties.name, " - ", stock_areas.name) AS area,
                     employees.name AS employee,
                     customers.name AS customer,
+                    unit_activities.name AS activity,
                     seams.name AS seam
                 ')
                 ->join('units', 'units.id', '=', 'port_activities.unit_id')
@@ -37,11 +38,13 @@ class PortActivityController extends Controller
                 ->join('jetties', 'jetties.id', '=', 'stock_areas.jetty_id')
                 ->join('employees', 'employees.id', '=', 'port_activities.employee_id')
                 ->join('customers', 'customers.id', '=', 'port_activities.customer_id')
+                ->join('unit_activities', 'unit_activities.id', '=', 'port_activities.unit_activity_id')
                 ->join('seams', 'seams.id', '=', 'port_activities.seam_id', 'LEFT')
                 ->when($request->searchPhrase, function($query) use ($request) {
                     return $query->where('units.name', 'LIKE', '%'.$request->searchPhrase.'%')
                         ->where('employees.name', 'LIKE', '%'.$request->searchPhrase.'%')
                         ->where('customers.name', 'LIKE', '%'.$request->searchPhrase.'%')
+                        ->where('unit_activities.name', 'LIKE', '%'.$request->searchPhrase.'%')
                         ->where('stock_areas.name', 'LIKE', '%'.$request->searchPhrase.'%');
                 })->orderBy($sort, $dir)->paginate($pageSize);
 

@@ -36,4 +36,19 @@ class PortActivityRequest extends FormRequest
             'stock_area_id' => 'required',
         ];
     }
+
+    public function attributes()
+    {
+        return [
+            'date' => 'Date',
+            'time_start' => 'Time Start',
+            'time_end' => 'Time End',
+            'unit_id' => 'Unit',
+            'employee_id' => 'Employee',
+            'customer_id' => 'Customer',
+            'material_type' => 'Material Type',
+            'volume' => 'Volume',
+            'stock_area_id' => 'Stock Area'
+        ];
+    }
 }

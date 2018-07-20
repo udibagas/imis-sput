@@ -17,12 +17,13 @@
                     <th data-column-id="date">Date</th>
                     <th data-column-id="time_start">Time Start</th>
                     <th data-column-id="time_end">Time End</th>
+                    <th data-column-id="activity">Activity</th>
                     <th data-column-id="unit">Unit</th>
                     <th data-column-id="area">Area</th>
                     <th data-column-id="employee">Employee</th>
                     <th data-column-id="rit">Rit</th>
                     <th data-column-id="volume">Volume</th>
-                    <th data-column-id="material_type">Material Type</th>
+                    <th data-column-id="material_type" data-formatter="material_type">Material Type</th>
                     <th data-column-id="seam">Seam</th>
                     <th data-column-id="customer">Customer</th>
                     @can('updateOrDelete', App\PortActivity::class)
@@ -188,6 +189,9 @@
                     "commands": function(column, row) {
                         return '@can("update", App\PortActivity::class) <a href="#" class="btn btn-info btn-xs c-edit" data-id="'+row.id+'"><i class="icon-pencil"></i></a> @endcan' +
                             '@can("delete", App\PortActivity::class) <a href="#" class="btn btn-danger btn-xs c-delete" data-id="'+row.id+'"><i class="icon-trash"></i></a> @endcan';
+                    },
+                    material_type: function(c, r) {
+                        return r.material_type == 'l' ? 'LOW' : 'HIGH';
                     }
                 }
             }).on("loaded.rs.jquery.bootgrid", function() {

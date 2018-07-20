@@ -4,7 +4,7 @@
 
 <div class="panel panel-primary" id="app">
     <div class="panel-body">
-        <h3 class="pull-left text-primary">STOCK DUMPING <small>Manage</small></h3>
+        <h3 class="pull-left text-primary">MATERIAL STOCK BALANCED <small>Manage</small></h3>
         @can('create', App\StockDumping::class)
         <span class="pull-right" style="margin:15px 0 15px 10px;">
             <a href="#" @click="add" class="btn btn-primary"><i class="icon-plus-circled"></i></a>
@@ -14,16 +14,12 @@
             <thead>
                 <tr>
                     <th data-column-id="id" data-width="3%">ID</th>
-                    <th data-column-id="date">Date</th>
-                    <th data-column-id="unit">Unit</th>
-                    <th data-column-id="employee">Employee</th>
-                    <th data-column-id="volume">Volume</th>
+                    <th data-column-id="dumping_date">Dmping Date</th>
                     <th data-column-id="material_type" data-formatter="material_type">Material Type</th>
                     <th data-column-id="seam">Seam</th>
+                    <th data-column-id="volume">Volume</th>
                     <th data-column-id="customer">Customer</th>
                     <th data-column-id="area">Area</th>
-                    <th data-column-id="user">User</th>
-                    <th data-column-id="insert_via">Insert Via</th>
                     @can('updateOrDelete', App\StockDumping::class)
                     <th data-column-id="commands"
                         data-formatter="commands"
@@ -37,7 +33,7 @@
     </div>
 
     @can('createOrUpdate', App\StockDumping::class)
-    @include('stockDumping._form')
+    @include('materialStock._form')
     @endcan
 
 </div>
@@ -55,8 +51,6 @@
             formErrors: {},
             formTitle: '',
             error: {},
-            units: {!! App\Unit::selectRaw('id AS id, name AS text')->orderBy('name', 'ASC')->get() !!},
-            employees: {!! App\Employee::selectRaw('id AS id, name AS text')->orderBy('name', 'ASC')->get() !!},
             stock_areas: {!! App\StockArea::selectRaw('stock_areas.id AS id, CONCAT("Jetty ", jetties.name, " - ", stock_areas.name) AS text')
                 ->join('jetties', 'jetties.id', '=', 'stock_areas.jetty_id')
                 ->orderBy('jetties.name', 'ASC')->get() !!},
@@ -66,7 +60,7 @@
         methods: {
             add: function() {
                 // reset the form
-                this.formTitle = "ADD STOCK DUMPING";
+                this.formTitle = "ADD MATERIAL STOCK BALANCED";
                 this.formData = {};
                 this.formErrors = {};
                 this.error = {};
@@ -76,7 +70,7 @@
             store: function() {
                 block('form');
                 var t = this;
-                axios.post('{{url("stockDumping")}}', this.formData).then(function(r) {
+                axios.post('{{url("materialStock")}}', this.formData).then(function(r) {
                     unblock('form');
                     $('#modal-form').modal('hide');
                     toastr["success"]("Data berhasil ditambahkan");
@@ -96,11 +90,11 @@
             },
             edit: function(id) {
                 var t = this;
-                this.formTitle = "EDIT STOCK DUMPING";
+                this.formTitle = "EDIT MATERIAL STOCK BALANCED";
                 this.formErrors = {};
                 this.error = {};
 
-                axios.get('{{url("stockDumping")}}/' + id).then(function(r) {
+                axios.get('{{url("materialStock")}}/' + id).then(function(r) {
                     t.formData = r.data;
                     $('#modal-form').modal('show');
                 })
@@ -115,7 +109,7 @@
             update: function() {
                 block('form');
                 var t = this;
-                axios.put('{{url("stockDumping")}}/' + this.formData.id, this.formData).then(function(r) {
+                axios.put('{{url("materialStock")}}/' + this.formData.id, this.formData).then(function(r) {
                     unblock('form');
                     $('#modal-form').modal('hide');
                     toastr["success"]("Data berhasil diupdate");
@@ -139,7 +133,7 @@
                     message: "Anda yakin akan menghapus data ini?",
                     callback: function(r) {
                         if (r == true) {
-                            axios.delete('{{url("stockDumping")}}/' + id)
+                            axios.delete('{{url("materialStock")}}/' + id)
 
                             .then(function(r) {
                                 if (r.data.success == true) {
@@ -171,7 +165,7 @@
                     1: "default"
                 },
                 rowCount: [10,25,50,100],
-                ajax: true, url: '{{url('stockDumping')}}',
+                ajax: true, url: '{{url('materialStock')}}',
                 ajaxSettings: {
                     method: 'GET', cache: false,
                     statusCode: {
