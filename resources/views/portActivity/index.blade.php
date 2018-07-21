@@ -15,17 +15,20 @@
                 <tr>
                     <th data-column-id="id" data-width="3%">ID</th>
                     <th data-column-id="date">Date</th>
+                    <th data-column-id="shift">Shift</th>
                     <th data-column-id="time_start">Time Start</th>
                     <th data-column-id="time_end">Time End</th>
                     <th data-column-id="activity">Activity</th>
                     <th data-column-id="unit">Unit</th>
+                    <th data-column-id="hauler">Hauler</th>
                     <th data-column-id="area">Area</th>
-                    <th data-column-id="employee">Employee</th>
-                    <th data-column-id="rit">Rit</th>
-                    <th data-column-id="volume">Volume</th>
+                    <th data-column-id="hopper">Hopper</th>
+                    <th data-column-id="rit">Bucket</th>
+                    <th data-column-id="volume">Volume (Ton)</th>
                     <th data-column-id="material_type" data-formatter="material_type">Material Type</th>
                     <th data-column-id="seam">Seam</th>
                     <th data-column-id="customer">Customer</th>
+                    <th data-column-id="employee">Employee</th>
                     @can('updateOrDelete', App\PortActivity::class)
                     <th data-column-id="commands"
                         data-formatter="commands"
@@ -57,14 +60,30 @@
             formErrors: {},
             formTitle: '',
             error: {},
-            units: {!! App\Unit::selectRaw('id AS id, name AS text')->orderBy('name', 'ASC')->get() !!},
+            units: {!! App\Unit::selectRaw('id AS id, name AS text')
+                ->where('name', 'LIKE', 'ld%')
+                ->orWhere('name', 'LIKE', 'wl%')
+                ->orderBy('name', 'ASC')->get() !!},
+            haulers: {!! App\Unit::selectRaw('id AS id, name AS text')
+                ->where('name', 'LIKE', 'ld%')
+                ->orderBy('name', 'ASC')->get() !!},
             employees: {!! App\Employee::selectRaw('id AS id, name AS text')->orderBy('name', 'ASC')->get() !!},
             stock_areas: {!! App\StockArea::selectRaw('stock_areas.id AS id, CONCAT("Jetty ", jetties.name, " - ", stock_areas.name) AS text')
                 ->join('jetties', 'jetties.id', '=', 'stock_areas.jetty_id')
                 ->orderBy('jetties.name', 'ASC')->get() !!},
+            hoppers: {!! App\Hopper::selectRaw('hoppers.id AS id, CONCAT("Jetty ", jetties.name, " - ", hoppers.name) AS text')
+                ->join('jetties', 'jetties.id', '=', 'hoppers.jetty_id')
+                ->orderBy('jetties.name', 'ASC')->get() !!},
             seams: {!! App\Seam::selectRaw('id AS id, name AS text')->orderBy('name', 'ASC')->get() !!},
             customers: {!! App\Customer::selectRaw('id AS id, name AS text')->orderBy('name', 'ASC')->get() !!},
             unit_activities: {!! App\UnitActivity::selectRaw('id AS id, name AS text')->orderBy('name', 'ASC')->get() !!},
+        },
+        watch: {
+            'formData.unit_activity_id': function(v, o) {
+                if (v == 'loading') {
+
+                }
+            }
         },
         methods: {
             add: function() {

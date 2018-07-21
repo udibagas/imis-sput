@@ -5,23 +5,29 @@
 <div class="panel panel-primary" id="app">
     <div class="panel-body">
         <h3 class="pull-left text-primary">STOCK DUMPING <small>Manage</small></h3>
-        @can('create', App\StockDumping::class)
         <span class="pull-right" style="margin:15px 0 15px 10px;">
+            @can('create', App\StockDumping::class)
             <a href="#" @click="add" class="btn btn-primary"><i class="icon-plus-circled"></i></a>
+            @endcan
+            <a href="{{url('stockDumping/downloadApp')}}" class="btn btn-primary"><i class="fa fa-android"></i> DOWNLOAD APLIKASI CHECKER</a>
+            @can('export', App\StockDumping::class)
+            <a href="#" @click="openExportForm" class="btn btn-primary"><i class="fa fa-file-excel-o"></i> EXPORT</a>
+            @endcan
         </span>
-        @endcan
         <table class="table table-striped table-hover " id="bootgrid" style="border-top:2px solid #ddd">
             <thead>
                 <tr>
                     <th data-column-id="id" data-width="3%">ID</th>
                     <th data-column-id="date">Date</th>
+                    <th data-column-id="shift">Shift</th>
+                    <th data-column-id="time">Time</th>
                     <th data-column-id="unit">Unit</th>
-                    <th data-column-id="employee">Employee</th>
-                    <th data-column-id="volume">Volume</th>
                     <th data-column-id="material_type" data-formatter="material_type">Material Type</th>
                     <th data-column-id="seam">Seam</th>
-                    <th data-column-id="customer">Customer</th>
                     <th data-column-id="area">Area</th>
+                    <th data-column-id="volume">Volume (Ton)</th>
+                    <th data-column-id="customer">Customer</th>
+                    <th data-column-id="employee">Employee</th>
                     <th data-column-id="user">User</th>
                     <th data-column-id="insert_via">Insert Via</th>
                     @can('updateOrDelete', App\StockDumping::class)
@@ -40,6 +46,10 @@
     @include('stockDumping._form')
     @endcan
 
+    @can('export', App\StockDumping::class)
+    @include('stockDumping._form_export')
+    @endcan
+
 </div>
 
 @endsection
@@ -55,7 +65,12 @@
             formErrors: {},
             formTitle: '',
             error: {},
-            units: {!! App\Unit::selectRaw('id AS id, name AS text')->orderBy('name', 'ASC')->get() !!},
+            exportRange: {
+                from: '{{date("Y-m-d")}}',
+                to: '{{date("Y-m-d")}}'
+            },
+            units: {!! App\Unit::selectRaw('id AS id, name AS text')
+                ->orderBy('name', 'ASC')->get() !!},
             employees: {!! App\Employee::selectRaw('id AS id, name AS text')->orderBy('name', 'ASC')->get() !!},
             stock_areas: {!! App\StockArea::selectRaw('stock_areas.id AS id, CONCAT("Jetty ", jetties.name, " - ", stock_areas.name) AS text')
                 ->join('jetties', 'jetties.id', '=', 'stock_areas.jetty_id')
@@ -64,6 +79,14 @@
             customers: {!! App\Customer::selectRaw('id AS id, name AS text')->orderBy('name', 'ASC')->get() !!},
         },
         methods: {
+            openExportForm: function() {
+                $('#modal-form-export').modal('show');
+            },
+            doExport: function() {
+                // TODO: validate input first
+                $('#modal-form-export').modal('hide');
+                window.location = '{{url("stockDumping/export")}}?from=' + this.exportRange.from + '&to=' + this.exportRange.to;
+            },
             add: function() {
                 // reset the form
                 this.formTitle = "ADD STOCK DUMPING";

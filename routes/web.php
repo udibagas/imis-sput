@@ -36,6 +36,7 @@ Route::group(['middleware' => 'auth'], function() {
     Route::resource('assetStatus', 'AssetStatusController')->except(['edit', 'create']);
     Route::resource('assetTaking', 'AssetTakingController')->except(['edit', 'create']);
     Route::resource('stockArea', 'StockAreaController')->only(['destroy']);
+    Route::resource('hopper', 'HopperController')->only(['destroy']);
     Route::resource('subArea', 'SubAreaController')->only(['destroy']);
     Route::resource('authorization', 'AuthorizationController')->except(['edit', 'create']);
     Route::get('barge/getAnchored', 'BargeController@getAnchored');
@@ -132,6 +133,9 @@ Route::group(['middleware' => 'auth'], function() {
     Route::resource('seam', 'SeamController')->except(['edit', 'create']);
     Route::resource('staffCategory', 'StaffCategoryController')->except(['edit', 'create']);
     Route::resource('stopWorkingPrediction', 'StopWorkingPredictionController')->except(['edit', 'create']);
+
+    Route::get('stockDumping/downloadApp', 'StockDumpingController@downloadApp');
+    Route::get('stockDumping/export', 'StockDumpingController@export');
     Route::resource('stockDumping', 'StockDumpingController')->except(['edit', 'create']);
 
     Route::get('sm/fuelConsumption', 'SmController@fuelConsumption');
@@ -225,7 +229,7 @@ View::composer('layouts._sidebar', function($view) {
                     'jetty/productivity' => 'Productivity Jetty'
                 ],
                 '<i class="fa fa-database"></i> Master Data' => [
-                    'area' => 'Area',
+                    // 'area' => 'Area',
                     'barge' => 'Barges',
                     'buyer' => 'Buyers',
                     'customer' => 'Customers',

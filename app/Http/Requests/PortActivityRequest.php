@@ -34,6 +34,7 @@ class PortActivityRequest extends FormRequest
             'material_type' => 'required',
             'volume' => 'required',
             'stock_area_id' => 'required',
+            'shift' => 'required',
         ];
     }
 
@@ -48,7 +49,11 @@ class PortActivityRequest extends FormRequest
             'customer_id' => 'Customer',
             'material_type' => 'Material Type',
             'volume' => 'Volume',
-            'stock_area_id' => 'Stock Area'
+            'rit' => 'Bucket',
+            'stock_area_id' => 'Stock Area',
+            'shift' => 'Shift',
+            'hopper_id' => 'Hopper',
+            'hauler_id' => 'Hauler',
         ];
     }
 }

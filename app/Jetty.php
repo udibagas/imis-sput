@@ -8,7 +8,7 @@ class Jetty extends Model
 {
     protected $fillable = ['name', 'description', 'capacity', 'order', 'status'];
 
-    protected $with = ['stockArea', 'barge', 'tugboat',  'units'];
+    protected $with = ['stockArea', 'barge', 'tugboat',  'units', 'hoppers'];
 
     public function stockArea() {
         return $this->hasMany(StockArea::class);
@@ -24,5 +24,9 @@ class Jetty extends Model
 
     public function units() {
         return $this->hasMany(Unit::class);
+    }
+
+    public function hoppers() {
+        return $this->hasMany(Hopper::class);
     }
 }

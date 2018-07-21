@@ -137,7 +137,58 @@ Route::post('fuelRefill', function() {
     return json_encode($ret);
 });
 
-// untuk game operational
+Route::post('stockDumping', function() {
+    $rows   = json_decode(request('rows'));
+    $ids    = [];
+
+    foreach($rows as $r)
+    {
+        $ids[] = $r->id;
+
+        $data = [
+            'date'              => $r->date,
+            'shift'             => $r->shift,
+            'time'              => $r->time,
+            'unit_id'           => $r->unit_id,
+            'employee_id'       => $r->employee_id,
+            'stock_area_id'     => $r->stock_area_id,
+            'customer_id'       => $r->customer_id,
+            'material_type'     => $r->material_type,
+            'seam_id'           => $r->seam_id,
+            'volume'            => $r->volume,
+            'user_id'      	    => $r->user_id,
+            'insert_via'        => 'mobile'
+        ];
+
+        // check duplikasi
+        $exists = App\StockDumping::where('date', $r->date)
+            ->where('shift', $r->shift)
+            ->where('stock_area_id', $r->stock_area_id)
+            ->where('unit_id', $r->unit_id)
+            ->where('employee_id', $r->employee_id)
+            ->where('customer_id', $r->customer_id)
+            ->where('volume', $r->volume)
+            ->first();
+
+        if ($exists) {
+            continue;
+        }
+
+        $stockDumping = App\StockDumping::create($data);
+
+        // update stock area
+        // $stockDumping->fuelTank->update([
+        //     'stock' => $stockDumping->fuelTank->stock - $fuelRefill->total_real,
+        //     'last_stock_time' => Carbon::now()
+        // ]);
+    }
+
+    $ret = (count($ids) > 0)
+        ? ['ids' => implode(',', $ids), 'success' => true]
+        : ['success' => false];
+
+    return json_encode($ret);
+});
 
 Route::get('area', function() {
     return App\Area::with('subArea')->get();

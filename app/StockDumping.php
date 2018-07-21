@@ -8,8 +8,8 @@ class StockDumping extends Model
 {
     protected $fillable = [
         'employee_id', 'unit_id', 'stock_area_id',
-        'volume', 'user_id', 'insert_via', 'date',
-        'material_type', 'seam_id', 'customer_id'
+        'volume', 'user_id', 'insert_via', 'date', 'time',
+        'material_type', 'seam_id', 'customer_id', 'shift'
     ];
 
     public function stockArea() {

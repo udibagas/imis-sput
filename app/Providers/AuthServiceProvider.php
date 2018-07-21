@@ -38,6 +38,7 @@ class AuthServiceProvider extends ServiceProvider
         'App\FuelTankTera' => 'App\Policies\FuelTankTeraPolicy',
         'App\FlowMeter' => 'App\Policies\FlowMeterPolicy',
         'App\FuelRefill' => 'App\Policies\FuelRefillPolicy',
+        'App\Hopper' => 'App\Policies\JettyPolicy',
         // 'App\Jabatan' => 'App\Policies\JabatanPolicy',
         'App\Jetty' => 'App\Policies\JettyPolicy',
         'App\Location' => 'App\Policies\LocationPolicy',

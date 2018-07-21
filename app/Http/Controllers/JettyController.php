@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Jetty;
 use App\StockArea;
+use App\Hopper;
 use App\Http\Requests\JettyRequest;
 
 class JettyController extends Controller
@@ -62,6 +63,10 @@ class JettyController extends Controller
             $jetty->stockArea()->create($r);
         }
 
+        foreach ($request->hoppers as $h) {
+            $jetty->hoppers()->create($h);
+        }
+
         return $jetty;
     }
 
@@ -100,6 +105,17 @@ class JettyController extends Controller
             }
         }
 
+        foreach ($request->hoppers as $h)
+        {
+            if (isset($h['id'])) {
+                Hopper::find($h['id'])->update($h);
+            }
+
+            else {
+                $jetty->hoppers()->create($h);
+            }
+        }
+
         return $jetty;
     }
 
@@ -112,6 +128,8 @@ class JettyController extends Controller
     public function destroy(Jetty $jetty)
     {
         $this->authorize('delete', Jetty::class);
+        StockArea::where('jetty_id', $jetty->id)->delete();
+        Hopper::where('jetty_id', $jetty->id)->delete();
         return ['success' => $jetty->delete()];
     }
 

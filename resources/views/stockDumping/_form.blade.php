@@ -23,6 +23,31 @@
                         </div>
                     </div>
 
+                    <div class="form-group" :class="formErrors.shift ? 'has-error' : ''">
+                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="shift">Shift
+                        </label>
+                        <div class="col-md-9 col-sm-9 col-xs-12">
+                            <div class="radio radio-inline radio-replace radio-success">
+								<input type="radio" v-model="formData.shift" id="shift_1" value="1">
+								<label for="shift_1">1</label>
+							</div>
+                            <div class="radio radio-inline radio-replace radio-success">
+								<input type="radio" v-model="formData.shift" id="shift_2" value="2">
+								<label for="shift_2">2</label>
+							</div>
+                            <span v-if="formErrors.shift" class="help-block">@{{formErrors.shift[0]}}</span>
+                        </div>
+                    </div>
+
+                    <div class="form-group" :class="formErrors.time ? 'has-error' : ''">
+                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="time">Time
+                        </label>
+                        <div class="col-md-9 col-sm-9 col-xs-12">
+                            <input type="text" v-model="formData.time" class="form-control" placeholder="Time">
+                            <span v-if="formErrors.time" class="help-block">@{{formErrors.time[0]}}</span>
+                        </div>
+                    </div>
+
                     <div class="form-group" :class="formErrors.unit_id ? 'has-error' : ''">
                         <label class="control-label col-md-3 col-sm-3 col-xs-12" for="unit_id">Unit
                         </label>
@@ -33,13 +58,29 @@
                         </div>
                     </div>
 
-                    <div class="form-group" :class="formErrors.employee_id ? 'has-error' : ''">
-                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="employee_id">Employee
+                    <div class="form-group" :class="formErrors.material_type ? 'has-error' : ''">
+                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="material_type">Material Type
                         </label>
                         <div class="col-md-9 col-sm-9 col-xs-12">
-                            <select2 :options="employees" v-model="formData.employee_id" data-placeholder="Employee">
+                            <div class="radio radio-inline radio-replace radio-success">
+								<input type="radio" v-model="formData.material_type" id="material_type_hi" value="h">
+								<label for="material_type_hi">HIGH</label>
+							</div>
+                            <div class="radio radio-inline radio-replace radio-danger">
+								<input type="radio" v-model="formData.material_type" id="material_type_lo" value="l">
+								<label for="material_type_lo">LOW</label>
+							</div>
+                            <span v-if="formErrors.material_type" class="help-block">@{{formErrors.material_type[0]}}</span>
+                        </div>
+                    </div>
+
+                    <div class="form-group" :class="formErrors.seam_id ? 'has-error' : ''">
+                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="seam_id">Seam
+                        </label>
+                        <div class="col-md-9 col-sm-9 col-xs-12">
+                            <select2 :options="seams" v-model="formData.seam_id" data-placeholder="Seam">
                             </select2>
-                            <span v-if="formErrors.employee_id" class="help-block">@{{formErrors.employee_id[0]}}</span>
+                            <span v-if="formErrors.seam_id" class="help-block">@{{formErrors.seam_id[0]}}</span>
                         </div>
                     </div>
 
@@ -62,16 +103,6 @@
                         </div>
                     </div>
 
-                    <div class="form-group" :class="formErrors.seam_id ? 'has-error' : ''">
-                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="seam_id">Seam
-                        </label>
-                        <div class="col-md-9 col-sm-9 col-xs-12">
-                            <select2 :options="seams" v-model="formData.seam_id" data-placeholder="Seam">
-                            </select2>
-                            <span v-if="formErrors.seam_id" class="help-block">@{{formErrors.seam_id[0]}}</span>
-                        </div>
-                    </div>
-
                     <div class="form-group" :class="formErrors.customer_id ? 'has-error' : ''">
                         <label class="control-label col-md-3 col-sm-3 col-xs-12" for="customer_id">Customer
                         </label>
@@ -82,19 +113,13 @@
                         </div>
                     </div>
 
-                    <div class="form-group" :class="formErrors.material_type ? 'has-error' : ''">
-                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="material_type">Material Type
+                    <div class="form-group" :class="formErrors.employee_id ? 'has-error' : ''">
+                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="employee_id">Employee
                         </label>
                         <div class="col-md-9 col-sm-9 col-xs-12">
-                            <div class="radio radio-inline radio-replace radio-success">
-								<input type="radio" v-model="formData.material_type" id="material_type_hi" value="h">
-								<label for="material_type_hi">HIGH</label>
-							</div>
-                            <div class="radio radio-inline radio-replace radio-danger">
-								<input type="radio" v-model="formData.material_type" id="material_type_lo" value="l">
-								<label for="material_type_lo">LOW</label>
-							</div>
-                            <span v-if="formErrors.material_type" class="help-block">@{{formErrors.material_type[0]}}</span>
+                            <select2 :options="employees" v-model="formData.employee_id" data-placeholder="Employee">
+                            </select2>
+                            <span v-if="formErrors.employee_id" class="help-block">@{{formErrors.employee_id[0]}}</span>
                         </div>
                     </div>
 

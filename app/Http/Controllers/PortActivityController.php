@@ -31,15 +31,19 @@ class PortActivityController extends Controller
                     employees.name AS employee,
                     customers.name AS customer,
                     unit_activities.name AS activity,
-                    seams.name AS seam
+                    seams.name AS seam,
+                    hoppers.name AS hopper,
+                    haulers.name AS hauler
                 ')
                 ->join('units', 'units.id', '=', 'port_activities.unit_id')
+                ->join('units AS haulers', 'haulers.id', '=', 'port_activities.hauler_id', 'LEFT')
                 ->join('stock_areas', 'stock_areas.id', '=', 'port_activities.stock_area_id')
                 ->join('jetties', 'jetties.id', '=', 'stock_areas.jetty_id')
                 ->join('employees', 'employees.id', '=', 'port_activities.employee_id')
                 ->join('customers', 'customers.id', '=', 'port_activities.customer_id')
                 ->join('unit_activities', 'unit_activities.id', '=', 'port_activities.unit_activity_id')
                 ->join('seams', 'seams.id', '=', 'port_activities.seam_id', 'LEFT')
+                ->join('hoppers', 'hoppers.id', '=', 'port_activities.hopper_id', 'LEFT')
                 ->when($request->searchPhrase, function($query) use ($request) {
                     return $query->where('units.name', 'LIKE', '%'.$request->searchPhrase.'%')
                         ->where('employees.name', 'LIKE', '%'.$request->searchPhrase.'%')

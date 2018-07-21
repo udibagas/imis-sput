@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\StockDumping;
 use App\Http\Requests\StockDumpingRequest;
+use App\Exports\StockDumpingExport;
+use Excel;
 
 class StockDumpingController extends Controller
 {
@@ -74,7 +76,9 @@ class StockDumpingController extends Controller
         $this->authorize('create', StockDumping::class);
         $input = $request->all();
         $input['user_id'] = auth()->user()->id;
-        return StockDumping::create($input);
+        $stockDumping = StockDumping::create($input);
+
+
     }
 
     /**
@@ -113,5 +117,16 @@ class StockDumpingController extends Controller
     {
         $this->authorize('delete', StockDumping::class);
         return ['success' => $stockDumping->delete()];
+    }
+
+    public function export(Request $request)
+    {
+        $this->authorize('export', StockDumping::class);
+        return Excel::download(new StockDumpingExport($request), "stock-dumping-{$request->from}-to-{$request->to}.xlsx");
+    }
+
+    public function downloadApp()
+    {
+        return response()->download('imis-checker.apk');
     }
 }
