@@ -92,7 +92,7 @@
 
                     <br>
 
-                    <table v-show="formData.super_admin == 0 && (formData.customer_id == 0 || formData.customer_id == undefined)" class="table table-striped table-condensed table-bordered" style="margin-bottom:0;">
+                    <table v-show="showAuth" class="table table-striped table-condensed table-bordered" style="margin-bottom:0;">
                         <thead>
                             <tr>
                                 <th style="vertical-align:middle;" rowspan="2">Modules/Action</th>
@@ -125,7 +125,7 @@
 
                     <?php $index = 0; ?>
                     @foreach(\App\Authorization::getModule() as $m)
-                    <table v-show="formData.super_admin == 0" class="table table-striped table-condensed table-bordered" style="margin-bottom:0;">
+                    <table v-show="showAuth" class="table table-striped table-condensed table-bordered" style="margin-bottom:0;">
                         <thead>
                             <tr>
                                 <th colspan="7">{{$m['text']}}</th>

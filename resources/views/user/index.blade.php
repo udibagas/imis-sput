@@ -59,9 +59,11 @@
         el: '#app',
         data: {
             customers: {!! App\Customer::selectRaw('id AS id, name AS text')->orderBy('name', 'ASC')->get() !!},
+            showAuth: true,
             formData: {
                 active: 0,
                 super_admin: 0,
+                customer_id: 0,
                 auth: {
                     controller: [],
                     view: [],
@@ -87,6 +89,12 @@
             actions: ['view', 'create', 'update', 'delete', 'export', 'import'],
         },
         watch: {
+            'formData.customer_id': function(v, o) {
+                this.showAuth = v ? false : true;
+            },
+            'formData.super_admin': function(v, o) {
+                this.showAuth = v ? false : true;
+            },
             'selectAll.view': function(v, o) {
                 for (i in this.formData.auth.view) {
                     this.formData.auth.view[i] = v;
@@ -134,6 +142,7 @@
                 this.formData = {
                     active: 0,
                     super_admin: 0,
+                    customer_id: 0,
                     auth: {
                         controller: [],
                         view: [],

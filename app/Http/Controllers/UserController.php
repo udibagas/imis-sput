@@ -22,13 +22,15 @@ class UserController extends Controller
         {
             $pageSize = $request->rowCount > 0 ? $request->rowCount : 1000000;
             $request['page'] = $request->current;
-            $sort = $request->sort ? key($request->sort) : 'name';
+            $sort = $request->sort ? key($request->sort) : 'users.name';
             $dir = $request->sort ? $request->sort[$sort] : 'asc';
 
-            $users = User::when($request->searchPhrase, function($query) use ($request) {
-                    return $query->where('name', 'LIKE', '%'.$request->searchPhrase.'%')
-                        ->orWhere('email', 'LIKE', '%'.$request->searchPhrase.'%')
-                        ->orWhere('role', 'LIKE', '%'.$request->searchPhrase.'%');
+            $users = User::selectRaw('users.*, customers.name AS customer')
+                ->join('customers', 'customers.id', '=', 'users.customer_id', 'LEFT')
+                ->when($request->searchPhrase, function($query) use ($request) {
+                    return $query->where('users.name', 'LIKE', '%'.$request->searchPhrase.'%')
+                        ->orWhere('users.email', 'LIKE', '%'.$request->searchPhrase.'%')
+                        ->orWhere('customers.name', 'LIKE', '%'.$request->searchPhrase.'%');
                 })->orderBy($sort, $dir)->paginate($pageSize);
 
             return [
@@ -58,6 +60,11 @@ class UserController extends Controller
         $input = $request->all();
         $input['password'] = bcrypt($request->password);
         $input['api_token'] = str_random(60);
+
+        if ($request->customer_id) {
+            $input['super_admin'] = 0;
+        }
+
         $user = User::create($input);
         $authorizations = [];
 
@@ -105,6 +112,10 @@ class UserController extends Controller
 
         if ($request->password) {
             $input['password'] = bcrypt($request->password);
+        }
+
+        if ($request->customer_id) {
+            $input['super_admin'] = 0;
         }
 
         $user->update($input);

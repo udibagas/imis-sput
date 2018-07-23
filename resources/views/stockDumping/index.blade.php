@@ -68,7 +68,7 @@
                 from: '{{date("Y-m-d")}}',
                 to: '{{date("Y-m-d")}}'
             },
-            armada_units: {!! App\ArmadaUnit::selectRaw('armada_units.id AS id, CONCAT(armadas.name, " - ", armada_units.name) AS text')
+            armada_units: {!! App\ArmadaUnit::selectRaw('armada_units.id AS id, CONCAT(armadas.name, " - ", armada_units.name, " - ", armada_units.register) AS text')
                 ->join('armadas', 'armadas.id', '=', 'armada_units.armada_id')
                 ->orderBy('armada_units.name', 'ASC')->get() !!},
             stock_areas: {!! App\StockArea::selectRaw('stock_areas.id AS id, CONCAT("Jetty ", jetties.name, " - ", stock_areas.name) AS text')
