@@ -7,6 +7,11 @@
                     <h4 class="modal-title">@{{formTitle}}</h4>
                 </div>
                 <div class="modal-body">
+                    <div class="alert alert-danger" v-if="error.message">
+                        @{{error.message}}<br>
+                        @{{error.file}}:@{{error.line}}
+                    </div>
+
                     <div class="form-group" :class="formErrors.name ? 'has-error' : ''">
                         <label class="control-label col-md-4 col-sm-4 col-xs-12" for="name">Name
                         </label>
@@ -59,52 +64,88 @@
                         </div>
                     </div>
 
-                    <table class="table table-striped table-hover" style="margin-bottom:0;">
-                        <thead>
-                            <tr>
-                                <th>Stock Area</th>
-                                <th>Capacity</th>
-                                <th>Stock</th>
-                                <th>Age</th>
-                                <th>Position</th>
-                                <th>Order</th>
-                                <th class="text-right">
-                                    <a href="#" @click="addStockArea" class="btn btn-primary"><i class="icon-plus"></i></a>
-                                </th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr v-for="(s,i) in formData.stock_area">
-                                <td>
-                                    <input type="hidden" v-model="formData.stock_area[i].id">
-                                    <input type="text" class="form-control" v-model="formData.stock_area[i].name">
-                                </td>
-                                <td>
-                                    <input type="number" class="form-control" v-model="formData.stock_area[i].capacity">
-                                </td>
-                                <td>
-                                    <input type="number" class="form-control" v-model="formData.stock_area[i].stock">
-                                </td>
-                                <td>
-                                    <input type="number" class="form-control" v-model="formData.stock_area[i].age">
-                                </td>
-                                <td>
-                                    <select class="form-control" v-model="formData.stock_area[i].position" name="">
-                                        <option value="l">Left</option>
-                                        <option value="r">Right</option>
-                                        <option value="c">Center</option>
-                                        <option value="o">Outside</option>
-                                    </select>
-                                </td>
-                                <td>
-                                    <input type="number" class="form-control" v-model="formData.stock_area[i].order">
-                                </td>
-                                <td class="text-right">
-                                    <a href="#" @click="delStockArea(i)" class="btn btn-danger"><i class="icon-trash"></i></a>
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
+                    <div class="panel panel-info">
+                        <div class="panel-heading">
+                            STOCK AREA
+                        </div>
+                        <table class="table table-striped table-hover" style="margin-bottom:0;">
+                            <thead>
+                                <tr>
+                                    <th>Stock Area</th>
+                                    <th>Capacity</th>
+                                    <th>Stock</th>
+                                    <th>Age</th>
+                                    <th>Position</th>
+                                    <th>Order</th>
+                                    <th class="text-right">
+                                        <a href="#" @click="addStockArea" class="btn btn-primary"><i class="icon-plus"></i></a>
+                                    </th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr v-for="(s,i) in formData.stock_area">
+                                    <td>
+                                        <input type="hidden" v-model="formData.stock_area[i].id">
+                                        <input type="text" class="form-control" v-model="formData.stock_area[i].name">
+                                    </td>
+                                    <td>
+                                        <input type="number" class="form-control" v-model="formData.stock_area[i].capacity">
+                                    </td>
+                                    <td>
+                                        <input type="number" class="form-control" v-model="formData.stock_area[i].stock">
+                                    </td>
+                                    <td>
+                                        <input type="number" class="form-control" v-model="formData.stock_area[i].age">
+                                    </td>
+                                    <td>
+                                        <select class="form-control" v-model="formData.stock_area[i].position" name="">
+                                            <option value="l">Left</option>
+                                            <option value="r">Right</option>
+                                            <option value="c">Center</option>
+                                            <option value="o">Outside</option>
+                                        </select>
+                                    </td>
+                                    <td>
+                                        <input type="number" class="form-control" v-model="formData.stock_area[i].order">
+                                    </td>
+                                    <td class="text-right">
+                                        <a href="#" @click="delStockArea(i)" class="btn btn-danger"><i class="icon-trash"></i></a>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <div class="panel panel-info">
+                        <div class="panel-heading">
+                            HOPPER
+                        </div>
+                        <table class="table table-striped">
+                            <thead>
+                                <tr>
+                                    <th>Name</th>
+                                    <th>Description</th>
+                                    <th class="text-right">
+                                        <a href="#" @click="addHopper" class="btn btn-primary"><i class="icon-plus"></i></a>
+                                    </th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr v-for="(s,i) in formData.hoppers">
+                                    <td>
+                                        <input type="hidden" v-model="formData.hoppers[i].id">
+                                        <input type="text" class="form-control" v-model="formData.hoppers[i].name">
+                                    </td>
+                                    <td>
+                                        <input type="text" class="form-control" v-model="formData.hoppers[i].description">
+                                    </td>
+                                    <td class="text-right">
+                                        <a href="#" @click="delHopper(i)" class="btn btn-danger"><i class="icon-trash"></i></a>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
 
                 </div>
                 <div class="modal-footer">

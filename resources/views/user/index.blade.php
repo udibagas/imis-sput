@@ -22,6 +22,8 @@
                         data-align="center"
                         data-header-align="center">Super Admin</th>
 
+                    <th data-column-id="customer">Customer</th>
+
                     <th data-column-id="active"
                         data-formatter="active"
                         data-align="center"
@@ -56,6 +58,7 @@
     const app = new Vue({
         el: '#app',
         data: {
+            customers: {!! App\Customer::selectRaw('id AS id, name AS text')->orderBy('name', 'ASC')->get() !!},
             formData: {
                 active: 0,
                 super_admin: 0,

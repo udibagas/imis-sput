@@ -48,7 +48,17 @@
                         </div>
                     </div>
 
-                    <div class="form-group" :class="formErrors.super_admin ? 'has-error' : ''">
+                    <div class="form-group" :class="formErrors.customer_id ? 'has-error' : ''">
+                        <label class="control-label col-md-4 col-sm-4 col-xs-12" for="customer_id">Customer
+                        </label>
+                        <div class="col-md-8 col-sm-8 col-xs-12">
+                            <select2 data-allow-clear="true" :options="customers" v-model="formData.customer_id" data-placeholder="Customer">
+                            </select2>
+                            <span v-if="formErrors.customer_id" class="help-block">@{{formErrors.customer_id[0]}}</span>
+                        </div>
+                    </div>
+
+                    <div v-show="formData.customer_id == 0 || formData.customer_id == undefined" class="form-group" :class="formErrors.super_admin ? 'has-error' : ''">
                         <label class="control-label col-md-4 col-sm-4 col-xs-12" for="super_admin">Super Admin
                         </label>
                         <div class="col-md-8 col-sm-8 col-xs-12">
@@ -82,7 +92,7 @@
 
                     <br>
 
-                    <table v-show="formData.super_admin == 0" class="table table-striped table-condensed table-bordered" style="margin-bottom:0;">
+                    <table v-show="formData.super_admin == 0 && (formData.customer_id == 0 || formData.customer_id == undefined)" class="table table-striped table-condensed table-bordered" style="margin-bottom:0;">
                         <thead>
                             <tr>
                                 <th style="vertical-align:middle;" rowspan="2">Modules/Action</th>

@@ -27,7 +27,6 @@
                     <th data-column-id="area">Area</th>
                     <th data-column-id="volume">Volume (Ton)</th>
                     <th data-column-id="customer">Customer</th>
-                    <th data-column-id="employee">Employee</th>
                     <th data-column-id="user">User</th>
                     <th data-column-id="insert_via">Insert Via</th>
                     @can('updateOrDelete', App\StockDumping::class)
@@ -69,9 +68,9 @@
                 from: '{{date("Y-m-d")}}',
                 to: '{{date("Y-m-d")}}'
             },
-            units: {!! App\Unit::selectRaw('id AS id, name AS text')
-                ->orderBy('name', 'ASC')->get() !!},
-            employees: {!! App\Employee::selectRaw('id AS id, name AS text')->orderBy('name', 'ASC')->get() !!},
+            armada_units: {!! App\ArmadaUnit::selectRaw('armada_units.id AS id, CONCAT(armadas.name, " - ", armada_units.name) AS text')
+                ->join('armadas', 'armadas.id', '=', 'armada_units.armada_id')
+                ->orderBy('armada_units.name', 'ASC')->get() !!},
             stock_areas: {!! App\StockArea::selectRaw('stock_areas.id AS id, CONCAT("Jetty ", jetties.name, " - ", stock_areas.name) AS text')
                 ->join('jetties', 'jetties.id', '=', 'stock_areas.jetty_id')
                 ->orderBy('jetties.name', 'ASC')->get() !!},

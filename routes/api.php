@@ -56,6 +56,10 @@ Route::get('fuelTank', function() {
     return App\FuelTank::all();
 });
 
+Route::get('seam', function() {
+    return App\Seam::all();
+});
+
 Route::get('fuelRefill', function() {
     return App\FuelRefill::selectRaw('
         fuel_refills.*, units.name AS unit,
@@ -192,6 +196,10 @@ Route::post('stockDumping', function() {
 
 Route::get('area', function() {
     return App\Area::with('subArea')->get();
+});
+
+Route::get('armada', function() {
+    return App\Armada::all();
 });
 
 Route::get('barge', function() {

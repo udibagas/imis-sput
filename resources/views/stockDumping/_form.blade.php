@@ -48,13 +48,13 @@
                         </div>
                     </div>
 
-                    <div class="form-group" :class="formErrors.unit_id ? 'has-error' : ''">
-                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="unit_id">Unit
+                    <div class="form-group" :class="formErrors.armada_unit_id ? 'has-error' : ''">
+                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="armada_unit_id">Unit
                         </label>
                         <div class="col-md-9 col-sm-9 col-xs-12">
-                            <select2 :options="units" v-model="formData.unit_id" data-placeholder="Unit">
+                            <select2 :options="armada_units" v-model="formData.armada_unit_id" data-placeholder="Unit">
                             </select2>
-                            <span v-if="formErrors.unit_id" class="help-block">@{{formErrors.unit_id[0]}}</span>
+                            <span v-if="formErrors.armada_unit_id" class="help-block">@{{formErrors.armada_unit_id[0]}}</span>
                         </div>
                     </div>
 
@@ -110,16 +110,6 @@
                             <select2 :options="customers" v-model="formData.customer_id" data-placeholder="Customer">
                             </select2>
                             <span v-if="formErrors.customer_id" class="help-block">@{{formErrors.customer_id[0]}}</span>
-                        </div>
-                    </div>
-
-                    <div class="form-group" :class="formErrors.employee_id ? 'has-error' : ''">
-                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="employee_id">Employee
-                        </label>
-                        <div class="col-md-9 col-sm-9 col-xs-12">
-                            <select2 :options="employees" v-model="formData.employee_id" data-placeholder="Employee">
-                            </select2>
-                            <span v-if="formErrors.employee_id" class="help-block">@{{formErrors.employee_id[0]}}</span>
                         </div>
                     </div>
 
