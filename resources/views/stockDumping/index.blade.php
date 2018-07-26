@@ -21,12 +21,15 @@
                     <th data-column-id="date">Date</th>
                     <th data-column-id="shift">Shift</th>
                     <th data-column-id="time">Time</th>
+                    <th data-column-id="subcont">Subcont</th>
                     <th data-column-id="unit">Unit</th>
                     <th data-column-id="material_type" data-formatter="material_type">Material Type</th>
                     <th data-column-id="seam">Seam</th>
+                    <th data-column-id="block_area">Block Area</th>
                     <th data-column-id="area">Area</th>
                     <th data-column-id="volume">Volume (Ton)</th>
                     <th data-column-id="customer">Customer</th>
+                    <th data-column-id="register_number">Register Number</th>
                     <th data-column-id="user">User</th>
                     <th data-column-id="insert_via">Insert Via</th>
                     @can('updateOrDelete', App\StockDumping::class)
@@ -68,14 +71,15 @@
                 from: '{{date("Y-m-d")}}',
                 to: '{{date("Y-m-d")}}'
             },
-            armada_units: {!! App\ArmadaUnit::selectRaw('armada_units.id AS id, CONCAT(armadas.name, " - ", armada_units.name, " - ", armada_units.register) AS text')
-                ->join('armadas', 'armadas.id', '=', 'armada_units.armada_id')
-                ->orderBy('armada_units.name', 'ASC')->get() !!},
+            subcont_units: {!! App\SubcontUnit::selectRaw('subcont_units.id AS id, CONCAT(subconts.name, " - ", subcont_units.code_number) AS text')
+                ->join('subconts', 'subconts.id', '=', 'subcont_units.subcont_id')
+                ->orderBy('subcont_units.code_number', 'ASC')->get() !!},
             stock_areas: {!! App\StockArea::selectRaw('stock_areas.id AS id, CONCAT("Jetty ", jetties.name, " - ", stock_areas.name) AS text')
                 ->join('jetties', 'jetties.id', '=', 'stock_areas.jetty_id')
                 ->orderBy('jetties.name', 'ASC')->get() !!},
             seams: {!! App\Seam::selectRaw('id AS id, name AS text')->orderBy('name', 'ASC')->get() !!},
             customers: {!! App\Customer::selectRaw('id AS id, name AS text')->orderBy('name', 'ASC')->get() !!},
+            areas: {!! App\Area::selectRaw('id AS id, name AS text')->orderBy('name', 'ASC')->get() !!},
         },
         methods: {
             openExportForm: function() {

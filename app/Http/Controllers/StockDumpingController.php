@@ -29,20 +29,24 @@ class StockDumpingController extends Controller
             $stockDumping = StockDumping::selectRaw('
                     stock_dumpings.*,
                     CONCAT("Jetty ", jetties.name, " - ", stock_areas.name) AS area,
-                    CONCAT(armadas.name, " - ", armada_units.name) AS unit,
+                    areas.name AS block_area,
+                    subconts.name AS subcont,
+                    subcont_units.code_number AS unit,
                     customers.name AS customer,
                     seams.name AS seam,
                     users.name AS user
                 ')
-                ->join('armada_units', 'armada_units.id', '=', 'stock_dumpings.armada_unit_id')
-                ->join('armadas', 'armadas.id', '=', 'armada_units.armada_id')
+                ->join('subcont_units', 'subcont_units.id', '=', 'stock_dumpings.subcont_unit_id')
+                ->join('subconts', 'subconts.id', '=', 'subcont_units.subcont_id')
                 ->join('stock_areas', 'stock_areas.id', '=', 'stock_dumpings.stock_area_id')
+                ->join('areas', 'areas.id', '=', 'stock_dumpings.area_id')
                 ->join('jetties', 'jetties.id', '=', 'stock_areas.jetty_id')
                 ->join('customers', 'customers.id', '=', 'stock_dumpings.customer_id')
                 ->join('users', 'users.id', '=', 'stock_dumpings.user_id')
                 ->join('seams', 'seams.id', '=', 'stock_dumpings.seam_id', 'LEFT')
                 ->when($request->searchPhrase, function($query) use ($request) {
-                    return $query->where('armada_units.name', 'LIKE', '%'.$request->searchPhrase.'%')
+                    return $query->where('subcont_units.code_number', 'LIKE', '%'.$request->searchPhrase.'%')
+                        ->where('stock_dumpings.register_number', 'LIKE', '%'.$request->searchPhrase.'%')
                         ->where('customers.name', 'LIKE', '%'.$request->searchPhrase.'%')
                         ->where('stock_areas.name', 'LIKE', '%'.$request->searchPhrase.'%');
                 })->orderBy($sort, $dir)->paginate($pageSize);

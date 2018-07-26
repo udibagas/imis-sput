@@ -27,12 +27,14 @@ class StockDumpingRequest extends FormRequest
         return [
             'date' => 'required|date',
             'time' => 'required|date_format:"H:i"',
-            'armada_unit_id' => 'required',
+            'subcont_unit_id' => 'required',
             'customer_id' => 'required',
             'material_type' => 'required',
             'volume' => 'required',
             'stock_area_id' => 'required',
+            'area_id' => 'required',
             'shift' => 'required',
+            'register_number' => 'required',
         ];
     }
 
@@ -41,12 +43,14 @@ class StockDumpingRequest extends FormRequest
         return [
             'date' => 'Date',
             'time' => 'Time',
-            'armada_unit_id' => 'Unit',
+            'subcont_unit_id' => 'Unit',
             'customer_id' => 'Customer',
             'material_type' => 'Material Type',
             'volume' => 'Volume',
             'stock_area_id' => 'Stock Area',
-            'shift' => 'Shift'
+            'shift' => 'Shift',
+            'area_id' => 'Block Area',
+            'register_number' => 'Register Number'
         ];
     }
 }

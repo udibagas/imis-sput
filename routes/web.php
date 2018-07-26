@@ -224,14 +224,14 @@ View::composer('layouts._sidebar', function($view) {
                 'breakdown' => 'Breakdown OCR',
                 'stockDumping' => 'Stock Dumping',
                 'portActivity' => 'Port Activity',
-                'materialStock' => 'Material Stock Balanced',
+                'materialStock' => 'Update Stock Balanced',
                 'Status Jetty' => [
                     'jetty/dwellingTime' => 'Dwelling Time',
                     'barge/resume' => 'Resume Barging Daily',
                     'jetty/productivity' => 'Productivity Jetty'
                 ],
                 '<i class="fa fa-database"></i> Master Data' => [
-                    // 'area' => 'Area',
+                    'area' => 'Area',
                     'barge' => 'Barges',
                     'buyer' => 'Buyers',
                     'buyer' => 'Buyers',

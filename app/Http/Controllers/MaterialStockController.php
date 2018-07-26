@@ -50,7 +50,7 @@ class MaterialStockController extends Controller
         return view('materialStock.index', [
             'breadcrumbs' => [
                 'operation/dashboard' => 'Operation',
-                'materialStock' => 'Stock Dumping'
+                'materialStock' => 'Update Stock Balanced'
             ]
         ]);
     }

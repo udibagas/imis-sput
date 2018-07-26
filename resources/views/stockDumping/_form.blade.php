@@ -48,13 +48,13 @@
                         </div>
                     </div>
 
-                    <div class="form-group" :class="formErrors.armada_unit_id ? 'has-error' : ''">
-                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="armada_unit_id">Unit
+                    <div class="form-group" :class="formErrors.subcont_unit_id ? 'has-error' : ''">
+                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="subcont_unit_id">Unit
                         </label>
                         <div class="col-md-9 col-sm-9 col-xs-12">
-                            <select2 :options="armada_units" v-model="formData.armada_unit_id" data-placeholder="Unit">
+                            <select2 :options="subcont_units" v-model="formData.subcont_unit_id" data-placeholder="Unit">
                             </select2>
-                            <span v-if="formErrors.armada_unit_id" class="help-block">@{{formErrors.armada_unit_id[0]}}</span>
+                            <span v-if="formErrors.subcont_unit_id" class="help-block">@{{formErrors.subcont_unit_id[0]}}</span>
                         </div>
                     </div>
 
@@ -84,6 +84,16 @@
                         </div>
                     </div>
 
+                    <div class="form-group" :class="formErrors.area_id ? 'has-error' : ''">
+                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="area_id">Block Area
+                        </label>
+                        <div class="col-md-9 col-sm-9 col-xs-12">
+                            <select2 :options="areas" v-model="formData.area_id" data-placeholder="Block Area">
+                            </select2>
+                            <span v-if="formErrors.area_id" class="help-block">@{{formErrors.area_id[0]}}</span>
+                        </div>
+                    </div>
+
                     <div class="form-group" :class="formErrors.stock_area_id ? 'has-error' : ''">
                         <label class="control-label col-md-3 col-sm-3 col-xs-12" for="stock_area_id">Area
                         </label>
@@ -110,6 +120,15 @@
                             <select2 :options="customers" v-model="formData.customer_id" data-placeholder="Customer">
                             </select2>
                             <span v-if="formErrors.customer_id" class="help-block">@{{formErrors.customer_id[0]}}</span>
+                        </div>
+                    </div>
+
+                    <div class="form-group" :class="formErrors.register_number ? 'has-error' : ''">
+                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="register_number">Register Number
+                        </label>
+                        <div class="col-md-9 col-sm-9 col-xs-12">
+                            <input type="text" v-model="formData.register_number" class="form-control" placeholder="Register Number">
+                            <span v-if="formErrors.register_number" class="help-block">@{{formErrors.register_number[0]}}</span>
                         </div>
                     </div>
 

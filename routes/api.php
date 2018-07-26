@@ -153,7 +153,7 @@ Route::post('stockDumping', function() {
             'date'              => $r->date,
             'shift'             => $r->shift,
             'time'              => $r->time,
-            'armada_unit_id'    => $r->armada_unit_id,
+            'subcont_unit_id'    => $r->subcont_unit_id,
             'stock_area_id'     => $r->stock_area_id,
             'customer_id'       => $r->customer_id,
             'material_type'     => $r->material_type,
@@ -167,7 +167,7 @@ Route::post('stockDumping', function() {
         $exists = App\StockDumping::where('date', $r->date)
             ->where('shift', $r->shift)
             ->where('stock_area_id', $r->stock_area_id)
-            ->where('armada_unit_id', $r->armada_unit_id)
+            ->where('subcont_unit_id', $r->subcont_unit_id)
             ->where('customer_id', $r->customer_id)
             ->where('volume', $r->volume)
             ->first();
@@ -192,15 +192,17 @@ Route::get('stockDumping', function() {
     return App\StockDumping::selectRaw('
             stock_dumpings.*,
             jetties.name AS jetty,
-            stock_areas.name AS area,
-            armadas.name AS armada,
-            CONCAT(armada_units.name, " - ", armada_units.register) AS unit,
+            areas.name AS area,
+            stock_areas.name AS stock_area,
+            subconts.name AS subcont,
+            subcont_units.code_number AS unit,
             customers.name AS customer,
             seams.name AS seam,
             users.name AS user
         ')
-        ->join('armada_units', 'armada_units.id', '=', 'stock_dumpings.armada_unit_id')
-        ->join('armadas', 'armadas.id', '=', 'armada_units.armada_id')
+        ->join('subcont_units', 'subcont_units.id', '=', 'stock_dumpings.subcont_unit_id')
+        ->join('subconts', 'subconts.id', '=', 'subcont_units.subcont_id')
+        ->join('areas', 'areas.id', '=', 'stock_dumpings.area_id')
         ->join('stock_areas', 'stock_areas.id', '=', 'stock_dumpings.stock_area_id')
         ->join('jetties', 'jetties.id', '=', 'stock_areas.jetty_id')
         ->join('customers', 'customers.id', '=', 'stock_dumpings.customer_id')
@@ -212,16 +214,20 @@ Route::get('stockDumping', function() {
         })->orderBy('stock_dumpings.id', 'DESC')->get();
 });
 
+Route::get('area', function() {
+    return App\Area::all();
+});
+
 Route::get('stockArea', function() {
     return App\StockArea::all();
 });
 
-Route::get('armada', function() {
-    return App\Armada::all();
+Route::get('subcont', function() {
+    return App\Subcont::all();
 });
 
-Route::get('armadaUnit', function() {
-    return App\ArmadaUnit::all();
+Route::get('subcontUnit', function() {
+    return App\SubcontUnit::all();
 });
 
 Route::get('barge', function() {
