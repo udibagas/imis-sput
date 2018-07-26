@@ -5,7 +5,7 @@ namespace App\Http\Requests;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
 
-class ArmadaRequest extends FormRequest
+class SubcontRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -24,12 +24,12 @@ class ArmadaRequest extends FormRequest
      */
     public function rules()
     {
-        $armada = $this->route('armada');
+        $subcont = $this->route('subcont');
 
         return [
             'name' => [
                 'required',
-                Rule::unique('armadas')->ignore($armada ? $armada->id : 0)
+                Rule::unique('subconts')->ignore($subcont ? $subcont->id : 0)
             ],
         ];
     }

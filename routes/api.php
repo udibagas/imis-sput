@@ -77,7 +77,10 @@ Route::get('fuelRefill', function() {
 });
 
 Route::post('login', function() {
-    $user = App\User::where('email', 'LIKE', request('email'))->first();
+    $user = App\User::selectRaw('users.*, customers.name AS customer')
+        ->join('customers', 'customers.id', '=', 'users.customer_id', 'LEFT')
+        ->where('users.active', 1)
+        ->where('users.email', 'LIKE', request('email'))->first();
 
     if ($user && password_verify(request('password'), $user->password)) {
         return $user;
@@ -143,18 +146,14 @@ Route::post('fuelRefill', function() {
 
 Route::post('stockDumping', function() {
     $rows   = json_decode(request('rows'));
-    $ids    = [];
 
     foreach($rows as $r)
     {
-        $ids[] = $r->id;
-
         $data = [
             'date'              => $r->date,
             'shift'             => $r->shift,
             'time'              => $r->time,
-            'unit_id'           => $r->unit_id,
-            'employee_id'       => $r->employee_id,
+            'armada_unit_id'    => $r->armada_unit_id,
             'stock_area_id'     => $r->stock_area_id,
             'customer_id'       => $r->customer_id,
             'material_type'     => $r->material_type,
@@ -168,8 +167,7 @@ Route::post('stockDumping', function() {
         $exists = App\StockDumping::where('date', $r->date)
             ->where('shift', $r->shift)
             ->where('stock_area_id', $r->stock_area_id)
-            ->where('unit_id', $r->unit_id)
-            ->where('employee_id', $r->employee_id)
+            ->where('armada_unit_id', $r->armada_unit_id)
             ->where('customer_id', $r->customer_id)
             ->where('volume', $r->volume)
             ->first();
@@ -187,19 +185,43 @@ Route::post('stockDumping', function() {
         // ]);
     }
 
-    $ret = (count($ids) > 0)
-        ? ['ids' => implode(',', $ids), 'success' => true]
-        : ['success' => false];
-
-    return json_encode($ret);
+    return json_encode(['success' => true]);
 });
 
-Route::get('area', function() {
-    return App\Area::with('subArea')->get();
+Route::get('stockDumping', function() {
+    return App\StockDumping::selectRaw('
+            stock_dumpings.*,
+            jetties.name AS jetty,
+            stock_areas.name AS area,
+            armadas.name AS armada,
+            CONCAT(armada_units.name, " - ", armada_units.register) AS unit,
+            customers.name AS customer,
+            seams.name AS seam,
+            users.name AS user
+        ')
+        ->join('armada_units', 'armada_units.id', '=', 'stock_dumpings.armada_unit_id')
+        ->join('armadas', 'armadas.id', '=', 'armada_units.armada_id')
+        ->join('stock_areas', 'stock_areas.id', '=', 'stock_dumpings.stock_area_id')
+        ->join('jetties', 'jetties.id', '=', 'stock_areas.jetty_id')
+        ->join('customers', 'customers.id', '=', 'stock_dumpings.customer_id')
+        ->join('users', 'users.id', '=', 'stock_dumpings.user_id')
+        ->join('seams', 'seams.id', '=', 'stock_dumpings.seam_id', 'LEFT')
+        ->where('stock_dumpings.date', date('Y-m-d'))
+        ->when(request('customer_id'), function($query) {
+            return $query->where('stock_dumpings.customer_id', request('customer_id'));
+        })->orderBy('stock_dumpings.id', 'DESC')->get();
+});
+
+Route::get('stockArea', function() {
+    return App\StockArea::all();
 });
 
 Route::get('armada', function() {
     return App\Armada::all();
+});
+
+Route::get('armadaUnit', function() {
+    return App\ArmadaUnit::all();
 });
 
 Route::get('barge', function() {

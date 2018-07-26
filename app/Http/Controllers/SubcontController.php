@@ -3,10 +3,10 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Armada;
-use App\Http\Requests\ArmadaRequest;
+use App\Subcont;
+use App\Http\Requests\SubcontRequest;
 
-class ArmadaController extends Controller
+class SubcontController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -15,7 +15,7 @@ class ArmadaController extends Controller
      */
     public function index(Request $request)
     {
-        $this->authorize('view', Armada::class);
+        $this->authorize('view', Subcont::class);
 
         if ($request->ajax())
         {
@@ -24,24 +24,24 @@ class ArmadaController extends Controller
             $sort = $request->sort ? key($request->sort) : 'name';
             $dir = $request->sort ? $request->sort[$sort] : 'asc';
 
-            $armada = Armada::when($request->searchPhrase, function($query) use ($request) {
+            $subcont = Subcont::when($request->searchPhrase, function($query) use ($request) {
                     return $query->where('name', 'LIKE', '%'.$request->searchPhrase.'%')
                         ->orWhere('description', 'LIKE', '%'.$request->searchPhrase.'%');
                 })->orderBy($sort, $dir)->paginate($pageSize);
 
             return [
-                'rowCount' => $armada->perPage(),
-                'total' => $armada->total(),
-                'current' => $armada->currentPage(),
-                'rows' => $armada->items(),
+                'rowCount' => $subcont->perPage(),
+                'total' => $subcont->total(),
+                'current' => $subcont->currentPage(),
+                'rows' => $subcont->items(),
             ];
         }
 
-        return view('armada.index', [
+        return view('subcont.index', [
             'breadcrumbs' => [
                 'operation' => 'Operation',
                 '#' => 'Master Data',
-                'armada' => 'Armada'
+                'subcont' => 'Subcont'
             ]
         ]);
     }
@@ -52,10 +52,10 @@ class ArmadaController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(ArmadaRequest $request)
+    public function store(SubcontRequest $request)
     {
-        $this->authorize('create', Armada::class);
-        return Armada::create($request->all());
+        $this->authorize('create', Subcont::class);
+        return Subcont::create($request->all());
     }
 
     /**
@@ -64,10 +64,10 @@ class ArmadaController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show(Armada $armada)
+    public function show(Subcont $subcont)
     {
-        $this->authorize('view', Armada::class);
-        return $armada;
+        $this->authorize('view', Subcont::class);
+        return $subcont;
     }
 
     /**
@@ -77,11 +77,11 @@ class ArmadaController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(ArmadaRequest $request, Armada $armada)
+    public function update(SubcontRequest $request, Subcont $subcont)
     {
-        $this->authorize('update', Armada::class);
-        $armada->update($request->all());
-        return $armada;
+        $this->authorize('update', Subcont::class);
+        $subcont->update($request->all());
+        return $subcont;
     }
 
     /**
@@ -90,9 +90,9 @@ class ArmadaController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Armada $armada)
+    public function destroy(Subcont $subcont)
     {
-        $this->authorize('delete', Armada::class);
-        return ['success' => $armada->delete()];
+        $this->authorize('delete', Subcont::class);
+        return ['success' => $subcont->delete()];
     }
 }

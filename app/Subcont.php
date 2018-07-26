@@ -4,7 +4,7 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Armada extends Model
+class Subcont extends Model
 {
     protected $fillable = ['name', 'description'];
 }

@@ -3,11 +3,11 @@
 namespace App\Policies;
 
 use App\User;
-use App\Armada;
+use App\Subcont;
 use App\Authorization;
 use Illuminate\Auth\Access\HandlesAuthorization;
 
-class ArmadaPolicy
+class SubcontPolicy
 {
     use HandlesAuthorization;
 
@@ -15,7 +15,7 @@ class ArmadaPolicy
      * Determine whether the user can view the unit.
      *
      * @param  \App\User  $user
-     * @param  \App\Armada  $unit
+     * @param  \App\Subcont  $unit
      * @return mixed
      */
     public function view(User $user)
@@ -24,7 +24,7 @@ class ArmadaPolicy
             return true;
         }
 
-        return Authorization::where('controller', 'Armada')
+        return Authorization::where('controller', 'Subcont')
                 ->where('user_id', $user->id)
                 ->where('view', 1)->count();
     }
@@ -41,7 +41,7 @@ class ArmadaPolicy
             return true;
         }
 
-        return Authorization::where('controller', 'Armada')
+        return Authorization::where('controller', 'Subcont')
                 ->where('user_id', $user->id)
                 ->where('create', 1)->count();
     }
@@ -50,7 +50,7 @@ class ArmadaPolicy
      * Determine whether the user can update the unit.
      *
      * @param  \App\User  $user
-     * @param  \App\Armada  $unit
+     * @param  \App\Subcont  $unit
      * @return mixed
      */
     public function update(User $user)
@@ -59,7 +59,7 @@ class ArmadaPolicy
             return true;
         }
 
-        return Authorization::where('controller', 'Armada')
+        return Authorization::where('controller', 'Subcont')
                 ->where('user_id', $user->id)
                 ->where('update', 1)->count();
     }
@@ -68,7 +68,7 @@ class ArmadaPolicy
      * Determine whether the user can delete the unit.
      *
      * @param  \App\User  $user
-     * @param  \App\Armada  $unit
+     * @param  \App\Subcont  $unit
      * @return mixed
      */
     public function delete(User $user)
@@ -77,7 +77,7 @@ class ArmadaPolicy
             return true;
         }
 
-        return Authorization::where('controller', 'Armada')
+        return Authorization::where('controller', 'Subcont')
                 ->where('user_id', $user->id)
                 ->where('delete', 1)->count();
     }

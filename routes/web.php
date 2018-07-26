@@ -19,8 +19,8 @@ Route::group(['middleware' => 'auth'], function() {
 
     Route::get('absensi/export', 'AbsensiController@export');
     Route::resource('absensi', 'AbsensiController')->except(['edit']);
-    Route::resource('armada', 'ArmadaController')->except(['edit']);
-    Route::resource('armadaUnit', 'ArmadaUnitController')->except(['edit']);
+    Route::resource('subcont', 'SubcontController')->except(['edit']);
+    Route::resource('subcontUnit', 'SubcontUnitController')->except(['edit']);
 
     Route::get('backup/export', 'BackupController@export');
     Route::get('backup/import', 'BackupController@import');
@@ -232,8 +232,6 @@ View::composer('layouts._sidebar', function($view) {
                 ],
                 '<i class="fa fa-database"></i> Master Data' => [
                     // 'area' => 'Area',
-                    'armada' => 'Armada',
-                    'armadaUnit' => 'Armada Unit',
                     'barge' => 'Barges',
                     'buyer' => 'Buyers',
                     'buyer' => 'Buyers',
@@ -245,6 +243,8 @@ View::composer('layouts._sidebar', function($view) {
                     'planCategory' => 'Plan Category',
                     'problemProductivityCategory' => 'Problem Productivity Categories',
                     'seam' => 'Seam',
+                    'subcont' => 'Subcont',
+                    'subcontUnit' => 'Subcont Unit',
                     'tugboat' => 'Tugboat',
                     'unitActivity' => 'Unit Activities',
                 ]

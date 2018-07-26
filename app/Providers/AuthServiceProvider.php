@@ -16,8 +16,6 @@ class AuthServiceProvider extends ServiceProvider
     protected $policies = [
         'App\Absensi' => 'App\Policies\AbsensiPolicy',
         'App\Area' => 'App\Policies\AreaPolicy',
-        'App\Armada' => 'App\Policies\ArmadaPolicy',
-        'App\ArmadaUnit' => 'App\Policies\ArmadaUnitPolicy',
         'App\Asset' => 'App\Policies\AssetPolicy',
         'App\AssetLocation' => 'App\Policies\AssetLocationPolicy',
         'App\AssetStatus' => 'App\Policies\AssetStatusPolicy',
@@ -58,6 +56,8 @@ class AuthServiceProvider extends ServiceProvider
         'App\ProblemProductivityCategory' => 'App\Policies\ProblemProductivityCategoryPolicy',
         'App\ProductivityPlan' => 'App\Policies\ProductivityPlanPolicy',
         'App\RunningText' => 'App\Policies\RunningTextPolicy',
+        'App\Subcont' => 'App\Policies\SubcontPolicy',
+        'App\SubcontUnit' => 'App\Policies\SubcontUnitPolicy',
         'App\Sadp' => 'App\Policies\SadpPolicy',
         'App\Seam' => 'App\Policies\SeamPolicy',
         'App\StaffCategory' => 'App\Policies\StaffCategoryPolicy',

@@ -4,8 +4,8 @@
 
 <div class="panel panel-primary" id="app">
     <div class="panel-body">
-        <h3 class="pull-left text-primary">ARMADA <small>Manage</small></h3>
-        @can('create', App\Armada::class)
+        <h3 class="pull-left text-primary">SUBCONT UNIT <small>Manage</small></h3>
+        @can('create', App\SubcontUnit::class)
         <span class="pull-right" style="margin:15px 0 15px 10px;">
             <a href="#" @click="add" class="btn btn-primary"><i class="icon-plus-circled"></i></a>
         </span>
@@ -14,9 +14,13 @@
             <thead>
                 <tr>
                     <th data-column-id="id" data-width="3%">ID</th>
-                    <th data-column-id="name">Name</th>
-                    <th data-column-id="description">Description</th>
-                    @can('updateOrDelete', App\Armada::class)
+                    <th data-column-id="subcont">Subcont</th>
+                    <th data-column-id="code_number">Code Number</th>
+                    <th data-column-id="type">Type</th>
+                    <th data-column-id="model">Model</th>
+                    <th data-column-id="empty_weight">Empty Weight</th>
+                    <th data-column-id="average_weight">Average Weight</th>
+                    @can('updateOrDelete', App\SubcontUnit::class)
                     <th data-column-id="commands"
                         data-formatter="commands"
                         data-sortable="false"
@@ -28,8 +32,8 @@
         </table>
     </div>
 
-    @can('createOrUpdate', App\Armada::class)
-    @include('armada._form')
+    @can('createOrUpdate', App\SubcontUnit::class)
+    @include('subcontUnit._form')
     @endcan
 
 </div>
@@ -46,12 +50,13 @@
             formData: {},
             formErrors: {},
             formTitle: '',
-            error: {}
+            error: {},
+            subconts: {!! App\Subcont::selectRaw('id AS id, name AS text')->orderBy('name', 'ASC')->get() !!},
         },
         methods: {
             add: function() {
                 // reset the form
-                this.formTitle = "ADD ARMADA";
+                this.formTitle = "ADD SUBCONT UNIT";
                 this.formData = {};
                 this.formErrors = {};
                 this.error = {};
@@ -61,7 +66,7 @@
             store: function() {
                 block('form');
                 var t = this;
-                axios.post('{{url("armada")}}', this.formData).then(function(r) {
+                axios.post('{{url("subcontUnit")}}', this.formData).then(function(r) {
                     unblock('form');
                     $('#modal-form').modal('hide');
                     toastr["success"]("Data berhasil ditambahkan");
@@ -81,11 +86,11 @@
             },
             edit: function(id) {
                 var t = this;
-                this.formTitle = "EDIT ARMADA";
+                this.formTitle = "EDIT SUBCONT UNIT";
                 this.formErrors = {};
                 this.error = {};
 
-                axios.get('{{url("armada")}}/' + id).then(function(r) {
+                axios.get('{{url("subcontUnit")}}/' + id).then(function(r) {
                     t.formData = r.data;
                     $('#modal-form').modal('show');
                 })
@@ -100,7 +105,7 @@
             update: function() {
                 block('form');
                 var t = this;
-                axios.put('{{url("armada")}}/' + this.formData.id, this.formData).then(function(r) {
+                axios.put('{{url("subcontUnit")}}/' + this.formData.id, this.formData).then(function(r) {
                     unblock('form');
                     $('#modal-form').modal('hide');
                     toastr["success"]("Data berhasil diupdate");
@@ -124,7 +129,7 @@
                     message: "Anda yakin akan menghapus data ini?",
                     callback: function(r) {
                         if (r == true) {
-                            axios.delete('{{url("armada")}}/' + id)
+                            axios.delete('{{url("subcontUnit")}}/' + id)
 
                             .then(function(r) {
                                 if (r.data.success == true) {
@@ -152,7 +157,7 @@
 
             var grid = $('#bootgrid').bootgrid({
                 rowCount: [10,25,50,100],
-                ajax: true, url: '{{url('armada')}}',
+                ajax: true, url: '{{url('subcontUnit')}}',
                 ajaxSettings: {
                     method: 'GET', cache: false,
                     statusCode: {
@@ -168,8 +173,8 @@
                 },
                 formatters: {
                     "commands": function(column, row) {
-                        return '@can("update", App\Armada::class) <a href="#" class="btn btn-info btn-xs c-edit" data-id="'+row.id+'"><i class="icon-pencil"></i></a> @endcan' +
-                            '@can("delete", App\Armada::class) <a href="#" class="btn btn-danger btn-xs c-delete" data-id="'+row.id+'"><i class="icon-trash"></i></a> @endcan';
+                        return '@can("update", App\SubcontUnit::class) <a href="#" class="btn btn-info btn-xs c-edit" data-id="'+row.id+'"><i class="icon-pencil"></i></a> @endcan' +
+                            '@can("delete", App\SubcontUnit::class) <a href="#" class="btn btn-danger btn-xs c-delete" data-id="'+row.id+'"><i class="icon-trash"></i></a> @endcan';
                     }
                 }
             }).on("loaded.rs.jquery.bootgrid", function() {

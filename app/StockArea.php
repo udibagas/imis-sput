@@ -9,4 +9,8 @@ class StockArea extends Model
     protected $fillable = [
         'jetty_id', 'name', 'capacity', 'stock', 'age', 'position', 'order'
     ];
+
+    public function jetty() {
+        return $this->belongsTo(Jetty::class);
+    }
 }
