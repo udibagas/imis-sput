@@ -1,0 +1,4 @@
+['type'=>'Hino','model'=>'FM260','code_number'=>'H700','empty_weight'=>'13790','average_weight'=>'30280'],
+['type'=>'Hino','model'=>'FM260','code_number'=>'H701','empty_weight'=>'13780','average_weight'=>'30670'],
+['type'=>'Hino','model'=>'FM260','code_number'=>'H703','empty_weight'=>'13760','average_weight'=>'31730'],
+['type'=>'Hino','model'=>'FM260','code_number'=>'H704','empty_weight'=>'13850','average_weight'=>'29300']

@@ -1,0 +1,10 @@
+['type'=>'Hino','model'=>'FM260','code_number'=>'H901','empty_weight'=>'12760','average_weight'=>'24950'],
+['type'=>'Hino','model'=>'FM260','code_number'=>'H902','empty_weight'=>'12820','average_weight'=>'25910'],
+['type'=>'Hino','model'=>'FM260','code_number'=>'H903','empty_weight'=>'14120','average_weight'=>'31570'],
+['type'=>'Hino','model'=>'FM260','code_number'=>'H904','empty_weight'=>'13430','average_weight'=>'29280'],
+['type'=>'Hino','model'=>'FM260','code_number'=>'H905','empty_weight'=>'13380','average_weight'=>'31370'],
+['type'=>'Hino','model'=>'FM260','code_number'=>'H906','empty_weight'=>'14520','average_weight'=>'28230'],
+['type'=>'Hino','model'=>'FM260','code_number'=>'H907','empty_weight'=>'14530','average_weight'=>'28170'],
+['type'=>'Hino','model'=>'FM260','code_number'=>'H908','empty_weight'=>'12660','average_weight'=>'26960'],
+['type'=>'Hino','model'=>'FM260','code_number'=>'H909','empty_weight'=>'12830','average_weight'=>'27840'],
+['type'=>'Hino','model'=>'FM260','code_number'=>'H910','empty_weight'=>'14160','average_weight'=>'']
