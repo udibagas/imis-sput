@@ -11,20 +11,21 @@
     },
     "devDependencies": {
         "axios": "^0.18",
-        "bootstrap": "^4.0.0",
-        "popper.js": "^1.12",
-        "cross-env": "^5.1",
-        "jquery": "^3.2",
+        "bootstrap": "3.3.6",
+        "cross-env": "^5.2.0",
+        "jquery": "1.11.3",
         "laravel-mix": "^2.0",
-        "lodash": "^4.17.4",
+        "lodash": "^4.17.10",
+        "popper.js": "^1.14.3",
         "vue": "^2.5.7"
     },
     "dependencies": {
         "ajv": "^6.5.0",
         "ajv-keywords": "^3.2.0",
+        "bootbox": "^4.4.0",
         "echarts": "^4.1.0",
         "es2016": "0.0.0",
         "vue-smooth-dnd": "^0.1.9",
-        "vuejs-datetimepicker": "^1.1.5"
+        "yarn": "^1.7.0"
     }
 }
