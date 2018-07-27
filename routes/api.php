@@ -153,12 +153,14 @@ Route::post('stockDumping', function() {
             'date'              => $r->date,
             'shift'             => $r->shift,
             'time'              => $r->time,
-            'subcont_unit_id'    => $r->subcont_unit_id,
+            'subcont_unit_id'   => $r->subcont_unit_id,
+            'area_id'           => $r->area_id,
             'stock_area_id'     => $r->stock_area_id,
             'customer_id'       => $r->customer_id,
             'material_type'     => $r->material_type,
             'seam_id'           => $r->seam_id,
             'volume'            => $r->volume,
+            'register_number'   => $r->register_number,
             'user_id'      	    => $r->user_id,
             'insert_via'        => 'mobile'
         ];
