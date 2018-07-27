@@ -12,7 +12,7 @@ window.Vue = require('vue');
 
 Vue.filter('formatNumber', function(v) {
     return parseFloat(v)
-        .toFixed(2)
+        .toFixed(0)
         .toString()
         .replace(/\B(?=(\d{3})+(?!\d))/g, ",");
 });
@@ -28,3 +28,4 @@ Vue.filter('formatNumber', function(v) {
 Vue.component('water-level', require('./components/WaterLevel.vue'));
 Vue.component('daily-check-setting', require('./components/DailyCheckSetting.vue'));
 Vue.component('operation-dashboard', require('./components/OperationDashboard.vue'));
+Vue.component('stock-dumping-summary', require('./components/StockDumpingSummary.vue'));

@@ -1,40 +1,77 @@
+- deskripsi hopper dibikin nullable
+- bikin component water level (tinggal proses data real)
+- stock dumping  (checker) => harus beres (di dropdown stock area tampilkan jetty mana)
+    - bikin logic buat nambah stock
+- port_activities ==> benerin skema!!! ==> intinya di sini. bikin form standar dulu (bucket control)
+- egi has many activity through productivity plan !!!
+- jadiin halaman dashboard
+
+- manually update via web page
+- beresin absensi (download log & export to imis) ==> setelah deal
+- halaman demo buat quitioner ==> ini fitur HSE. tidak wajib
+- module operation
+- asset discrepancy?
+- tampilkan summary untuk employee management & asset management => belum fixed contentnya
+- asset taking jadi 1 halaman dengan asset manegement
+
+
+- tampilkan filter "TAMPILKAN PENGHUNI SAAT INI"
+- export data sesuai filter di atas
+- form validation check room availability & duplication dari sisi employee
+- tambah data owner / office di table
+
+
+
+DWELLING TIME ISI MANUAL PAKE FORM
+Resume
+    - input per minggu
+
+OPERATION
+    - barge monitoring
+    - warna untuk cargo punya siapa (per barge bisa kombinasi)
+    - umur = rata2
+
+Productivity : ambil dari api belt scale
+
+data atasan
+module payroll
+data sarana dipisah? ==> sepertinya iya biar ga tumpang tindih, atau bikinkan field baru?
+
+
+UNIT :
+- Hauler (1 rit berapa ton, high atau low)
+    - Hauling dalam dari area mana (stock) ke area mana (depan hopper)
+    - Hauling luar (dari luar ke depan hopper atau area stock) => stock balance neraca in (umur, volume)
+        - area mana
+        - berapa rit
+        - DT apa
+        - seam apa
+        - kualitas (high, low)
+        - punya siapa
+        - tanggal & jam berapa
+    - direct dumping (dari dalam langsung masuk ke hopper /feeding)
+- WA : (ada 600 & 500)
+    - feeding (ke hopper mana, jetty mana) : berapa bucket (<10m)
+    - loading/langsir dalam (ke Hauler mana) : berapa bucket (> 30m)
+    - stock piling (merapikan stock tanpa proses feeding/barging) : start - finish jam berapa, berapa bucket
+    - load and carry langsung feeding ke hopper(> 10m < 30m) dari mana ke mana (harus 2 WA)
+
 Dropdown di daily check sesuai yang dijadwalkan. Perlu?
-perhitungan durasi pakai moment.js
-parsing nilai untuk decimal ==> integer
 dropdown employe sesuai sesuai dengan yg aktif?
-dropdown pake select2 semua
-chart Fel Consumption
-add last_login on login
+chart Feul Consumption
+add last_login on login (tinggal implementasi di action login)
 form class diganti ala vue
 cari lib table vue yg bagus
 
-Saran:
-    - Bagaimana kalau leadtime breakdown unit disatuin sama breakdown PCR?
-
 Customer (owner) => pemilik batu / shipper
     - Long term
-        - BRE (owner) : KPP (kontraktor/tukang gali)
+        - BRE (owner) : KPP (kontraktor/tukang gali) => perlu dipisahkan?
         - BRE : HRS
     - Sale / short term
 
 Checker : menghitung yang masuk ke area stock pile
 
-Activity
-    - stock piling
-    - direct dumping / hauling luar
-    - hauling dalam / langsir dalam
-
 Berapa volume in
-
-PLANT:
-- Dashboard:
-    - Pitstop
-        - antrian maksudnya?
-        - achievement daily check?
-            - plan & actual cara ngitungnya?
-        - today plan daily check:
-            - data pitstop hari ini?
-            - warna hijau maksudnya? (yang sudah close)
 
 
 PR!!!
@@ -47,29 +84,3 @@ PR!!!
         - form untuk update policy
     - bikin running text
         - ada menu ini di tiap module
-    - responsive chart atau persistent collapse sidebar
-
-Prioritas module (masing2 2 minggu):
-    - Plant (22 april)
-        - Pitstop
-        - Breakdown
-        - lead time daily check
-        - lead time breakdown
-    - Fuel  (29 april)
-        - Flow meter
-        - fuel refill
-        - dashboard
-    - Operation (13 mei)
-        - hourly monitoring barging
-            - stock balanced
-            - anchored barge
-            - prediksi pasang surut
-        - Status Jetty
-            - dwelling time
-            - resume barging daily
-            - productivity jetty
-    - HCGS (20 mei)
-        - absensi
-
-    - SHE
-        - operator performance

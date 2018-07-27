@@ -2,46 +2,92 @@
 
 @section('content')
 
-<div class="panel panel-primary" id="app">
-    <div class="panel-body">
-        <h3 class="pull-left text-primary">STOCK DUMPING <small>Manage</small></h3>
-        <span class="pull-right" style="margin:15px 0 15px 10px;">
-            @can('create', App\StockDumping::class)
-            <a href="#" @click="add" class="btn btn-primary"><i class="icon-plus-circled"></i></a>
-            @endcan
-            <a href="{{url('stockDumping/downloadApp')}}" class="btn btn-primary"><i class="fa fa-android"></i> DOWNLOAD APLIKASI CHECKER</a>
-            @can('export', App\StockDumping::class)
-            <a href="#" @click="openExportForm" class="btn btn-primary"><i class="fa fa-file-excel-o"></i> EXPORT</a>
-            @endcan
-        </span>
-        <table class="table table-striped table-hover " id="bootgrid" style="border-top:2px solid #ddd">
-            <thead>
-                <tr>
-                    <th data-column-id="id" data-width="3%">ID</th>
-                    <th data-column-id="date">Date</th>
-                    <th data-column-id="shift">Shift</th>
-                    <th data-column-id="time">Time</th>
-                    <th data-column-id="subcont">Subcont</th>
-                    <th data-column-id="unit">Unit</th>
-                    <th data-column-id="material_type" data-formatter="material_type">Material Type</th>
-                    <th data-column-id="seam">Seam</th>
-                    <th data-column-id="block_area">Block Area</th>
-                    <th data-column-id="area">Area</th>
-                    <th data-column-id="volume">Volume (Ton)</th>
-                    <th data-column-id="customer">Customer</th>
-                    <th data-column-id="register_number">Register Number</th>
-                    <th data-column-id="user">User</th>
-                    <th data-column-id="insert_via">Insert Via</th>
-                    @can('updateOrDelete', App\StockDumping::class)
-                    <th data-column-id="commands"
-                        data-formatter="commands"
-                        data-sortable="false"
-                        data-align="right"
-                        data-header-align="right"></th>
-                    @endcan
-                </tr>
-            </thead>
-        </table>
+    <div class="row" id="app">
+        <div class="col-md-3">
+            <vue-datepicker v-model="date"></vue-datepicker>
+            <br>
+            <stock-dumping-summary
+                :date="date"
+                :group="'customer_id'"
+                :header="'SUMMARY BY CUSTOMER'"
+                :entity="'Customer'"></stock-dumping-summary>
+
+            <stock-dumping-summary
+                :date="date"
+                :group="'material_type'"
+                :header="'SUMMARY BY MATERIAL TYPE'"
+                :entity="'Materal Type'"></stock-dumping-summary>
+
+            <stock-dumping-summary
+                :date="date"
+                :group="'area_id'"
+                :header="'SUMMARY BY BLOCK AREA'"
+                :entity="'Block Area'"></stock-dumping-summary>
+
+            <stock-dumping-summary
+                :date="date"
+                :group="'jetty_id'"
+                :header="'SUMMARY BY JETTY'"
+                :entity="'Jetty'"></stock-dumping-summary>
+
+            <stock-dumping-summary
+                :date="date"
+                :group="'stock_area_id'"
+                :header="'SUMMARY BY STOCK AREA'"
+                :entity="'Stock Area'"></stock-dumping-summary>
+
+            <stock-dumping-summary
+                :date="date"
+                :group="'subcont_id'"
+                :header="'SUMMARY BY SUBCONT'"
+                :entity="'Subcont'"></stock-dumping-summary>
+
+        </div>
+        <div class="col-md-9">
+            <div class="panel panel-primary">
+                <div class="panel-body">
+                    <h3 class="pull-left text-primary">STOCK DUMPING <small>Manage</small></h3>
+                    <span class="pull-right" style="margin:15px 0 15px 10px;">
+                        @can('create', App\StockDumping::class)
+                        <a href="#" @click="add" class="btn btn-primary"><i class="icon-plus-circled"></i></a>
+                        @endcan
+                        <a href="{{url('stockDumping/downloadApp')}}" class="btn btn-primary"><i class="fa fa-android"></i> DOWNLOAD APLIKASI CHECKER</a>
+                        @can('export', App\StockDumping::class)
+                        <a href="#" @click="openExportForm" class="btn btn-primary"><i class="fa fa-file-excel-o"></i> EXPORT</a>
+                        @endcan
+                    </span>
+                    <table class="table table-striped table-hover " id="bootgrid" style="border-top:2px solid #ddd">
+                        <thead>
+                            <tr>
+                                <th data-column-id="id" data-width="3%">ID</th>
+                                <th data-column-id="date">Date</th>
+                                <th data-column-id="shift">Shift</th>
+                                <th data-column-id="time">Time</th>
+                                <th data-column-id="subcont">Subcont</th>
+                                <th data-column-id="unit">Unit</th>
+                                <th data-column-id="material_type" data-formatter="material_type">Material Type</th>
+                                <th data-column-id="seam">Seam</th>
+                                <th data-column-id="block_area">Block Area</th>
+                                <th data-column-id="jetty">Jetty</th>
+                                <th data-column-id="stock_area">Stock Area</th>
+                                <th data-column-id="volume">Volume (Ton)</th>
+                                <th data-column-id="customer">Customer</th>
+                                <th data-column-id="register_number">Register Number</th>
+                                <th data-column-id="user">User</th>
+                                <th data-column-id="insert_via">Insert Via</th>
+                                @can('updateOrDelete', App\StockDumping::class)
+                                <th data-column-id="commands"
+                                    data-formatter="commands"
+                                    data-sortable="false"
+                                    data-align="right"
+                                    data-header-align="right"></th>
+                                @endcan
+                            </tr>
+                        </thead>
+                    </table>
+                </div>
+            </div>
+        </div>
     </div>
 
     @can('createOrUpdate', App\StockDumping::class)
@@ -67,6 +113,7 @@
             formErrors: {},
             formTitle: '',
             error: {},
+            date: '{{date("Y-m-d")}}',
             exportRange: {
                 from: '{{date("Y-m-d")}}',
                 to: '{{date("Y-m-d")}}'
@@ -188,7 +235,6 @@
             },
         },
         mounted: function() {
-
             var t = this;
 
             var grid = $('#bootgrid').bootgrid({

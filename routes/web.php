@@ -138,6 +138,7 @@ Route::group(['middleware' => 'auth'], function() {
 
     Route::get('stockDumping/downloadApp', 'StockDumpingController@downloadApp');
     Route::get('stockDumping/export', 'StockDumpingController@export');
+    Route::get('stockDumping/summary', 'StockDumpingController@summary');
     Route::resource('stockDumping', 'StockDumpingController')->except(['edit', 'create']);
 
     Route::get('sm/fuelConsumption', 'SmController@fuelConsumption');

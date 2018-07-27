@@ -3,6 +3,7 @@
 @section('content')
 <div id="app">
     <operation-dashboard></operation-dashboard>
+    <water-level></water-level>
 </div>
 @endsection
 

@@ -7,6 +7,7 @@ use App\StockDumping;
 use App\Http\Requests\StockDumpingRequest;
 use App\Exports\StockDumpingExport;
 use Excel;
+use DB;
 
 class StockDumpingController extends Controller
 {
@@ -28,7 +29,8 @@ class StockDumpingController extends Controller
 
             $stockDumping = StockDumping::selectRaw('
                     stock_dumpings.*,
-                    CONCAT("Jetty ", jetties.name, " - ", stock_areas.name) AS area,
+                    jetties.name AS jetty,
+                    stock_areas.name AS stock_area,
                     areas.name AS block_area,
                     subconts.name AS subcont,
                     subcont_units.code_number AS unit,
@@ -130,5 +132,69 @@ class StockDumpingController extends Controller
     public function downloadApp()
     {
         return response()->download('imis-checker.apk');
+    }
+
+    public function summary(Request $request)
+    {
+        $date = $request->date ? $request->date : date("Y-m-d");
+        $groupBy = $request->group_by ? $request->group_by : 'customer_id';
+        $sql = [];
+
+        $sql['material_type'] = "SELECT
+            COUNT(stock_dumpings.id) AS ritase,
+            SUM(stock_dumpings.volume) AS tonase,
+            IF(stock_dumpings.material_type = 'l', 'LOW', 'HIGH') AS entity
+        FROM stock_dumpings
+        WHERE stock_dumpings.date = '{$date}'
+        GROUP BY stock_dumpings.material_type";
+
+        $sql['customer_id'] = "SELECT
+            COUNT(stock_dumpings.id) AS ritase,
+            SUM(stock_dumpings.volume) AS tonase,
+            customers.name AS entity
+        FROM stock_dumpings
+        JOIN customers ON customers.id = stock_dumpings.customer_id
+        WHERE stock_dumpings.date = '{$date}'
+        GROUP BY stock_dumpings.customer_id";
+
+        $sql['area_id'] = "SELECT
+            COUNT(stock_dumpings.id) AS ritase,
+            SUM(stock_dumpings.volume) AS tonase,
+            areas.name AS entity
+        FROM stock_dumpings
+        JOIN areas ON areas.id = stock_dumpings.area_id
+        WHERE stock_dumpings.date = '{$date}'
+        GROUP BY stock_dumpings.area_id";
+
+        $sql['stock_area_id'] = "SELECT
+            COUNT(stock_dumpings.id) AS ritase,
+            SUM(stock_dumpings.volume) AS tonase,
+            stock_areas.name AS entity
+        FROM stock_dumpings
+        JOIN stock_areas ON stock_areas.id = stock_dumpings.stock_area_id
+        WHERE stock_dumpings.date = '{$date}'
+        GROUP BY stock_dumpings.stock_area_id";
+
+        $sql['subcont_id'] = "SELECT
+            COUNT(stock_dumpings.id) AS ritase,
+            SUM(stock_dumpings.volume) AS tonase,
+            subconts.name AS entity
+        FROM stock_dumpings
+        JOIN subcont_units ON subcont_units.id = stock_dumpings.subcont_unit_id
+        JOIN subconts ON subconts.id = subcont_units.subcont_id
+        WHERE stock_dumpings.date = '{$date}'
+        GROUP BY subcont_units.subcont_id";
+
+        $sql['jetty_id'] = "SELECT
+            COUNT(stock_dumpings.id) AS ritase,
+            SUM(stock_dumpings.volume) AS tonase,
+            jetties.name AS entity
+        FROM stock_dumpings
+        JOIN stock_areas ON stock_areas.id = stock_dumpings.stock_area_id
+        JOIN jetties ON jetties.id = stock_areas.jetty_id
+        WHERE stock_dumpings.date = '{$date}'
+        GROUP BY stock_areas.jetty_id";
+
+        return DB::select(DB::raw($sql[$groupBy]));
     }
 }

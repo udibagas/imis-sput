@@ -26,7 +26,7 @@ return [
     |
     */
 
-    'cloud' => env('FILESYSTEM_CLOUD', 's3'),
+    'cloud' => env('FILESYSTEM_CLOUD', 'rackspace'),
 
     /*
     |--------------------------------------------------------------------------
@@ -55,13 +55,33 @@ return [
             'visibility' => 'public',
         ],
 
+        // 's3' => [
+        //     'driver' => 's3',
+        //     'key' => env('AWS_ACCESS_KEY_ID'),
+        //     'secret' => env('AWS_SECRET_ACCESS_KEY'),
+        //     'region' => env('AWS_DEFAULT_REGION'),
+        //     'bucket' => env('AWS_BUCKET'),
+        //     'url' => env('AWS_URL'),
+        // ],
+
         's3' => [
             'driver' => 's3',
-            'key' => env('AWS_ACCESS_KEY_ID'),
-            'secret' => env('AWS_SECRET_ACCESS_KEY'),
-            'region' => env('AWS_DEFAULT_REGION'),
-            'bucket' => env('AWS_BUCKET'),
-            'url' => env('AWS_URL'),
+            'key' => '',
+            'secret' => '',
+            'region' => '',
+            'bucket' => '',
+            'url' => '',
+        ],
+
+        'rackspace' => [
+            'driver' => 'rackspace',
+            'username' => 'bagas',
+            'key' => 'udibagas',
+            'container' => 'TEST',
+            'endpoint' => 'http://192.168.0.12/v1',
+            // 'endpoint' => 'http://192.168.0.12/v1/AUTH_bagas',
+            'region' => 'ID',
+            'url_type' => 'publicURL',
         ],
 
     ],
