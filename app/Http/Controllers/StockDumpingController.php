@@ -48,9 +48,10 @@ class StockDumpingController extends Controller
                 ->join('seams', 'seams.id', '=', 'stock_dumpings.seam_id', 'LEFT')
                 ->when($request->searchPhrase, function($query) use ($request) {
                     return $query->where('subcont_units.code_number', 'LIKE', '%'.$request->searchPhrase.'%')
-                        ->where('stock_dumpings.register_number', 'LIKE', '%'.$request->searchPhrase.'%')
-                        ->where('customers.name', 'LIKE', '%'.$request->searchPhrase.'%')
-                        ->where('stock_areas.name', 'LIKE', '%'.$request->searchPhrase.'%');
+                        ->orWhere('stock_dumpings.register_number', 'LIKE', '%'.$request->searchPhrase.'%')
+                        ->orWhere('subconts.name', 'LIKE', '%'.$request->searchPhrase.'%')
+                        ->orWhere('customers.name', 'LIKE', '%'.$request->searchPhrase.'%')
+                        ->orWhere('stock_areas.name', 'LIKE', '%'.$request->searchPhrase.'%');
                 })->orderBy($sort, $dir)->paginate($pageSize);
 
             return [
