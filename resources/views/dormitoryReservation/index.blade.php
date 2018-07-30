@@ -34,9 +34,9 @@
                 <thead>
                     <tr>
                         <th class="text-center">Room</th>
-                        <th class="text-center">Capacity</th>
-                        <th class="text-center">Reserved</th>
-                        <th class="text-center">Available</th>
+                        <th class="text-center">C</th>
+                        <th class="text-center">R</th>
+                        <th class="text-center">A</th>
                         <th v-if="d.status != 0"></th>
                     </tr>
                 </thead>
@@ -70,7 +70,7 @@
 
         @include('dormitoryReservation._lewatMasaCuti')
 
-        <div class="panel panel-primary">
+        <div class="panel panel-default">
             <div class="panel-heading">
                 DORMITORY RESERVATIONS <small> - Manage</small>
             </div>

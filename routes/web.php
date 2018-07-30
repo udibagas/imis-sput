@@ -139,6 +139,8 @@ Route::group(['middleware' => 'auth'], function() {
     Route::get('stockDumping/downloadApp', 'StockDumpingController@downloadApp');
     Route::get('stockDumping/export', 'StockDumpingController@export');
     Route::get('stockDumping/summary', 'StockDumpingController@summary');
+    Route::get('stockDumping/tonase', 'StockDumpingController@tonase');
+    Route::get('stockDumping/chart', 'StockDumpingController@chart');
     Route::resource('stockDumping', 'StockDumpingController')->except(['edit', 'create']);
 
     Route::get('sm/fuelConsumption', 'SmController@fuelConsumption');
@@ -165,9 +167,9 @@ Route::group(['middleware' => 'auth'], function() {
     Route::get('warningPart/export', 'WarningPartController@export');
     Route::resource('warningPart', 'WarningPartController')->only(['index', 'show', 'update']);
 
-    Route::get('pasangSurut', 'OperationController@pasangSurut');
+    Route::get('operation/waterLevel', 'OperationController@waterLevel');
+    Route::get('operation/stockBalanced', 'OperationController@stockBalanced');
     Route::get('operation', 'OperationController@index');
-    Route::get('test', 'OperationController@test');
 
     Route::get('hcgs', 'HcgsController@index');
     Route::get('doUpdate', 'AdminController@doUpdate');
@@ -224,6 +226,8 @@ View::composer('layouts._sidebar', function($view) {
                 'operation' => 'Dahsboard',
                 'breakdown' => 'Breakdown OCR',
                 'stockDumping' => 'Stock Dumping',
+                'operation/stockBalanced' => 'Stock Balanced',
+                'operation/waterLevel' => 'Water Level',
                 'portActivity' => 'Port Activity',
                 'materialStock' => 'Update Stock Balanced',
                 'Status Jetty' => [

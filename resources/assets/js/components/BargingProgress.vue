@@ -1,5 +1,7 @@
 <template>
-    <div style="height: 150px;" :id="'barging-progress-'+id" v-model="jetty">
+    <div class="panel panel-default panel-body text-center" style="min-height: 200px;">
+        <div style="height: 180px;" :id="'barging-progress-'+id" v-model="jetty"> </div>
+        <strong>BARGING PROGRESS</strong>
     </div>
 </template>
 
@@ -42,12 +44,6 @@ export default {
                 }
             },
             color: ['rgba(176, 212, 251, 1)'],
-            // legend: {
-            //     show: true,
-            //     itemGap: 12,
-            //     data: ['01', '02']
-            // },
-
             series: [{
                 name: 'Line 1',
                 type: 'pie',

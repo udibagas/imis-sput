@@ -2,90 +2,105 @@
 
 @section('content')
 
-    <div class="row" id="app">
-        <div class="col-md-3">
-            <vue-datepicker v-model="date"></vue-datepicker>
-            <br>
-            <stock-dumping-summary
-                :date="date"
-                :group="'customer_id'"
-                :header="'SUMMARY BY CUSTOMER'"
-                :entity="'Customer'"></stock-dumping-summary>
+<div class="row" id="app">
+    <div class="col-md-12">
+        <stock-dumping-chart :range="[chartRange.from, chartRange.to]"></stock-dumping-chart>
+    </div>
 
-            <stock-dumping-summary
-                :date="date"
-                :group="'material_type'"
-                :header="'SUMMARY BY MATERIAL TYPE'"
-                :entity="'Materal Type'"></stock-dumping-summary>
-
-            <stock-dumping-summary
-                :date="date"
-                :group="'area_id'"
-                :header="'SUMMARY BY BLOCK AREA'"
-                :entity="'Block Area'"></stock-dumping-summary>
-
-            <stock-dumping-summary
-                :date="date"
-                :group="'jetty_id'"
-                :header="'SUMMARY BY JETTY'"
-                :entity="'Jetty'"></stock-dumping-summary>
-
-            <stock-dumping-summary
-                :date="date"
-                :group="'stock_area_id'"
-                :header="'SUMMARY BY STOCK AREA'"
-                :entity="'Stock Area'"></stock-dumping-summary>
-
-            <stock-dumping-summary
-                :date="date"
-                :group="'subcont_id'"
-                :header="'SUMMARY BY SUBCONT'"
-                :entity="'Subcont'"></stock-dumping-summary>
-
+    <div class="col-md-3">
+        <div class="alert alert-info">
+            <form class="form-inline text-center" style="margin:0;">
+                <vue-datepicker v-model="chartRange.from" style="width:100px;"></vue-datepicker> TO
+                <vue-datepicker v-model="chartRange.to" style="width:100px;"></vue-datepicker>
+            </form>
         </div>
-        <div class="col-md-9">
-            <div class="panel panel-primary">
-                <div class="panel-body">
-                    <h3 class="pull-left text-primary">STOCK DUMPING <small>Manage</small></h3>
-                    <span class="pull-right" style="margin:15px 0 15px 10px;">
-                        @can('create', App\StockDumping::class)
-                        <a href="#" @click="add" class="btn btn-primary"><i class="icon-plus-circled"></i></a>
-                        @endcan
-                        <a href="{{url('stockDumping/downloadApp')}}" class="btn btn-primary"><i class="fa fa-android"></i> DOWNLOAD APLIKASI CHECKER</a>
-                        @can('export', App\StockDumping::class)
-                        <a href="#" @click="openExportForm" class="btn btn-primary"><i class="fa fa-file-excel-o"></i> EXPORT</a>
-                        @endcan
-                    </span>
-                    <table class="table table-striped table-hover " id="bootgrid" style="border-top:2px solid #ddd">
-                        <thead>
-                            <tr>
-                                <th data-column-id="id" data-width="3%">ID</th>
-                                <th data-column-id="date">Date</th>
-                                <th data-column-id="shift">Shift</th>
-                                <th data-column-id="time">Time</th>
-                                <th data-column-id="subcont">Subcont</th>
-                                <th data-column-id="unit">Unit</th>
-                                <th data-column-id="material_type" data-formatter="material_type">Material Type</th>
-                                <th data-column-id="seam">Seam</th>
-                                <th data-column-id="block_area">Block Area</th>
-                                <th data-column-id="jetty">Jetty</th>
-                                <th data-column-id="stock_area">Stock Area</th>
-                                <th data-column-id="volume">Volume (Ton)</th>
-                                <th data-column-id="customer">Customer</th>
-                                <th data-column-id="register_number">Register Number</th>
-                                <th data-column-id="user">User</th>
-                                <th data-column-id="insert_via">Insert Via</th>
-                                @can('updateOrDelete', App\StockDumping::class)
-                                <th data-column-id="commands"
-                                    data-formatter="commands"
-                                    data-sortable="false"
-                                    data-align="right"
-                                    data-header-align="right"></th>
-                                @endcan
-                            </tr>
-                        </thead>
-                    </table>
-                </div>
+        <ritase-tonase :from="chartRange.from" :to="chartRange.to"></ritase-tonase>
+        <stock-dumping-summary
+
+            :from="chartRange.from"
+            :to="chartRange.to"
+            :group="'customer_id'"
+            :header="'SUMMARY BY CUSTOMER'"
+            :entity="'Customer'"></stock-dumping-summary>
+
+        <stock-dumping-summary
+            :from="chartRange.from"
+            :to="chartRange.to"
+            :group="'material_type'"
+            :header="'SUMMARY BY MATERIAL TYPE'"
+            :entity="'Materal Type'"></stock-dumping-summary>
+
+        <stock-dumping-summary
+            :from="chartRange.from"
+            :to="chartRange.to"
+            :group="'subcont_id'"
+            :header="'SUMMARY BY SUBCONT'"
+            :entity="'Subcont'"></stock-dumping-summary>
+
+        <stock-dumping-summary
+            :from="chartRange.from"
+            :to="chartRange.to"
+            :group="'area_id'"
+            :header="'SUMMARY BY BLOCK AREA'"
+            :entity="'Block Area'"></stock-dumping-summary>
+
+        <stock-dumping-summary
+            :from="chartRange.from"
+            :to="chartRange.to"
+            :group="'jetty_id'"
+            :header="'SUMMARY BY JETTY'"
+            :entity="'Jetty'"></stock-dumping-summary>
+
+        <stock-dumping-summary
+            :from="chartRange.from"
+            :to="chartRange.to"
+            :group="'stock_area_id'"
+            :header="'SUMMARY BY STOCK AREA'"
+            :entity="'Stock Area'"></stock-dumping-summary>
+
+    </div>
+    <div class="col-md-9">
+        <div class="panel panel-default">
+            <div class="panel-body">
+                <h3 class="pull-left text-primary">STOCK DUMPING <small>Manage</small></h3>
+                <span class="pull-right" style="margin:15px 0 15px 10px;">
+                    @can('create', App\StockDumping::class)
+                    <a href="#" @click="add" class="btn btn-primary"><i class="icon-plus-circled"></i></a>
+                    @endcan
+                    <a href="{{url('stockDumping/downloadApp')}}" class="btn btn-primary"><i class="fa fa-android"></i> DOWNLOAD APLIKASI CHECKER</a>
+                    @can('export', App\StockDumping::class)
+                    <a href="#" @click="openExportForm" class="btn btn-primary"><i class="fa fa-file-excel-o"></i> EXPORT</a>
+                    @endcan
+                </span>
+                <table class="table table-striped table-hover " id="bootgrid" style="border-top:2px solid #ddd">
+                    <thead>
+                        <tr>
+                            <th data-column-id="id" data-width="3%">ID</th>
+                            <th data-column-id="date">Date</th>
+                            <th data-column-id="shift">Shift</th>
+                            <th data-column-id="time">Time</th>
+                            <th data-column-id="subcont">Subcont</th>
+                            <th data-column-id="unit">Unit</th>
+                            <th data-column-id="material_type" data-formatter="material_type">Material Type</th>
+                            <th data-column-id="seam">Seam</th>
+                            <th data-column-id="block_area">Block Area</th>
+                            <th data-column-id="jetty">Jetty</th>
+                            <th data-column-id="stock_area">Stock Area</th>
+                            <th data-column-id="volume">Volume (Ton)</th>
+                            <th data-column-id="customer">Customer</th>
+                            <th data-column-id="register_number">Register Number</th>
+                            <th data-column-id="user">User</th>
+                            <th data-column-id="insert_via">Insert Via</th>
+                            @can('updateOrDelete', App\StockDumping::class)
+                            <th data-column-id="commands"
+                                data-formatter="commands"
+                                data-sortable="false"
+                                data-align="right"
+                                data-header-align="right"></th>
+                            @endcan
+                        </tr>
+                    </thead>
+                </table>
             </div>
         </div>
     </div>
@@ -118,6 +133,12 @@
                 from: '{{date("Y-m-d")}}',
                 to: '{{date("Y-m-d")}}'
             },
+            chartRange: {
+                from: '{{date("Y-m-01")}}',
+                to: '{{date("Y-m-d")}}'
+            },
+            ritase: 0,
+            tonase: 0,
             subcont_units: {!! App\SubcontUnit::selectRaw('subcont_units.id AS id, CONCAT(subconts.name, " - ", subcont_units.code_number) AS text')
                 ->join('subconts', 'subconts.id', '=', 'subcont_units.subcont_id')
                 ->orderBy('subcont_units.code_number', 'ASC')->get() !!},
@@ -129,6 +150,21 @@
             areas: {!! App\Area::selectRaw('id AS id, name AS text')->orderBy('name', 'ASC')->get() !!},
         },
         methods: {
+            getTonase: function() {
+                var _this = this;
+
+                axios.get('{{url("stockDumping/tonase")}}?from=' + _this.date + '&to=' + _this.date)
+                    .then(function(r) {
+                        _this.tonase = r.data[0].tonase ? r.data[0].tonase : 0;
+                        _this.ritase = r.data[0].ritase ? r.data[0].ritase : 0;
+                    })
+                    .catch(function(error) {
+                        var error = error.response.data;
+                        toastr["error"](error.message + ". " + error.file + ":" + error.line)
+                    });
+
+                setTimeout(this.getTonase, 3000);
+            },
             openExportForm: function() {
                 $('#modal-form-export').modal('show');
             },
@@ -149,23 +185,23 @@
             store: function() {
                 block('form');
                 var t = this;
-                axios.post('{{url("stockDumping")}}', this.formData).then(function(r) {
-                    unblock('form');
-                    $('#modal-form').modal('hide');
-                    toastr["success"]("Data berhasil ditambahkan");
-                    $('#bootgrid').bootgrid('reload');
-                })
-                // validasi
-                .catch(function(error) {
-                    unblock('form');
-                    if (error.response.status == 422) {
-                        t.formErrors = error.response.data.errors;
-                    }
+                axios.post('{{url("stockDumping")}}', this.formData)
+                    .then(function(r) {
+                        unblock('form');
+                        $('#modal-form').modal('hide');
+                        toastr["success"]("Data berhasil ditambahkan");
+                        $('#bootgrid').bootgrid('reload');
+                    })
+                    .catch(function(error) {
+                        unblock('form');
+                        if (error.response.status == 422) {
+                            t.formErrors = error.response.data.errors;
+                        }
 
-                    if (error.response.status == 500) {
-                        t.error = error.response.data;
-                    }
-                });
+                        if (error.response.status == 500) {
+                            t.error = error.response.data;
+                        }
+                    });
             },
             edit: function(id) {
                 var t = this;
@@ -179,10 +215,8 @@
                 })
 
                 .catch(function(error) {
-                    if (error.response.status == 500) {
-                        var error = error.response.data;
-                        toastr["error"](error.message + ". " + error.file + ":" + error.line)
-                    }
+                    var error = error.response.data;
+                    toastr["error"](error.message + ". " + error.file + ":" + error.line)
                 });
             },
             update: function() {
@@ -236,6 +270,7 @@
         },
         mounted: function() {
             var t = this;
+            t.getTonase();
 
             var grid = $('#bootgrid').bootgrid({
                 statusMapping: {

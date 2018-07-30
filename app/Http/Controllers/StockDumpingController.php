@@ -137,7 +137,9 @@ class StockDumpingController extends Controller
 
     public function summary(Request $request)
     {
-        $date = $request->date ? $request->date : date("Y-m-d");
+        $from = $request->from ? $request->from : date('Y-m-d');
+        $to = $request->to ? $request->to : date('Y-m-d');
+
         $groupBy = $request->group_by ? $request->group_by : 'customer_id';
         $sql = [];
 
@@ -146,7 +148,7 @@ class StockDumpingController extends Controller
             SUM(stock_dumpings.volume) AS tonase,
             IF(stock_dumpings.material_type = 'l', 'LOW', 'HIGH') AS entity
         FROM stock_dumpings
-        WHERE stock_dumpings.date = '{$date}'
+        WHERE stock_dumpings.date BETWEEN ? AND ?
         GROUP BY stock_dumpings.material_type";
 
         $sql['customer_id'] = "SELECT
@@ -155,7 +157,7 @@ class StockDumpingController extends Controller
             customers.name AS entity
         FROM stock_dumpings
         JOIN customers ON customers.id = stock_dumpings.customer_id
-        WHERE stock_dumpings.date = '{$date}'
+        WHERE stock_dumpings.date BETWEEN ? AND ?
         GROUP BY stock_dumpings.customer_id";
 
         $sql['area_id'] = "SELECT
@@ -164,7 +166,7 @@ class StockDumpingController extends Controller
             areas.name AS entity
         FROM stock_dumpings
         JOIN areas ON areas.id = stock_dumpings.area_id
-        WHERE stock_dumpings.date = '{$date}'
+        WHERE stock_dumpings.date BETWEEN ? AND ?
         GROUP BY stock_dumpings.area_id";
 
         $sql['stock_area_id'] = "SELECT
@@ -173,7 +175,7 @@ class StockDumpingController extends Controller
             stock_areas.name AS entity
         FROM stock_dumpings
         JOIN stock_areas ON stock_areas.id = stock_dumpings.stock_area_id
-        WHERE stock_dumpings.date = '{$date}'
+        WHERE stock_dumpings.date BETWEEN ? AND ?
         GROUP BY stock_dumpings.stock_area_id";
 
         $sql['subcont_id'] = "SELECT
@@ -183,7 +185,7 @@ class StockDumpingController extends Controller
         FROM stock_dumpings
         JOIN subcont_units ON subcont_units.id = stock_dumpings.subcont_unit_id
         JOIN subconts ON subconts.id = subcont_units.subcont_id
-        WHERE stock_dumpings.date = '{$date}'
+        WHERE stock_dumpings.date BETWEEN ? AND ?
         GROUP BY subcont_units.subcont_id";
 
         $sql['jetty_id'] = "SELECT
@@ -193,9 +195,34 @@ class StockDumpingController extends Controller
         FROM stock_dumpings
         JOIN stock_areas ON stock_areas.id = stock_dumpings.stock_area_id
         JOIN jetties ON jetties.id = stock_areas.jetty_id
-        WHERE stock_dumpings.date = '{$date}'
+        WHERE stock_dumpings.date BETWEEN ? AND ?
         GROUP BY stock_areas.jetty_id";
 
-        return DB::select(DB::raw($sql[$groupBy]));
+        return DB::select($sql[$groupBy], [$from, $to]);
+    }
+
+    public function tonase(Request $request)
+    {
+        $sql = "SELECT COUNT(id) AS ritase, SUM(volume) AS tonase FROM stock_dumpings WHERE `date` BETWEEN ? AND ?";
+        return DB::select($sql, [
+            $request->from ? $request->from : date("Y-m-d"),
+            $request->to ? $request->to : date("Y-m-d")
+        ]);
+    }
+
+    public function chart(Request $request)
+    {
+        $from = $request->from ? $request->from : date('Y-m-01');
+        $to = $request->to ? $request->to : date('Y-m-d');
+
+        $sql = "SELECT
+            `date` AS date,
+            COUNT(id) AS ritase,
+            SUM(volume) AS tonase
+        FROM stock_dumpings
+        WHERE `date` BETWEEN ? AND ?
+        GROUP BY `date`";
+
+        return DB::select($sql, [$from, $to]);
     }
 }

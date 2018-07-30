@@ -6,13 +6,22 @@ use Illuminate\Http\Request;
 
 class OperationController extends Controller
 {
-    public function pasangSurut()
+    public function waterLevel()
     {
-        return view('operation.pasangSurut', [
+        return view('operation.waterLevel', [
             'breadcrumbs' => [
-                'operation/dashboard' => 'Operation',
-                '#' => 'Hourly Monitoring Barging',
-                'pasangSurut' => 'Prediksi Pasang Surut'
+                'operation' => 'Operation',
+                'waterLevel' => 'Water Level'
+            ]
+        ]);
+    }
+
+    public function stockBalanced()
+    {
+        return view('operation.stockBalanced', [
+            'breadcrumbs' => [
+                'operation' => 'Operation',
+                'stockBalanced' => 'Stock Balanced'
             ]
         ]);
     }
@@ -34,25 +43,6 @@ class OperationController extends Controller
             'breadcrumbs' => [
                 'operation/dashboard' => 'Operation',
                 'dashboard' => 'Dashboard'
-            ]
-        ]);
-    }
-
-    public function dashboard()
-    {
-        return view('operation.game', [
-            'breadcrumbs' => [
-                'operation/dashboard' => 'Operation',
-                'dashboard' => 'Game'
-            ]
-        ]);
-    }
-
-    public function test()
-    {
-        return view('operation.test', [
-            'breadcrumbs' => [
-                'Test' => 'Test',
             ]
         ]);
     }

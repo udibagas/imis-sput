@@ -120,4 +120,10 @@ class DormitoryController extends Controller
     {
         return Dormitory::all();
     }
+
+    // public function getAvailability()
+    // {
+    //     return DB::select('SELECT COUNT(id) FROM dormitory_rooms')
+    // }
+
 }

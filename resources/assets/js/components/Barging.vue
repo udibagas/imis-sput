@@ -1,5 +1,6 @@
 <template>
-    <div style="height: 200px;" :id="'barging-'+id" v-model="jetty">
+    <div class="panel panel-default panel-body">
+        <div style="height: 200px;" :id="'barging-'+id" v-model="jetty"> </div>
     </div>
 </template>
 
@@ -40,10 +41,10 @@ export default {
                 trigger: 'axis'
             },
             grid: {
-                left: '3%',
-                right: '3%',
+                left: '10%',
+                right: '0%',
                 bottom: '10%',
-                containLabel: true
+                // containLabel: true
             },
             xAxis: {
                 type: 'category',

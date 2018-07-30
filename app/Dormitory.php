@@ -42,4 +42,5 @@ class Dormitory extends Model
     {
         return $this->capacity - $this->reserved;
     }
+
 }

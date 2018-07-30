@@ -31,7 +31,7 @@
 
 <script>
 export default {
-    props: ['header', 'entity', 'group', 'date'],
+    props: ['header', 'entity', 'group', 'from', 'to'],
     data: function() {
         return {
             summaries: [],
@@ -44,7 +44,8 @@ export default {
             var _this = this;
             var params = {
                 group_by: this.group,
-                date: this.date
+                from: this.from,
+                to: this.to
             };
             axios.get('stockDumping/summary', {params: params})
 

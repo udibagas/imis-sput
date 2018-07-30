@@ -1,9 +1,13 @@
-<div class="panel panel-danger" v-if="lewatMasaCuti.length > 0">
+<div class="panel panel-default" v-if="lewatMasaCuti.length > 0">
     <div class="panel-heading">
+        <div class="pull-right">
+            <input type="text" placeholder="Search" class="form-control">
+        </div>
         MENDEKATI/LEWAT MASA CUTI
+        <div class="clearfix"> </div>
     </div>
-    <div class="panel-body">
-        <table class="table table-striped table-hover" style="border-top:2px solid #ddd; margin:0;">
+    <!-- <div class="panel-body"> -->
+        <table class="table table-striped table-hover">
             <thead>
                 <tr>
                     <th>#</th>
@@ -37,5 +41,5 @@
                 </tr>
             </tbody>
         </table>
-    </div>
+    <!-- </div> -->
 </div>
