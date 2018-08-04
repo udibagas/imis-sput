@@ -84,16 +84,6 @@
                         </div>
                     </div>
 
-                    <div class="form-group" :class="formErrors.area_id ? 'has-error' : ''">
-                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="area_id">Block Area
-                        </label>
-                        <div class="col-md-9 col-sm-9 col-xs-12">
-                            <select2 :options="areas" v-model="formData.area_id" data-placeholder="Block Area">
-                            </select2>
-                            <span v-if="formErrors.area_id" class="help-block">@{{formErrors.area_id[0]}}</span>
-                        </div>
-                    </div>
-
                     <div class="form-group" :class="formErrors.stock_area_id ? 'has-error' : ''">
                         <label class="control-label col-md-3 col-sm-3 col-xs-12" for="stock_area_id">Area
                         </label>

@@ -47,13 +47,6 @@
         <stock-dumping-summary
             :from="chartRange.from"
             :to="chartRange.to"
-            :group="'jetty_id'"
-            :header="'SUMMARY BY JETTY'"
-            :entity="'Jetty'"></stock-dumping-summary>
-
-        <stock-dumping-summary
-            :from="chartRange.from"
-            :to="chartRange.to"
             :group="'stock_area_id'"
             :header="'SUMMARY BY STOCK AREA'"
             :entity="'Stock Area'"></stock-dumping-summary>
@@ -142,9 +135,9 @@
             subcont_units: {!! App\SubcontUnit::selectRaw('subcont_units.id AS id, CONCAT(subconts.name, " - ", subcont_units.code_number) AS text')
                 ->join('subconts', 'subconts.id', '=', 'subcont_units.subcont_id')
                 ->orderBy('subcont_units.code_number', 'ASC')->get() !!},
-            stock_areas: {!! App\StockArea::selectRaw('stock_areas.id AS id, CONCAT("Jetty ", jetties.name, " - ", stock_areas.name) AS text')
-                ->join('jetties', 'jetties.id', '=', 'stock_areas.jetty_id')
-                ->orderBy('jetties.name', 'ASC')->get() !!},
+            stock_areas: {!! App\StockArea::selectRaw('stock_areas.id AS id, CONCAT(areas.name, " - ", stock_areas.name) AS text')
+                ->join('areas', 'areas.id', '=', 'stock_areas.area_id')
+                ->orderBy('areas.name', 'ASC')->get() !!},
             seams: {!! App\Seam::selectRaw('id AS id, name AS text')->orderBy('name', 'ASC')->get() !!},
             customers: {!! App\Customer::selectRaw('id AS id, name AS text')->orderBy('name', 'ASC')->get() !!},
             areas: {!! App\Area::selectRaw('id AS id, name AS text')->orderBy('name', 'ASC')->get() !!},
@@ -176,7 +169,7 @@
             add: function() {
                 // reset the form
                 this.formTitle = "ADD STOCK DUMPING";
-                this.formData = {};
+                this.formData = {time: '{{date("H:i")}}'},
                 this.formErrors = {};
                 this.error = {};
                 // open form

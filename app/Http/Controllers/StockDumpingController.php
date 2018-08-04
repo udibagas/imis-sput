@@ -29,7 +29,6 @@ class StockDumpingController extends Controller
 
             $stockDumping = StockDumping::selectRaw('
                     stock_dumpings.*,
-                    jetties.name AS jetty,
                     stock_areas.name AS stock_area,
                     areas.name AS block_area,
                     subconts.name AS subcont,
@@ -41,8 +40,7 @@ class StockDumpingController extends Controller
                 ->join('subcont_units', 'subcont_units.id', '=', 'stock_dumpings.subcont_unit_id')
                 ->join('subconts', 'subconts.id', '=', 'subcont_units.subcont_id')
                 ->join('stock_areas', 'stock_areas.id', '=', 'stock_dumpings.stock_area_id')
-                ->join('areas', 'areas.id', '=', 'stock_dumpings.area_id')
-                ->join('jetties', 'jetties.id', '=', 'stock_areas.jetty_id')
+                ->join('areas', 'areas.id', '=', 'stock_areas.area_id')
                 ->join('customers', 'customers.id', '=', 'stock_dumpings.customer_id')
                 ->join('users', 'users.id', '=', 'stock_dumpings.user_id')
                 ->join('seams', 'seams.id', '=', 'stock_dumpings.seam_id', 'LEFT')
@@ -165,9 +163,10 @@ class StockDumpingController extends Controller
             SUM(stock_dumpings.volume) AS tonase,
             areas.name AS entity
         FROM stock_dumpings
-        JOIN areas ON areas.id = stock_dumpings.area_id
+        JOIN stock_areas ON stock_areas.id = stock_dumpings.stock_area_id
+        JOIN areas ON areas.id = stock_areas.area_id
         WHERE stock_dumpings.date BETWEEN ? AND ?
-        GROUP BY stock_dumpings.area_id";
+        GROUP BY stock_areas.area_id";
 
         $sql['stock_area_id'] = "SELECT
             COUNT(stock_dumpings.id) AS ritase,
@@ -187,16 +186,6 @@ class StockDumpingController extends Controller
         JOIN subconts ON subconts.id = subcont_units.subcont_id
         WHERE stock_dumpings.date BETWEEN ? AND ?
         GROUP BY subcont_units.subcont_id";
-
-        $sql['jetty_id'] = "SELECT
-            COUNT(stock_dumpings.id) AS ritase,
-            SUM(stock_dumpings.volume) AS tonase,
-            jetties.name AS entity
-        FROM stock_dumpings
-        JOIN stock_areas ON stock_areas.id = stock_dumpings.stock_area_id
-        JOIN jetties ON jetties.id = stock_areas.jetty_id
-        WHERE stock_dumpings.date BETWEEN ? AND ?
-        GROUP BY stock_areas.jetty_id";
 
         return DB::select($sql[$groupBy], [$from, $to]);
     }

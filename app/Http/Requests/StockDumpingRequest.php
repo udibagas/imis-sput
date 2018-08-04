@@ -32,7 +32,6 @@ class StockDumpingRequest extends FormRequest
             'material_type' => 'required',
             'volume' => 'required',
             'stock_area_id' => 'required',
-            'area_id' => 'required',
             'shift' => 'required',
             'register_number' => 'required',
         ];
@@ -49,7 +48,6 @@ class StockDumpingRequest extends FormRequest
             'volume' => 'Volume',
             'stock_area_id' => 'Stock Area',
             'shift' => 'Shift',
-            'area_id' => 'Block Area',
             'register_number' => 'Register Number'
         ];
     }
