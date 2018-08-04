@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class BaseSurface extends Model
 {
-    protected $connection = 'sqlsrv';
+    protected $connection = 'water_surface';
 
     protected $table = 'BaseSurface';
 }

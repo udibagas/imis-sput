@@ -67,13 +67,35 @@ return [
             'sslmode' => 'prefer',
         ],
 
-        'sqlsrv' => [
+        'sqlsrv_local' => [
             'driver' => 'sqlsrv',
-            'host' => env('DB_HOST', 'localhost'),
-            'port' => env('DB_PORT', '1433'),
-            'database' => env('DB_DATABASE', 'forge'),
-            'username' => env('DB_USERNAME', 'forge'),
-            'password' => env('DB_PASSWORD', ''),
+            'host' => 'localhost',
+            'port' => '1433',
+            'database' => 'imis_sput',
+            'username' => 'sa',
+            'password' => 'Bismillah12345',
+            'charset' => 'utf8',
+            'prefix' => '',
+        ],
+
+        'beltscale' => [
+            'driver' => 'sqlsrv',
+            'host' => '10.13.20.77',
+            'port' => '1433',
+            'database' => 'BeltProHost',
+            'username' => 'bagas',
+            'password' => 'Bismillah',
+            'charset' => 'utf8',
+            'prefix' => '',
+        ],
+
+        'water_surface' => [
+            'driver' => 'sqlsrv',
+            'host' => '10.13.20.77',
+            'port' => '1433',
+            'database' => 'Senselog',
+            'username' => 'bagas',
+            'password' => 'Bismillah',
             'charset' => 'utf8',
             'prefix' => '',
         ],

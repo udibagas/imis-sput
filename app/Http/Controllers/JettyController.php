@@ -7,6 +7,7 @@ use App\Jetty;
 use App\StockArea;
 use App\Hopper;
 use App\Http\Requests\JettyRequest;
+use DB;
 
 class JettyController extends Controller
 {
@@ -120,8 +121,16 @@ class JettyController extends Controller
 
     public function productivity(Request $request)
     {
+        return DB::connection('beltscale')->select("SELECT * FROM ClientTrans LIMIT 100");
+
+        // 244	: JETTY-H
+        // 245	: JETTY-J
+        // 246	: JETTY-U
+        // 247	: JETTY-K
+
         if ($request->ajax())
         {
+
             // $jetties = Jetty::orderBy('name', 'ASC')->get();
             $series = [];
 

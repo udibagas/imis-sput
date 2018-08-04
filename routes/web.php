@@ -104,7 +104,7 @@ Route::group(['middleware' => 'auth'], function() {
     Route::resource('location', 'LocationController')->except(['edit', 'create']);
     Route::resource('lostTimeCategory', 'LostTimeCategoryController')->except(['edit', 'create']);
     // Route::resource('material', 'MaterialController')->except(['edit', 'create']);
-    
+
     Route::get('materialStock/summary', 'MaterialStockController@summary');
     Route::resource('materialStock', 'MaterialStockController')->except(['edit', 'create']);
 
@@ -229,10 +229,9 @@ View::composer('layouts._sidebar', function($view) {
                 'operation' => 'Dahsboard',
                 'breakdown' => 'Breakdown OCR',
                 'stockDumping' => 'Stock Dumping',
-                'operation/stockBalanced' => 'Stock Balanced',
+                'materialStock' => 'Stock Balanced',
                 'operation/waterLevel' => 'Water Level',
                 'portActivity' => 'Port Activity',
-                'materialStock' => 'Update Stock Balanced',
                 'Status Jetty' => [
                     'jetty/dwellingTime' => 'Dwelling Time',
                     'barge/resume' => 'Resume Barging Daily',

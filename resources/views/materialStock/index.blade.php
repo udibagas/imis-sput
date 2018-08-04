@@ -4,27 +4,36 @@
 
 <div class="row" id="app">
     <div class="col-md-3">
+        <select2 :options="customers" v-model="customer_id" data-placeholder="All Customer" data-allow-clear="true">
+        </select2>
+        <br>
+        <br>
         <material-stock-summary
+            :customer="customer_id"
             :group="'customer_id'"
             :header="'SUMMARY BY CUSTOMER'"
             :entity="'Customer'"></material-stock-summary>
 
         <material-stock-summary
+            :customer="customer_id"
             :group="'material_type'"
             :header="'SUMMARY BY MATERIAL TYPE'"
             :entity="'Material Type'"></material-stock-summary>
 
         <material-stock-summary
+            :customer="customer_id"
             :group="'seam_id'"
             :header="'SUMMARY BY SEAM'"
             :entity="'Seam'"></material-stock-summary>
 
         <material-stock-summary
+            :customer="customer_id"
             :group="'area_id'"
             :header="'SUMMARY BY BLOCK AREA'"
             :entity="'Block Area'"></material-stock-summary>
 
         <material-stock-summary
+            :customer="customer_id"
             :group="'stock_area_id'"
             :header="'SUMMARY BY STOCK AREA'"
             :entity="'Stock Area'"></material-stock-summary>
@@ -32,7 +41,7 @@
     <div class="col-md-9">
         <div class="panel panel-primary">
             <div class="panel-body">
-                <h3 class="pull-left text-primary">MATERIAL STOCK BALANCED <small>Manage</small></h3>
+                <h3 class="pull-left text-primary">STOCK BALANCED <small>Manage</small></h3>
                 @can('create', App\StockDumping::class)
                 <span class="pull-right" style="margin:15px 0 15px 10px;">
                     <a href="#" @click="add" class="btn btn-primary"><i class="icon-plus-circled"></i></a>
@@ -92,6 +101,7 @@ const app = new Vue({
         formErrors: {},
         formTitle: '',
         error: {},
+        customer_id: '',
         stock_areas: {!! App\StockArea::selectRaw('stock_areas.id AS id, CONCAT(areas.name, " - ", stock_areas.name) AS text')
             ->join('areas', 'areas.id', '=', 'stock_areas.area_id')
             ->orderBy('areas.name', 'ASC')->get() !!},

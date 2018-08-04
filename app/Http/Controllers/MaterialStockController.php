@@ -54,7 +54,7 @@ class MaterialStockController extends Controller
         return view('materialStock.index', [
             'breadcrumbs' => [
                 'operation/dashboard' => 'Operation',
-                'materialStock' => 'Update Stock Balanced'
+                'materialStock' => 'Stock Balanced'
             ]
         ]);
     }
@@ -112,12 +112,19 @@ class MaterialStockController extends Controller
     public function summary(Request $request)
     {
         $groupBy = $request->group_by ? $request->group_by : 'customer_id';
+        $condition = '';
+
+        if ($request->customer_id) {
+            $condition = "WHERE customer_id = ".$request->customer_id;
+        }
+
         $sql = [];
 
         $sql['material_type'] = "SELECT
             SUM(material_stocks.volume) AS volume,
             IF(material_stocks.material_type = 'l', 'LOW', 'HIGH') AS entity
         FROM material_stocks
+        ".$condition."
         GROUP BY material_stocks.material_type";
 
         $sql['seam_id'] = "SELECT
@@ -125,6 +132,7 @@ class MaterialStockController extends Controller
             seams.name AS entity
         FROM material_stocks
         JOIN seams ON seams.id = material_stocks.seam_id
+        ".$condition."
         GROUP BY material_stocks.seam_id";
 
         $sql['customer_id'] = "SELECT
@@ -132,6 +140,7 @@ class MaterialStockController extends Controller
             customers.name AS entity
         FROM material_stocks
         JOIN customers ON customers.id = material_stocks.customer_id
+        ".$condition."
         GROUP BY material_stocks.customer_id";
 
         $sql['area_id'] = "SELECT
@@ -140,6 +149,7 @@ class MaterialStockController extends Controller
         FROM material_stocks
         JOIN stock_areas ON stock_areas.id = material_stocks.stock_area_id
         JOIN areas ON areas.id = stock_areas.area_id
+        ".$condition."
         GROUP BY stock_areas.area_id";
 
         $sql['stock_area_id'] = "SELECT
@@ -148,6 +158,7 @@ class MaterialStockController extends Controller
         FROM material_stocks
         JOIN stock_areas ON stock_areas.id = material_stocks.stock_area_id
         JOIN areas ON areas.id = stock_areas.area_id
+        ".$condition."
         GROUP BY material_stocks.stock_area_id";
 
         return DB::select($sql[$groupBy]);

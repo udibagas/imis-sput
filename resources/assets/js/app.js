@@ -30,5 +30,6 @@ Vue.component('water-level', require('./components/WaterLevel.vue'));
 Vue.component('daily-check-setting', require('./components/DailyCheckSetting.vue'));
 Vue.component('operation-dashboard', require('./components/OperationDashboard.vue'));
 Vue.component('stock-dumping-summary', require('./components/StockDumpingSummary.vue'));
+Vue.component('material-stock-summary', require('./components/MaterialStockSummary.vue'));
 Vue.component('stock-dumping-chart', require('./components/StockDumpingChart.vue'));
 Vue.component('ritase-tonase', require('./components/RitaseTonase.vue'));

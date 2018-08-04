@@ -3,34 +3,12 @@
         <div class="panel-body">
             <div style="height: 200px;" :id="'stock-'+id" v-model="jetty"> </div>
         </div>
-        <table class="table table-striped table-hover table-bordered">
-            <thead>
-                <tr>
-                    <th>MATERIAL TYPE</th>
-                    <th v-for="s in jetty.stock_area">{{s.name}}</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td>HIGH</td>
-                    <td v-for="s in jetty.stock_area">100T/12d</td>
-                </tr>
-                <tr>
-                    <td>LOW</td>
-                    <td v-for="s in jetty.stock_area">100T/12d</td>
-                </tr>
-            </tbody>
-            <tfoot>
-                <tr>
-                    <th>TOTAL</th>
-                    <td v-for="s in jetty.stock_area">200T</td>
-                </tr>
-            </tfoot>
-        </table>
     </div>
 </template>
 
 <script>
+import StockSummary from "./StockSummary"
+
 export default {
     name: 'Stock',
     props: ['id', 'jetty'],
