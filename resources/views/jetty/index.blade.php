@@ -57,43 +57,10 @@
             error: {}
         },
         methods: {
-            addStockArea: function() {
-                this.formData.stock_area.push({
-                    name: 'XX',
-                    capacity: 0,
-                    stock: 0,
-                    age: 0,
-                    position: 'l',
-                    order: 0
-                });
-            },
             addHopper: function() {
                 this.formData.hoppers.push({
                     name: 'XX',
                     description: ''
-                });
-            },
-            delStockArea: function(i) {
-                var _this = this;
-
-                // kalau belum ada di database langsung hapus aja ak masalah
-                if (_this.formData.stock_area[i].id == undefined) {
-                    _this.formData.stock_area.splice(i,1);
-                    return;
-                }
-
-                // kalau sudah ada di database harus konfirmasi
-                if (!confirm('Anda yakin?')) {
-                    return;
-                }
-
-                axios.delete('{{url("stockArea")}}/' + _this.formData.stock_area[i].id).then(function(r) {
-                    _this.formData.stock_area.splice(i,1);
-                })
-
-                .catch(function(error) {
-                    var error = error.response.data;
-                    toastr["error"](error.message + ". " + error.file + ":" + error.line);
                 });
             },
             delHopper: function(i) {

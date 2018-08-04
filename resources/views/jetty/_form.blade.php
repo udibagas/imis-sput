@@ -1,5 +1,5 @@
 <div id="modal-form" class="modal fade" role="dialog">
-    <div class="modal-dialog" style="width:800px;">
+    <div class="modal-dialog">
         <div class="modal-content">
             <form class="form-horizontal" role="form" @submit.prevent="formData.id == undefined ? store : update">
                 <div class="modal-header">
@@ -62,58 +62,6 @@
 							</div>
                             <span v-if="formErrors.status" class="help-block">@{{formErrors.status[0]}}</span>
                         </div>
-                    </div>
-
-                    <div class="panel panel-info">
-                        <div class="panel-heading">
-                            STOCK AREA
-                        </div>
-                        <table class="table table-striped table-hover" style="margin-bottom:0;">
-                            <thead>
-                                <tr>
-                                    <th>Stock Area</th>
-                                    <th>Capacity</th>
-                                    <th>Stock</th>
-                                    <th>Age</th>
-                                    <th>Position</th>
-                                    <th>Order</th>
-                                    <th class="text-right">
-                                        <a href="#" @click="addStockArea" class="btn btn-primary"><i class="icon-plus"></i></a>
-                                    </th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr v-for="(s,i) in formData.stock_area">
-                                    <td>
-                                        <input type="hidden" v-model="formData.stock_area[i].id">
-                                        <input type="text" class="form-control" v-model="formData.stock_area[i].name">
-                                    </td>
-                                    <td>
-                                        <input type="number" class="form-control" v-model="formData.stock_area[i].capacity">
-                                    </td>
-                                    <td>
-                                        <input type="number" class="form-control" v-model="formData.stock_area[i].stock">
-                                    </td>
-                                    <td>
-                                        <input type="number" class="form-control" v-model="formData.stock_area[i].age">
-                                    </td>
-                                    <td>
-                                        <select class="form-control" v-model="formData.stock_area[i].position" name="">
-                                            <option value="l">Left</option>
-                                            <option value="r">Right</option>
-                                            <option value="c">Center</option>
-                                            <option value="o">Outside</option>
-                                        </select>
-                                    </td>
-                                    <td>
-                                        <input type="number" class="form-control" v-model="formData.stock_area[i].order">
-                                    </td>
-                                    <td class="text-right">
-                                        <a href="#" @click="delStockArea(i)" class="btn btn-danger"><i class="icon-trash"></i></a>
-                                    </td>
-                                </tr>
-                            </tbody>
-                        </table>
                     </div>
 
                     <div class="panel panel-info">

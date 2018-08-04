@@ -54,22 +54,36 @@
                 // reset the form
                 this.formTitle = "ADD AREA";
                 this.formData = {
-                    sub_area: [{name: 'XX', capacity: 1000, description: ''}]
+                    stock_area: [{
+                        name: 'XX',
+                        capacity: 0,
+                        stock: 0,
+                        age: 0,
+                        position: 'l',
+                        order: 0
+                    }]
                 };
                 this.formErrors = {};
                 this.error = {};
                 // open form
                 $('#modal-form').modal('show');
             },
-            addSubArea: function() {
-                this.formData.sub_area.push({name: 'XX', capacity: 1000, description: ''});
+            addStockArea: function() {
+                this.formData.stock_area.push({
+                    name: 'XX',
+                    capacity: 0,
+                    stock: 0,
+                    age: 0,
+                    position: 'l',
+                    order: 0
+                });
             },
-            delSubArea: function(i) {
+            delStockArea: function(i) {
                 var _this = this;
 
                 // kalau belum ada di database langsung hapus aja ak masalah
-                if (_this.formData.sub_area[i].id == undefined) {
-                    _this.formData.sub_area.splice(i,1);
+                if (_this.formData.stock_area[i].id == undefined) {
+                    _this.formData.stock_area.splice(i,1);
                     return;
                 }
 
@@ -78,8 +92,8 @@
                     return;
                 }
 
-                axios.delete('{{url("subArea")}}/' + _this.formData.sub_area[i].id).then(function(r) {
-                    _this.formData.sub_area.splice(i,1);
+                axios.delete('{{url("stockArea")}}/' + _this.formData.stock_area[i].id).then(function(r) {
+                    _this.formData.stock_area.splice(i,1);
                 })
 
                 .catch(function(error) {

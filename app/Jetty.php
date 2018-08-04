@@ -8,11 +8,7 @@ class Jetty extends Model
 {
     protected $fillable = ['name', 'description', 'capacity', 'order', 'status'];
 
-    protected $with = ['stockArea', 'barge', 'tugboat',  'units', 'hoppers'];
-
-    public function stockArea() {
-        return $this->hasMany(StockArea::class);
-    }
+    protected $with = ['barge', 'tugboat',  'units', 'hoppers'];
 
     public function barge() {
         return $this->hasOne(Barge::class);

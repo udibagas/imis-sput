@@ -8,9 +8,9 @@ class Area extends Model
 {
     protected $fillable = ['name', 'capacity', 'description'];
 
-    protected $with = ['subArea'];
+    protected $with = ['stockArea'];
 
-    public function subArea() {
-        return $this->hasMany(SubArea::class);
+    public function stockArea() {
+        return $this->hasMany(StockArea::class);
     }
 }

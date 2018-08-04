@@ -59,10 +59,6 @@ class JettyController extends Controller
         $this->authorize('create', Jetty::class);
         $jetty = Jetty::create($request->all());
 
-        foreach ($request->stock_area as $r) {
-            $jetty->stockArea()->create($r);
-        }
-
         foreach ($request->hoppers as $h) {
             $jetty->hoppers()->create($h);
         }
@@ -93,17 +89,6 @@ class JettyController extends Controller
     {
         $this->authorize('update', Jetty::class);
         $jetty->update($request->all());
-
-        foreach ($request->stock_area as $r)
-        {
-            if (isset($r['id'])) {
-                StockArea::find($r['id'])->update($r);
-            }
-
-            else {
-                $jetty->stockArea()->create($r);
-            }
-        }
 
         foreach ($request->hoppers as $h)
         {
@@ -180,5 +165,11 @@ class JettyController extends Controller
                 'jetty/dwellingTime' => 'Dwelling Time'
             ]
         ]);
+    }
+
+    public function stockSummary(Request $request)
+    {
+        $jetty = Jetty::find($request->jetty_id);
+
     }
 }

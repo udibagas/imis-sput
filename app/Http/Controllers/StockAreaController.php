@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\StockArea;
-use App\Jetty;
+use App\Area;
 
 class StockAreaController extends Controller
 {
@@ -16,7 +16,7 @@ class StockAreaController extends Controller
      */
     public function destroy(StockArea $stockArea)
     {
-        $this->authorize('delete', Jetty::class);
+        $this->authorize('delete', Area::class);
         return ['success' => $stockArea->delete()];
     }
 }

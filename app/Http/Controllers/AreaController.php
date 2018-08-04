@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Area;
-use App\SubArea;
+use App\StockArea;
 use App\Http\Requests\AreaRequest;
 
 class AreaController extends Controller
@@ -58,8 +58,8 @@ class AreaController extends Controller
         $this->authorize('create', Area::class);
         $area = Area::create($request->all());
 
-        foreach ($request->sub_area as $r) {
-            $area->subArea()->create($r);
+        foreach ($request->stock_area as $r) {
+            $area->stockArea()->create($r);
         }
 
         return $area;
@@ -89,14 +89,14 @@ class AreaController extends Controller
         $this->authorize('update', Area::class);
         $area->update($request->all());
 
-        foreach ($request->sub_area as $r)
+        foreach ($request->stock_area as $r)
         {
             if (isset($r['id'])) {
-                SubArea::find($r['id'])->update($r);
+                StockArea::find($r['id'])->update($r);
             }
 
             else {
-                $area->subArea()->create($r);
+                $area->stockArea()->create($r);
             }
         }
 
@@ -112,7 +112,7 @@ class AreaController extends Controller
     public function destroy(Area $area)
     {
         $this->authorize('delete', Area::class);
-        $area->subArea()->delete();
+        $area->stockArea()->delete();
         return ['success' => $area->delete()];
     }
 }
