@@ -16,7 +16,6 @@
         </div>
         <ritase-tonase :from="chartRange.from" :to="chartRange.to"></ritase-tonase>
         <stock-dumping-summary
-
             :from="chartRange.from"
             :to="chartRange.to"
             :group="'customer_id'"
@@ -28,7 +27,7 @@
             :to="chartRange.to"
             :group="'material_type'"
             :header="'SUMMARY BY MATERIAL TYPE'"
-            :entity="'Materal Type'"></stock-dumping-summary>
+            :entity="'Material Type'"></stock-dumping-summary>
 
         <stock-dumping-summary
             :from="chartRange.from"

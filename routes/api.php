@@ -179,11 +179,29 @@ Route::post('stockDumping', function() {
 
         $stockDumping = App\StockDumping::create($data);
 
-        // update stock area
-        // $stockDumping->fuelTank->update([
-        //     'stock' => $stockDumping->fuelTank->stock - $fuelRefill->total_real,
-        //     'last_stock_time' => Carbon::now()
-        // ]);
+        $stock = App\MaterialStock::where('customer_id', $request->customer_id)
+            ->where('stock_area_id', $request->stock_area_id)
+            ->where('seam_id', $request->seam_id)
+            ->where('material_type', $request->material_type)
+            ->first();
+
+        if ($stock) {
+            $stock->update([
+                'volume' => $stock->volume + $request->volume,
+                'dumping_date' => $request->date
+            ]);
+        }
+
+        else {
+            App\MaterialStock::create([
+                'customer_id' => $request->customer_id,
+                'stock_area_id' => $request->stock_area_id,
+                'seam_id' => $request->seam_id,
+                'material_type' => $request->material_type,
+                'volume' => $request->volume,
+                'dumping_date' => $request->date
+            ]);
+        }
     }
 
     return json_encode(['success' => true]);

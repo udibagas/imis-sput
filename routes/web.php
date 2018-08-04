@@ -104,7 +104,10 @@ Route::group(['middleware' => 'auth'], function() {
     Route::resource('location', 'LocationController')->except(['edit', 'create']);
     Route::resource('lostTimeCategory', 'LostTimeCategoryController')->except(['edit', 'create']);
     // Route::resource('material', 'MaterialController')->except(['edit', 'create']);
+    
+    Route::get('materialStock/summary', 'MaterialStockController@summary');
     Route::resource('materialStock', 'MaterialStockController')->except(['edit', 'create']);
+
     Route::get('meal/summary', 'MealController@summary');
     Route::get('meal/summary1', 'MealController@summary1');
     Route::put('meal/confirm', 'MealController@confirm');
