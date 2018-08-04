@@ -154,7 +154,6 @@ Route::post('stockDumping', function() {
             'shift'             => $r->shift,
             'time'              => $r->time,
             'subcont_unit_id'   => $r->subcont_unit_id,
-            'area_id'           => $r->area_id,
             'stock_area_id'     => $r->stock_area_id,
             'customer_id'       => $r->customer_id,
             'material_type'     => $r->material_type,
@@ -193,7 +192,6 @@ Route::post('stockDumping', function() {
 Route::get('stockDumping', function() {
     return App\StockDumping::selectRaw('
             stock_dumpings.*,
-            jetties.name AS jetty,
             areas.name AS area,
             stock_areas.name AS stock_area,
             subconts.name AS subcont,
@@ -204,9 +202,8 @@ Route::get('stockDumping', function() {
         ')
         ->join('subcont_units', 'subcont_units.id', '=', 'stock_dumpings.subcont_unit_id')
         ->join('subconts', 'subconts.id', '=', 'subcont_units.subcont_id')
-        ->join('areas', 'areas.id', '=', 'stock_dumpings.area_id')
         ->join('stock_areas', 'stock_areas.id', '=', 'stock_dumpings.stock_area_id')
-        ->join('jetties', 'jetties.id', '=', 'stock_areas.jetty_id')
+        ->join('areas', 'areas.id', '=', 'stock_areas.area_id')
         ->join('customers', 'customers.id', '=', 'stock_dumpings.customer_id')
         ->join('users', 'users.id', '=', 'stock_dumpings.user_id')
         ->join('seams', 'seams.id', '=', 'stock_dumpings.seam_id', 'LEFT')
