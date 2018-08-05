@@ -53,30 +53,14 @@
             add: function() {
                 // reset the form
                 this.formTitle = "ADD AREA";
-                this.formData = {
-                    stock_area: [{
-                        name: 'XX',
-                        capacity: 0,
-                        stock: 0,
-                        age: 0,
-                        position: 'l',
-                        order: 0
-                    }]
-                };
+                this.formData = { stock_area: [{ name: 'XX', capacity: 0, }] };
                 this.formErrors = {};
                 this.error = {};
                 // open form
                 $('#modal-form').modal('show');
             },
             addStockArea: function() {
-                this.formData.stock_area.push({
-                    name: 'XX',
-                    capacity: 0,
-                    stock: 0,
-                    age: 0,
-                    position: 'l',
-                    order: 0
-                });
+                this.formData.stock_area.push({ name: 'XX', capacity: 0, });
             },
             delStockArea: function(i) {
                 var _this = this;

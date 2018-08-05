@@ -64,7 +64,6 @@ class AuthServiceProvider extends ServiceProvider
         'App\StopWorkingPrediction' => 'App\Policies\StopWorkingPredictionPolicy',
         'App\StockArea' => 'App\Policies\AreaPolicy',
         'App\StockDumping' => 'App\Policies\StockDumpingPolicy',
-        'App\SubArea' => 'App\Policies\AreaPolicy',
         'App\SupervisingPrediction' => 'App\Policies\SupervisingPredictionPolicy',
         'App\TerminalAbsensi' => 'App\Policies\TerminalAbsensiPolicy',
         'App\Tugboat' => 'App\Policies\TugboatPolicy',

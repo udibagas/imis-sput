@@ -39,7 +39,6 @@ Route::group(['middleware' => 'auth'], function() {
     Route::resource('assetTaking', 'AssetTakingController')->except(['edit', 'create']);
     Route::resource('stockArea', 'StockAreaController')->only(['destroy']);
     Route::resource('hopper', 'HopperController')->only(['destroy']);
-    Route::resource('subArea', 'SubAreaController')->only(['destroy']);
     Route::resource('authorization', 'AuthorizationController')->except(['edit', 'create']);
     Route::get('barge/getAnchored', 'BargeController@getAnchored');
     Route::get('barge/resume', 'BargeController@resume');
@@ -232,11 +231,9 @@ View::composer('layouts._sidebar', function($view) {
                 'materialStock' => 'Stock Balanced',
                 'operation/waterLevel' => 'Water Level',
                 'portActivity' => 'Port Activity',
-                'Status Jetty' => [
-                    'jetty/dwellingTime' => 'Dwelling Time',
-                    'barge/resume' => 'Resume Barging Daily',
-                    'jetty/productivity' => 'Productivity Jetty'
-                ],
+                'jetty/dwellingTime' => 'Dwelling Time',
+                // 'barge/resume' => 'Resume Barging Daily',
+                // 'jetty/productivity' => 'Productivity Jetty'
                 '<i class="fa fa-database"></i> Master Data' => [
                     'area' => 'Area',
                     'barge' => 'Barges',
