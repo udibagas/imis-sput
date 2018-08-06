@@ -57,11 +57,7 @@ class DormitoryController extends Controller
     {
         $this->authorize('create', Dormitory::class);
         $dormitory = Dormitory::create($request->all());
-
-        foreach ($request->rooms as $r) {
-            $dormitory->rooms()->create($r);
-        }
-
+        $dormitory->rooms()->createMany($request->rooms);
         return $dormitory;
     }
 

@@ -87,7 +87,7 @@
     @endcan
 
     @can('export', App\FuelRefill::class)
-    @include('fuelRefill._form_export')
+    <export-form :from="'{{date('Y-m-d')}}'" :to="'{{date('Y-m-d')}}'" :url="'{{url('fuelRefill/export')}}'" :id="'modal-form-export'"></export-form>
     @endcan
 
 </div>
@@ -105,10 +105,10 @@
             formErrors: {},
             formTitle: '',
             error: {},
-            exportRange: {
-                from: '{{date("Y-m-d")}}',
-                to: '{{date("Y-m-d")}}'
-            },
+            // exportRange: {
+            //     from: '{{date("Y-m-d")}}',
+            //     to: '{{date("Y-m-d")}}'
+            // },
             units: {!! App\Unit::selectRaw('id AS id, name AS text')->orderBy('name', 'ASC')->get() !!},
             fuel_tanks: {!! App\FuelTank::selectRaw('id AS id, name AS text')->orderBy('name', 'ASC')->get() !!},
             employees: {!! App\Employee::selectRaw('id AS id, CONCAT(nrp, " - ", name) AS text')->orderBy('name', 'ASC')->get() !!},
@@ -160,11 +160,11 @@
             openExportForm: function() {
                 $('#modal-form-export').modal('show');
             },
-            doExport: function() {
-                // TODO: validate input first
-                $('#modal-form-export').modal('hide');
-                window.location = '{{url("fuelRefill/export")}}?from=' + this.exportRange.from + '&to=' + this.exportRange.to;
-            },
+            // doExport: function() {
+            //     // TODO: validate input first
+            //     $('#modal-form-export').modal('hide');
+            //     window.location = '{{url("fuelRefill/export")}}?from=' + this.exportRange.from + '&to=' + this.exportRange.to;
+            // },
             formatNumber: function(v) {
                 return parseFloat(v)
                     .toFixed(0)

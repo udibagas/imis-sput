@@ -79,7 +79,7 @@
                                     <span v-if="formErrors.hm" class="help-block">@{{formErrors.hm[0]}}</span>
                                 </div>
                                 <div class="col-sm-6">
-                                    <input type="number" v-model="formData.hm_last" class="form-control" placeholder="HM Last" readonly>
+                                    <input type="number" v-model="formData.hm_last" class="form-control" placeholder="HM Last">
                                 </div>
                             </div>
                         </div>
@@ -95,7 +95,7 @@
                                     <span v-if="formErrors.km" class="help-block">@{{formErrors.km[0]}}</span>
                                 </div>
                                 <div class="col-sm-6">
-                                    <input type="number" v-model="formData.km_last" class="form-control" placeholder="KM Last" readonly>
+                                    <input type="number" v-model="formData.km_last" class="form-control" placeholder="KM Last">
                                 </div>
                             </div>
                         </div>

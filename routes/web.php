@@ -43,6 +43,8 @@ Route::group(['middleware' => 'auth'], function() {
     Route::get('barge/getAnchored', 'BargeController@getAnchored');
     Route::get('barge/resume', 'BargeController@resume');
     Route::resource('barge', 'BargeController')->except(['edit', 'create']);
+    Route::resource('barging', 'BargingController')->except(['edit', 'create']);
+    Route::resource('bargingMaterial', 'BargingMaterialController')->only(['destroy']);
     Route::resource('breakdownCategory', 'BreakdownCategoryController')->except(['edit', 'create']);
     Route::resource('breakdownStatus', 'BreakdownStatusController')->except(['edit', 'create']);
 
@@ -228,10 +230,10 @@ View::composer('layouts._sidebar', function($view) {
                 'operation' => 'Dahsboard',
                 'breakdown' => 'Breakdown OCR',
                 'stockDumping' => 'Stock Dumping',
-                'materialStock' => 'Stock Balanced',
-                'operation/waterLevel' => 'Water Level',
                 'portActivity' => 'Port Activity',
-                'jetty/dwellingTime' => 'Dwelling Time',
+                'barging' => 'Barging',
+                'dwellingTime' => 'Dwelling Time',
+                'materialStock' => 'Stock Balanced',
                 // 'barge/resume' => 'Resume Barging Daily',
                 // 'jetty/productivity' => 'Productivity Jetty'
                 '<i class="fa fa-database"></i> Master Data' => [

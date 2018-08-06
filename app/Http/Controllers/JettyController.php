@@ -59,11 +59,7 @@ class JettyController extends Controller
     {
         $this->authorize('create', Jetty::class);
         $jetty = Jetty::create($request->all());
-
-        foreach ($request->hoppers as $h) {
-            $jetty->hoppers()->create($h);
-        }
-
+        $jetty->hoppers()->createMany($request->hoppers);
         return $jetty;
     }
 

@@ -8,7 +8,7 @@ class Jetty extends Model
 {
     protected $fillable = ['name', 'description', 'capacity', 'order', 'status'];
 
-    protected $with = ['barge', 'tugboat',  'units', 'hoppers'];
+    protected $with = ['hoppers'];
 
     public function barge() {
         return $this->hasOne(Barge::class);

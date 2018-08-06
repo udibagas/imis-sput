@@ -57,11 +57,7 @@ class AreaController extends Controller
     {
         $this->authorize('create', Area::class);
         $area = Area::create($request->all());
-
-        foreach ($request->stock_area as $r) {
-            $area->stockArea()->create($r);
-        }
-
+        $area->stockArea()->createMany($request->stock_area);
         return $area;
     }
 

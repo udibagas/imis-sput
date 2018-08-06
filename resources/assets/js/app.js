@@ -33,3 +33,4 @@ Vue.component('stock-dumping-summary', require('./components/StockDumpingSummary
 Vue.component('material-stock-summary', require('./components/MaterialStockSummary.vue'));
 Vue.component('stock-dumping-chart', require('./components/StockDumpingChart.vue'));
 Vue.component('ritase-tonase', require('./components/RitaseTonase.vue'));
+Vue.component('export-form', require('./components/ExportForm.vue'));
