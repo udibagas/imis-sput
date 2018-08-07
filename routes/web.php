@@ -125,7 +125,6 @@ Route::group(['middleware' => 'auth'], function() {
 
     Route::resource('position', 'PositionController')->except(['edit', 'create']);
     Route::resource('portActivity', 'PortActivityController')->except(['edit', 'create']);
-    Route::resource('problemProductivityCategory', 'ProblemProductivityCategoryController')->except(['edit', 'create']);
 
     Route::resource('productivityPlan', 'ProductivityPlanController')->except(['edit', 'create']);
 
@@ -241,7 +240,6 @@ View::composer('layouts._sidebar', function($view) {
                     'jetty' => 'Jetties',
                     // 'lostTimeCategory' => 'Lost Time Categories',
                     'productivityPlan' => 'Productivity Plan',
-                    'problemProductivityCategory' => 'Problem Productivity Categories',
                     'seam' => 'Seam',
                     'subcont' => 'Subcont',
                     'subcontUnit' => 'Subcont Unit',

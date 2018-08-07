@@ -53,7 +53,6 @@ class AuthServiceProvider extends ServiceProvider
         'App\PortActivity' => 'App\Policies\PortActivityPolicy',
         'App\Position' => 'App\Policies\PositionPolicy',
         'App\Prajob' => 'App\Policies\PrajobPolicy',
-        'App\ProblemProductivityCategory' => 'App\Policies\ProblemProductivityCategoryPolicy',
         'App\ProductivityPlan' => 'App\Policies\ProductivityPlanPolicy',
         'App\RunningText' => 'App\Policies\RunningTextPolicy',
         'App\Subcont' => 'App\Policies\SubcontPolicy',
