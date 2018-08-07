@@ -19,7 +19,7 @@
                     <th data-column-id="barge">Barge</th>
                     <th data-column-id="buyer">Buyer</th>
                     <th data-column-id="jetty">Jetty</th>
-                    <th data-column-id="cargo">Cargo</th>
+                    <th data-column-id="cargo" data-formatter="cargo"data-width="200px">Cargo</th>
                     <th data-column-id="volume">Volume</th>
                     <th data-column-id="start">Start</th>
                     <th data-column-id="stop">Stop</th>
@@ -226,15 +226,22 @@
                     header: '<div id="@{{ctx.id}}" class="pull-right @{{css.header}}"><div class="actionBar"><p class="@{{css.search}}"></p><p class="@{{css.actions}}"></p></div></div>'
                 },
                 formatters: {
-                    "commands": function(column, row) {
+                    commands: function(column, row) {
                         return '@can("update", App\Barging::class) <a href="#" class="btn btn-info btn-xs c-edit" data-id="'+row.id+'"><i class="icon-pencil"></i></a> @endcan' +
                             '@can("delete", App\Barging::class) <a href="#" class="btn btn-danger btn-xs c-delete" data-id="'+row.id+'"><i class="icon-trash"></i></a> @endcan';
                     },
-                    "anchored": function(column, row) {
-                        return row.anchored
-                            ? '<span class="label label-success">Y</span>'
-                            : '<span class="label label-default">N</span>';
-                    },
+                    cargo: function(c, r) {
+                        var cargo = '';
+                        r.barging_material.forEach(function(m) {
+                            cargo += '[' + t.customers.filter(c => c.id === m.customer_id)[0].text;
+                            cargo += m.material_type === 'h' ? ', HIGH' : ', LOW';
+                            var seam = t.seams.filter(s => s.id === m.seam_id);
+                            cargo += seam.length > 0 ? ', ' + seam[0].text : '';
+                            cargo += ', ' + m.volume + 'T]<br />';
+                        });
+
+                        return cargo;
+                    }
                 }
             }).on("loaded.rs.jquery.bootgrid", function(e) {
                 grid.find(".c-delete").on("click", function(e) {
