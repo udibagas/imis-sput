@@ -3,7 +3,10 @@
 @section('content')
 
 <div class="row text-center" style="width:1000px;margin:auto;">
-    <h1>Welcome to IMIS KPP Site Sungai Puting!</h1>
+    <h1>Welcome to POINS!<br>
+        <small>Port Operation Integrated System</small>
+    </h1>
+
     <br>
     <div class="col-md-4">
         <div class="panel panel-primary">

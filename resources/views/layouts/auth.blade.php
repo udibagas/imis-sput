@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>IMIS - KPP</title>
+<title>POINS - KPP</title>
 <link rel='shortcut icon' type='image/x-icon' href='images/favicon.ico' />
 
 <link href="{{ asset('css/app.css') }}" rel="stylesheet">
@@ -28,8 +28,12 @@
 		    <div class="login-content">
 				<div class="text-center">
 				    <img src="{{asset('img/logo.png')}}">
+					<hr>
+					<h1>POINS<br>
+						<small>Port Operation Integrated System</small>
+					</h1>
+					<hr>
 				</div>
-				<br><br>
 				@yield('content')
 			</div>
 		</div>

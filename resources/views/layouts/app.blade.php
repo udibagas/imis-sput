@@ -8,7 +8,7 @@
 
 <!-- CSRF Token -->
 <meta name="csrf-token" content="{{ csrf_token() }}">
-<title>{{ config('app.name', 'IMIS - SPUT') }}</title>
+<title>POINS KPP SPUT</title>
 <link href="{{ asset('css/app.css') }}" rel="stylesheet">
 <link href="{{ asset('css/theme.css') }}" rel="stylesheet">
 
