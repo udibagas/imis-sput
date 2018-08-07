@@ -131,15 +131,30 @@
             },
             ritase: 0,
             tonase: 0,
-            subcont_units: {!! App\SubcontUnit::selectRaw('subcont_units.id AS id, CONCAT(subconts.name, " - ", subcont_units.code_number) AS text')
-                ->join('subconts', 'subconts.id', '=', 'subcont_units.subcont_id')
-                ->orderBy('subcont_units.code_number', 'ASC')->get() !!},
-            stock_areas: {!! App\StockArea::selectRaw('stock_areas.id AS id, CONCAT(areas.name, " - ", stock_areas.name) AS text')
-                ->join('areas', 'areas.id', '=', 'stock_areas.area_id')
-                ->orderBy('areas.name', 'ASC')->get() !!},
+            subcont_units: [],
+            stock_areas: [],
+            subconts: {!! App\Subcont::selectRaw('id AS id, name AS text')->orderBy('name', 'ASC')->get() !!},
             seams: {!! App\Seam::selectRaw('id AS id, name AS text')->orderBy('name', 'ASC')->get() !!},
             customers: {!! App\Customer::selectRaw('id AS id, name AS text')->orderBy('name', 'ASC')->get() !!},
             areas: {!! App\Area::selectRaw('id AS id, name AS text')->orderBy('name', 'ASC')->get() !!},
+            allUnits: {!! App\SubcontUnit::selectRaw('id AS id, code_number AS text, subcont_id')->orderBy('code_number', 'ASC')->get() !!},
+            allStockAreas: {!! App\StockArea::selectRaw('id AS id, name AS text, area_id')->orderBy('name', 'ASC')->get() !!},
+        },
+        watch: {
+            'formData.subcont_id': function(v, o) {
+                if (v) {
+                    this.subcont_units = this.allUnits.filter(u => u.subcont_id == v);
+                } else {
+                    this.subcont_units = [];
+                }
+            },
+            'formData.area_id': function(v, o) {
+                if (v) {
+                    this.stock_areas = this.allStockAreas.filter(u => u.area_id == v);
+                } else {
+                    this.stock_areas = [];
+                }
+            },
         },
         methods: {
             getTonase: function() {
@@ -168,7 +183,11 @@
             add: function() {
                 // reset the form
                 this.formTitle = "ADD STOCK DUMPING";
-                this.formData = {time: '{{date("H:i")}}'},
+                this.formData = {
+                    date: moment().format('YYYY-MM-DD'),
+                    time: moment().format('HH:mm'),
+                    shift: (moment().format('H') >= 7 && moment().format('H') < 19) ? 1 : 2,
+                },
                 this.formErrors = {};
                 this.error = {};
                 // open form

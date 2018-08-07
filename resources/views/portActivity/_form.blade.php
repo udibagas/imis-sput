@@ -107,16 +107,6 @@
                         </div>
                     </div>
 
-                    <!-- <div v-show="showAreaList" class="form-group" :class="formErrors.stock_area_id ? 'has-error' : ''">
-                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="stock_area_id">Area
-                        </label>
-                        <div class="col-md-9 col-sm-9 col-xs-12">
-                            <select2 :options="stock_areas" v-model="formData.stock_area_id" data-placeholder="Area">
-                            </select2>
-                            <span v-if="formErrors.stock_area_id" class="help-block">@{{formErrors.stock_area_id[0]}}</span>
-                        </div>
-                    </div> -->
-
                     <div v-show="showHopperList" :class="['form-group', formErrors.hopper_id ? 'has-error' : '']">
                         <label class="control-label col-md-3 col-sm-3 col-xs-12" for="hopper_id">Hopper
                         </label>
@@ -144,42 +134,6 @@
                             <span v-if="formErrors.volume" class="help-block">@{{formErrors.volume[0]}}</span>
                         </div>
                     </div>
-
-                    <!-- <div v-show="showMaterialTypeList" class="form-group" :class="formErrors.material_type ? 'has-error' : ''">
-                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="material_type">Material Type
-                        </label>
-                        <div class="col-md-9 col-sm-9 col-xs-12">
-                            <div class="radio radio-inline radio-replace radio-success">
-								<input type="radio" v-model="formData.material_type" id="material_type_hi" value="h">
-								<label for="material_type_hi">HIGH</label>
-							</div>
-                            <div class="radio radio-inline radio-replace radio-danger">
-								<input type="radio" v-model="formData.material_type" id="material_type_lo" value="l">
-								<label for="material_type_lo">LOW</label>
-							</div>
-                            <span v-if="formErrors.material_type" class="help-block">@{{formErrors.material_type[0]}}</span>
-                        </div>
-                    </div>
-
-                    <div v-show="showSeamList" class="form-group" :class="formErrors.seam_id ? 'has-error' : ''">
-                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="seam_id">Seam
-                        </label>
-                        <div class="col-md-9 col-sm-9 col-xs-12">
-                            <select2 :options="seams" v-model="formData.seam_id" data-placeholder="Seam">
-                            </select2>
-                            <span v-if="formErrors.seam_id" class="help-block">@{{formErrors.seam_id[0]}}</span>
-                        </div>
-                    </div>
-
-                    <div v-show="showCustomerList" class="form-group" :class="formErrors.customer_id ? 'has-error' : ''">
-                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="customer_id">Customer
-                        </label>
-                        <div class="col-md-9 col-sm-9 col-xs-12">
-                            <select2 :options="customers" v-model="formData.customer_id" data-placeholder="Customer">
-                            </select2>
-                            <span v-if="formErrors.customer_id" class="help-block">@{{formErrors.customer_id[0]}}</span>
-                        </div>
-                    </div> -->
 
                 </div>
                 <div class="modal-footer">

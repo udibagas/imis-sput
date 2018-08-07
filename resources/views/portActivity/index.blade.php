@@ -76,14 +76,11 @@ const app = new Vue({
             ->where('name', 'LIKE', 'ld%')
             ->orderBy('name', 'ASC')->get() !!},
         employees: {!! App\Employee::selectRaw('id AS id, name AS text')->orderBy('name', 'ASC')->get() !!},
-        // stock_areas: {!! App\StockArea::selectRaw('stock_areas.id AS id, CONCAT(areas.name, " - ", stock_areas.name) AS text')
             ->join('areas', 'areas.id', '=', 'stock_areas.area_id')
             ->orderBy('areas.name', 'ASC')->get() !!},
         hoppers: {!! App\Hopper::selectRaw('hoppers.id AS id, CONCAT(jetties.name, " - ", hoppers.name) AS text')
             ->join('jetties', 'jetties.id', '=', 'hoppers.jetty_id')
             ->orderBy('jetties.name', 'ASC')->get() !!},
-        // seams: {!! App\Seam::selectRaw('id AS id, name AS text')->orderBy('name', 'ASC')->get() !!},
-        // customers: {!! App\Customer::selectRaw('id AS id, name AS text')->orderBy('name', 'ASC')->get() !!},
         unit_activities: {!! json_encode(App\PortActivity::getActivityList()) !!},
     },
     watch: {
