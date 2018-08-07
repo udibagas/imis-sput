@@ -34,7 +34,8 @@ class PortActivityController extends Controller
                     seams.name AS seam,
                     hoppers.name AS hopper,
                     jetties.name AS jetty,
-                    haulers.name AS hauler
+                    haulers.name AS hauler,
+                    users.name AS user
                 ')
                 ->join('units', 'units.id', '=', 'port_activities.unit_id')
                 ->join('units AS haulers', 'haulers.id', '=', 'port_activities.hauler_id', 'LEFT')
@@ -46,6 +47,7 @@ class PortActivityController extends Controller
                 ->join('seams', 'seams.id', '=', 'material_stocks.seam_id', 'LEFT')
                 ->join('hoppers', 'hoppers.id', '=', 'port_activities.hopper_id', 'LEFT')
                 ->join('jetties', 'jetties.id', '=', 'hoppers.jetty_id', 'LEFT')
+                ->join('users', 'users.id', '=', 'port_activities.user_id', 'LEFT')
                 ->when($request->searchPhrase, function($query) use ($request) {
                     return $query->where('units.name', 'LIKE', '%'.$request->searchPhrase.'%')
                         ->where('employees.name', 'LIKE', '%'.$request->searchPhrase.'%')
@@ -80,7 +82,7 @@ class PortActivityController extends Controller
     {
         $this->authorize('create', PortActivity::class);
         $input = $request->all();
-        // $input['user_id'] = auth()->user()->id;
+        $input['user_id'] = auth()->user()->id;
         return PortActivity::create($input);
     }
 

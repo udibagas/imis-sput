@@ -31,6 +31,7 @@
                     <th data-column-id="seam">Seam</th>
                     <th data-column-id="customer">Customer</th>
                     <th data-column-id="employee">Employee</th>
+                    <th data-column-id="user">User</th>
                     @can('updateOrDelete', App\PortActivity::class)
                     <th data-column-id="commands"
                         data-formatter="commands"
@@ -76,8 +77,6 @@ const app = new Vue({
             ->where('name', 'LIKE', 'ld%')
             ->orderBy('name', 'ASC')->get() !!},
         employees: {!! App\Employee::selectRaw('id AS id, name AS text')->orderBy('name', 'ASC')->get() !!},
-            ->join('areas', 'areas.id', '=', 'stock_areas.area_id')
-            ->orderBy('areas.name', 'ASC')->get() !!},
         hoppers: {!! App\Hopper::selectRaw('hoppers.id AS id, CONCAT(jetties.name, " - ", hoppers.name) AS text')
             ->join('jetties', 'jetties.id', '=', 'hoppers.jetty_id')
             ->orderBy('jetties.name', 'ASC')->get() !!},
