@@ -43,7 +43,6 @@ class AuthServiceProvider extends ServiceProvider
         // 'App\Jabatan' => 'App\Policies\JabatanPolicy',
         'App\Jetty' => 'App\Policies\JettyPolicy',
         'App\Location' => 'App\Policies\LocationPolicy',
-        'App\LostTimeCategory' => 'App\Policies\LostTimeCategoryPolicy',
         'App\MaterialStock' => 'App\Policies\MaterialStockPolicy',
         'App\Meal' => 'App\Policies\MealPolicy',
         'App\MealLocation' => 'App\Policies\MealLocationPolicy',

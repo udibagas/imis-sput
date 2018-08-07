@@ -103,7 +103,6 @@ Route::group(['middleware' => 'auth'], function() {
     Route::get('leadTimeBreakdownUnit', 'LeadTimeBreakdownUnitController@index');
     Route::get('leadTimeDailyCheck', 'LeadTimeDailyCheckController@index');
     Route::resource('location', 'LocationController')->except(['edit', 'create']);
-    Route::resource('lostTimeCategory', 'LostTimeCategoryController')->except(['edit', 'create']);
 
     Route::get('materialStock/summary', 'MaterialStockController@summary');
     Route::resource('materialStock', 'MaterialStockController')->except(['edit', 'create']);
@@ -238,7 +237,6 @@ View::composer('layouts._sidebar', function($view) {
                     'buyer' => 'Buyers',
                     'customer' => 'Customers',
                     'jetty' => 'Jetties',
-                    // 'lostTimeCategory' => 'Lost Time Categories',
                     'productivityPlan' => 'Productivity Plan',
                     'seam' => 'Seam',
                     'subcont' => 'Subcont',
@@ -260,7 +258,6 @@ View::composer('layouts._sidebar', function($view) {
                 'fuelManagement' => 'Fuel Management',
                 'p2h' => 'P2H',
                 '<i class="fa fa-database"></i> Master Data' => [
-                    // 'asset' => 'Asset',
                     'assetLocation' => 'Asset Location',
                     'assetStatus' => 'Asset Status',
                     'dormitory' => 'Dormitory',
