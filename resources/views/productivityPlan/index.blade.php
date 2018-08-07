@@ -15,7 +15,7 @@
                 <tr>
                     <th data-column-id="id" data-width="3%">ID</th>
                     <th data-column-id="egi">EGI</th>
-                    <th data-column-id="activity">Activity</th>
+                    <th data-column-id="activity" data-formatter="activity">Activity</th>
                     <th data-column-id="tph">TPH</th>
                     <th data-column-id="description">Description</th>
                     @can('updateOrDelete', App\ProductivityPlan::class)
@@ -50,7 +50,7 @@
             formTitle: '',
             error: {},
             egis: {!! App\Egi::selectRaw('id AS id, name AS text')->orderBy('name', 'ASC')->get() !!},
-            unit_activities: {!! App\UnitActivity::selectRaw('id AS id, name AS text')->orderBy('name', 'ASC')->get() !!},
+            unit_activities: {!! json_encode(App\PortActivity::getActivityList()) !!},
         },
         methods: {
             add: function() {
@@ -175,9 +175,12 @@
                     header: '<div id="@{{ctx.id}}" class="pull-right @{{css.header}}"><div class="actionBar"><p class="@{{css.search}}"></p><p class="@{{css.actions}}"></p></div></div>'
                 },
                 formatters: {
-                    "commands": function(column, row) {
+                    commands: function(column, row) {
                         return '@can("update", App\ProductivityPlan::class) <a href="#" class="btn btn-info btn-xs c-edit" data-id="'+row.id+'"><i class="icon-pencil"></i></a> @endcan' +
                             '@can("delete", App\ProductivityPlan::class) <a href="#" class="btn btn-danger btn-xs c-delete" data-id="'+row.id+'"><i class="icon-trash"></i></a> @endcan';
+                    },
+                    activity: function(c, r) {
+                        return t.unit_activities.filter(a => a.id == r.unit_activity_id)[0].text;
                     }
                 }
             }).on("loaded.rs.jquery.bootgrid", function() {

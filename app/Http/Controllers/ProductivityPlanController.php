@@ -24,15 +24,10 @@ class ProductivityPlanController extends Controller
             $sort = $request->sort ? key($request->sort) : 'egis.name';
             $dir = $request->sort ? $request->sort[$sort] : 'asc';
 
-            $productivityPlan = ProductivityPlan::selectRaw('
-                productivity_plans.*,
-                egis.name AS egi,
-                unit_activities.name AS activity')
+            $productivityPlan = ProductivityPlan::selectRaw(' productivity_plans.*, egis.name AS egi')
                 ->join('egis', 'egis.id', '=', 'productivity_plans.egi_id')
-                ->join('unit_activities', 'unit_activities.id', '=', 'productivity_plans.unit_activity_id')
                 ->when($request->searchPhrase, function($query) use ($request) {
-                    return $query->where('egis.name', 'LIKE', '%'.$request->searchPhrase.'%')
-                        ->where('unit_activities.name', 'LIKE', '%'.$request->searchPhrase.'%');
+                    return $query->where('egis.name', 'LIKE', '%'.$request->searchPhrase.'%');
                 })->orderBy($sort, $dir)->paginate($pageSize);
 
             return [
