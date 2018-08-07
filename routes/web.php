@@ -123,7 +123,6 @@ Route::group(['middleware' => 'auth'], function() {
     Route::get('pitstop/achievementDailyCheck', 'PitstopController@achievementDailyCheck');
     Route::resource('pitstop', 'PitstopController')->except(['edit', 'create']);
 
-    Route::resource('planCategory', 'PlanCategoryController')->except(['edit', 'create']);
     Route::resource('position', 'PositionController')->except(['edit', 'create']);
     Route::resource('portActivity', 'PortActivityController')->except(['edit', 'create']);
     Route::resource('problemProductivityCategory', 'ProblemProductivityCategoryController')->except(['edit', 'create']);
@@ -242,7 +241,6 @@ View::composer('layouts._sidebar', function($view) {
                     'jetty' => 'Jetties',
                     // 'lostTimeCategory' => 'Lost Time Categories',
                     'productivityPlan' => 'Productivity Plan',
-                    // 'planCategory' => 'Plan Category',
                     'problemProductivityCategory' => 'Problem Productivity Categories',
                     'seam' => 'Seam',
                     'subcont' => 'Subcont',

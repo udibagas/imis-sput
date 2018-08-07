@@ -50,7 +50,6 @@ class AuthServiceProvider extends ServiceProvider
         'App\Office' => 'App\Policies\OfficePolicy',
         'App\Owner' => 'App\Policies\OwnerPolicy',
         'App\Pitstop' => 'App\Policies\PitstopPolicy',
-        'App\PlanCategory' => 'App\Policies\PlanCategoryPolicy',
         'App\PortActivity' => 'App\Policies\PortActivityPolicy',
         'App\Position' => 'App\Policies\PositionPolicy',
         'App\Prajob' => 'App\Policies\PrajobPolicy',
