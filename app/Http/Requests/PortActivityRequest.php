@@ -26,15 +26,12 @@ class PortActivityRequest extends FormRequest
     {
         return [
             'date' => 'required|date',
-            'time_start' => 'required',
-            'time_end' => 'required',
+            'shift' => 'required',
             'unit_id' => 'required',
             'employee_id' => 'required',
-            'customer_id' => 'required',
-            'material_type' => 'required',
-            'volume' => 'required',
-            'stock_area_id' => 'required',
-            'shift' => 'required',
+            'time_start' => 'required',
+            'time_end' => 'required',
+            'unit_activity_id' => 'required',
         ];
     }
 
@@ -46,14 +43,12 @@ class PortActivityRequest extends FormRequest
             'time_end' => 'Time End',
             'unit_id' => 'Unit',
             'employee_id' => 'Employee',
-            'customer_id' => 'Customer',
-            'material_type' => 'Material Type',
             'volume' => 'Volume',
             'rit' => 'Bucket',
-            'stock_area_id' => 'Stock Area',
             'shift' => 'Shift',
             'hopper_id' => 'Hopper',
             'hauler_id' => 'Hauler',
+            'material_stock_id' => 'Stock'
         ];
     }
 }

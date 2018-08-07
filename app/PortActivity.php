@@ -8,20 +8,33 @@ class PortActivity extends Model
 {
     public $activities = [];
 
-    public function __construct()
-    {
-        parent::__construct();
-        $activities = UnitActivity::all();
-
-        foreach ($activities as $a) {
-            $this->activities[$a->id] = strtolower($a->name);
-        }
-    }
+    public const ACT_HAULING = 1;
+    public const ACT_FEEDING = 2;
+    public const ACT_LOAD_AND_CARRY = 3;
+    public const ACT_LOADING = 4;
+    public const ACT_STOCKPILING = 5;
+    public const ACT_BREAKDOWN = 6;
+    public const ACT_STANDBY = 7;
 
     protected $fillable = [
         'date', 'time_start', 'time_end', 'hauler_id',
         'employee_id', 'unit_id', 'unit_activity_id',
-        'stock_area_id', 'material_type', 'seam_id',
-        'customer_id', 'volume', 'rit', 'shift', 'hopper_id'
+        'volume', 'rit', 'shift', 'hopper_id',
+        'material_stock_id'
     ];
+
+    public static function getActivityList($act = false)
+    {
+        $activities = [
+            ['id' => self::ACT_HAULING, 'text' => 'Hauling'],
+            ['id' => self::ACT_FEEDING, 'text' => 'Feeding'],
+            ['id' => self::ACT_LOAD_AND_CARRY, 'text' => 'Load and Carry'],
+            ['id' => self::ACT_LOADING, 'text' => 'Loading'],
+            ['id' => self::ACT_STOCKPILING, 'text' => 'Stock Piling'],
+            ['id' => self::ACT_BREAKDOWN, 'text' => 'Breakdown'],
+            ['id' => self::ACT_STANDBY, 'text' => 'Standby']
+        ];
+
+        return $act ? $activities[$act] : $activities;
+    }
 }

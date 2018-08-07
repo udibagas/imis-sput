@@ -39,6 +39,36 @@
                         </div>
                     </div>
 
+                    <div class="form-group" :class="formErrors.unit_id ? 'has-error' : ''">
+                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="unit_id">Unit
+                        </label>
+                        <div class="col-md-9 col-sm-9 col-xs-12">
+                            <select2 :options="units" v-model="formData.unit_id" data-placeholder="Unit">
+                            </select2>
+                            <span v-if="formErrors.unit_id" class="help-block">@{{formErrors.unit_id[0]}}</span>
+                        </div>
+                    </div>
+
+                    <div class="form-group" :class="formErrors.employee_id ? 'has-error' : ''">
+                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="employee_id">Employee
+                        </label>
+                        <div class="col-md-9 col-sm-9 col-xs-12">
+                            <select2 :options="employees" v-model="formData.employee_id" data-placeholder="Employee">
+                            </select2>
+                            <span v-if="formErrors.employee_id" class="help-block">@{{formErrors.employee_id[0]}}</span>
+                        </div>
+                    </div>
+
+                    <div class="form-group" :class="formErrors.unit_activity_id ? 'has-error' : ''">
+                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="unit_activity_id">Activity
+                        </label>
+                        <div class="col-md-9 col-sm-9 col-xs-12">
+                            <select2 :options="unit_activities" v-model="formData.unit_activity_id" data-placeholder="Activity">
+                            </select2>
+                            <span v-if="formErrors.unit_activity_id" class="help-block">@{{formErrors.unit_activity_id[0]}}</span>
+                        </div>
+                    </div>
+
                     <div class="form-group" :class="formErrors.time_start ? 'has-error' : ''">
                         <label class="control-label col-md-3 col-sm-3 col-xs-12" for="time_start">Time Start
                         </label>
@@ -57,27 +87,7 @@
                         </div>
                     </div>
 
-                    <div class="form-group" :class="formErrors.unit_activity_id ? 'has-error' : ''">
-                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="unit_activity_id">Activity
-                        </label>
-                        <div class="col-md-9 col-sm-9 col-xs-12">
-                            <select2 :options="unit_activities" v-model="formData.unit_activity_id" data-placeholder="Activity">
-                            </select2>
-                            <span v-if="formErrors.unit_activity_id" class="help-block">@{{formErrors.unit_activity_id[0]}}</span>
-                        </div>
-                    </div>
-
-                    <div class="form-group" :class="formErrors.unit_id ? 'has-error' : ''">
-                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="unit_id">Unit
-                        </label>
-                        <div class="col-md-9 col-sm-9 col-xs-12">
-                            <select2 :options="units" v-model="formData.unit_id" data-placeholder="Unit">
-                            </select2>
-                            <span v-if="formErrors.unit_id" class="help-block">@{{formErrors.unit_id[0]}}</span>
-                        </div>
-                    </div>
-
-                    <div class="form-group" :class="formErrors.hauler_id ? 'has-error' : ''">
+                    <div v-show="showHaulerList" class="form-group" :class="formErrors.hauler_id ? 'has-error' : ''">
                         <label class="control-label col-md-3 col-sm-3 col-xs-12" for="hauler_id">Hauler
                         </label>
                         <div class="col-md-9 col-sm-9 col-xs-12">
@@ -87,7 +97,17 @@
                         </div>
                     </div>
 
-                    <div class="form-group" :class="formErrors.stock_area_id ? 'has-error' : ''">
+                    <div v-show="showMaterialStockList" class="form-group" :class="formErrors.material_stock_id ? 'has-error' : ''">
+                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="material_stock_id">Stock
+                        </label>
+                        <div class="col-md-9 col-sm-9 col-xs-12">
+                            <select2 :options="material_stocks" v-model="formData.material_stock_id" data-placeholder="Stock">
+                            </select2>
+                            <span v-if="formErrors.material_stock_id" class="help-block">@{{formErrors.material_stock_id[0]}}</span>
+                        </div>
+                    </div>
+
+                    <!-- <div v-show="showAreaList" class="form-group" :class="formErrors.stock_area_id ? 'has-error' : ''">
                         <label class="control-label col-md-3 col-sm-3 col-xs-12" for="stock_area_id">Area
                         </label>
                         <div class="col-md-9 col-sm-9 col-xs-12">
@@ -95,9 +115,9 @@
                             </select2>
                             <span v-if="formErrors.stock_area_id" class="help-block">@{{formErrors.stock_area_id[0]}}</span>
                         </div>
-                    </div>
+                    </div> -->
 
-                    <div class="form-group" :class="formErrors.hopper_id ? 'has-error' : ''">
+                    <div v-show="showHopperList" :class="['form-group', formErrors.hopper_id ? 'has-error' : '']">
                         <label class="control-label col-md-3 col-sm-3 col-xs-12" for="hopper_id">Hopper
                         </label>
                         <div class="col-md-9 col-sm-9 col-xs-12">
@@ -107,7 +127,7 @@
                         </div>
                     </div>
 
-                    <div class="form-group" :class="formErrors.rit ? 'has-error' : ''">
+                    <div v-show="showBucketInput" class="form-group" :class="formErrors.rit ? 'has-error' : ''">
                         <label class="control-label col-md-3 col-sm-3 col-xs-12" for="rit">Bucket
                         </label>
                         <div class="col-md-9 col-sm-9 col-xs-12">
@@ -116,7 +136,7 @@
                         </div>
                     </div>
 
-                    <div class="form-group" :class="formErrors.volume ? 'has-error' : ''">
+                    <div v-show="showVolumeInput" class="form-group" :class="formErrors.volume ? 'has-error' : ''">
                         <label class="control-label col-md-3 col-sm-3 col-xs-12" for="volume">Volume (Ton)
                         </label>
                         <div class="col-md-9 col-sm-9 col-xs-12">
@@ -125,7 +145,7 @@
                         </div>
                     </div>
 
-                    <div class="form-group" :class="formErrors.material_type ? 'has-error' : ''">
+                    <!-- <div v-show="showMaterialTypeList" class="form-group" :class="formErrors.material_type ? 'has-error' : ''">
                         <label class="control-label col-md-3 col-sm-3 col-xs-12" for="material_type">Material Type
                         </label>
                         <div class="col-md-9 col-sm-9 col-xs-12">
@@ -141,7 +161,7 @@
                         </div>
                     </div>
 
-                    <div class="form-group" :class="formErrors.seam_id ? 'has-error' : ''">
+                    <div v-show="showSeamList" class="form-group" :class="formErrors.seam_id ? 'has-error' : ''">
                         <label class="control-label col-md-3 col-sm-3 col-xs-12" for="seam_id">Seam
                         </label>
                         <div class="col-md-9 col-sm-9 col-xs-12">
@@ -151,7 +171,7 @@
                         </div>
                     </div>
 
-                    <div class="form-group" :class="formErrors.customer_id ? 'has-error' : ''">
+                    <div v-show="showCustomerList" class="form-group" :class="formErrors.customer_id ? 'has-error' : ''">
                         <label class="control-label col-md-3 col-sm-3 col-xs-12" for="customer_id">Customer
                         </label>
                         <div class="col-md-9 col-sm-9 col-xs-12">
@@ -159,17 +179,7 @@
                             </select2>
                             <span v-if="formErrors.customer_id" class="help-block">@{{formErrors.customer_id[0]}}</span>
                         </div>
-                    </div>
-
-                    <div class="form-group" :class="formErrors.employee_id ? 'has-error' : ''">
-                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="employee_id">Employee
-                        </label>
-                        <div class="col-md-9 col-sm-9 col-xs-12">
-                            <select2 :options="employees" v-model="formData.employee_id" data-placeholder="Employee">
-                            </select2>
-                            <span v-if="formErrors.employee_id" class="help-block">@{{formErrors.employee_id[0]}}</span>
-                        </div>
-                    </div>
+                    </div> -->
 
                 </div>
                 <div class="modal-footer">

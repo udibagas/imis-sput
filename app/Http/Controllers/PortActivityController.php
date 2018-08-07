@@ -27,23 +27,25 @@ class PortActivityController extends Controller
             $portActivity = PortActivity::selectRaw('
                     port_activities.*,
                     units.name AS unit,
-                    CONCAT("Jetty ", jetties.name, " - ", stock_areas.name) AS area,
+                    areas.name AS area,
+                    stock_areas.name AS stock_area,
                     employees.name AS employee,
                     customers.name AS customer,
-                    unit_activities.name AS activity,
                     seams.name AS seam,
                     hoppers.name AS hopper,
+                    jetties.name AS jetty,
                     haulers.name AS hauler
                 ')
                 ->join('units', 'units.id', '=', 'port_activities.unit_id')
                 ->join('units AS haulers', 'haulers.id', '=', 'port_activities.hauler_id', 'LEFT')
-                ->join('stock_areas', 'stock_areas.id', '=', 'port_activities.stock_area_id')
-                ->join('jetties', 'jetties.id', '=', 'stock_areas.jetty_id')
+                ->join('material_stocks', 'material_stocks.id', '=', 'port_activities.material_stock_id', 'LEFT')
+                ->join('stock_areas', 'stock_areas.id', '=', 'material_stocks.stock_area_id', 'LEFT')
+                ->join('areas', 'areas.id', '=', 'stock_areas.area_id', 'LEFT')
                 ->join('employees', 'employees.id', '=', 'port_activities.employee_id')
-                ->join('customers', 'customers.id', '=', 'port_activities.customer_id')
-                ->join('unit_activities', 'unit_activities.id', '=', 'port_activities.unit_activity_id')
-                ->join('seams', 'seams.id', '=', 'port_activities.seam_id', 'LEFT')
+                ->join('customers', 'customers.id', '=', 'material_stocks.customer_id', 'LEFT')
+                ->join('seams', 'seams.id', '=', 'material_stocks.seam_id', 'LEFT')
                 ->join('hoppers', 'hoppers.id', '=', 'port_activities.hopper_id', 'LEFT')
+                ->join('jetties', 'jetties.id', '=', 'hoppers.jetty_id', 'LEFT')
                 ->when($request->searchPhrase, function($query) use ($request) {
                     return $query->where('units.name', 'LIKE', '%'.$request->searchPhrase.'%')
                         ->where('employees.name', 'LIKE', '%'.$request->searchPhrase.'%')
