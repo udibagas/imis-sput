@@ -160,8 +160,6 @@ Route::group(['middleware' => 'auth'], function() {
     Route::get('unit/export', 'UnitController@export');
     Route::resource('unit', 'UnitController')->except(['edit', 'create']);
 
-    Route::resource('unitActivity', 'UnitActivityController')->except(['edit', 'create']);
-
     Route::resource('unitCategory', 'UnitCategoryController')->except(['edit', 'create']);
 
     Route::get('user/getAuth/{user}', 'UserController@getAuth');
@@ -250,7 +248,6 @@ View::composer('layouts._sidebar', function($view) {
                     'subcont' => 'Subcont',
                     'subcontUnit' => 'Subcont Unit',
                     'tugboat' => 'Tugboat',
-                    'unitActivity' => 'Unit Activities',
                 ]
             ]
         ],

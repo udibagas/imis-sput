@@ -70,7 +70,6 @@ class AuthServiceProvider extends ServiceProvider
         'App\Tugboat' => 'App\Policies\TugboatPolicy',
         'App\Unit' => 'App\Policies\UnitPolicy',
         'App\UnitCategory' => 'App\Policies\UnitCategoryPolicy',
-        'App\UnitActivity' => 'App\Policies\UnitActivityPolicy',
         'App\User' => 'App\Policies\UserPolicy',
         'App\WarningPart' => 'App\Policies\WarningPartPolicy',
     ];
