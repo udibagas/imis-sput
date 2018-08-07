@@ -104,7 +104,6 @@ Route::group(['middleware' => 'auth'], function() {
     Route::get('leadTimeDailyCheck', 'LeadTimeDailyCheckController@index');
     Route::resource('location', 'LocationController')->except(['edit', 'create']);
     Route::resource('lostTimeCategory', 'LostTimeCategoryController')->except(['edit', 'create']);
-    // Route::resource('material', 'MaterialController')->except(['edit', 'create']);
 
     Route::get('materialStock/summary', 'MaterialStockController@summary');
     Route::resource('materialStock', 'MaterialStockController')->except(['edit', 'create']);
@@ -243,10 +242,9 @@ View::composer('layouts._sidebar', function($view) {
                     'buyer' => 'Buyers',
                     'customer' => 'Customers',
                     'jetty' => 'Jetties',
-                    'lostTimeCategory' => 'Lost Time Categories',
-                    // 'material' => 'Materials',
+                    // 'lostTimeCategory' => 'Lost Time Categories',
                     'productivityPlan' => 'Productivity Plan',
-                    'planCategory' => 'Plan Category',
+                    // 'planCategory' => 'Plan Category',
                     'problemProductivityCategory' => 'Problem Productivity Categories',
                     'seam' => 'Seam',
                     'subcont' => 'Subcont',
