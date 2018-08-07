@@ -83,7 +83,17 @@ class PortActivityController extends Controller
         $this->authorize('create', PortActivity::class);
         $input = $request->all();
         $input['user_id'] = auth()->user()->id;
-        return PortActivity::create($input);
+        $portActivity = PortActivity::create($input);
+
+        if ($request->unit_activity_id == PortActivity::ACT_HAULING
+        || $request->unit_activity_id == PortActivity::ACT_LOAD_AND_CARRY)
+        {
+            $portActivity->materialStock()->update([
+                'volume' => $portActivity->materialStock->volume - $request->volume,
+            ]);
+
+            // TODO: tambah di barging
+        }
     }
 
     /**

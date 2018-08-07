@@ -37,4 +37,8 @@ class PortActivity extends Model
 
         return $act ? $activities[$act] : $activities;
     }
+
+    public function materialStock() {
+        return $this->belongsTo(MaterialStock::class);
+    }
 }
