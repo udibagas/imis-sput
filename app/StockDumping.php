@@ -12,8 +12,14 @@ class StockDumping extends Model
         'material_type', 'seam_id', 'customer_id', 'shift', 'register_number'
     ];
 
+    protected $with = ['stockArea', 'subcontUnit'];
+
     public function stockArea() {
         return $this->belongsTo(StockArea::class);
+    }
+
+    public function subcontUnit() {
+        return $this->belongsTo(SubcontUnit::class);
     }
 
     public function customer() {

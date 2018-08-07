@@ -76,8 +76,7 @@
                             <th data-column-id="material_type" data-formatter="material_type">Material Type</th>
                             <th data-column-id="seam">Seam</th>
                             <th data-column-id="block_area">Block Area</th>
-                            <th data-column-id="jetty">Jetty</th>
-                            <th data-column-id="stock_area">Stock Area</th>
+                            <th data-column-id="sa">Stock Area</th>
                             <th data-column-id="volume">Volume (Ton)</th>
                             <th data-column-id="customer">Customer</th>
                             <th data-column-id="register_number">Register Number</th>
@@ -222,6 +221,8 @@
 
                 axios.get('{{url("stockDumping")}}/' + id).then(function(r) {
                     t.formData = r.data;
+                    t.formData.subcont_id = r.data.subcont_unit.subcont_id;
+                    t.formData.area_id = r.data.stock_area.area_id;
                     $('#modal-form').modal('show');
                 })
 

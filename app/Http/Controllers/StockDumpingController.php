@@ -30,7 +30,7 @@ class StockDumpingController extends Controller
 
             $stockDumping = StockDumping::selectRaw('
                     stock_dumpings.*,
-                    stock_areas.name AS stock_area,
+                    stock_areas.name AS sa,
                     areas.name AS block_area,
                     subconts.name AS subcont,
                     subcont_units.code_number AS unit,
