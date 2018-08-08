@@ -16,12 +16,23 @@ class PortActivity extends Model
     public const ACT_BREAKDOWN = 6;
     public const ACT_STANDBY = 7;
 
+    protected $with = ['hopper'];
+
     protected $fillable = [
         'date', 'time_start', 'time_end', 'hauler_id',
         'employee_id', 'unit_id', 'unit_activity_id',
         'volume', 'rit', 'shift', 'hopper_id',
         'material_stock_id', 'user_id'
     ];
+
+    public function getJettyIdAttribute()
+    {
+        return ($this->hopper) ? $this->hopper->jetty_id : 0;
+    }
+
+    public function hopper() {
+        return $this->belongsTo(Hopper::class);
+    }
 
     public static function getActivityList($act = false)
     {

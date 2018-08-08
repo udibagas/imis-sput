@@ -8,11 +8,12 @@
     </div>
 
     <div class="col-md-3">
-        <div class="alert alert-info">
-            <form class="form-inline text-center" style="margin:0;">
-                <vue-datepicker v-model="chartRange.from" style="width:100px;"></vue-datepicker> TO
-                <vue-datepicker v-model="chartRange.to" style="width:100px;"></vue-datepicker>
-            </form>
+        <div class="form-group">
+            <div class="input-group">
+                <vue-datepicker placeholder="From" v-model="chartRange.from"> </vue-datepicker>
+                <div class="input-group-addon">To</div>
+                <vue-datepicker placeholder="To" v-model="chartRange.to"> </vue-datepicker>
+            </div>
         </div>
         <ritase-tonase :from="chartRange.from" :to="chartRange.to"></ritase-tonase>
         <stock-dumping-summary

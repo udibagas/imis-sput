@@ -72,16 +72,16 @@ class BargingController extends Controller
     {
         $this->authorize('create', Barging::class);
         $barging = Barging::create($request->all());
-
         $barging->bargingMaterial()->createMany($request->barging_material);
 
         $dwellingTime = [
-            ['status' => 0, 'time' => $request->start, 'jetty_id' => $request->jetty_id, 'user_id' => auth()->user()->id], // start
-            ['status' => 1, 'time' => $request->start, 'jetty_id' => $request->jetty_id, 'user_id' => auth()->user()->id], // loading
+            'status' => Barging::STATUS_START,
+            'time' => $request->start,
+            'jetty_id' => $request->jetty_id,
+            'user_id' => auth()->user()->id
         ];
 
-        $barging->dwellingTime()->createMany($dwellingTime);
-
+        $barging->dwellingTime()->create($dwellingTime);
         return $barging;
     }
 

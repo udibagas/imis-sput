@@ -108,10 +108,20 @@
                     </div>
 
                     <div v-show="showHopperList" :class="['form-group', formErrors.hopper_id ? 'has-error' : '']">
+                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="jetty_id">Jetty
+                        </label>
+                        <div class="col-md-9 col-sm-9 col-xs-12">
+                            <select2 :options="jetties" v-model="formData.jetty_id" data-placeholder="Jetty">
+                            </select2>
+                            <span v-if="formErrors.jetty_id" class="help-block">@{{formErrors.jetty_id[0]}}</span>
+                        </div>
+                    </div>
+
+                    <div v-show="showHopperList" :class="['form-group', formErrors.hopper_id ? 'has-error' : '']">
                         <label class="control-label col-md-3 col-sm-3 col-xs-12" for="hopper_id">Hopper
                         </label>
                         <div class="col-md-9 col-sm-9 col-xs-12">
-                            <select2 :options="hoppers" v-model="formData.hopper_id" data-placeholder="Hopper">
+                            <select2 :options="hoppers.filter(h => h.jetty_id == formData.jetty_id)" v-model="formData.hopper_id" data-placeholder="Hopper">
                             </select2>
                             <span v-if="formErrors.hopper_id" class="help-block">@{{formErrors.hopper_id[0]}}</span>
                         </div>

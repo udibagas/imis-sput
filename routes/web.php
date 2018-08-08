@@ -123,6 +123,7 @@ Route::group(['middleware' => 'auth'], function() {
     Route::resource('pitstop', 'PitstopController')->except(['edit', 'create']);
 
     Route::resource('position', 'PositionController')->except(['edit', 'create']);
+    Route::get('portActivity/summary', 'PortActivityController@summary');
     Route::resource('portActivity', 'PortActivityController')->except(['edit', 'create']);
 
     Route::resource('productivityPlan', 'ProductivityPlanController')->except(['edit', 'create']);

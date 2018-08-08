@@ -4,7 +4,9 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\PortActivity;
+use App\Barging;
 use App\Http\Requests\PortActivityRequest;
+use DB;
 
 class PortActivityController extends Controller
 {
@@ -21,7 +23,7 @@ class PortActivityController extends Controller
         {
             $pageSize = $request->rowCount > 0 ? $request->rowCount : 1000000;
             $request['page'] = $request->current;
-            $sort = $request->sort ? key($request->sort) : 'port_activities.date';
+            $sort = $request->sort ? key($request->sort) : 'port_activities.id';
             $dir = $request->sort ? $request->sort[$sort] : 'desc';
 
             $portActivity = PortActivity::selectRaw('
@@ -32,7 +34,7 @@ class PortActivityController extends Controller
                     employees.name AS employee,
                     customers.name AS customer,
                     seams.name AS seam,
-                    hoppers.name AS hopper,
+                    hoppers.name AS hpr,
                     jetties.name AS jetty,
                     haulers.name AS hauler,
                     users.name AS user
@@ -92,7 +94,16 @@ class PortActivityController extends Controller
                 'volume' => $portActivity->materialStock->volume - $request->volume,
             ]);
 
-            // TODO: tambah di barging
+            // TODO: tambah di barging, ambil data jetty
+            $barging = Barging::where('jetty_id', $request->jetty_id)
+                ->where('status', '!=', Barging::STATUS_COMPLETE)
+                ->latest()->first();
+
+            if ($barging) {
+                $barging->update([
+                    'volume_by_bucket_ctrl' => $barging->volume_by_bucket_ctrl + $request->volume
+                ]);
+            }
         }
     }
 
@@ -132,5 +143,23 @@ class PortActivityController extends Controller
     {
         $this->authorize('delete', PortActivity::class);
         return ['success' => $portActivity->delete()];
+    }
+
+    public function summary(Request $request)
+    {
+        $from = $request->from ? $request->from : date('Y-m-01');
+        $to = $request->to ? $request->to : date('Y-m-d');
+
+        $sql = "SELECT
+            SUM(rit) AS bucket,
+            SUM(volume) AS volume,
+            unit_activity_id,
+            units.name AS unit
+        FROM port_activities
+        JOIN units ON units.id = port_activities.unit_id
+        WHERE `date` BETWEEN ? AND ?
+        GROUP BY unit_id, unit_activity_id";
+
+        return DB::select($sql, [$from, $to]);
     }
 }
