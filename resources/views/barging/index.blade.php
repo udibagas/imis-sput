@@ -60,6 +60,8 @@
 
 // console.log(JSON.stringify({!! json_encode(App\Barging::getStatusList()) !!}));
 
+$('.page-container').addClass('sidebar-collapsed');
+
 const app = new Vue({
     el: '#app',
     data: {
