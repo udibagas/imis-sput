@@ -113,135 +113,98 @@
 
 <script type="text/javascript">
 
-    const app = new Vue({
-        el: '#app',
-        data: {
-            formData: {},
-            formErrors: {},
-            formTitle: '',
-            error: {},
-            date: '{{date("Y-m-d")}}',
-            exportRange: {
-                from: '{{date("Y-m-d")}}',
-                to: '{{date("Y-m-d")}}'
-            },
-            chartRange: {
-                from: '{{date("Y-m-01")}}',
-                to: '{{date("Y-m-d")}}'
-            },
-            ritase: 0,
-            tonase: 0,
-            subcont_units: [],
-            stock_areas: [],
-            subconts: {!! App\Subcont::selectRaw('id AS id, name AS text')->orderBy('name', 'ASC')->get() !!},
-            seams: {!! App\Seam::selectRaw('id AS id, name AS text')->orderBy('name', 'ASC')->get() !!},
-            customers: {!! App\Customer::selectRaw('id AS id, name AS text')->orderBy('name', 'ASC')->get() !!},
-            areas: {!! App\Area::selectRaw('id AS id, name AS text')->orderBy('name', 'ASC')->get() !!},
-            allUnits: {!! App\SubcontUnit::selectRaw('id AS id, code_number AS text, subcont_id')->orderBy('code_number', 'ASC')->get() !!},
-            allStockAreas: {!! App\StockArea::selectRaw('id AS id, name AS text, area_id')->orderBy('name', 'ASC')->get() !!},
+$('.page-container').addClass('sidebar-collapsed');
+
+const app = new Vue({
+    el: '#app',
+    data: {
+        formData: {},
+        formErrors: {},
+        formTitle: '',
+        error: {},
+        date: '{{date("Y-m-d")}}',
+        exportRange: {
+            from: '{{date("Y-m-d")}}',
+            to: '{{date("Y-m-d")}}'
         },
-        watch: {
-            'formData.subcont_id': function(v, o) {
-                if (v) {
-                    this.subcont_units = this.allUnits.filter(u => u.subcont_id == v);
-                } else {
-                    this.subcont_units = [];
-                }
-            },
-            'formData.area_id': function(v, o) {
-                if (v) {
-                    this.stock_areas = this.allStockAreas.filter(u => u.area_id == v);
-                } else {
-                    this.stock_areas = [];
-                }
-            },
+        chartRange: {
+            from: '{{date("Y-m-01")}}',
+            to: '{{date("Y-m-d")}}'
         },
-        methods: {
-            getTonase: function() {
-                var _this = this;
+        ritase: 0,
+        tonase: 0,
+        subcont_units: [],
+        stock_areas: [],
+        subconts: {!! App\Subcont::selectRaw('id AS id, name AS text')->orderBy('name', 'ASC')->get() !!},
+        seams: {!! App\Seam::selectRaw('id AS id, name AS text')->orderBy('name', 'ASC')->get() !!},
+        customers: {!! App\Customer::selectRaw('id AS id, name AS text')->orderBy('name', 'ASC')->get() !!},
+        areas: {!! App\Area::selectRaw('id AS id, name AS text')->orderBy('name', 'ASC')->get() !!},
+        allUnits: {!! App\SubcontUnit::selectRaw('id AS id, code_number AS text, subcont_id')->orderBy('code_number', 'ASC')->get() !!},
+        allStockAreas: {!! App\StockArea::selectRaw('id AS id, name AS text, area_id')->orderBy('name', 'ASC')->get() !!},
+    },
+    watch: {
+        'formData.subcont_id': function(v, o) {
+            if (v) {
+                this.subcont_units = this.allUnits.filter(u => u.subcont_id == v);
+            } else {
+                this.subcont_units = [];
+            }
+        },
+        'formData.area_id': function(v, o) {
+            if (v) {
+                this.stock_areas = this.allStockAreas.filter(u => u.area_id == v);
+            } else {
+                this.stock_areas = [];
+            }
+        },
+    },
+    methods: {
+        getTonase: function() {
+            var _this = this;
 
-                axios.get('{{url("stockDumping/tonase")}}?from=' + _this.date + '&to=' + _this.date)
-                    .then(function(r) {
-                        _this.tonase = r.data[0].tonase ? r.data[0].tonase : 0;
-                        _this.ritase = r.data[0].ritase ? r.data[0].ritase : 0;
-                    })
-                    .catch(function(error) {
-                        var error = error.response.data;
-                        toastr["error"](error.message + ". " + error.file + ":" + error.line)
-                    });
-
-                setTimeout(this.getTonase, 3000);
-            },
-            openExportForm: function() {
-                $('#modal-form-export').modal('show');
-            },
-            doExport: function() {
-                // TODO: validate input first
-                $('#modal-form-export').modal('hide');
-                window.location = '{{url("stockDumping/export")}}?from=' + this.exportRange.from + '&to=' + this.exportRange.to;
-            },
-            add: function() {
-                // reset the form
-                this.formTitle = "ADD STOCK DUMPING";
-                this.formData = {
-                    date: moment().format('YYYY-MM-DD'),
-                    time: moment().format('HH:mm'),
-                    shift: (moment().format('H') >= 7 && moment().format('H') < 19) ? 1 : 2,
-                },
-                this.formErrors = {};
-                this.error = {};
-                // open form
-                $('#modal-form').modal('show');
-            },
-            store: function() {
-                block('form');
-                var t = this;
-                axios.post('{{url("stockDumping")}}', this.formData)
-                    .then(function(r) {
-                        unblock('form');
-                        $('#modal-form').modal('hide');
-                        toastr["success"]("Data berhasil ditambahkan");
-                        $('#bootgrid').bootgrid('reload');
-                    })
-                    .catch(function(error) {
-                        unblock('form');
-                        if (error.response.status == 422) {
-                            t.formErrors = error.response.data.errors;
-                        }
-
-                        if (error.response.status == 500) {
-                            t.error = error.response.data;
-                        }
-                    });
-            },
-            edit: function(id) {
-                var t = this;
-                this.formTitle = "EDIT STOCK DUMPING";
-                this.formErrors = {};
-                this.error = {};
-
-                axios.get('{{url("stockDumping")}}/' + id).then(function(r) {
-                    t.formData = r.data;
-                    t.formData.subcont_id = r.data.subcont_unit.subcont_id;
-                    t.formData.area_id = r.data.stock_area.area_id;
-                    $('#modal-form').modal('show');
+            axios.get('{{url("stockDumping/tonase")}}?from=' + _this.date + '&to=' + _this.date)
+                .then(function(r) {
+                    _this.tonase = r.data[0].tonase ? r.data[0].tonase : 0;
+                    _this.ritase = r.data[0].ritase ? r.data[0].ritase : 0;
                 })
-
                 .catch(function(error) {
                     var error = error.response.data;
                     toastr["error"](error.message + ". " + error.file + ":" + error.line)
                 });
+
+            setTimeout(this.getTonase, 3000);
+        },
+        openExportForm: function() {
+            $('#modal-form-export').modal('show');
+        },
+        doExport: function() {
+            // TODO: validate input first
+            $('#modal-form-export').modal('hide');
+            window.location = '{{url("stockDumping/export")}}?from=' + this.exportRange.from + '&to=' + this.exportRange.to;
+        },
+        add: function() {
+            // reset the form
+            this.formTitle = "ADD STOCK DUMPING";
+            this.formData = {
+                date: moment().format('YYYY-MM-DD'),
+                time: moment().format('HH:mm'),
+                shift: (moment().format('H') >= 7 && moment().format('H') < 19) ? 1 : 2,
             },
-            update: function() {
-                block('form');
-                var t = this;
-                axios.put('{{url("stockDumping")}}/' + this.formData.id, this.formData).then(function(r) {
+            this.formErrors = {};
+            this.error = {};
+            // open form
+            $('#modal-form').modal('show');
+        },
+        store: function() {
+            block('form');
+            var t = this;
+            axios.post('{{url("stockDumping")}}', this.formData)
+                .then(function(r) {
                     unblock('form');
                     $('#modal-form').modal('hide');
-                    toastr["success"]("Data berhasil diupdate");
+                    toastr["success"]("Data berhasil ditambahkan");
                     $('#bootgrid').bootgrid('reload');
                 })
-                // validasi
                 .catch(function(error) {
                     unblock('form');
                     if (error.response.status == 422) {
@@ -252,80 +215,119 @@
                         t.error = error.response.data;
                     }
                 });
-            },
-            delete: function(id) {
-                bootbox.confirm({
-                    title: "Konfirmasi",
-                    message: "Anda yakin akan menghapus data ini?",
-                    callback: function(r) {
-                        if (r == true) {
-                            axios.delete('{{url("stockDumping")}}/' + id)
-
-                            .then(function(r) {
-                                if (r.data.success == true) {
-                                    toastr["success"]("Data berhasil dihapus");
-                                    $('#bootgrid').bootgrid('reload');
-                                } else {
-                                    toastr["error"]("Data gagal dihapus. " + r.data.message);
-                                }
-                            })
-
-                            .catch(function(error) {
-                                if (error.response.status == 500) {
-                                    var error = error.response.data;
-                                    toastr["error"](error.message + ". " + error.file + ":" + error.line)
-                                }
-                            });
-                        }
-                    }
-                });
-            },
         },
-        mounted: function() {
+        edit: function(id) {
             var t = this;
-            t.getTonase();
+            this.formTitle = "EDIT STOCK DUMPING";
+            this.formErrors = {};
+            this.error = {};
 
-            var grid = $('#bootgrid').bootgrid({
-                statusMapping: {
-                    0: "default",
-                    1: "default"
-                },
-                rowCount: [10,25,50,100],
-                ajax: true, url: '{{url('stockDumping')}}',
-                ajaxSettings: {
-                    method: 'GET', cache: false,
-                    statusCode: {
-                        500: function(e) {
-                            var error = JSON.parse(e.responseText);
-                            toastr["error"](error.message + ". " + error.file + ":" + error.line)
-                        }
-                    }
-                },
-                searchSettings: { delay: 100, characters: 3 },
-                templates: {
-                    header: '<div id="@{{ctx.id}}" class="pull-right @{{css.header}}"><div class="actionBar"><p class="@{{css.search}}"></p><p class="@{{css.actions}}"></p></div></div>'
-                },
-                formatters: {
-                    "commands": function(column, row) {
-                        return '@can("update", App\StockDumping::class) <a href="#" class="btn btn-info btn-xs c-edit" data-id="'+row.id+'"><i class="icon-pencil"></i></a> @endcan' +
-                            '@can("delete", App\StockDumping::class) <a href="#" class="btn btn-danger btn-xs c-delete" data-id="'+row.id+'"><i class="icon-trash"></i></a> @endcan';
-                    },
-                    material_type: function(c, r) {
-                        return r.material_type == 'l' ? 'LOW' : 'HIGH';
+            axios.get('{{url("stockDumping")}}/' + id).then(function(r) {
+                t.formData = r.data;
+                t.formData.subcont_id = r.data.subcont_unit.subcont_id;
+                t.formData.area_id = r.data.stock_area.area_id;
+                $('#modal-form').modal('show');
+            })
+
+            .catch(function(error) {
+                var error = error.response.data;
+                toastr["error"](error.message + ". " + error.file + ":" + error.line)
+            });
+        },
+        update: function() {
+            block('form');
+            var t = this;
+            axios.put('{{url("stockDumping")}}/' + this.formData.id, this.formData).then(function(r) {
+                unblock('form');
+                $('#modal-form').modal('hide');
+                toastr["success"]("Data berhasil diupdate");
+                $('#bootgrid').bootgrid('reload');
+            })
+            // validasi
+            .catch(function(error) {
+                unblock('form');
+                if (error.response.status == 422) {
+                    t.formErrors = error.response.data.errors;
+                }
+
+                if (error.response.status == 500) {
+                    t.error = error.response.data;
+                }
+            });
+        },
+        delete: function(id) {
+            bootbox.confirm({
+                title: "Konfirmasi",
+                message: "Anda yakin akan menghapus data ini?",
+                callback: function(r) {
+                    if (r == true) {
+                        axios.delete('{{url("stockDumping")}}/' + id)
+
+                        .then(function(r) {
+                            if (r.data.success == true) {
+                                toastr["success"]("Data berhasil dihapus");
+                                $('#bootgrid').bootgrid('reload');
+                            } else {
+                                toastr["error"]("Data gagal dihapus. " + r.data.message);
+                            }
+                        })
+
+                        .catch(function(error) {
+                            if (error.response.status == 500) {
+                                var error = error.response.data;
+                                toastr["error"](error.message + ". " + error.file + ":" + error.line)
+                            }
+                        });
                     }
                 }
-            }).on("loaded.rs.jquery.bootgrid", function() {
-                grid.find(".c-delete").on("click", function(e) {
-                    t.delete($(this).data("id"));
-                });
+            });
+        },
+    },
+    mounted: function() {
+        var t = this;
+        t.getTonase();
 
-                grid.find(".c-edit").on("click", function(e) {
-                    t.edit($(this).data("id"));
-                });
+        var grid = $('#bootgrid').bootgrid({
+            statusMapping: {
+                0: "default",
+                1: "default"
+            },
+            rowCount: [10,25,50,100],
+            ajax: true, url: '{{url('stockDumping')}}',
+            ajaxSettings: {
+                method: 'GET', cache: false,
+                statusCode: {
+                    500: function(e) {
+                        var error = JSON.parse(e.responseText);
+                        toastr["error"](error.message + ". " + error.file + ":" + error.line)
+                    }
+                }
+            },
+            searchSettings: { delay: 100, characters: 3 },
+            templates: {
+                header: '<div id="@{{ctx.id}}" class="pull-right @{{css.header}}"><div class="actionBar"><p class="@{{css.search}}"></p><p class="@{{css.actions}}"></p></div></div>'
+            },
+            formatters: {
+                "commands": function(column, row) {
+                    return '@can("update", App\StockDumping::class) <a href="#" class="btn btn-info btn-xs c-edit" data-id="'+row.id+'"><i class="icon-pencil"></i></a> @endcan' +
+                        '@can("delete", App\StockDumping::class) <a href="#" class="btn btn-danger btn-xs c-delete" data-id="'+row.id+'"><i class="icon-trash"></i></a> @endcan';
+                },
+                material_type: function(c, r) {
+                    return r.material_type == 'l' ? 'LOW' : 'HIGH';
+                }
+            }
+        }).on("loaded.rs.jquery.bootgrid", function() {
+            grid.find(".c-delete").on("click", function(e) {
+                t.delete($(this).data("id"));
             });
 
-        }
-    });
+            grid.find(".c-edit").on("click", function(e) {
+                t.edit($(this).data("id"));
+            });
+        });
+
+    }
+});
 
 </script>
 

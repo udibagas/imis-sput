@@ -137,4 +137,23 @@ class BargingController extends Controller
         return ['success' => $barging->delete()];
     }
 
+    public function active()
+    {
+        return Barging::selectRaw('
+                bargings.*,
+                customers.name AS customer,
+                barges.name AS barge,
+                tugboats.name AS tugboat,
+                jetties.name AS jetty,
+                buyers.name AS buyer
+            ')
+            ->join('jetties', 'jetties.id', '=', 'bargings.jetty_id')
+            ->join('buyers', 'buyers.id', '=', 'bargings.buyer_id')
+            ->join('barges', 'barges.id', '=', 'bargings.barge_id')
+            ->join('customers', 'customers.id', '=', 'bargings.customer_id')
+            ->join('tugboats', 'tugboats.id', '=', 'bargings.tugboat_id')
+            ->where('bargings.status', '!=', Barging::STATUS_COMPLETE)
+            ->get();
+    }
+
 }

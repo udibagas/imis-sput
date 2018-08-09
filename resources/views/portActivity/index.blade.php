@@ -2,67 +2,70 @@
 
 @section('content')
 
-<div class="row" id="app">
-    <div class="col-md-3">
-        <div class="form-group">
-            <div class="input-group">
-                <vue-datepicker placeholder="From" v-model="summary_from"> </vue-datepicker>
-                <div class="input-group-addon">To</div>
-                <vue-datepicker placeholder="To" v-model="summary_to"> </vue-datepicker>
+<div id="app">
+    <div class="panel panel-primary">
+        <div class="panel-heading">
+            <div class="form-group pull-right">
+                <div class="input-group">
+                    <vue-datepicker placeholder="From" v-model="summary_from"> </vue-datepicker>
+                    <div class="input-group-addon">To</div>
+                    <vue-datepicker placeholder="To" v-model="summary_to"> </vue-datepicker>
+                </div>
             </div>
+            SUMMARY
+            <div class="clearfix"> </div>
         </div>
-
         <port-activity-summary :from="summary_from" :to="summary_to">
-        </port-activity-summary>
     </div>
-    <div class="col-md-9">
-        <div class="panel panel-primary">
-            <div class="panel-body">
-                <h3 class="pull-left text-primary">PORT ACTIVITY <small>Manage</small></h3>
-                @can('create', App\PortActivity::class)
-                <span class="pull-right" style="margin:15px 0 15px 10px;">
-                    <a href="#" @click="add" class="btn btn-primary"><i class="icon-plus-circled"></i></a>
-                </span>
-                @endcan
-                <table class="table table-striped table-hover " id="bootgrid" style="border-top:2px solid #ddd">
-                    <thead>
-                        <tr>
-                            <th data-column-id="id" data-width="3%">ID</th>
-                            <th data-column-id="date">Date</th>
-                            <th data-column-id="shift">Shift</th>
-                            <th data-column-id="time_start">Time Start</th>
-                            <th data-column-id="time_end">Time End</th>
-                            <th data-column-id="activity" data-formatter="activity" data-sortable="false">Activity</th>
-                            <th data-column-id="unit">Unit</th>
-                            <th data-column-id="hauler">Hauler</th>
-                            <th data-column-id="area">Area</th>
-                            <th data-column-id="stock_area">Stock Area</th>
-                            <th data-column-id="jetty">Jetty</th>
-                            <th data-column-id="hpr">Hopper</th>
-                            <th data-column-id="rit">Bucket</th>
-                            <th data-column-id="volume">Volume (Ton)</th>
-                            <th data-column-id="material_type" data-formatter="material_type">Material Type</th>
-                            <th data-column-id="seam">Seam</th>
-                            <th data-column-id="customer">Customer</th>
-                            <th data-column-id="employee">Employee</th>
-                            <th data-column-id="user">User</th>
-                            @can('updateOrDelete', App\PortActivity::class)
-                            <th data-column-id="commands"
-                                data-formatter="commands"
-                                data-sortable="false"
-                                data-align="right"
-                                data-header-align="right"></th>
-                            @endcan
-                        </tr>
-                    </thead>
-                </table>
-            </div>
 
-            @can('createOrUpdate', App\PortActivity::class)
-            @include('portActivity._form')
+
+    </port-activity-summary>
+    <div class="panel panel-primary">
+        <div class="panel-body">
+            <h3 class="pull-left text-primary">PORT ACTIVITY <small>Manage</small></h3>
+            @can('create', App\PortActivity::class)
+            <span class="pull-right" style="margin:15px 0 15px 10px;">
+                <a href="#" @click="add" class="btn btn-primary"><i class="icon-plus-circled"></i></a>
+            </span>
             @endcan
-
+            <table class="table table-striped table-hover " id="bootgrid" style="border-top:2px solid #ddd">
+                <thead>
+                    <tr>
+                        <th data-column-id="id" data-width="3%">ID</th>
+                        <th data-column-id="date">Date</th>
+                        <th data-column-id="shift">Shift</th>
+                        <th data-column-id="time_start">Time Start</th>
+                        <th data-column-id="time_end">Time End</th>
+                        <th data-column-id="activity" data-formatter="activity" data-sortable="false">Activity</th>
+                        <th data-column-id="unit">Unit</th>
+                        <th data-column-id="hauler">Hauler</th>
+                        <th data-column-id="area">Area</th>
+                        <th data-column-id="stock_area">Stock Area</th>
+                        <th data-column-id="jetty">Jetty</th>
+                        <th data-column-id="hpr">Hopper</th>
+                        <th data-column-id="rit">Bucket</th>
+                        <th data-column-id="volume">Volume (Ton)</th>
+                        <th data-column-id="material_type" data-formatter="material_type">Material Type</th>
+                        <th data-column-id="seam">Seam</th>
+                        <th data-column-id="customer">Customer</th>
+                        <th data-column-id="employee">Employee</th>
+                        <th data-column-id="user">User</th>
+                        @can('updateOrDelete', App\PortActivity::class)
+                        <th data-column-id="commands"
+                            data-formatter="commands"
+                            data-sortable="false"
+                            data-align="right"
+                            data-header-align="right"></th>
+                        @endcan
+                    </tr>
+                </thead>
+            </table>
         </div>
+
+        @can('createOrUpdate', App\PortActivity::class)
+        @include('portActivity._form')
+        @endcan
+
     </div>
 </div>
 
@@ -191,9 +194,16 @@ const app = new Vue({
 
             axios.get('{{url("portActivity")}}/' + id).then(function(r) {
                 t.formData = r.data;
-                t.formData.jetty_id = r.data.hopper.jetty_id;
-                t.formData.hopper_id = r.data.hopper_id;
-                $('#modal-form').modal('show');
+
+                if (r.data.hopper) {
+                    t.formData.jetty_id = r.data.hopper.jetty_id;
+                    t.formData.hopper_id = r.data.hopper_id;
+                }
+
+                setTimeout(function() {
+                    $('#modal-form').modal('show');
+                }, 100);
+
             })
 
             .catch(function(error) {

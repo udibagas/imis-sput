@@ -1,34 +1,45 @@
 <template lang="html">
-    <div class="panel panel-default">
-        <div class="panel-heading">
-            SUMMARY
-        </div>
-        <table class="table table-striped table-bordered">
-            <thead>
-                <tr>
-                    <th>UNIT</th>
-                    <th>ACTIVITY</th>
-                    <th class="text-right">BUCKET</th>
-                    <th class="text-right">VOLUME</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr v-for="s in summaries">
-                    <td>{{s.unit}}</td>
-                    <td>{{activities.filter(a => a.id == s.unit_activity_id)[0].text}}</td>
-                    <td class="text-right">{{s.bucket | formatNumber}}</td>
-                    <td class="text-right">{{s.volume | formatNumber}}</td>
-                </tr>
-            </tbody>
-            <tfoot>
-                <tr>
-                    <th colspan="2">TOTAL</th>
-                    <th class="text-right">{{totalBucket | formatNumber}}</th>
-                    <th class="text-right">{{totalVolume | formatNumber}}</th>
-                </tr>
-            </tfoot>
-        </table>
-    </div>
+    <table class="table table-striped table-bordered">
+        <thead>
+            <tr>
+                <th rowspan="2">UNIT</th>
+                <th rowspan="2">EGI</th>
+                <th rowspan="2">SHIFT</th>
+                <th rowspan="2">ACTIVITY</th>
+                <th colspan="3">PRODUCTIVITY</th>
+                <th rowspan="2">BUCKET</th>
+                <th rowspan="2">VOLUME</th>
+            </tr>
+            <tr>
+                <th style="width:100px;">PLAN</th>
+                <th style="width:100px;">ACTUAL</th>
+                <th style="width:100px;">ACHIEVEMENT</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr v-for="s in summaries">
+                <td>{{s.unit}}</td>
+                <td>{{s.egi}}</td>
+                <td class="text-center">{{s.shift}}</td>
+                <td>{{activities.filter(a => a.id == s.unit_activity_id)[0].text}}</td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td class="text-center">{{s.bucket | formatNumber}}</td>
+                <td class="text-center">{{s.volume | formatNumber}}</td>
+            </tr>
+        </tbody>
+        <tfoot>
+            <tr>
+                <th colspan="4">TOTAL</th>
+                <th></th>
+                <th></th>
+                <th></th>
+                <th>{{totalBucket | formatNumber}}</th>
+                <th>{{totalVolume | formatNumber}}</th>
+            </tr>
+        </tfoot>
+    </table>
 </template>
 
 <script>
@@ -81,4 +92,12 @@ export default {
 </script>
 
 <style lang="css" scoped>
+    table tr th {
+        vertical-align: middle;
+        text-align: center;
+    }
+
+    .text-right {
+        text-align: right;
+    }
 </style>

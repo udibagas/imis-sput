@@ -104,8 +104,11 @@ export default {
         }
     },
     mounted: function() {
-        this.initChart();
-        this.requestData();
+        var _this = this;
+        setTimeout(function() {
+            _this.initChart();
+            _this.requestData();
+        }, 1000);
     }
 }
 </script>

@@ -35,3 +35,4 @@ Vue.component('port-activity-summary', require('./components/PortActivitySummary
 Vue.component('stock-dumping-chart', require('./components/StockDumpingChart.vue'));
 Vue.component('ritase-tonase', require('./components/RitaseTonase.vue'));
 Vue.component('export-form', require('./components/ExportForm.vue'));
+Vue.component('active-barging', require('./components/ActiveBarging.vue'));

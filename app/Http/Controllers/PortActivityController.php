@@ -154,12 +154,37 @@ class PortActivityController extends Controller
             SUM(rit) AS bucket,
             SUM(volume) AS volume,
             unit_activity_id,
-            units.name AS unit
+            units.name AS unit,
+            shift,
+            egis.name AS egi
         FROM port_activities
         JOIN units ON units.id = port_activities.unit_id
+        JOIN egis ON egis.id = units.egi_id
         WHERE `date` BETWEEN ? AND ?
-        GROUP BY unit_id, unit_activity_id";
+        GROUP BY unit_id, unit_activity_id, shift";
 
         return DB::select($sql, [$from, $to]);
     }
+
+    public function summary1(Request $request)
+    {
+        $from = $request->from ? $request->from : date('Y-m-01');
+        $to = $request->to ? $request->to : date('Y-m-d');
+
+        $sql = "SELECT
+            units.name AS unit,
+            port_activities.shift,
+            SUM(CASE WHEN port_activities.unit_activity_id = ".PortActivity::ACT_FEEDING." THEN volume ELSE 0 END) feeding,
+            SUM(CASE WHEN port_activities.unit_activity_id = ".PortActivity::ACT_LOAD_AND_CARRY." THEN volume ELSE 0 END) load_and_carry,
+            SUM(CASE WHEN port_activities.unit_activity_id = ".PortActivity::ACT_LOADING." THEN volume ELSE 0 END) loading,
+            SUM(CASE WHEN port_activities.unit_activity_id = ".PortActivity::ACT_STOCKPILING." THEN volume ELSE 0 END) stock_piling,
+            SUM(CASE WHEN port_activities.unit_activity_id = ".PortActivity::ACT_HAULING." THEN volume ELSE 0 END) hauling
+            FROM port_activities
+            JOIN units ON units.id = port_activities.unit_id
+            GROUP BY port_activities.unit_id, shift
+        ";
+
+        return DB::select($sql, [$from, $to]);
+    }
+
 }

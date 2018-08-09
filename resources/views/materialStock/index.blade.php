@@ -42,7 +42,7 @@
         <div class="panel panel-primary">
             <div class="panel-body">
                 <h3 class="pull-left text-primary">STOCK BALANCED <small>Manage</small></h3>
-                @can('create', App\StockDumping::class)
+                @can('create', App\MaterialStock::class)
                 <span class="pull-right" style="margin:15px 0 15px 10px;">
                     <a href="#" @click="add" class="btn btn-primary"><i class="icon-plus-circled"></i></a>
                 </span>
@@ -68,7 +68,7 @@
                                 data-align="right"
                                 data-header-align="right">Age</th>
 
-                            @can('updateOrDelete', App\StockDumping::class)
+                            @can('updateOrDelete', App\MaterialStock::class)
                             <th data-column-id="commands"
                                 data-formatter="commands"
                                 data-sortable="false"
@@ -80,7 +80,7 @@
                 </table>
             </div>
 
-            @can('createOrUpdate', App\StockDumping::class)
+            @can('createOrUpdate', App\MaterialStock::class)
             @include('materialStock._form')
             @endcan
 
@@ -93,6 +93,8 @@
 @push('scripts')
 
 <script type="text/javascript">
+
+$('.page-container').addClass('sidebar-collapsed');
 
 const app = new Vue({
     el: '#app',
@@ -238,9 +240,9 @@ const app = new Vue({
             },
             formatters: {
                 commands: function(column, row) {
-                    return '@can("update", App\StockDumping::class) <a href="#" class="btn btn-info btn-xs c-edit" data-id="'+row.id+'"><i class="icon-pencil"></i></a> @endcan';
-                    // return '@can("update", App\StockDumping::class) <a href="#" class="btn btn-info btn-xs c-edit" data-id="'+row.id+'"><i class="icon-pencil"></i></a> @endcan' +
-                    //     '@can("delete", App\StockDumping::class) <a href="#" class="btn btn-danger btn-xs c-delete" data-id="'+row.id+'"><i class="icon-trash"></i></a> @endcan';
+                    // return '@can("update", App\MaterialStock::class) <a href="#" class="btn btn-info btn-xs c-edit" data-id="'+row.id+'"><i class="icon-pencil"></i></a> @endcan';
+                    return '@can("update", App\MaterialStock::class) <a href="#" class="btn btn-info btn-xs c-edit" data-id="'+row.id+'"><i class="icon-pencil"></i></a> @endcan' +
+                        '@can("delete", App\MaterialStock::class) <a href="#" class="btn btn-danger btn-xs c-delete" data-id="'+row.id+'"><i class="icon-trash"></i></a> @endcan';
                 },
                 material_type: function(c, r) {
                     return r.material_type == 'l' ? 'LOW' : 'HIGH';
