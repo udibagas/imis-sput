@@ -34,6 +34,7 @@
                     <tr><td>Description</td><td>{{b.description}}</td></tr>
                 </tbody>
             </table>
+            <hr>
         </div>
     </div>
 </template>

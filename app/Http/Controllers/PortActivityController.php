@@ -166,7 +166,7 @@ class PortActivityController extends Controller
         return DB::select($sql, [$from, $to]);
     }
 
-    public function summary1(Request $request)
+    public function productivity(Request $request)
     {
         $from = $request->from ? $request->from : date('Y-m-01');
         $to = $request->to ? $request->to : date('Y-m-d');
@@ -174,6 +174,7 @@ class PortActivityController extends Controller
         $sql = "SELECT
             units.name AS unit,
             port_activities.shift,
+            SUM(volume) AS total,
             SUM(CASE WHEN port_activities.unit_activity_id = ".PortActivity::ACT_FEEDING." THEN volume ELSE 0 END) feeding,
             SUM(CASE WHEN port_activities.unit_activity_id = ".PortActivity::ACT_LOAD_AND_CARRY." THEN volume ELSE 0 END) load_and_carry,
             SUM(CASE WHEN port_activities.unit_activity_id = ".PortActivity::ACT_LOADING." THEN volume ELSE 0 END) loading,

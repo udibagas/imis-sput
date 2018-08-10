@@ -3,23 +3,28 @@
 @section('content')
 
 <div id="app">
-    <div class="panel panel-primary">
-        <div class="panel-heading">
-            <div class="form-group pull-right">
-                <div class="input-group">
-                    <vue-datepicker placeholder="From" v-model="summary_from"> </vue-datepicker>
-                    <div class="input-group-addon">To</div>
-                    <vue-datepicker placeholder="To" v-model="summary_to"> </vue-datepicker>
-                </div>
-            </div>
-            SUMMARY
-            <div class="clearfix"> </div>
+    <form class="form-inline pull-right">
+        <div class="input-group">
+            <vue-datepicker placeholder="From" v-model="summary_from"> </vue-datepicker>
+            <div class="input-group-addon">To</div>
+            <vue-datepicker placeholder="To" v-model="summary_to"> </vue-datepicker>
         </div>
-        <port-activity-summary :from="summary_from" :to="summary_to">
+    </form>
+    <h3>PRODUCTIVITY SUMMARY</h3>
+    <hr>
+    <div class="row">
+        <div class="col-md-6">
+            <div class="panel panel-default">
+                <port-activity-summary :from="summary_from" :to="summary_to"></port-activity-summary>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="panel panel-default">
+                <productivity :from="summary_from" :to="summary_to"></productivity>
+            </div>
+        </div>
     </div>
 
-
-    </port-activity-summary>
     <div class="panel panel-primary">
         <div class="panel-body">
             <h3 class="pull-left text-primary">PORT ACTIVITY <small>Manage</small></h3>
@@ -74,7 +79,7 @@
 @push('scripts')
 
 <script type="text/javascript">
-
+$('.page-container').addClass('sidebar-collapsed');
 const app = new Vue({
     el: '#app',
     data: {
@@ -147,6 +152,9 @@ const app = new Vue({
                 this.showHaulerList = false;
                 this.showMaterialStockList = false;
             }
+        },
+        'formData.jetty_id': function(v, o) {
+            this.formData.hopper_id = null
         }
     },
     methods: {

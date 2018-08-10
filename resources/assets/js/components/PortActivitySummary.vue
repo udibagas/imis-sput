@@ -11,22 +11,22 @@
                 <th rowspan="2">VOLUME</th>
             </tr>
             <tr>
-                <th style="width:100px;">PLAN</th>
-                <th style="width:100px;">ACTUAL</th>
-                <th style="width:100px;">ACHIEVEMENT</th>
+                <th>PLAN</th>
+                <th>ACTUAL</th>
+                <th>ACHIEVEMENT</th>
             </tr>
         </thead>
         <tbody>
             <tr v-for="s in summaries">
                 <td>{{s.unit}}</td>
                 <td>{{s.egi}}</td>
-                <td class="text-center">{{s.shift}}</td>
+                <td>{{s.shift}}</td>
                 <td>{{activities.filter(a => a.id == s.unit_activity_id)[0].text}}</td>
                 <td></td>
                 <td></td>
                 <td></td>
-                <td class="text-center">{{s.bucket | formatNumber}}</td>
-                <td class="text-center">{{s.volume | formatNumber}}</td>
+                <td>{{s.bucket | formatNumber}}</td>
+                <td>{{s.volume | formatNumber}}</td>
             </tr>
         </tbody>
         <tfoot>
@@ -92,7 +92,7 @@ export default {
 </script>
 
 <style lang="css" scoped>
-    table tr th {
+    th, td {
         vertical-align: middle;
         text-align: center;
     }

@@ -25,6 +25,10 @@ Vue.filter('formatNumber', function(v) {
 
 // Vue.component('vue-dd', require('./components/Dd.vue'));
 // Vue.component('vue-card', require('./components/Card.vue'));
+
+import vSelect from 'vue-select'
+Vue.component('v-select', vSelect)
+
 Vue.component('stock', require('./components/Stock.vue'));
 Vue.component('water-level', require('./components/WaterLevel.vue'));
 Vue.component('daily-check-setting', require('./components/DailyCheckSetting.vue'));
@@ -36,3 +40,4 @@ Vue.component('stock-dumping-chart', require('./components/StockDumpingChart.vue
 Vue.component('ritase-tonase', require('./components/RitaseTonase.vue'));
 Vue.component('export-form', require('./components/ExportForm.vue'));
 Vue.component('active-barging', require('./components/ActiveBarging.vue'));
+Vue.component('productivity', require('./components/Productivity.vue'));
