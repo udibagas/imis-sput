@@ -1,10 +1,12 @@
 <template lang="html">
     <div class="">
-        <div class="panel panel-primary">
+        <div class="panel panel-primary" style="margin-bottom:0;">
             <div class="panel-heading">
                 ACTIVE BARGING
             </div>
-            <table v-for="b in bargings" class="table table-striped table-bordered">
+        </div>
+        <div class="panel panel-default"  v-for="b in bargings" style="margin-bottom:0;">
+            <table class="table table-striped table-bordered">
                 <tbody>
                     <tr>
                         <th colspan="2">
@@ -34,7 +36,6 @@
                     <tr><td>Description</td><td>{{b.description}}</td></tr>
                 </tbody>
             </table>
-            <hr>
         </div>
     </div>
 </template>
