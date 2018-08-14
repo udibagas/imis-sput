@@ -152,7 +152,7 @@ class PortActivityController extends Controller
 
         $sql = "SELECT
             SUM(rit) AS bucket,
-            SUM(volume) AS volume,
+            SUM(COALESCE(volume, 0)) AS volume,
             unit_activity_id,
             units.name AS unit,
             shift,
@@ -175,11 +175,11 @@ class PortActivityController extends Controller
             units.name AS unit,
             port_activities.shift,
             SUM(volume) AS total,
-            SUM(CASE WHEN port_activities.unit_activity_id = ".PortActivity::ACT_FEEDING." THEN volume ELSE 0 END) feeding,
-            SUM(CASE WHEN port_activities.unit_activity_id = ".PortActivity::ACT_LOAD_AND_CARRY." THEN volume ELSE 0 END) load_and_carry,
-            SUM(CASE WHEN port_activities.unit_activity_id = ".PortActivity::ACT_LOADING." THEN volume ELSE 0 END) loading,
-            SUM(CASE WHEN port_activities.unit_activity_id = ".PortActivity::ACT_STOCKPILING." THEN volume ELSE 0 END) stock_piling,
-            SUM(CASE WHEN port_activities.unit_activity_id = ".PortActivity::ACT_HAULING." THEN volume ELSE 0 END) hauling
+            SUM(CASE WHEN port_activities.unit_activity_id = ".PortActivity::ACT_FEEDING." THEN COALESCE(volume, 0) ELSE 0 END) AS feeding,
+            SUM(CASE WHEN port_activities.unit_activity_id = ".PortActivity::ACT_LOAD_AND_CARRY." THEN COALESCE(volume, 0) ELSE 0 END) AS load_and_carry,
+            SUM(CASE WHEN port_activities.unit_activity_id = ".PortActivity::ACT_LOADING." THEN COALESCE(volume, 0) ELSE 0 END) AS loading,
+            SUM(CASE WHEN port_activities.unit_activity_id = ".PortActivity::ACT_STOCKPILING." THEN COALESCE(volume, 0) ELSE 0 END) AS stock_piling,
+            SUM(CASE WHEN port_activities.unit_activity_id = ".PortActivity::ACT_HAULING." THEN COALESCE(volume, 0) ELSE 0 END) hauling
             FROM port_activities
             JOIN units ON units.id = port_activities.unit_id
             GROUP BY port_activities.unit_id, shift
