@@ -11,6 +11,10 @@ window.echarts = require('echarts');
 window.Vue = require('vue');
 
 Vue.filter('formatNumber', function(v) {
+    if (!v) {
+        return 0;
+    }
+    
     return parseFloat(v)
         .toFixed(0)
         .toString()
