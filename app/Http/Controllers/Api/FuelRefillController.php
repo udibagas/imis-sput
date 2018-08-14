@@ -46,7 +46,7 @@ class FuelRefillController extends Controller
                 'hm_last'           => $r->hm_last ? $r->hm_last : 0,
                 'km_last'           => $r->km_last ? $r->km_last : 0,
                 'total_real'        => $r->total_real,
-                'total_recommended' => $r->total_recommended,
+                'total_recommended' => $r->total_recommended ? $r->total_recommended : 0,
                 'user_id'      	    => $r->user_id,
                 'insert_via'        => 'mobile'
             ];
