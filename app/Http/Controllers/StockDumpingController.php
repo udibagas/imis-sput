@@ -192,6 +192,7 @@ class StockDumpingController extends Controller
         $sql['material_type'] = "SELECT
             COUNT(stock_dumpings.id) AS ritase,
             SUM(stock_dumpings.volume) AS tonase,
+            COUNT(DISTINCT stock_dumpings.subcont_unit_id) AS unit,
             IF(stock_dumpings.material_type = 'l', 'LOW', 'HIGH') AS entity
         FROM stock_dumpings
         WHERE stock_dumpings.date BETWEEN ? AND ?
@@ -200,6 +201,7 @@ class StockDumpingController extends Controller
         $sql['customer_id'] = "SELECT
             COUNT(stock_dumpings.id) AS ritase,
             SUM(stock_dumpings.volume) AS tonase,
+            COUNT(DISTINCT stock_dumpings.subcont_unit_id) AS unit,
             customers.name AS entity
         FROM stock_dumpings
         JOIN customers ON customers.id = stock_dumpings.customer_id
@@ -209,6 +211,7 @@ class StockDumpingController extends Controller
         $sql['area_id'] = "SELECT
             COUNT(stock_dumpings.id) AS ritase,
             SUM(stock_dumpings.volume) AS tonase,
+            COUNT(DISTINCT stock_dumpings.subcont_unit_id) AS unit,
             areas.name AS entity
         FROM stock_dumpings
         JOIN stock_areas ON stock_areas.id = stock_dumpings.stock_area_id
@@ -219,6 +222,7 @@ class StockDumpingController extends Controller
         $sql['stock_area_id'] = "SELECT
             COUNT(stock_dumpings.id) AS ritase,
             SUM(stock_dumpings.volume) AS tonase,
+            COUNT(DISTINCT stock_dumpings.subcont_unit_id) AS unit,
             stock_areas.name AS entity
         FROM stock_dumpings
         JOIN stock_areas ON stock_areas.id = stock_dumpings.stock_area_id
@@ -228,6 +232,7 @@ class StockDumpingController extends Controller
         $sql['subcont_id'] = "SELECT
             COUNT(stock_dumpings.id) AS ritase,
             SUM(stock_dumpings.volume) AS tonase,
+            COUNT(DISTINCT stock_dumpings.subcont_unit_id) AS unit,
             subconts.name AS entity
         FROM stock_dumpings
         JOIN subcont_units ON subcont_units.id = stock_dumpings.subcont_unit_id

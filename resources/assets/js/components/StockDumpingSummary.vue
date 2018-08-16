@@ -7,6 +7,7 @@
             <thead>
                 <tr>
                     <th>{{entity}}</th>
+                    <th style="text-align:right;">UNIT</th>
                     <th style="text-align:right;">Ritase</th>
                     <th style="text-align:right;">Tonase</th>
                 </tr>
@@ -14,6 +15,7 @@
             <tbody>
                 <tr v-for="s in summaries">
                     <td>{{s.entity}}</td>
+                    <td style="text-align:right;">{{s.unit}}</td>
                     <td style="text-align:right;">{{s.ritase | formatNumber}}</td>
                     <td style="text-align:right;">{{s.tonase | formatNumber}}</td>
                 </tr>
@@ -21,6 +23,7 @@
             <tfoot>
                 <tr>
                     <th>TOTAL</th>
+                    <th style="text-align:right;">{{totalUnit | formatNumber}}</th>
                     <th style="text-align:right;">{{totalRitase | formatNumber}}</th>
                     <th style="text-align:right;">{{totalTonase | formatNumber}}</th>
                 </tr>
@@ -36,7 +39,9 @@ export default {
         return {
             summaries: [],
             totalRitase: 0,
-            totalTonase: 0
+            totalTonase: 0,
+            totalUnit: 0,
+            totalUnit: 0,
         }
     },
     methods: {
@@ -53,9 +58,11 @@ export default {
                 _this.summaries = r.data;
                 _this.totalRitase = 0;
                 _this.totalTonase = 0;
+                _this.totalUnit = 0;
                 r.data.forEach(function(d) {
                     _this.totalRitase += parseInt(d.ritase);
                     _this.totalTonase += parseInt(d.tonase);
+                    _this.totalUnit += parseInt(d.unit);
                 });
                 setTimeout(_this.requestData, 3000);
             })

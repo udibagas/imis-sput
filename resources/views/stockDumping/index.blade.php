@@ -78,7 +78,7 @@
                             <th data-column-id="seam">Seam</th>
                             <th data-column-id="block_area">Block Area</th>
                             <th data-column-id="sa">Stock Area</th>
-                            <th data-column-id="volume">Volume (Ton)</th>
+                            <th data-column-id="volume">Volume (KG)</th>
                             <th data-column-id="customer">Customer</th>
                             <th data-column-id="register_number">Register Number</th>
                             <th data-column-id="user">User</th>
@@ -133,21 +133,18 @@ const app = new Vue({
         },
         ritase: 0,
         tonase: 0,
-        subcont_units: [],
         stock_areas: [],
         subconts: {!! App\Subcont::selectRaw('id AS id, name AS text')->orderBy('name', 'ASC')->get() !!},
         seams: {!! App\Seam::selectRaw('id AS id, name AS text')->orderBy('name', 'ASC')->get() !!},
         customers: {!! App\Customer::selectRaw('id AS id, name AS text')->orderBy('name', 'ASC')->get() !!},
         areas: {!! App\Area::selectRaw('id AS id, name AS text')->orderBy('name', 'ASC')->get() !!},
-        allUnits: {!! App\SubcontUnit::selectRaw('id AS id, code_number AS text, subcont_id')->orderBy('code_number', 'ASC')->get() !!},
+        subcont_units: {!! App\SubcontUnit::selectRaw('id AS id, code_number AS text, subcont_id')->orderBy('code_number', 'ASC')->get() !!},
         allStockAreas: {!! App\StockArea::selectRaw('id AS id, name AS text, area_id')->orderBy('name', 'ASC')->get() !!},
     },
     watch: {
-        'formData.subcont_id': function(v, o) {
+        'formData.subcont_unit_id': function(v, o) {
             if (v) {
-                this.subcont_units = this.allUnits.filter(u => u.subcont_id == v);
-            } else {
-                this.subcont_units = [];
+                this.formData.subcont_id = this.subcont_units.filter(u => u.id == v)[0].subcont_id;
             }
         },
         'formData.area_id': function(v, o) {
@@ -189,6 +186,7 @@ const app = new Vue({
                 date: moment().format('YYYY-MM-DD'),
                 time: moment().format('HH:mm'),
                 shift: (moment().format('H') >= 7 && moment().format('H') < 19) ? 1 : 2,
+                customer_id: '{{auth()->user()->customer_id}}'
             },
             this.formErrors = {};
             this.error = {};

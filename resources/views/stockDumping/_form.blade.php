@@ -24,16 +24,6 @@
                     </div>
 
                     <div class="form-group" :class="formErrors.subcont_unit_id ? 'has-error' : ''">
-                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="subcont_id">Subcont
-                        </label>
-                        <div class="col-md-9 col-sm-9 col-xs-12">
-                            <select2 :options="subconts" v-model="formData.subcont_id" data-placeholder="Subcont">
-                            </select2>
-                            <span v-if="formErrors.subcont_id" class="help-block">@{{formErrors.subcont_id[0]}}</span>
-                        </div>
-                    </div>
-
-                    <div class="form-group" :class="formErrors.subcont_unit_id ? 'has-error' : ''">
                         <label class="control-label col-md-3 col-sm-3 col-xs-12" for="subcont_unit_id">Unit
                         </label>
                         <div class="col-md-9 col-sm-9 col-xs-12">
@@ -42,6 +32,17 @@
                             <span v-if="formErrors.subcont_unit_id" class="help-block">@{{formErrors.subcont_unit_id[0]}}</span>
                         </div>
                     </div>
+
+                    <div class="form-group" :class="formErrors.subcont_unit_id ? 'has-error' : ''">
+                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="subcont_id">Subcont
+                        </label>
+                        <div class="col-md-9 col-sm-9 col-xs-12">
+                            <select2 :options="subconts" v-model="formData.subcont_id" data-placeholder="Subcont" disabled>
+                            </select2>
+                            <span v-if="formErrors.subcont_id" class="help-block">@{{formErrors.subcont_id[0]}}</span>
+                        </div>
+                    </div>
+
 
                     <div class="form-group" :class="formErrors.stock_area_id ? 'has-error' : ''">
                         <label class="control-label col-md-3 col-sm-3 col-xs-12" for="area_id">Block Area
@@ -90,10 +91,10 @@
                     </div>
 
                     <div class="form-group" :class="formErrors.volume ? 'has-error' : ''">
-                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="volume">Volume (Ton)
+                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="volume">Volume (KG)
                         </label>
                         <div class="col-md-9 col-sm-9 col-xs-12">
-                            <input type="number" v-model="formData.volume" class="form-control" placeholder="Volume (Ton)">
+                            <input type="number" v-model="formData.volume" class="form-control" placeholder="Volume (KG)">
                             <span v-if="formErrors.volume" class="help-block">@{{formErrors.volume[0]}}</span>
                         </div>
                     </div>
