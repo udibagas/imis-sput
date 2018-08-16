@@ -9,6 +9,9 @@ use App\StockArea;
 class StockAreaController extends Controller
 {
     public function index() {
-        return StockArea::all();
+        return StockArea::selectRaw('stock_areas.*, areas.name AS area')
+            ->join('areas', 'areas.id', '=', 'stock_areas.area_id')
+            ->orderBy('stock_areas.name', 'ASC')
+            ->get();
     }
 }

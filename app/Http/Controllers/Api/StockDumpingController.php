@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\StockDumping;
+use App\MaterialStock;
 
 class StockDumpingController extends Controller
 {
@@ -13,9 +14,7 @@ class StockDumpingController extends Controller
         return StockDumping::selectRaw('
                 stock_dumpings.*,
                 areas.name AS area,
-                stock_areas.name AS stock_area,
                 subconts.name AS subcont,
-                subcont_units.code_number AS unit,
                 customers.name AS customer,
                 seams.name AS seam,
                 users.name AS user
@@ -35,7 +34,7 @@ class StockDumpingController extends Controller
 
     public function store(Request $request)
     {
-        $rows   = json_decode($request->rows);
+        $rows = json_decode($request->rows);
 
         foreach($rows as $r)
         {
@@ -69,27 +68,27 @@ class StockDumpingController extends Controller
 
             $stockDumping = StockDumping::create($data);
 
-            $stock = MaterialStock::where('customer_id', $request->customer_id)
-                ->where('stock_area_id', $request->stock_area_id)
-                ->where('seam_id', $request->seam_id)
-                ->where('material_type', $request->material_type)
+            $stock = MaterialStock::where('customer_id', $r->customer_id)
+                ->where('stock_area_id', $r->stock_area_id)
+                ->where('seam_id', $r->seam_id)
+                ->where('material_type', $r->material_type)
                 ->first();
 
             if ($stock) {
                 $stock->update([
-                    'volume' => $stock->volume + $request->volume,
-                    'dumping_date' => $request->date
+                    'volume' => $stock->volume + $r->volume,
+                    'dumping_date' => $r->date
                 ]);
             }
 
             else {
                 MaterialStock::create([
-                    'customer_id' => $request->customer_id,
-                    'stock_area_id' => $request->stock_area_id,
-                    'seam_id' => $request->seam_id,
-                    'material_type' => $request->material_type,
-                    'volume' => $request->volume,
-                    'dumping_date' => $request->date
+                    'customer_id' => $r->customer_id,
+                    'stock_area_id' => $r->stock_area_id,
+                    'seam_id' => $r->seam_id,
+                    'material_type' => $r->material_type,
+                    'volume' => $r->volume,
+                    'dumping_date' => $r->date
                 ]);
             }
         }

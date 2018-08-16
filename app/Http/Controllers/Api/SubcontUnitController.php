@@ -9,6 +9,9 @@ use App\SubcontUnit;
 class SubcontUnitController extends Controller
 {
     public function index() {
-        return SubcontUnit::all();
+        return SubcontUnit::selectRaw('subcont_units.*, subconts.name AS subcont')
+            ->join('subconts', 'subconts.id', '=', 'subcont_units.subcont_id')
+            ->orderBy('subcont_units.code_number', 'ASC')
+            ->get();
     }
 }
