@@ -129,6 +129,7 @@ Route::group(['middleware' => 'auth'], function() {
 
     Route::get('portActivity/productivity', 'PortActivityController@productivity');
     Route::get('portActivity/summary', 'PortActivityController@summary');
+    Route::get('portActivity/export', 'PortActivityController@export');
     Route::resource('portActivity', 'PortActivityController')->except(['edit', 'create']);
 
     Route::resource('productivityPlan', 'ProductivityPlanController')->except(['edit', 'create']);

@@ -28,11 +28,14 @@
     <div class="panel panel-primary">
         <div class="panel-body">
             <h3 class="pull-left text-primary">PORT ACTIVITY <small>Manage</small></h3>
-            @can('create', App\PortActivity::class)
             <span class="pull-right" style="margin:15px 0 15px 10px;">
+                @can('create', App\PortActivity::class)
                 <a href="#" @click="add" class="btn btn-primary"><i class="icon-plus-circled"></i></a>
+                @endcan
+                @can('export', App\PortActivity::class)
+                <a href="#" @click="openExportForm" class="btn btn-primary"><i class="fa fa-file-excel-o"></i> EXPORT</a>
+                @endcan
             </span>
-            @endcan
             <table class="table table-striped table-hover " id="bootgrid" style="border-top:2px solid #ddd">
                 <thead>
                     <tr>
@@ -49,7 +52,7 @@
                         <th data-column-id="jetty">Jetty</th>
                         <th data-column-id="hpr">Hopper</th>
                         <th data-column-id="rit">Bucket</th>
-                        <th data-column-id="volume">Volume (Ton)</th>
+                        <th data-column-id="volume">Volume (KG)</th>
                         <th data-column-id="material_type" data-formatter="material_type">Material Type</th>
                         <th data-column-id="seam">Seam</th>
                         <th data-column-id="customer">Customer</th>
@@ -71,6 +74,10 @@
         @include('portActivity._form')
         @endcan
 
+        @can('export', App\PortActivity::class)
+        @include('portActivity._form_export')
+        @endcan
+
     </div>
 </div>
 
@@ -83,6 +90,36 @@ $('.page-container').addClass('sidebar-collapsed');
 const app = new Vue({
     el: '#app',
     data: {
+        times: [
+            {id: '00:00', text: '00:00'},
+            {id: '01:00', text: '01:00'},
+            {id: '02:00', text: '02:00'},
+            {id: '03:00', text: '03:00'},
+            {id: '04:00', text: '04:00'},
+            {id: '05:00', text: '05:00'},
+            {id: '06:00', text: '06:00'},
+            {id: '07:00', text: '07:00'},
+            {id: '08:00', text: '08:00'},
+            {id: '09:00', text: '09:00'},
+            {id: '10:00', text: '10:00'},
+            {id: '11:00', text: '11:00'},
+            {id: '12:00', text: '12:00'},
+            {id: '13:00', text: '13:00'},
+            {id: '14:00', text: '14:00'},
+            {id: '15:00', text: '15:00'},
+            {id: '16:00', text: '16:00'},
+            {id: '17:00', text: '17:00'},
+            {id: '18:00', text: '18:00'},
+            {id: '19:00', text: '19:00'},
+            {id: '20:00', text: '20:00'},
+            {id: '21:00', text: '21:00'},
+            {id: '22:00', text: '22:00'},
+            {id: '23:00', text: '23:00'},
+        ],
+        exportRange: {
+            from: '{{date("Y-m-d")}}',
+            to: '{{date("Y-m-d")}}'
+        },
         showHaulerList: false,
         showHopperList: false,
         showBucketInput: false,
@@ -158,6 +195,14 @@ const app = new Vue({
         }
     },
     methods: {
+        openExportForm: function() {
+            $('#modal-form-export').modal('show');
+        },
+        doExport: function() {
+            // TODO: validate input first
+            $('#modal-form-export').modal('hide');
+            window.location = '{{url("portActivity/export")}}?from=' + this.exportRange.from + '&to=' + this.exportRange.to;
+        },
         add: function() {
             this.formTitle = "ADD PORT ACTIVITY";
             this.formData = {

@@ -6,6 +6,8 @@ use Illuminate\Http\Request;
 use App\PortActivity;
 use App\Barging;
 use App\Http\Requests\PortActivityRequest;
+use App\Exports\PortActivityExport;
+use Excel;
 use DB;
 
 class PortActivityController extends Controller
@@ -186,6 +188,12 @@ class PortActivityController extends Controller
         ";
 
         return DB::select($sql, [$from, $to]);
+    }
+
+    public function export(Request $request)
+    {
+        $this->authorize('export', PortActivity::class);
+        return Excel::download(new PortActivityExport($request), "port-activity-{$request->from}-to-{$request->to}.xlsx");
     }
 
 }
