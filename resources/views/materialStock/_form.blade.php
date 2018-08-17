@@ -59,6 +59,7 @@
                         </div>
                     </div>
 
+                    @if (!auth()->user()->customer_id)
                     <div class="form-group" :class="formErrors.customer_id ? 'has-error' : ''">
                         <label class="control-label col-md-3 col-sm-3 col-xs-12" for="customer_id">Customer
                         </label>
@@ -68,9 +69,10 @@
                             <span v-if="formErrors.customer_id" class="help-block">@{{formErrors.customer_id[0]}}</span>
                         </div>
                     </div>
+                    @endif
 
                     <div class="form-group" :class="formErrors.volume ? 'has-error' : ''">
-                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="volume">Volume (Ton)
+                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="volume">Volume (KG)
                         </label>
                         <div class="col-md-9 col-sm-9 col-xs-12">
                             <input type="number" v-model="formData.volume" class="form-control" placeholder="Volume (Ton)">

@@ -7,25 +7,25 @@
             <thead>
                 <tr>
                     <th>{{entity}}</th>
-                    <th style="text-align:right;">UNIT</th>
-                    <th style="text-align:right;">Ritase</th>
-                    <th style="text-align:right;">Tonase</th>
+                    <th style="text-align:center;">UNIT</th>
+                    <th style="text-align:center;">RITASE</th>
+                    <th style="text-align:center;">VOLUME (KG)</th>
                 </tr>
             </thead>
             <tbody>
                 <tr v-for="s in summaries">
                     <td>{{s.entity}}</td>
-                    <td style="text-align:right;">{{s.unit}}</td>
-                    <td style="text-align:right;">{{s.ritase | formatNumber}}</td>
-                    <td style="text-align:right;">{{s.tonase | formatNumber}}</td>
+                    <td style="text-align:center;">{{s.unit}}</td>
+                    <td style="text-align:center;">{{s.ritase | formatNumber}}</td>
+                    <td style="text-align:center;">{{s.tonase | formatNumber}}</td>
                 </tr>
             </tbody>
             <tfoot>
                 <tr>
                     <th>TOTAL</th>
-                    <th style="text-align:right;">{{totalUnit | formatNumber}}</th>
-                    <th style="text-align:right;">{{totalRitase | formatNumber}}</th>
-                    <th style="text-align:right;">{{totalTonase | formatNumber}}</th>
+                    <th style="text-align:center;">{{totalUnit | formatNumber}}</th>
+                    <th style="text-align:center;">{{totalRitase | formatNumber}}</th>
+                    <th style="text-align:center;">{{totalTonase | formatNumber}}</th>
                 </tr>
             </tfoot>
         </table>

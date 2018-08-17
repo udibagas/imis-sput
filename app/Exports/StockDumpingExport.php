@@ -66,6 +66,6 @@ class StockDumpingExport implements FromQuery, WithHeadings
             ->when($request, function($query) use ($request) {
                 return $query->whereRaw("`date` BETWEEN '{$request->from}' AND '{$request->to}'");
             })
-            ->orderBy('stock_dumpings.date', 'DESC');
+            ->orderBy('stock_dumpings.id', 'DESC');
     }
 }

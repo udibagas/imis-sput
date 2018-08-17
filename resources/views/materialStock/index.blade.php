@@ -4,6 +4,7 @@
 
 <div class="row" id="app">
     <div class="col-md-3">
+        @if (!auth()->user()->customer_id)
         <select2 :options="customers" v-model="customer_id" data-placeholder="All Customer" data-allow-clear="true">
         </select2>
         <br>
@@ -13,6 +14,7 @@
             :group="'customer_id'"
             :header="'SUMMARY BY CUSTOMER'"
             :entity="'Customer'"></material-stock-summary>
+        @endif
 
         <material-stock-summary
             :customer="customer_id"
@@ -42,11 +44,14 @@
         <div class="panel panel-primary">
             <div class="panel-body">
                 <h3 class="pull-left text-primary">STOCK BALANCED <small>Manage</small></h3>
-                @can('create', App\MaterialStock::class)
                 <span class="pull-right" style="margin:15px 0 15px 10px;">
+                    @can('create', App\MaterialStock::class)
                     <a href="#" @click="add" class="btn btn-primary"><i class="icon-plus-circled"></i></a>
+                    @endcan
+                    @can('export', App\MaterialStock::class)
+                    <a href="{{url('materialStock/export')}}" target="_blank" class="btn btn-primary"><i class="fa fa-file-excel-o"></i> EXPORT</a>
+                    @endcan
                 </span>
-                @endcan
                 <table class="table table-striped table-hover " id="bootgrid" style="border-top:2px solid #ddd">
                     <thead>
                         <tr>
@@ -54,14 +59,16 @@
                             <th data-column-id="dumping_date">Dumping Date</th>
                             <th data-column-id="material_type" data-formatter="material_type">Material Type</th>
                             <th data-column-id="seam">Seam</th>
+                            @if (!auth()->user()->customer_id)
                             <th data-column-id="customer">Customer</th>
+                            @endif
                             <th data-column-id="area">Area</th>
                             <th data-column-id="stock_area">Stock Area</th>
 
                             <th data-column-id="volume"
                                 data-formatter="volume"
                                 data-align="right"
-                                data-header-align="right">Volume</th>
+                                data-header-align="right">Volume (KG)</th>
 
                             <th data-column-id="age"
                                 data-sortable="false"
@@ -103,7 +110,7 @@ const app = new Vue({
         formErrors: {},
         formTitle: '',
         error: {},
-        customer_id: '',
+        customer_id: '{{auth()->user()->customer_id}}',
         stock_areas: {!! App\StockArea::selectRaw('stock_areas.id AS id, CONCAT(areas.name, " - ", stock_areas.name) AS text')
             ->join('areas', 'areas.id', '=', 'stock_areas.area_id')
             ->orderBy('areas.name', 'ASC')->get() !!},
@@ -120,7 +127,9 @@ const app = new Vue({
         add: function() {
             // reset the form
             this.formTitle = "ADD MATERIAL STOCK BALANCED";
-            this.formData = {};
+            this.formData = {
+                customer_id: '{{auth()->user()->customer_id}}',
+            };
             this.formErrors = {};
             this.error = {};
             // open form

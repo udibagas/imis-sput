@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\MaterialStock;
 use App\Http\Requests\MaterialStockRequest;
+use App\Exports\MaterialStockExport;
+use Excel;
 use DB;
 
 class MaterialStockController extends Controller
@@ -36,6 +38,9 @@ class MaterialStockController extends Controller
                 ->join('areas', 'areas.id', '=', 'stock_areas.area_id')
                 ->join('customers', 'customers.id', '=', 'material_stocks.customer_id')
                 ->join('seams', 'seams.id', '=', 'material_stocks.seam_id', 'LEFT')
+                ->when(auth()->user()->customer_id, function($query) {
+                    return $query->where('material_stocks.customer_id', auth()->user()->customer_id);
+                })
                 ->when($request->searchPhrase, function($query) use ($request) {
                     return $query->where('customers.name', 'LIKE', '%'.$request->searchPhrase.'%')
                         ->orWhere('stock_areas.name', 'LIKE', '%'.$request->searchPhrase.'%')
@@ -162,5 +167,11 @@ class MaterialStockController extends Controller
         GROUP BY material_stocks.stock_area_id";
 
         return DB::select($sql[$groupBy]);
+    }
+
+    public function export()
+    {
+        $this->authorize('export', MaterialStock::class);
+        return Excel::download(new MaterialStockExport(), "stock-balanced.xlsx");
     }
 }

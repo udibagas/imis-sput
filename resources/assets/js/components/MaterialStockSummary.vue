@@ -7,7 +7,7 @@
             <thead>
                 <tr>
                     <th>{{entity}}</th>
-                    <th style="text-align:right;">Stock</th>
+                    <th style="text-align:right;">Stock (KG)</th>
                 </tr>
             </thead>
             <tbody>

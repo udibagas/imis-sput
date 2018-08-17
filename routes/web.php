@@ -108,6 +108,7 @@ Route::group(['middleware' => 'auth'], function() {
     Route::resource('location', 'LocationController')->except(['edit', 'create']);
 
     Route::get('materialStock/summary', 'MaterialStockController@summary');
+    Route::get('materialStock/export', 'MaterialStockController@export');
     Route::resource('materialStock', 'MaterialStockController')->except(['edit', 'create']);
 
     Route::get('meal/summary', 'MealController@summary');
@@ -313,6 +314,17 @@ View::composer('layouts._sidebar', function($view) {
             ]
         ]
     ];
+
+    if (auth()->user()->customer_id) {
+        $menus = [
+            'DASHBOARD' => ['url' => '/', 'icon' => 'dashboard'],
+            'Stock Dumping' => ['url' => 'stockDumping', 'icon' => 'truck'],
+            'Barging' => ['url' => 'barging', 'icon' => 'forward'],
+            'Dwelling Time' => ['url' => 'dwellingTime', 'icon' => 'list'],
+            'Stock Balanced' => ['url' => 'materialStock', 'icon' => 'th-large'],
+            'My Profile' => ['url' => 'profile', 'icon' => 'user'],
+        ];
+    }
 
     $view->with('menus', $menus);
 });

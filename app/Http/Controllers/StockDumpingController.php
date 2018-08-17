@@ -45,6 +45,9 @@ class StockDumpingController extends Controller
                 ->join('customers', 'customers.id', '=', 'stock_dumpings.customer_id')
                 ->join('users', 'users.id', '=', 'stock_dumpings.user_id')
                 ->join('seams', 'seams.id', '=', 'stock_dumpings.seam_id', 'LEFT')
+                ->when(auth()->user()->customer_id, function($query) {
+                    return $query->where('stock_dumpings.customer_id', auth()->user()->customer_id);
+                })
                 ->when($request->searchPhrase, function($query) use ($request) {
                     return $query->where('subcont_units.code_number', 'LIKE', '%'.$request->searchPhrase.'%')
                         ->orWhere('stock_dumpings.register_number', 'LIKE', '%'.$request->searchPhrase.'%')

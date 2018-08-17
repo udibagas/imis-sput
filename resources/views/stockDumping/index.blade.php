@@ -16,12 +16,15 @@
             </div>
         </div>
         <ritase-tonase :from="chartRange.from" :to="chartRange.to"></ritase-tonase>
+
+        @if (!auth()->user()->customer_id)
         <stock-dumping-summary
             :from="chartRange.from"
             :to="chartRange.to"
             :group="'customer_id'"
             :header="'SUMMARY BY CUSTOMER'"
             :entity="'Customer'"></stock-dumping-summary>
+        @endif
 
         <stock-dumping-summary
             :from="chartRange.from"
@@ -79,7 +82,9 @@
                             <th data-column-id="block_area">Block Area</th>
                             <th data-column-id="sa">Stock Area</th>
                             <th data-column-id="volume">Volume (KG)</th>
+                            @if (!auth()->user()->customer_id)
                             <th data-column-id="customer">Customer</th>
+                            @endif
                             <th data-column-id="register_number">Register Number</th>
                             <th data-column-id="user">User</th>
                             <th data-column-id="insert_via">Insert Via</th>

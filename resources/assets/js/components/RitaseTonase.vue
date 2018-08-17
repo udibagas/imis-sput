@@ -7,7 +7,7 @@
                     <h1 class="no-margins text-success">{{ritase | formatNumber}}</h1>
                 </div>
                 <div class="col-xs-6 text-center stack-order">
-                    TONASE
+                    VOLUME (KG)
                     <h1 class="no-margins text-success">{{tonase | formatNumber}}</h1>
                 </div>
             </div>
