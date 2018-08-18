@@ -20,7 +20,7 @@ class BargingPolicy
      */
     public function view(User $user)
     {
-        if ($user->super_admin) {
+        if ($user->super_admin || $user->customer_id) {
             return true;
         }
 
@@ -37,7 +37,7 @@ class BargingPolicy
      */
     public function create(User $user)
     {
-        if ($user->super_admin) {
+        if ($user->super_admin || $user->customer_id) {
             return true;
         }
 
@@ -55,7 +55,7 @@ class BargingPolicy
      */
     public function update(User $user)
     {
-        if ($user->super_admin) {
+        if ($user->super_admin || $user->customer_id) {
             return true;
         }
 
@@ -73,7 +73,7 @@ class BargingPolicy
      */
     public function delete(User $user)
     {
-        if ($user->super_admin) {
+        if ($user->super_admin || $user->customer_id) {
             return true;
         }
 
