@@ -29,6 +29,17 @@ class StockDumpingPolicy
                 ->where('view', 1)->count();
     }
 
+    public function export(User $user)
+    {
+        if ($user->super_admin || $user->customer_id) {
+            return true;
+        }
+
+        return Authorization::where('controller', 'StockDumping')
+                ->where('user_id', $user->id)
+                ->where('export', 1)->count();
+    }
+
     /**
      * Determine whether the user can create egis.
      *
