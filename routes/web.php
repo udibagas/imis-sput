@@ -79,6 +79,8 @@ Route::group(['middleware' => 'auth'], function() {
     Route::get('dormitoryReservation/lewatMasaCuti', 'DormitoryReservationController@lewatMasaCuti');
     Route::resource('dormitoryReservation', 'DormitoryReservationController')->except(['edit', 'create']);
 
+    Route::resource('dwellingTime', 'DwellingTimeController')->except(['edit', 'create']);
+
     Route::resource('egi', 'EgiController')->except(['edit', 'create']);
 
     Route::get('employee/generateNameTag/{employee}', 'EmployeeController@generateNameTag');
@@ -101,7 +103,6 @@ Route::group(['middleware' => 'auth'], function() {
     Route::resource('fuelTank', 'FuelTankController')->except(['edit', 'create']);
     Route::resource('fuelTankTera', 'FuelTankTeraController')->except(['edit', 'create']);
     Route::get('jetty/productivity', 'JettyController@productivity');
-    Route::get('jetty/dwellingTime', 'JettyController@dwellingTime');
     Route::resource('jetty', 'JettyController')->except(['edit', 'create']);
     Route::get('leadTimeBreakdownUnit', 'LeadTimeBreakdownUnitController@index');
     Route::get('leadTimeDailyCheck', 'LeadTimeDailyCheckController@index');
