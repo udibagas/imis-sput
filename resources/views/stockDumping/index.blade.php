@@ -36,6 +36,13 @@
         <stock-dumping-summary
             :from="chartRange.from"
             :to="chartRange.to"
+            :group="'seam_id'"
+            :header="'SUMMARY BY SEAM'"
+            :entity="'Seam'"></stock-dumping-summary>
+
+        <stock-dumping-summary
+            :from="chartRange.from"
+            :to="chartRange.to"
             :group="'subcont_id'"
             :header="'SUMMARY BY SUBCONT'"
             :entity="'Subcont'"></stock-dumping-summary>

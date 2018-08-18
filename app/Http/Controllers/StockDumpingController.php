@@ -211,6 +211,16 @@ class StockDumpingController extends Controller
         WHERE stock_dumpings.date BETWEEN ? AND ?
         GROUP BY stock_dumpings.customer_id";
 
+        $sql['seam_id'] = "SELECT
+            COUNT(stock_dumpings.id) AS ritase,
+            SUM(stock_dumpings.volume) AS tonase,
+            COUNT(DISTINCT stock_dumpings.subcont_unit_id) AS unit,
+            seams.name AS entity
+        FROM stock_dumpings
+        LEFT JOIN seams ON seams.id = stock_dumpings.seam_id
+        WHERE stock_dumpings.date BETWEEN ? AND ?
+        GROUP BY stock_dumpings.seam_id";
+
         $sql['area_id'] = "SELECT
             COUNT(stock_dumpings.id) AS ritase,
             SUM(stock_dumpings.volume) AS tonase,

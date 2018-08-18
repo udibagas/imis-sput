@@ -32,19 +32,16 @@ class UnitController extends Controller
                     owners.name AS owner,
                     egis.name AS egi_name,
                     egis.fc AS fc,
-                    unit_categories.name AS category,
-                    jetties.name AS jetty
+                    unit_categories.name AS category
                 ')
                 ->join('owners', 'owners.id', '=', 'units.owner_id')
                 ->join('egis', 'egis.id', '=', 'units.egi_id')
-                ->join('jetties', 'jetties.id', '=', 'units.jetty_id', 'LEFT')
                 ->join('unit_categories', 'unit_categories.id', '=', 'units.unit_category_id', 'LEFT')
                 ->when($request->searchPhrase, function($query) use ($request) {
                     return $query->where('units.name', 'LIKE', '%'.$request->searchPhrase.'%')
                         ->orWhere('owners.name', 'LIKE', '%'.$request->searchPhrase.'%')
                         ->orWhere('egis.name', 'LIKE', '%'.$request->searchPhrase.'%')
-                        ->orWhere('unit_categories.name', 'LIKE', '%'.$request->searchPhrase.'%')
-                        ->orWhere('jetties.name', 'LIKE', '%'.$request->searchPhrase.'%');
+                        ->orWhere('unit_categories.name', 'LIKE', '%'.$request->searchPhrase.'%');
                 })->orderBy($sort, $dir)->paginate($pageSize);
 
             return [

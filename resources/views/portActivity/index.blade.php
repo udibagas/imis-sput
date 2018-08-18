@@ -132,10 +132,11 @@ const app = new Vue({
         summary_from: '{{date("Y-m-01")}}',
         summary_to: '{{date("Y-m-d")}}',
         material_stocks: {!!App\MaterialStock::getList()!!},
-        units: {!! App\Unit::selectRaw('id AS id, name AS text')
-            ->where('name', 'LIKE', 'ld%')
-            ->orWhere('name', 'LIKE', 'wl%')
-            ->orderBy('name', 'ASC')->get() !!},
+        units: {!! App\Unit::selectRaw('units.id AS id, units.name AS text, egis.mt_per_bucket_hi AS mt_per_bucket_hi, egis.mt_per_bucket_lo AS mt_per_bucket_lo')
+            ->join('egis', 'egis.id', '=', 'units.egi_id')
+            ->where('units.name', 'LIKE', 'ld%')
+            ->orWhere('units.name', 'LIKE', 'wl%')
+            ->orderBy('units.name', 'ASC')->get() !!},
         haulers: {!! App\Unit::selectRaw('id AS id, name AS text')
             ->where('name', 'LIKE', 'ld%')
             ->orderBy('name', 'ASC')->get() !!},
@@ -192,7 +193,12 @@ const app = new Vue({
         },
         'formData.jetty_id': function(v, o) {
             this.formData.hopper_id = null
-        }
+        },
+        // 'formData.bucket': function(v, o) {
+        //     var unit = this.units.filter(u => u.id == this.formData.unit_id)[0];
+        //     var mt_per_bucket = (this.formData.material_type == 'l') ? unit.mt_per_bucket_lo :  unit.mt_per_bucket_hi;
+        //     this.formData.volume = v * mt_per_bucket;
+        // }
     },
     methods: {
         openExportForm: function() {

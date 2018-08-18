@@ -77,34 +77,6 @@
                         </div>
                     </div>
 
-                    <div :class="['form-group', formErrors.ton_pen_rit_hi ? 'has-error' : '']">
-                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="ton_pen_rit_hi">Ton/Rit (Hi)
-                        </label>
-                        <div class="col-md-9 col-sm-9 col-xs-12">
-                            <input type="number" v-model="formData.ton_pen_rit_hi" class="form-control" placeholder="Ton/Rit (Hi)" step="any">
-                            <span v-if="formErrors.ton_pen_rit_hi" class="help-block">@{{formErrors.ton_pen_rit_hi[0]}}</span>
-                        </div>
-                    </div>
-
-                    <div :class="['form-group', formErrors.ton_pen_rit_lo ? 'has-error' : '']">
-                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="ton_pen_rit_lo">Ton/Rit (Lo)
-                        </label>
-                        <div class="col-md-9 col-sm-9 col-xs-12">
-                            <input type="number" v-model="formData.ton_pen_rit_lo" class="form-control" placeholder="Ton/Rit (Lo)" step="any">
-                            <span v-if="formErrors.ton_pen_rit_lo" class="help-block">@{{formErrors.ton_pen_rit_lo[0]}}</span>
-                        </div>
-                    </div>
-
-                    <div :class="['form-group', formErrors.jetty ? 'has-error' : '']">
-                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="jetty">Jetty
-                        </label>
-                        <div class="col-md-9 col-sm-9 col-xs-12">
-                            <select2 :options="jetties" v-model="formData.jetty_id" data-placeholder="Jetty" data-allow-clear="true">
-                            </select2>
-                            <span v-if="formErrors.jetty" class="help-block">@{{formErrors.jetty[0]}}</span>
-                        </div>
-                    </div>
-
                 </div>
                 <div class="modal-footer">
                     <button type="submit" v-if="formData.id == undefined" class="btn btn-primary" @click="store"><i class="fa fa-floppy-o"></i> Save</button>

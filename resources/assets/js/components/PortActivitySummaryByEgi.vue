@@ -2,12 +2,18 @@
     <table class="table table-striped table-bordered">
         <thead>
             <tr>
-                <th>UNIT</th>
-                <th>EGI</th>
-                <th>SHIFT</th>
-                <th>ACTIVITY</th>
-                <th>BUCKET</th>
-                <th class="info">VOLUME (KG)</th>
+                <th rowspan="2">UNIT</th>
+                <th rowspan="2">EGI</th>
+                <th rowspan="2">SHIFT</th>
+                <th rowspan="2">ACTIVITY</th>
+                <th colspan="3">PRODUCTIVITY</th>
+                <th rowspan="2">BUCKET</th>
+                <th rowspan="2">VOLUME</th>
+            </tr>
+            <tr>
+                <th>PLAN</th>
+                <th>ACTUAL</th>
+                <th>ACHIEVEMENT</th>
             </tr>
         </thead>
         <tbody>
@@ -16,15 +22,21 @@
                 <td>{{s.egi}}</td>
                 <td>{{s.shift}}</td>
                 <td>{{activities.filter(a => a.id == s.unit_activity_id)[0].text}}</td>
+                <td></td>
+                <td></td>
+                <td></td>
                 <td>{{s.bucket | formatNumber}}</td>
-                <td class="info">{{s.volume | formatNumber}}</td>
+                <td>{{s.volume | formatNumber}}</td>
             </tr>
         </tbody>
         <tfoot>
             <tr>
-                <th class="info" colspan="4">TOTAL</th>
-                <th class="info">{{totalBucket | formatNumber}}</th>
-                <th class="info">{{totalVolume | formatNumber}}</th>
+                <th colspan="4">TOTAL</th>
+                <th></th>
+                <th></th>
+                <th></th>
+                <th>{{totalBucket | formatNumber}}</th>
+                <th>{{totalVolume | formatNumber}}</th>
             </tr>
         </tfoot>
     </table>
@@ -83,5 +95,9 @@ export default {
     th, td {
         vertical-align: middle;
         text-align: center;
+    }
+
+    .text-right {
+        text-align: right;
     }
 </style>

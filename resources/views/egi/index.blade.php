@@ -18,6 +18,8 @@
                     <th data-column-id="description">Description</th>
                     <th data-column-id="fc">FC</th>
                     <th data-column-id="is_utama" data-formatter="is_utama">Utama</th>
+                    <th data-column-id="mt_per_bucket_hi">MT/Bucket High CV</th>
+                    <th data-column-id="mt_per_bucket_lo">MT/Bucket Low CV</th>
                     @can('updateOrDelete', App\Egi::class)
                     <th data-column-id="commands"
                         data-formatter="commands"

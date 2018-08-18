@@ -16,8 +16,9 @@
                     <th data-column-id="id" data-width="3%">ID</th>
                     <th data-column-id="egi">EGI</th>
                     <th data-column-id="activity" data-formatter="activity">Activity</th>
-                    <th data-column-id="tph">TPH</th>
-                    <th data-column-id="description">Description</th>
+                    <th data-column-id="hi_cv">High CV</th>
+                    <th data-column-id="lo_cv">Low CV</th>
+                    <th data-column-id="avg" data-formatter="avg">Average</th>
                     @can('updateOrDelete', App\ProductivityPlan::class)
                     <th data-column-id="commands"
                         data-formatter="commands"
@@ -181,6 +182,9 @@
                     },
                     activity: function(c, r) {
                         return t.unit_activities.filter(a => a.id == r.unit_activity_id)[0].text;
+                    },
+                    avg: function(c, r) {
+                        return (parseInt(r.hi_cv) + parseInt(r.lo_cv)) / 2;
                     }
                 }
             }).on("loaded.rs.jquery.bootgrid", function() {

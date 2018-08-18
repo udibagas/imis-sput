@@ -34,8 +34,6 @@ class UnitRequest extends FormRequest
             'egi_id' => 'required',
             'owner_id' => 'required',
             'unit_category_id' => 'required',
-            'ton_pen_rit_hi' => 'numeric',
-            'ton_pen_rit_lo' => 'numeric',
         ];
     }
 }

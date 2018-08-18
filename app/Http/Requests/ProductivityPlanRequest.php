@@ -27,7 +27,8 @@ class ProductivityPlanRequest extends FormRequest
         return [
             'egi_id' => 'required',
             'unit_activity_id' => 'required',
-            'tph' => 'required',
+            'hi_cv' => 'required',
+            'lo_cv' => 'required',
         ];
     }
 }

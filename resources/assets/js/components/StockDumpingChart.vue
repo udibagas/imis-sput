@@ -85,7 +85,7 @@ export default {
                 },
                 yAxis: [{
                     type: 'value',
-                    name: 'TONASE',
+                    name: 'VOLUME (KG)',
                     // min: 0,
                     // max: 50000,
                     // interval: 10000,

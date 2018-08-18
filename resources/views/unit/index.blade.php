@@ -23,9 +23,6 @@
                     <th data-column-id="owner">Owner</th>
                     <th data-column-id="egi_name">EGI</th>
                     <th data-column-id="fc">FC</th>
-                    <th data-column-id="ton_pen_rit_hi">Ton/Rit (HI)</th>
-                    <th data-column-id="ton_pen_rit_lo">Ton/Rit (LO)</th>
-                    <th data-column-id="jetty">Jetty</th>
                     <!-- <th data-column-id="status">Status</th> -->
                     @can('updateOrDelete', App\Unit::class)
                     <th data-column-id="commands"
