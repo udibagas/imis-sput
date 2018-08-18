@@ -51,6 +51,7 @@
                         <th data-column-id="stock_area">Stock Area</th>
                         <th data-column-id="jetty">Jetty</th>
                         <th data-column-id="hpr">Hopper</th>
+                        <th data-column-id="material_type" data-formatter="material_type">Material Type</th>
                         <th data-column-id="rit">Bucket</th>
                         <th data-column-id="volume">Volume (KG)</th>
                         <th data-column-id="material_type" data-formatter="material_type">Material Type</th>
@@ -124,6 +125,7 @@ const app = new Vue({
         showHopperList: false,
         showBucketInput: false,
         showVolumeInput: false,
+        showMaterialType: false,
         showMaterialStockList: false,
         formData: {},
         formErrors: {},
@@ -154,6 +156,7 @@ const app = new Vue({
                 this.showVolumeInput = true;
                 this.showHaulerList = false;
                 this.showMaterialStockList = true;
+                this.showMaterialType = true;
             }
 
             // oleh WA umpan dari Hauler, dari depan hoper
@@ -163,6 +166,7 @@ const app = new Vue({
                 this.showMaterialStockList = false;
                 this.showBucketInput = true,
                 this.showVolumeInput = true;
+                this.showMaterialType = true;
             }
 
             // oleh WA ke hauler
@@ -172,6 +176,7 @@ const app = new Vue({
                 this.showMaterialStockList = true;
                 this.showBucketInput = true,
                 this.showVolumeInput = true;
+                this.showMaterialType = true;
             }
 
             // oleh WA
@@ -181,6 +186,7 @@ const app = new Vue({
                 this.showVolumeInput = true;
                 this.showHaulerList = false;
                 this.showMaterialStockList = true;
+                this.showMaterialType = true;
             }
 
             else {
@@ -189,16 +195,17 @@ const app = new Vue({
                 this.showVolumeInput = false;
                 this.showHaulerList = false;
                 this.showMaterialStockList = false;
+                this.showMaterialType = false;
             }
         },
         'formData.jetty_id': function(v, o) {
             this.formData.hopper_id = null
         },
-        // 'formData.bucket': function(v, o) {
-        //     var unit = this.units.filter(u => u.id == this.formData.unit_id)[0];
-        //     var mt_per_bucket = (this.formData.material_type == 'l') ? unit.mt_per_bucket_lo :  unit.mt_per_bucket_hi;
-        //     this.formData.volume = v * mt_per_bucket;
-        // }
+        'formData.rit': function(v, o) {
+            var unit = this.units.filter(u => u.id == this.formData.unit_id)[0];
+            var mt_per_bucket = (this.formData.material_type == 'l') ? unit.mt_per_bucket_lo :  unit.mt_per_bucket_hi;
+            this.formData.volume = v * mt_per_bucket * 1000;
+        }
     },
     methods: {
         openExportForm: function() {
@@ -345,12 +352,20 @@ const app = new Vue({
                 header: '<div id="@{{ctx.id}}" class="pull-right @{{css.header}}"><div class="actionBar"><p class="@{{css.search}}"></p><p class="@{{css.actions}}"></p></div></div>'
             },
             formatters: {
-                "commands": function(column, row) {
+                commands: function(column, row) {
                     return '@can("update", App\PortActivity::class) <a href="#" class="btn btn-info btn-xs c-edit" data-id="'+row.id+'"><i class="icon-pencil"></i></a> @endcan' +
                         '@can("delete", App\PortActivity::class) <a href="#" class="btn btn-danger btn-xs c-delete" data-id="'+row.id+'"><i class="icon-trash"></i></a> @endcan';
                 },
                 material_type: function(c, r) {
-                    return r.material_type == 'l' ? 'LOW' : 'HIGH';
+                    if (r.material_type == 'l') {
+                        return "LOW";
+                    }
+
+                    if (r.material_type == 'h') {
+                        return "HIGH";
+                    }
+
+                    return "";
                 },
                 activity: function(c, r) {
                     return t.unit_activities.filter(a => a.id == r.unit_activity_id)[0].text;

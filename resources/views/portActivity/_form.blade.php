@@ -69,18 +69,19 @@
                         </div>
                     </div>
 
-                    <div class="form-group" :class="formErrors.time_start || formErrors.time_end ? 'has-error' : ''">
-                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="time_start">Time
+                    <div v-show="showMaterialType" class="form-group" :class="formErrors.material_type ? 'has-error' : ''">
+                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="material_type">Material Type
                         </label>
-                        <div class="col-md-5 col-sm-5 col-xs-12">
-                            <select2 :options="times"  v-model="formData.time_start" class="form-control" data-placeholder="Start">
-                            </select2>
-                            <span v-if="formErrors.time_start" class="help-block">@{{formErrors.time_start[0]}}</span>
-                        </div>
-                        <div class="col-md-4 col-sm-4 col-xs-12">
-                            <select2 :options="times"  v-model="formData.time_end" class="form-control" data-placeholder="End">
-                            </select2>
-                            <span v-if="formErrors.time_end" class="help-block">@{{formErrors.time_end[0]}}</span>
+                        <div class="col-md-9 col-sm-9 col-xs-12">
+                            <div class="radio radio-inline radio-replace radio-success">
+								<input type="radio" v-model="formData.material_type" id="material_type_hi" value="h">
+								<label for="material_type_hi">HIGH</label>
+							</div>
+                            <div class="radio radio-inline radio-replace radio-danger">
+								<input type="radio" v-model="formData.material_type" id="material_type_lo" value="l">
+								<label for="material_type_lo">LOW</label>
+							</div>
+                            <span v-if="formErrors.material_type" class="help-block">@{{formErrors.material_type[0]}}</span>
                         </div>
                     </div>
 
@@ -139,6 +140,21 @@
                         <div class="col-md-9 col-sm-9 col-xs-12">
                             <input type="number" v-model="formData.volume" class="form-control" placeholder="Volume (KG)">
                             <span v-if="formErrors.volume" class="help-block">@{{formErrors.volume[0]}}</span>
+                        </div>
+                    </div>
+
+                    <div class="form-group" :class="formErrors.time_start || formErrors.time_end ? 'has-error' : ''">
+                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="time_start">Time
+                        </label>
+                        <div class="col-md-5 col-sm-5 col-xs-12">
+                            <select2 :options="times"  v-model="formData.time_start" class="form-control" data-placeholder="Start">
+                            </select2>
+                            <span v-if="formErrors.time_start" class="help-block">@{{formErrors.time_start[0]}}</span>
+                        </div>
+                        <div class="col-md-4 col-sm-4 col-xs-12">
+                            <select2 :options="times"  v-model="formData.time_end" class="form-control" data-placeholder="End">
+                            </select2>
+                            <span v-if="formErrors.time_end" class="help-block">@{{formErrors.time_end[0]}}</span>
                         </div>
                     </div>
 

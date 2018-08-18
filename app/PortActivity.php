@@ -22,7 +22,7 @@ class PortActivity extends Model
         'date', 'time_start', 'time_end', 'hauler_id',
         'employee_id', 'unit_id', 'unit_activity_id',
         'volume', 'rit', 'shift', 'hopper_id',
-        'material_stock_id', 'user_id'
+        'material_stock_id', 'user_id', 'material_type'
     ];
 
     public function getJettyIdAttribute()
