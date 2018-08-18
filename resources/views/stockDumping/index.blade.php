@@ -201,12 +201,18 @@ const app = new Vue({
         add: function() {
             // reset the form
             this.formTitle = "ADD STOCK DUMPING";
+            
             this.formData = {
                 date: moment().format('YYYY-MM-DD'),
                 time: moment().format('HH:mm'),
                 shift: (moment().format('H') >= 7 && moment().format('H') < 19) ? 1 : 2,
                 customer_id: '{{auth()->user()->customer_id}}'
-            },
+            };
+
+            var customer = this.customers.filter(c => c.id == {{auth()->user()->customer_id}})[0];
+            this.formData.material_type = customer.default_material_type;
+            this.formData.seam_id = customer.default_seam_id;
+
             this.formErrors = {};
             this.error = {};
             // open form
