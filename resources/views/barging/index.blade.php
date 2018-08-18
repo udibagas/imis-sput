@@ -82,6 +82,7 @@ const app = new Vue({
             // reset the form
             this.formTitle = "ADD BARGING";
             this.formData = {
+                customer_id: {{auth()->user()->customer_id}},
                 start: moment().format('YYYY-MM-DD HH:mm'),
                 barging_material: [{
                     customer_id: 0,

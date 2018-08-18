@@ -13,6 +13,7 @@
                         @{{error.file}}:@{{error.line}}
                     </div>
 
+                    @if (!auth()->user()->customer_id)
                     <div :class="['form-group', formErrors.customer_id ? 'has-error' : '']">
                         <label class="control-label col-md-4 col-sm-4 col-xs-12" for="customer_id">Customer
                         </label>
@@ -22,6 +23,7 @@
                             <span v-if="formErrors.customer_id" class="help-block">@{{formErrors.customer_id[0]}}</span>
                         </div>
                     </div>
+                    @endif
 
                     <div :class="['form-group', formErrors.tugboat_id ? 'has-error' : '']">
                         <label class="control-label col-md-4 col-sm-4 col-xs-12" for="tugboat_id">Tugboat
