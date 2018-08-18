@@ -25,8 +25,8 @@
                             <th data-column-id="buyer">Buyer</th>
                             <th data-column-id="jetty">Jetty</th>
                             <th data-column-id="cargo" data-width="200px">Cargo</th>
-                            <th data-column-id="volume">Volume</th>
-                            <th data-column-id="volume_by_bucket_ctrl">Volume By Bucket Control</th>
+                            <th data-column-id="volume">Volume (KG)</th>
+                            <th data-column-id="volume_by_bucket_ctrl">Volume By Bucket Control (KG)</th>
                             <th data-column-id="start">Start</th>
                             <th data-column-id="stop">Stop</th>
                             <th data-column-id="duration">Duration</th>
@@ -82,7 +82,7 @@ const app = new Vue({
             // reset the form
             this.formTitle = "ADD BARGING";
             this.formData = {
-                start: moment().format('YYYY-MM-DD hh:mm'),
+                start: moment().format('YYYY-MM-DD HH:mm'),
                 barging_material: [{
                     customer_id: 0,
                     material_type: 'h',

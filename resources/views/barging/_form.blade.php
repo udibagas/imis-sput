@@ -64,10 +64,10 @@
                     </div>
 
                     <div :class="['form-group', formErrors.volume ? 'has-error' : '']">
-                        <label class="control-label col-md-4 col-sm-4 col-xs-12" for="volume">Volume (Ton)
+                        <label class="control-label col-md-4 col-sm-4 col-xs-12" for="volume">Volume (KG)
                         </label>
                         <div class="col-md-8 col-sm-8 col-xs-12">
-                            <input type="number" v-model="formData.volume" class="form-control" placeholder="Volume (Ton)">
+                            <input type="number" v-model="formData.volume" class="form-control" placeholder="Volume (KG)">
                             <span v-if="formErrors.volume" class="help-block">@{{formErrors.volume[0]}}</span>
                         </div>
                     </div>
@@ -97,7 +97,7 @@
                                 <th>Customer</th>
                                 <th>Material Type</th>
                                 <th>Seam</th>
-                                <th>Volume</th>
+                                <th>Volume (KG)</th>
                                 <th>
                                     <button type="button" class="btn btn-info" @click="addCargo"><i class="icon-plus"></i></button>
                                 </th>

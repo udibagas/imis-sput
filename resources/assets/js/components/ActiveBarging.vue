@@ -22,9 +22,9 @@
                     <tr><td>Barge</td><td>{{b.barge}}</td></tr>
                     <tr><td>Tugboat</td><td>{{b.tugboat}}</td></tr>
                     <tr><td>Cargo</td><td v-html="b.cargo"></td></tr>
-                    <tr><td>Volume</td><td>{{b.volume | formatNumber}} TON</td></tr>
-                    <tr><td>Volume by Bucket Control</td><td>{{b.volume_by_bucket_ctrl | formatNumber}} TON</td></tr>
-                    <tr><td>Volume by Belt Scale</td><td>{{b.volume_by_bucket_ctrl | formatNumber}} TON</td></tr>
+                    <tr><td>Volume</td><td>{{b.volume | formatNumber}} KG</td></tr>
+                    <tr><td>Volume by Bucket Control</td><td>{{b.volume_by_bucket_ctrl | formatNumber}} KG</td></tr>
+                    <tr><td>Volume by Belt Scale</td><td>{{b.volume_by_bucket_ctrl | formatNumber}} KG</td></tr>
                     <tr><td>Progress</td><td>{{b | getPercentage}}%</td></tr>
                     <tr><td>Status</td>
                         <td>
