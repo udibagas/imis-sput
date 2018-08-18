@@ -19,6 +19,8 @@
                     <th data-column-id="email">Email</th>
                     <th data-column-id="phone">Phone</th>
                     <th data-column-id="fax">Fax</th>
+                    <th data-column-id="default_material_type" data-formatter="default_material_type">Default Material Type</th>
+                    <th data-column-id="default_seam">Default Seam</th>
                     @can('updateOrDelete', App\Customer::class)
                     <th data-column-id="commands"
                         data-formatter="commands"
@@ -49,7 +51,8 @@
             formData: {},
             formErrors: {},
             formTitle: '',
-            error: {}
+            error: {},
+            seams: {!! App\Seam::selectRaw('id AS id, name AS text')->orderBy('name', 'ASC')->get() !!},
         },
         methods: {
             add: function() {
@@ -172,9 +175,20 @@
                     header: '<div id="@{{ctx.id}}" class="pull-right @{{css.header}}"><div class="actionBar"><p class="@{{css.search}}"></p><p class="@{{css.actions}}"></p></div></div>'
                 },
                 formatters: {
-                    "commands": function(column, row) {
+                    commands: function(column, row) {
                         return '@can("update", App\Customer::class) <a href="#" class="btn btn-info btn-xs c-edit" data-id="'+row.id+'"><i class="icon-pencil"></i></a> @endcan' +
                             '@can("delete", App\Customer::class) <a href="#" class="btn btn-danger btn-xs c-delete" data-id="'+row.id+'"><i class="icon-trash"></i></a> @endcan';
+                    },
+                    default_material_type: function(c, r) {
+                        if (r.default_material_type == 'l') {
+                            return "LOW";
+                        }
+                        
+                        if (r.default_material_type == 'h') {
+                            return "HIGH";
+                        }
+
+                        return "";
                     }
                 }
             }).on("loaded.rs.jquery.bootgrid", function(e) {

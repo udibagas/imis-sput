@@ -148,7 +148,7 @@ const app = new Vue({
         stock_areas: [],
         subconts: {!! App\Subcont::selectRaw('id AS id, name AS text')->orderBy('name', 'ASC')->get() !!},
         seams: {!! App\Seam::selectRaw('id AS id, name AS text')->orderBy('name', 'ASC')->get() !!},
-        customers: {!! App\Customer::selectRaw('id AS id, name AS text')->orderBy('name', 'ASC')->get() !!},
+        customers: {!! App\Customer::selectRaw('id AS id, name AS text, default_seam_id, default_material_type')->orderBy('name', 'ASC')->get() !!},
         areas: {!! App\Area::selectRaw('id AS id, name AS text')->orderBy('name', 'ASC')->get() !!},
         subcont_units: {!! App\SubcontUnit::selectRaw('id AS id, code_number AS text, subcont_id')->orderBy('code_number', 'ASC')->get() !!},
         allStockAreas: {!! App\StockArea::selectRaw('id AS id, name AS text, area_id')->orderBy('name', 'ASC')->get() !!},
@@ -166,6 +166,13 @@ const app = new Vue({
                 this.stock_areas = [];
             }
         },
+        'formData.customer_id': function(v, o) {
+            if (v) {
+                var customer = this.customers.filter(c => c.id == v)[0];
+                this.formData.material_type = customer.default_material_type;
+                this.formData.seam_id = customer.default_seam_id;
+            }
+        }
     },
     methods: {
         getTonase: function() {

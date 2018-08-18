@@ -52,6 +52,32 @@
                         </div>
                     </div>
 
+                    <div class="form-group" :class="formErrors.default_material_type ? 'has-error' : ''">
+                        <label class="control-label col-md-4 col-sm-4 col-xs-12" for="default_material_type">Default Material Type
+                        </label>
+                        <div class="col-md-8 col-sm-8 col-xs-12">
+                            <div class="radio radio-inline radio-replace radio-success">
+								<input type="radio" v-model="formData.default_material_type" id="default_material_type_hi" value="h">
+								<label for="default_material_type_hi">HIGH</label>
+							</div>
+                            <div class="radio radio-inline radio-replace radio-danger">
+								<input type="radio" v-model="formData.default_material_type" id="default_material_type_lo" value="l">
+								<label for="default_material_type_lo">LOW</label>
+							</div>
+                            <span v-if="formErrors.default_material_type" class="help-block">@{{formErrors.default_material_type[0]}}</span>
+                        </div>
+                    </div>
+
+                    <div class="form-group" :class="formErrors.default_seam_id ? 'has-error' : ''">
+                        <label class="control-label col-md-4 col-sm-4 col-xs-12" for="default_seam_id">Default Seam
+                        </label>
+                        <div class="col-md-8 col-sm-8 col-xs-12">
+                            <select2 :options="seams" v-model="formData.default_seam_id" data-placeholder="Seam">
+                            </select2>
+                            <span v-if="formErrors.default_seam_id" class="help-block">@{{formErrors.default_seam_id[0]}}</span>
+                        </div>
+                    </div>
+
                 </div>
                 <div class="modal-footer">
                     <button type="submit" v-if="formData.id == undefined" class="btn btn-primary" @click="store"><i class="fa fa-floppy-o"></i> Save</button>

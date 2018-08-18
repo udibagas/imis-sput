@@ -21,15 +21,17 @@ class CustomerController extends Controller
         {
             $pageSize = $request->rowCount > 0 ? $request->rowCount : 1000000;
             $request['page'] = $request->current;
-            $sort = $request->sort ? key($request->sort) : 'name';
+            $sort = $request->sort ? key($request->sort) : 'customers.name';
             $dir = $request->sort ? $request->sort[$sort] : 'asc';
 
-            $customer = Customer::when($request->searchPhrase, function($query) use ($request) {
-                    return $query->where('name', 'LIKE', '%'.$request->searchPhrase.'%')
-                        ->orWhere('address', 'LIKE', '%'.$request->searchPhrase.'%')
-                        ->orWhere('email', 'LIKE', '%'.$request->searchPhrase.'%')
-                        ->orWhere('phone', 'LIKE', '%'.$request->searchPhrase.'%')
-                        ->orWhere('fax', 'LIKE', '%'.$request->searchPhrase.'%');
+            $customer = Customer::selectRaw('customers.*, seams.name AS default_seam')
+                ->join('seams', 'seams.id', '=', 'customers.default_seam_id', 'LEFT')
+                ->when($request->searchPhrase, function($query) use ($request) {
+                    return $query->where('customers.name', 'LIKE', '%'.$request->searchPhrase.'%')
+                        ->orWhere('customers.address', 'LIKE', '%'.$request->searchPhrase.'%')
+                        ->orWhere('customers.email', 'LIKE', '%'.$request->searchPhrase.'%')
+                        ->orWhere('customers.phone', 'LIKE', '%'.$request->searchPhrase.'%')
+                        ->orWhere('customers.fax', 'LIKE', '%'.$request->searchPhrase.'%');
                 })->orderBy($sort, $dir)->paginate($pageSize);
 
             return [
