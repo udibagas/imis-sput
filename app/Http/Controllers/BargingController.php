@@ -39,6 +39,9 @@ class BargingController extends Controller
                 ->join('barges', 'barges.id', '=', 'bargings.barge_id')
                 ->join('customers', 'customers.id', '=', 'bargings.customer_id')
                 ->join('tugboats', 'tugboats.id', '=', 'bargings.tugboat_id')
+                ->when(auth()->user()->customer_id, function($query) {
+                    return $query->where('bargings.customer_id', auth()->user()->customer_id);
+                })
                 ->when($request->searchPhrase, function($query) use ($request) {
                     return $query->where('buyers.name', 'LIKE', '%'.$request->searchPhrase.'%')
                         ->orWhere('jetties.name', 'LIKE', '%'.$request->searchPhrase.'%')
