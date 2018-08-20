@@ -11,8 +11,6 @@ class Unit extends Model
         'unit_category_id', 'type'
     ];
 
-    // protected $with = ['egi'];
-
     public function egi() {
         return $this->belongsTo(Egi::class);
     }
