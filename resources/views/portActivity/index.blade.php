@@ -146,6 +146,7 @@ const app = new Vue({
         jetties: {!! App\Jetty::selectRaw('id AS id, name AS text') ->orderBy('name', 'ASC')->get() !!},
         hoppers: {!! App\Hopper::selectRaw('id AS id, name AS text, jetty_id AS jetty_id') ->orderBy('name', 'ASC')->get() !!},
         unit_activities: {!! json_encode(App\PortActivity::getActivityList()) !!},
+        seams: {!! App\Seam::selectRaw('id AS id, name AS text')->orderBy('name', 'ASC')->get() !!},
     },
     watch: {
         'formData.unit_activity_id': function(v, o) {
@@ -205,6 +206,12 @@ const app = new Vue({
             var unit = this.units.filter(u => u.id == this.formData.unit_id)[0];
             var mt_per_bucket = (this.formData.material_type == 'l') ? unit.mt_per_bucket_lo :  unit.mt_per_bucket_hi;
             this.formData.volume = v * mt_per_bucket * 1000;
+        },
+        'formData.material_stock_id': function(v, o) {
+            if (v) {
+                this.formData.material_type = this.material_stocks.filter(m => m.id == v)[0].material_type;
+                this.formData.seam_id = this.material_stocks.filter(m => m.id == v)[0].seam_id;
+            }
         }
     },
     methods: {

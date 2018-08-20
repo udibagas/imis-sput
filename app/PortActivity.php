@@ -21,7 +21,7 @@ class PortActivity extends Model
     protected $fillable = [
         'date', 'time_start', 'time_end', 'hauler_id',
         'employee_id', 'unit_id', 'unit_activity_id',
-        'volume', 'rit', 'shift', 'hopper_id',
+        'volume', 'rit', 'shift', 'hopper_id', 'seam_id',
         'material_stock_id', 'user_id', 'material_type'
     ];
 

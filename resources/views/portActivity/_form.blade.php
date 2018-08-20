@@ -69,6 +69,16 @@
                         </div>
                     </div>
 
+                    <div v-show="showMaterialStockList" class="form-group" :class="formErrors.material_stock_id ? 'has-error' : ''">
+                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="material_stock_id">Stock
+                        </label>
+                        <div class="col-md-9 col-sm-9 col-xs-12">
+                            <select2 :options="material_stocks" v-model="formData.material_stock_id" data-placeholder="Stock">
+                            </select2>
+                            <span v-if="formErrors.material_stock_id" class="help-block">@{{formErrors.material_stock_id[0]}}</span>
+                        </div>
+                    </div>
+
                     <div v-show="showMaterialType" class="form-group" :class="formErrors.material_type ? 'has-error' : ''">
                         <label class="control-label col-md-3 col-sm-3 col-xs-12" for="material_type">Material Type
                         </label>
@@ -85,6 +95,16 @@
                         </div>
                     </div>
 
+                    <div v-show="showMaterialType" class="form-group" :class="formErrors.seam_id ? 'has-error' : ''">
+                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="seam_id">Seam
+                        </label>
+                        <div class="col-md-9 col-sm-9 col-xs-12">
+                            <select2 :options="seams" v-model="formData.seam_id" data-placeholder="Seam">
+                            </select2>
+                            <span v-if="formErrors.seam_id" class="help-block">@{{formErrors.seam_id[0]}}</span>
+                        </div>
+                    </div>
+
                     <div v-show="showHaulerList" class="form-group" :class="formErrors.hauler_id ? 'has-error' : ''">
                         <label class="control-label col-md-3 col-sm-3 col-xs-12" for="hauler_id">Hauler
                         </label>
@@ -92,16 +112,6 @@
                             <select2 :options="haulers" v-model="formData.hauler_id" data-placeholder="Hauler">
                             </select2>
                             <span v-if="formErrors.hauler_id" class="help-block">@{{formErrors.hauler_id[0]}}</span>
-                        </div>
-                    </div>
-
-                    <div v-show="showMaterialStockList" class="form-group" :class="formErrors.material_stock_id ? 'has-error' : ''">
-                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="material_stock_id">Stock
-                        </label>
-                        <div class="col-md-9 col-sm-9 col-xs-12">
-                            <select2 :options="material_stocks" v-model="formData.material_stock_id" data-placeholder="Stock">
-                            </select2>
-                            <span v-if="formErrors.material_stock_id" class="help-block">@{{formErrors.material_stock_id[0]}}</span>
                         </div>
                     </div>
 
