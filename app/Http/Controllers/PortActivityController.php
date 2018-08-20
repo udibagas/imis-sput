@@ -89,8 +89,8 @@ class PortActivityController extends Controller
         $input['user_id'] = auth()->user()->id;
         $portActivity = PortActivity::create($input);
 
-        if ($request->unit_activity_id == PortActivity::ACT_HAULING
-        || $request->unit_activity_id == PortActivity::ACT_LOAD_AND_CARRY)
+        if ($request->unit_activity_id == PortActivity::ACT_LOAD_AND_CARRY
+        || $request->unit_activity_id == PortActivity::ACT_FEEDING)
         {
             $portActivity->materialStock()->update([
                 'volume' => $portActivity->materialStock->volume - $request->volume,
