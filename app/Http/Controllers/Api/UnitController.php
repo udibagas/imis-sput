@@ -9,6 +9,6 @@ use App\Unit;
 class UnitController extends Controller
 {
     public function index() {
-        return Unit::all();
+        return Unit::with('egi')->get();
     }
 }

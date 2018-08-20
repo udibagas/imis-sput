@@ -11,7 +11,6 @@ class Unit extends Model
         'unit_category_id', 'type'
     ];
 
-    // gak tau dulu di appends ini buat apa
     // protected $with = ['egi'];
 
     public function egi() {
