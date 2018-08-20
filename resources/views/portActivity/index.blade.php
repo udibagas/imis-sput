@@ -164,7 +164,7 @@ const app = new Vue({
             else if (v == {{App\PortActivity::ACT_FEEDING}}) {
                 this.showHopperList = true;
                 this.showHaulerList = false;
-                this.showMaterialStockList = false;
+                this.showMaterialStockList = true;
                 this.showBucketInput = true,
                 this.showVolumeInput = true;
                 this.showMaterialType = true;
