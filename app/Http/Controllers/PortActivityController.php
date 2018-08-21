@@ -92,19 +92,25 @@ class PortActivityController extends Controller
         if ($request->unit_activity_id == PortActivity::ACT_LOAD_AND_CARRY
         || $request->unit_activity_id == PortActivity::ACT_FEEDING)
         {
-            $portActivity->materialStock()->update([
-                'volume' => $portActivity->materialStock->volume - $request->volume,
-            ]);
+            if ($portActivity->materialStock) {
+                $portActivity->materialStock()->update([
+                    'volume' => $portActivity->materialStock->volume - $request->volume,
+                ]);
+            }
 
             // TODO: tambah di barging, ambil data jetty
             $barging = Barging::where('jetty_id', $request->jetty_id)
                 ->where('status', '!=', Barging::STATUS_COMPLETE)
                 ->latest()->first();
 
-            if ($barging) {
-                $barging->update([
-                    'volume_by_bucket_ctrl' => $barging->volume_by_bucket_ctrl + $request->volume
-                ]);
+            foreach ($barging->bargingMaterial as $s)
+            {
+                if ($s->material_type == $request->material_type
+                && $s->seam_id == $request->seam_id
+                && $s->customer_id == $request->customer_id)
+                {
+                    $s->update(['volume_progress' => $s->volume_progress + $request->volume]);
+                }
             }
         }
     }
@@ -154,7 +160,7 @@ class PortActivityController extends Controller
 
         $sql = "SELECT
             SUM(rit) AS bucket,
-            SUM(COALESCE(volume, 0)) AS volume,
+            SUM(COALESCE(volume, 0)) / 1000 AS volume,
             unit_activity_id,
             units.name AS unit,
             shift,
@@ -176,12 +182,12 @@ class PortActivityController extends Controller
         $sql = "SELECT
             units.name AS unit,
             port_activities.shift,
-            SUM(volume) AS total,
-            SUM(CASE WHEN port_activities.unit_activity_id = ".PortActivity::ACT_FEEDING." THEN COALESCE(volume, 0) ELSE 0 END) AS feeding,
-            SUM(CASE WHEN port_activities.unit_activity_id = ".PortActivity::ACT_LOAD_AND_CARRY." THEN COALESCE(volume, 0) ELSE 0 END) AS load_and_carry,
-            SUM(CASE WHEN port_activities.unit_activity_id = ".PortActivity::ACT_LOADING." THEN COALESCE(volume, 0) ELSE 0 END) AS loading,
-            SUM(CASE WHEN port_activities.unit_activity_id = ".PortActivity::ACT_STOCKPILING." THEN COALESCE(volume, 0) ELSE 0 END) AS stock_piling,
-            SUM(CASE WHEN port_activities.unit_activity_id = ".PortActivity::ACT_HAULING." THEN COALESCE(volume, 0) ELSE 0 END) hauling
+            SUM(volume) /1000 AS total,
+            SUM(CASE WHEN port_activities.unit_activity_id = ".PortActivity::ACT_FEEDING." THEN COALESCE(volume, 0) ELSE 0 END) / 1000 AS feeding,
+            SUM(CASE WHEN port_activities.unit_activity_id = ".PortActivity::ACT_LOAD_AND_CARRY." THEN COALESCE(volume, 0) ELSE 0 END) / 1000 AS load_and_carry,
+            SUM(CASE WHEN port_activities.unit_activity_id = ".PortActivity::ACT_LOADING." THEN COALESCE(volume, 0) ELSE 0 END) / 000 AS loading,
+            SUM(CASE WHEN port_activities.unit_activity_id = ".PortActivity::ACT_STOCKPILING." THEN COALESCE(volume, 0) ELSE 0 END) / 1000 AS stock_piling,
+            SUM(CASE WHEN port_activities.unit_activity_id = ".PortActivity::ACT_HAULING." THEN COALESCE(volume, 0) ELSE 0 END) / 1000 hauling
             FROM port_activities
             JOIN units ON units.id = port_activities.unit_id
             GROUP BY port_activities.unit_id, shift

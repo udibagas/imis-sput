@@ -22,9 +22,8 @@
                     <tr><td>Barge</td><td>{{b.barge}}</td></tr>
                     <tr><td>Tugboat</td><td>{{b.tugboat}}</td></tr>
                     <tr><td>Cargo</td><td v-html="b.cargo"></td></tr>
-                    <tr><td>Volume</td><td>{{b.volume | formatNumber}} KG</td></tr>
-                    <tr><td>Volume by Bucket Control</td><td>{{b.volume_by_bucket_ctrl | formatNumber}} KG</td></tr>
-                    <tr><td>Volume by Belt Scale</td><td>{{b.volume_by_bucket_ctrl | formatNumber}} KG</td></tr>
+                    <tr><td>Volume</td><td>{{b.volume | formatNumber}} TON</td></tr>
+                    <tr><td>Volume by Bucket Control</td><td>{{b.volume_by_bucket_ctrl | formatNumber}} TON</td></tr>
                     <tr><td>Progress</td><td>{{b | getPercentage}}%</td></tr>
                     <tr><td>Status</td>
                         <td>
@@ -57,20 +56,8 @@ export default {
     },
     filters: {
         getPercentage: function(v) {
-            return (parseInt(v.volume_by_bucket_ctrl) / parseInt(v.volume)).toFixed(2);
+            return (parseInt(v.volume_by_bucket_ctrl) / parseInt(v.volume) * 100).toFixed(2);
         }
-        // formatCargo: function(v) {
-        //     var cargo = '';
-        //     v.barging_material.forEach(function(m) {
-        //         cargo += '[' + t.customers.filter(c => c.id === m.customer_id)[0].text;
-        //         cargo += m.material_type === 'h' ? ', HIGH' : ', LOW';
-        //         var seam = t.seams.filter(s => s.id === m.seam_id);
-        //         cargo += seam.length > 0 ? ', ' + seam[0].text : '';
-        //         cargo += ', ' + m.volume + 'T]<br />';
-        //     });
-        //
-        //     return cargo;
-        // }
     },
     methods: {
         requestData: function() {

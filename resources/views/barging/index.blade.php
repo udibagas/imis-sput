@@ -25,8 +25,7 @@
                             <th data-column-id="buyer">Buyer</th>
                             <th data-column-id="jetty">Jetty</th>
                             <th data-column-id="cargo" data-width="200px">Cargo</th>
-                            <th data-column-id="volume">Volume (KG)</th>
-                            <th data-column-id="volume_by_bucket_ctrl">Volume By Bucket Control (KG)</th>
+                            <th data-column-id="volume">Volume (Ton)</th>
                             <th data-column-id="start">Start</th>
                             <th data-column-id="stop">Stop</th>
                             <th data-column-id="duration">Duration</th>

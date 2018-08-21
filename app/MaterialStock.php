@@ -25,7 +25,8 @@ class MaterialStock extends Model
         return self::selectRaw('
             material_stocks.id AS id, CONCAT(customers.name, "/", areas.name, "/", stock_areas.name, "/", IF(material_type = "l", "LOW", "HIGH"), "/", seams.name) AS text,
             material_stocks.material_type AS material_type,
-            material_stocks.seam_id AS seam_id
+            material_stocks.seam_id AS seam_id,
+            customer_id
         ')
         ->join('stock_areas', 'stock_areas.id', '=', 'material_stocks.stock_area_id')
         ->join('areas', 'areas.id', '=', 'stock_areas.area_id')

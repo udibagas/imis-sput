@@ -22,8 +22,25 @@ class PortActivity extends Model
         'date', 'time_start', 'time_end', 'hauler_id',
         'employee_id', 'unit_id', 'unit_activity_id',
         'volume', 'rit', 'shift', 'hopper_id', 'seam_id',
-        'material_stock_id', 'user_id', 'material_type'
+        'material_stock_id', 'user_id', 'material_type',
+        'customer_id'
     ];
+
+    public function getTimeStartAttribute($v) {
+        return substr($v, 0, 5);
+    }
+
+    public function getTimeEndAttribute($v) {
+        return substr($v, 0, 5);
+    }
+
+    public function setVolumeAttribute($v) {
+        $this->attributes['volume'] = $v * 1000;
+    }
+
+    public function getVolumeAttribute($v) {
+        return $v / 1000;
+    }
 
     public function getJettyIdAttribute()
     {

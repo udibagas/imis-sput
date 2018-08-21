@@ -7,7 +7,7 @@
                 <th>SHIFT</th>
                 <th>ACTIVITY</th>
                 <th>BUCKET</th>
-                <th class="info">VOLUME (KG)</th>
+                <th class="info">VOLUME (TON)</th>
             </tr>
         </thead>
         <tbody>

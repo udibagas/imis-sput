@@ -53,7 +53,7 @@
                         <th data-column-id="hpr">Hopper</th>
                         <th data-column-id="material_type" data-formatter="material_type">Material Type</th>
                         <th data-column-id="rit">Bucket</th>
-                        <th data-column-id="volume">Volume (KG)</th>
+                        <th data-column-id="volume">Volume (Ton)</th>
                         <th data-column-id="material_type" data-formatter="material_type">Material Type</th>
                         <th data-column-id="seam">Seam</th>
                         <th data-column-id="customer">Customer</th>
@@ -205,12 +205,14 @@ const app = new Vue({
         'formData.rit': function(v, o) {
             var unit = this.units.filter(u => u.id == this.formData.unit_id)[0];
             var mt_per_bucket = (this.formData.material_type == 'l') ? unit.mt_per_bucket_lo :  unit.mt_per_bucket_hi;
-            this.formData.volume = v * mt_per_bucket * 1000;
+            this.formData.volume = v * mt_per_bucket;
         },
         'formData.material_stock_id': function(v, o) {
             if (v) {
-                this.formData.material_type = this.material_stocks.filter(m => m.id == v)[0].material_type;
-                this.formData.seam_id = this.material_stocks.filter(m => m.id == v)[0].seam_id;
+                var ms = this.material_stocks.filter(m => m.id == v)[0];
+                this.formData.material_type = ms.material_type;
+                this.formData.seam_id = ms.seam_id;
+                this.formData.customer_id = ms.customer_id;
             }
         }
     },

@@ -1,5 +1,5 @@
 <div id="modal-form" class="modal fade" role="dialog">
-    <div class="modal-dialog">
+    <div class="modal-dialog" style="width:750px;">
         <div class="modal-content">
             <form class="form-horizontal" role="form" @submit.prevent="formData.id == undefined ? store : update">
                 <div class="modal-header">
@@ -66,10 +66,10 @@
                     </div>
 
                     <div :class="['form-group', formErrors.volume ? 'has-error' : '']">
-                        <label class="control-label col-md-4 col-sm-4 col-xs-12" for="volume">Volume (KG)
+                        <label class="control-label col-md-4 col-sm-4 col-xs-12" for="volume">Volume (Ton)
                         </label>
                         <div class="col-md-8 col-sm-8 col-xs-12">
-                            <input type="number" v-model="formData.volume" class="form-control" placeholder="Volume (KG)">
+                            <input type="number" step="any" v-model="formData.volume" class="form-control" placeholder="Volume (Ton)">
                             <span v-if="formErrors.volume" class="help-block">@{{formErrors.volume[0]}}</span>
                         </div>
                     </div>
@@ -93,13 +93,15 @@
                         </div>
                     </div>
 
-                    <table class="table table-striped" style="margin: 20px 0 0">
+                    <table class="table table-striped" style="margin: 20px 0 0;border-top:1px solid #ddd;">
                         <thead>
                             <tr>
                                 <th>Customer</th>
                                 <th>Material Type</th>
                                 <th>Seam</th>
-                                <th>Volume (KG)</th>
+                                <th>Volume (Ton)</th>
+                                <th>Progress By Bucket Control (Ton)</th>
+                                <th>Volume By Draught Survey (TOn)</th>
                                 <th>
                                     <button type="button" class="btn btn-info" @click="addCargo"><i class="icon-plus"></i></button>
                                 </th>
@@ -123,7 +125,13 @@
                                     </select2>
                                 </td>
                                 <td>
-                                    <input type="text" v-model="formData.barging_material[i].volume" class="form-control" placeholder="Volume">
+                                    <input type="number" step="any" v-model="formData.barging_material[i].volume" class="form-control">
+                                </td>
+                                <td>
+                                    <input type="number" step="any" v-model="formData.barging_material[i].volume_progress" class="form-control">
+                                </td>
+                                <td>
+                                    <input type="number" step="any" v-model="formData.barging_material[i].volume_by_draught_survey" class="form-control">
                                 </td>
                                 <td>
                                     <button type="button" @click="delCargo(i)" class="btn btn-danger"><i class="icon-trash"></i></button>

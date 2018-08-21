@@ -17,11 +17,24 @@ class Barging extends Model
     protected $fillable = [
         'start', 'stop', 'jetty_id', 'barge_id',
         'buyer_id', 'volume', 'progress', 'status', 'description',
-        'customer_id', 'tugboat_id', 'volume_by_bucket_ctrl'
+        'customer_id', 'tugboat_id'
     ];
 
     protected $with = ['bargingMaterial'];
-    protected $appends = ['cargo'];
+    protected $appends = ['cargo', 'volume_by_bucket_ctrl'];
+
+    public function getVolumeByBucketCtrlAttribute() {
+        $sql = "SELECT (SUM(volume_progress) / 1000) AS v FROM barging_materials WHERE barging_id = ?";
+        return DB::select($sql, [$this->id])[0]->v;
+    }
+
+    public function setVolumeAttribute($v) {
+        $this->attributes['volume'] = $v * 1000;
+    }
+
+    public function getVolumeAttribute($v) {
+        return $v / 1000;
+    }
 
     public function bargingMaterial() {
         return $this->hasMany(BargingMaterial::class);
