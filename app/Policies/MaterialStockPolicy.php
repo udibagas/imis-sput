@@ -20,7 +20,7 @@ class MaterialStockPolicy
      */
     public function view(User $user)
     {
-        if ($user->super_admin || $user->customer_id) {
+        if ($user->super_admin || $user->customer_id || $user->contractor_id) {
             return true;
         }
 
@@ -31,7 +31,7 @@ class MaterialStockPolicy
 
     public function export(User $user)
     {
-        if ($user->super_admin || $user->customer_id) {
+        if ($user->super_admin || $user->customer_id || $user->contractor_id) {
             return true;
         }
 
@@ -48,7 +48,7 @@ class MaterialStockPolicy
      */
     public function create(User $user)
     {
-        if ($user->super_admin || $user->customer_id) {
+        if ($user->super_admin || $user->customer_id || $user->contractor_id) {
             return true;
         }
 
@@ -66,7 +66,7 @@ class MaterialStockPolicy
      */
     public function update(User $user)
     {
-        if ($user->super_admin || $user->customer_id) {
+        if ($user->super_admin || $user->customer_id || $user->contractor_id) {
             return true;
         }
 
@@ -84,7 +84,7 @@ class MaterialStockPolicy
      */
     public function delete(User $user)
     {
-        if ($user->super_admin || $user->customer_id) {
+        if ($user->super_admin || $user->customer_id || $user->contractor_id) {
             return true;
         }
 
