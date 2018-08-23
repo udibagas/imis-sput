@@ -16,6 +16,7 @@
                     <th data-column-id="id" data-width="3%">ID</th>
                     <th data-column-id="name">Name</th>
                     <th data-column-id="capacity">Capacity (Ton)</th>
+                    <th data-column-id="jetty">Jetty</th>
                     <th data-column-id="description">Description</th>
                     @can('updateOrDelete', App\Area::class)
                     <th data-column-id="commands"
@@ -47,7 +48,8 @@
             formData: {},
             formErrors: {},
             formTitle: '',
-            error: {}
+            error: {},
+            jetties: {!! App\Jetty::selectRaw('id AS id, name AS text') ->orderBy('name', 'ASC')->get() !!},
         },
         methods: {
             add: function() {

@@ -94,7 +94,7 @@ class PortActivityController extends Controller
         {
             if ($portActivity->materialStock) {
                 $portActivity->materialStock()->update([
-                    'volume' => $portActivity->materialStock->volume - $request->volume,
+                    'volume' => $portActivity->materialStock->volume - ($request->volume * 1000),
                 ]);
             }
 
@@ -109,7 +109,7 @@ class PortActivityController extends Controller
                 && $s->seam_id == $request->seam_id
                 && $s->customer_id == $request->customer_id)
                 {
-                    $s->update(['volume_progress' => $s->volume_progress + $request->volume]);
+                    $s->update(['volume_progress' => $s->volume_progress + ($request->volume * 1000)]);
                 }
             }
         }

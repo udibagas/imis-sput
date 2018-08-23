@@ -25,4 +25,5 @@ class Jetty extends Model
     public function hoppers() {
         return $this->hasMany(Hopper::class);
     }
+
 }

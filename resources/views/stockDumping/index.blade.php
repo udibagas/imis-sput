@@ -209,9 +209,11 @@ const app = new Vue({
                 customer_id: '{{auth()->user()->customer_id}}'
             };
 
-            var customer = this.customers.filter(c => c.id == {{auth()->user()->customer_id ? auth()->user()->customer_id : 0}})[0];
+            @if (auth()->user()->customer_id)
+            var customer = this.customers.filter(c => c.id == {{auth()->user()->customer_id}})[0];
             this.formData.material_type = customer.default_material_type;
             this.formData.seam_id = customer.default_seam_id;
+            @endif
 
             this.formErrors = {};
             this.error = {};

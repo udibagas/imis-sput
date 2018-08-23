@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Area;
 
 class OperationController extends Controller
 {
@@ -40,6 +41,9 @@ class OperationController extends Controller
     public function index()
     {
         return view('operation.dashboard', [
+            'areas' => Area::selectRaw('areas.*, jetties.name AS jetty')
+                ->join('jetties', 'jetties.id', '=', 'areas.jetty_id', 'LEFT')
+                ->orderBy('jetties.order', 'ASC')->get(),
             'breadcrumbs' => [
                 'operation/dashboard' => 'Operation',
                 'dashboard' => 'Dashboard'

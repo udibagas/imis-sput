@@ -31,6 +31,16 @@
                         </div>
                     </div>
 
+                    <div :class="['form-group', formErrors.jetty_id ? 'has-error' : '']">
+                        <label class="control-label col-md-4 col-sm-4 col-xs-12" for="jetty_id">Jetty
+                        </label>
+                        <div class="col-md-8 col-sm-8 col-xs-12">
+                            <select2 :options="jetties" v-model="formData.jetty_id" data-placeholder="Jetty">
+                            </select2>
+                            <span v-if="formErrors.jetty_id" class="help-block">@{{formErrors.jetty_id[0]}}</span>
+                        </div>
+                    </div>
+
                     <div class="form-group" :class="formErrors.description ? 'has-error' : ''">
                         <label class="control-label col-md-4 col-sm-4 col-xs-12" for="description">Description
                         </label>
@@ -45,8 +55,8 @@
                             <tr>
                                 <th>Stock Area</th>
                                 <th>Capacity</th>
-                                <!-- <th>Position</th>
-                                <th>Order</th> -->
+                                <th>Position</th>
+                                <th>Order</th>
                                 <th class="text-right">
                                     <a href="#" @click="addStockArea" class="btn btn-primary"><i class="icon-plus"></i></a>
                                 </th>
@@ -61,17 +71,17 @@
                                 <td>
                                     <input type="number" class="form-control" v-model="formData.stock_area[i].capacity">
                                 </td>
-                                <!-- <td>
+                                <td>
                                     <select class="form-control" v-model="formData.stock_area[i].position" name="">
                                         <option value="l">Left</option>
                                         <option value="r">Right</option>
                                         <option value="c">Center</option>
                                         <option value="o">Outside</option>
                                     </select>
-                                </td> -->
-                                <!-- <td>
+                                </td>
+                                <td>
                                     <input type="number" class="form-control" v-model="formData.stock_area[i].order">
-                                </td> -->
+                                </td>
                                 <td class="text-right">
                                     <a href="#" @click="delStockArea(i)" class="btn btn-danger"><i class="icon-trash"></i></a>
                                 </td>
