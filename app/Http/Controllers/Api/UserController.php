@@ -17,10 +17,10 @@ class UserController extends Controller
         $user = User::selectRaw('
                 users.*,
                 customers.name AS customer,
-                customers.default_seam_id AS default_seam_id,
-                customers.default_material_type AS default_material_type
+                contractors.name AS contractor
             ')
             ->join('customers', 'customers.id', '=', 'users.customer_id', 'LEFT')
+            ->join('contractors', 'contractors.id', '=', 'users.contractor_id', 'LEFT')
             ->where('users.active', 1)
             ->where('users.email', 'LIKE', $request->email)->first();
 
