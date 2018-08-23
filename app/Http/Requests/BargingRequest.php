@@ -42,7 +42,7 @@ class BargingRequest extends FormRequest
             'jetty_id' =>'Jetty',
             'barge_id' => 'Barge',
             'buyer_id' => 'Buyer',
-            'volume' => 'Volume',
+            'volume' => 'Target Barging',
             'customer_id' => 'Customer',
             'tugboat_id' => 'Tugboat',
         ];

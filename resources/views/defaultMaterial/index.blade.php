@@ -4,22 +4,24 @@
 
 <div class="panel panel-primary" id="app">
     <div class="panel-body">
-        <h3 class="pull-left text-primary">CUSTOMER <small>Manage</small></h3>
-        @can('create', App\Customer::class)
+        <h3 class="pull-left text-primary">DEFAULT MATERIAL <small>Manage</small></h3>
         <span class="pull-right" style="margin:15px 0 15px 10px;">
+            @can('create', App\DefaultMaterial::class)
             <a href="#" @click="add" class="btn btn-primary"><i class="icon-plus-circled"></i></a>
+            @endcan
+            @can('export', App\DefaultMaterial::class)
+            <a href="{{url('defaultMaterial/export')}}" class="btn btn-primary"><i class="icon-download"></i> EXPORT</a>
+            @endcan
         </span>
-        @endcan
         <table class="table table-striped table-hover " id="bootgrid" style="border-top:2px solid #ddd">
             <thead>
                 <tr>
                     <th data-column-id="id" data-width="3%">ID</th>
-                    <th data-column-id="name">Name</th>
-                    <th data-column-id="address">Address</th>
-                    <th data-column-id="email">Email</th>
-                    <th data-column-id="phone">Phone</th>
-                    <th data-column-id="fax">Fax</th>
-                    @can('updateOrDelete', App\Customer::class)
+                    <th data-column-id="customer">Customer</th>
+                    <th data-column-id="contractor">Contractor</th>
+                    <th data-column-id="material_type" data-formatter="material_type">Material Type</th>
+                    <th data-column-id="seam">Seam</th>
+                    @can('updateOrDelete', App\DefaultMaterial::class)
                     <th data-column-id="commands"
                         data-formatter="commands"
                         data-sortable="false"
@@ -31,8 +33,8 @@
         </table>
     </div>
 
-    @can('createOrUpdate', App\Customer::class)
-    @include('customer._form')
+    @can('createOrUpdate', App\DefaultMaterial::class)
+    @include('defaultMaterial._form')
     @endcan
 
 </div>
@@ -50,11 +52,14 @@
             formErrors: {},
             formTitle: '',
             error: {},
+            seams: {!! App\Seam::selectRaw('id AS id, name AS text')->orderBy('name', 'ASC')->get() !!},
+            customers: {!! App\Customer::selectRaw('id AS id, name AS text')->orderBy('name', 'ASC')->get() !!},
+            contractors: {!! App\Contractor::selectRaw('id AS id, name AS text')->orderBy('name', 'ASC')->get() !!},
         },
         methods: {
             add: function() {
                 // reset the form
-                this.formTitle = "ADD CUSTOMER";
+                this.formTitle = "ADD DEFAULT MATERIAL";
                 this.formData = {};
                 this.formErrors = {};
                 this.error = {};
@@ -64,8 +69,7 @@
             store: function() {
                 block('form');
                 var t = this;
-
-                axios.post('{{url("customer")}}', this.formData).then(function(r) {
+                axios.post('{{url("defaultMaterial")}}', this.formData).then(function(r) {
                     unblock('form');
                     $('#modal-form').modal('hide');
                     toastr["success"]("Data berhasil ditambahkan");
@@ -74,25 +78,22 @@
                 // validasi
                 .catch(function(error) {
                     unblock('form');
-
                     if (error.response.status == 422) {
-                        t.error = {}
                         t.formErrors = error.response.data.errors;
                     }
 
                     if (error.response.status == 500) {
-                        t.formErrors = {}
                         t.error = error.response.data;
                     }
                 });
             },
             edit: function(id) {
                 var t = this;
-                this.formTitle = "EDIT CUSTOMER";
+                this.formTitle = "EDIT DEFAULT MATERIAL";
                 this.formErrors = {};
                 this.error = {};
 
-                axios.get('{{url("customer")}}/' + id).then(function(r) {
+                axios.get('{{url("defaultMaterial")}}/' + id).then(function(r) {
                     t.formData = r.data;
                     $('#modal-form').modal('show');
                 })
@@ -107,7 +108,7 @@
             update: function() {
                 block('form');
                 var t = this;
-                axios.put('{{url("customer")}}/' + this.formData.id, this.formData).then(function(r) {
+                axios.put('{{url("defaultMaterial")}}/' + this.formData.id, this.formData).then(function(r) {
                     unblock('form');
                     $('#modal-form').modal('hide');
                     toastr["success"]("Data berhasil diupdate");
@@ -117,12 +118,10 @@
                 .catch(function(error) {
                     unblock('form');
                     if (error.response.status == 422) {
-                        t.error = {};
                         t.formErrors = error.response.data.errors;
                     }
 
                     if (error.response.status == 500) {
-                        t.formErrors = {};
                         t.error = error.response.data;
                     }
                 });
@@ -133,7 +132,7 @@
                     message: "Anda yakin akan menghapus data ini?",
                     callback: function(r) {
                         if (r == true) {
-                            axios.delete('{{url("customer")}}/' + id)
+                            axios.delete('{{url("defaultMaterial")}}/' + id)
 
                             .then(function(r) {
                                 if (r.data.success == true) {
@@ -156,12 +155,14 @@
             },
         },
         mounted: function() {
-
             var t = this;
-
             var grid = $('#bootgrid').bootgrid({
+                statusMapping: {
+                    0: "danger",
+                    1: "default"
+                },
                 rowCount: [10,25,50,100],
-                ajax: true, url: '{{url('customer')}}',
+                ajax: true, url: '{{url('defaultMaterial')}}',
                 ajaxSettings: {
                     method: 'GET', cache: false,
                     statusCode: {
@@ -171,17 +172,20 @@
                         }
                     }
                 },
-                searchSettings: { delay: 100, characters: 3 },
+                searchSettings: { delay: 100, characters: 2 },
                 templates: {
                     header: '<div id="@{{ctx.id}}" class="pull-right @{{css.header}}"><div class="actionBar"><p class="@{{css.search}}"></p><p class="@{{css.actions}}"></p></div></div>'
                 },
                 formatters: {
                     commands: function(column, row) {
-                        return '@can("update", App\Customer::class) <a href="#" class="btn btn-info btn-xs c-edit" data-id="'+row.id+'"><i class="icon-pencil"></i></a> @endcan' +
-                            '@can("delete", App\Customer::class) <a href="#" class="btn btn-danger btn-xs c-delete" data-id="'+row.id+'"><i class="icon-trash"></i></a> @endcan';
+                        return '@can("update", App\DefaultMaterial::class) <a href="#" class="btn btn-info btn-xs c-edit" data-id="'+row.id+'"><i class="icon-pencil"></i></a> @endcan' +
+                            '@can("delete", App\DefaultMaterial::class) <a href="#" class="btn btn-danger btn-xs c-delete" data-id="'+row.id+'"><i class="icon-trash"></i></a> @endcan';
                     },
+                    material_type: function(c, r) {
+                        return r.material_type == 'l' ? "LOW" : "HIGH";
+                    }
                 }
-            }).on("loaded.rs.jquery.bootgrid", function(e) {
+            }).on("loaded.rs.jquery.bootgrid", function() {
                 grid.find(".c-delete").on("click", function(e) {
                     t.delete($(this).data("id"));
                 });

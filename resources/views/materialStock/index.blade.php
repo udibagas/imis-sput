@@ -9,33 +9,57 @@
         </select2>
         <br>
         <br>
+        @endif
+
+        @if (!auth()->user()->contractor_id)
+        <select2 :options="contractors" v-model="contractor_id" data-placeholder="All Contractor" data-allow-clear="true">
+        </select2>
+        <br>
+        <br>
+        @endif
+
+        @if (!auth()->user()->customer_id)
         <material-stock-summary
             :customer="customer_id"
+            :contractor="contractor_id"
             :group="'customer_id'"
             :header="'SUMMARY BY CUSTOMER'"
             :entity="'Customer'"></material-stock-summary>
         @endif
 
+        @if (!auth()->user()->contractor_id)
         <material-stock-summary
             :customer="customer_id"
+            :contractor="contractor_id"
+            :group="'contractor_id'"
+            :header="'SUMMARY BY CONTRACTOR'"
+            :entity="'Contractor'"></material-stock-summary>
+        @endif
+
+        <material-stock-summary
+            :customer="customer_id"
+            :contractor="contractor_id"
             :group="'material_type'"
             :header="'SUMMARY BY MATERIAL TYPE'"
             :entity="'Material Type'"></material-stock-summary>
 
         <material-stock-summary
             :customer="customer_id"
+            :contractor="contractor_id"
             :group="'seam_id'"
             :header="'SUMMARY BY SEAM'"
             :entity="'Seam'"></material-stock-summary>
 
         <material-stock-summary
             :customer="customer_id"
+            :contractor="contractor_id"
             :group="'area_id'"
             :header="'SUMMARY BY BLOCK AREA'"
             :entity="'Block Area'"></material-stock-summary>
 
         <material-stock-summary
             :customer="customer_id"
+            :contractor="contractor_id"
             :group="'stock_area_id'"
             :header="'SUMMARY BY STOCK AREA'"
             :entity="'Stock Area'"></material-stock-summary>
@@ -61,6 +85,9 @@
                             <th data-column-id="seam">Seam</th>
                             @if (!auth()->user()->customer_id)
                             <th data-column-id="customer">Customer</th>
+                            @endif
+                            @if (!auth()->user()->contractor_id)
+                            <th data-column-id="contractor">Contractor</th>
                             @endif
                             <th data-column-id="area">Area</th>
                             <th data-column-id="stock_area">Stock Area</th>
@@ -111,11 +138,13 @@ const app = new Vue({
         formTitle: '',
         error: {},
         customer_id: '{{auth()->user()->customer_id}}',
+        contractor_id: '{{auth()->user()->contractor_id}}',
         stock_areas: {!! App\StockArea::selectRaw('stock_areas.id AS id, CONCAT(areas.name, " - ", stock_areas.name) AS text')
             ->join('areas', 'areas.id', '=', 'stock_areas.area_id')
             ->orderBy('areas.name', 'ASC')->get() !!},
         seams: {!! App\Seam::selectRaw('id AS id, name AS text')->orderBy('name', 'ASC')->get() !!},
         customers: {!! App\Customer::selectRaw('id AS id, name AS text')->orderBy('name', 'ASC')->get() !!},
+        contractors: {!! App\Contractor::selectRaw('id AS id, name AS text')->orderBy('name', 'ASC')->get() !!},
     },
     methods: {
         formatNumber: function(v) {

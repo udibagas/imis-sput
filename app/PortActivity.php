@@ -23,7 +23,7 @@ class PortActivity extends Model
         'employee_id', 'unit_id', 'unit_activity_id',
         'volume', 'rit', 'shift', 'hopper_id', 'seam_id',
         'material_stock_id', 'user_id', 'material_type',
-        'customer_id'
+        'customer_id', 'contractor_id'
     ];
 
     public function getTimeStartAttribute($v) {

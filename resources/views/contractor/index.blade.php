@@ -4,8 +4,8 @@
 
 <div class="panel panel-primary" id="app">
     <div class="panel-body">
-        <h3 class="pull-left text-primary">CUSTOMER <small>Manage</small></h3>
-        @can('create', App\Customer::class)
+        <h3 class="pull-left text-primary">CONTRACTOR <small>Manage</small></h3>
+        @can('create', App\Contractor::class)
         <span class="pull-right" style="margin:15px 0 15px 10px;">
             <a href="#" @click="add" class="btn btn-primary"><i class="icon-plus-circled"></i></a>
         </span>
@@ -19,7 +19,7 @@
                     <th data-column-id="email">Email</th>
                     <th data-column-id="phone">Phone</th>
                     <th data-column-id="fax">Fax</th>
-                    @can('updateOrDelete', App\Customer::class)
+                    @can('updateOrDelete', App\Contractor::class)
                     <th data-column-id="commands"
                         data-formatter="commands"
                         data-sortable="false"
@@ -31,8 +31,8 @@
         </table>
     </div>
 
-    @can('createOrUpdate', App\Customer::class)
-    @include('customer._form')
+    @can('createOrUpdate', App\Contractor::class)
+    @include('contractor._form')
     @endcan
 
 </div>
@@ -54,7 +54,7 @@
         methods: {
             add: function() {
                 // reset the form
-                this.formTitle = "ADD CUSTOMER";
+                this.formTitle = "ADD CONTRACTOR";
                 this.formData = {};
                 this.formErrors = {};
                 this.error = {};
@@ -65,7 +65,7 @@
                 block('form');
                 var t = this;
 
-                axios.post('{{url("customer")}}', this.formData).then(function(r) {
+                axios.post('{{url("contractor")}}', this.formData).then(function(r) {
                     unblock('form');
                     $('#modal-form').modal('hide');
                     toastr["success"]("Data berhasil ditambahkan");
@@ -76,23 +76,23 @@
                     unblock('form');
 
                     if (error.response.status == 422) {
-                        t.error = {}
+                        t.error = {};
                         t.formErrors = error.response.data.errors;
                     }
 
                     if (error.response.status == 500) {
-                        t.formErrors = {}
+                        t.formErrors = {};
                         t.error = error.response.data;
                     }
                 });
             },
             edit: function(id) {
                 var t = this;
-                this.formTitle = "EDIT CUSTOMER";
+                this.formTitle = "EDIT CONTRACTOR";
                 this.formErrors = {};
                 this.error = {};
 
-                axios.get('{{url("customer")}}/' + id).then(function(r) {
+                axios.get('{{url("contractor")}}/' + id).then(function(r) {
                     t.formData = r.data;
                     $('#modal-form').modal('show');
                 })
@@ -107,7 +107,7 @@
             update: function() {
                 block('form');
                 var t = this;
-                axios.put('{{url("customer")}}/' + this.formData.id, this.formData).then(function(r) {
+                axios.put('{{url("contractor")}}/' + this.formData.id, this.formData).then(function(r) {
                     unblock('form');
                     $('#modal-form').modal('hide');
                     toastr["success"]("Data berhasil diupdate");
@@ -122,7 +122,7 @@
                     }
 
                     if (error.response.status == 500) {
-                        t.formErrors = {};
+                        t.formErrors = {}
                         t.error = error.response.data;
                     }
                 });
@@ -133,7 +133,7 @@
                     message: "Anda yakin akan menghapus data ini?",
                     callback: function(r) {
                         if (r == true) {
-                            axios.delete('{{url("customer")}}/' + id)
+                            axios.delete('{{url("contractor")}}/' + id)
 
                             .then(function(r) {
                                 if (r.data.success == true) {
@@ -161,7 +161,7 @@
 
             var grid = $('#bootgrid').bootgrid({
                 rowCount: [10,25,50,100],
-                ajax: true, url: '{{url('customer')}}',
+                ajax: true, url: '{{url('contractor')}}',
                 ajaxSettings: {
                     method: 'GET', cache: false,
                     statusCode: {
@@ -177,9 +177,20 @@
                 },
                 formatters: {
                     commands: function(column, row) {
-                        return '@can("update", App\Customer::class) <a href="#" class="btn btn-info btn-xs c-edit" data-id="'+row.id+'"><i class="icon-pencil"></i></a> @endcan' +
-                            '@can("delete", App\Customer::class) <a href="#" class="btn btn-danger btn-xs c-delete" data-id="'+row.id+'"><i class="icon-trash"></i></a> @endcan';
+                        return '@can("update", App\Contractor::class) <a href="#" class="btn btn-info btn-xs c-edit" data-id="'+row.id+'"><i class="icon-pencil"></i></a> @endcan' +
+                            '@can("delete", App\Contractor::class) <a href="#" class="btn btn-danger btn-xs c-delete" data-id="'+row.id+'"><i class="icon-trash"></i></a> @endcan';
                     },
+                    default_material_type: function(c, r) {
+                        if (r.default_material_type == 'l') {
+                            return "LOW";
+                        }
+
+                        if (r.default_material_type == 'h') {
+                            return "HIGH";
+                        }
+
+                        return "";
+                    }
                 }
             }).on("loaded.rs.jquery.bootgrid", function(e) {
                 grid.find(".c-delete").on("click", function(e) {

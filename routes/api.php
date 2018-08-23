@@ -30,6 +30,8 @@ Route::get('assetStatus', 'Api\AssetStatusController@index');
 Route::resource('assetTaking', 'Api\AssetTakingController');
 Route::get('barge', 'Api\BargeController@index');
 Route::get('customer', 'Api\CustomerController@index');
+Route::get('contractor', 'Api\ContractorController@index');
+Route::get('defaultMaterial', 'Api\DefaultMaterialController@index');
 Route::get('employee', 'Api\EmployeeController@index');
 Route::get('fuelTank', 'Api\FuelTankController@index');
 Route::resource('fuelRefill', 'Api\FuelRefillController')->only(['index', 'store']);

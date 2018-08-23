@@ -28,7 +28,7 @@
 
 <script>
 export default {
-    props: ['header', 'entity', 'group', 'customer'],
+    props: ['header', 'entity', 'group', 'customer', 'contractor'],
     data: function() {
         return {
             summaries: [],
@@ -40,7 +40,8 @@ export default {
             var _this = this;
             var params = {
                 group_by: this.group,
-                customer_id: this.customer
+                customer_id: this.customer,
+                contractor_id: this.contractor
             };
             axios.get('materialStock/summary', {params: params})
 

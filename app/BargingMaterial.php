@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class BargingMaterial extends Model
 {
     protected $fillable = [
-        'barging_id', 'customer_id', 'material_type',
+        'barging_id', 'contractor_id', 'material_type',
         'seam_id', 'volume', 'volume_progress', 'volume_by_draught_survey'
     ];
 

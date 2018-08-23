@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class StockDumping extends Model
 {
     protected $fillable = [
-        'subcont_unit_id', 'stock_area_id',
+        'subcont_unit_id', 'stock_area_id', 'contractor_id',
         'volume', 'user_id', 'insert_via', 'date', 'time',
         'material_type', 'seam_id', 'customer_id', 'shift', 'register_number'
     ];
@@ -25,6 +25,10 @@ class StockDumping extends Model
 
     public function customer() {
         return $this->belongsTo(Customer::class);
+    }
+
+    public function contractor() {
+        return $this->belongsTo(Contractor::class);
     }
 
     public function getTimeAttribute($value) {

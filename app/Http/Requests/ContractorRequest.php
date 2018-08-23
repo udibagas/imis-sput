@@ -5,7 +5,7 @@ namespace App\Http\Requests;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
 
-class CustomerRequest extends FormRequest
+class ContractorRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -24,12 +24,12 @@ class CustomerRequest extends FormRequest
      */
     public function rules()
     {
-        $customer = $this->route('customer');
+        $contractor = $this->route('contractor');
 
         return [
             'name' => [
                 'required',
-                Rule::unique('customers')->ignore($customer ? $customer->id : 0)
+                Rule::unique('contractors')->ignore($contractor ? $contractor->id : 0)
             ],
             'email' => 'email'
         ];

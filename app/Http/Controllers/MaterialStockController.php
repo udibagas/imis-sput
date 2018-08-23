@@ -32,14 +32,19 @@ class MaterialStockController extends Controller
                     areas.name AS area,
                     stock_areas.name AS stock_area,
                     customers.name AS customer,
+                    contractors.name AS contractor,
                     seams.name AS seam
                 ')
                 ->join('stock_areas', 'stock_areas.id', '=', 'material_stocks.stock_area_id')
                 ->join('areas', 'areas.id', '=', 'stock_areas.area_id')
                 ->join('customers', 'customers.id', '=', 'material_stocks.customer_id')
+                ->join('contractors', 'contractors.id', '=', 'material_stocks.contractor_id')
                 ->join('seams', 'seams.id', '=', 'material_stocks.seam_id', 'LEFT')
                 ->when(auth()->user()->customer_id, function($query) {
                     return $query->where('material_stocks.customer_id', auth()->user()->customer_id);
+                })
+                ->when(auth()->user()->contractor_id, function($query) {
+                    return $query->where('material_stocks.contractor_id', auth()->user()->contractor_id);
                 })
                 ->when($request->searchPhrase, function($query) use ($request) {
                     return $query->where('customers.name', 'LIKE', '%'.$request->searchPhrase.'%')
@@ -58,7 +63,7 @@ class MaterialStockController extends Controller
 
         return view('materialStock.index', [
             'breadcrumbs' => [
-                'operation/dashboard' => 'Operation',
+                'operation' => 'Operation',
                 'materialStock' => 'Stock Balanced'
             ]
         ]);
@@ -123,6 +128,10 @@ class MaterialStockController extends Controller
             $condition = "WHERE customer_id = ".$request->customer_id;
         }
 
+        if ($request->contractor_id) {
+            $condition = "WHERE contractor_id = ".$request->contractor_id;
+        }
+
         $sql = [];
 
         $sql['material_type'] = "SELECT
@@ -147,6 +156,14 @@ class MaterialStockController extends Controller
         JOIN customers ON customers.id = material_stocks.customer_id
         ".$condition."
         GROUP BY material_stocks.customer_id";
+
+        $sql['contractor_id'] = "SELECT
+            SUM(material_stocks.volume) AS volume,
+            contractors.name AS entity
+        FROM material_stocks
+        JOIN contractors ON contractors.id = material_stocks.contractor_id
+        ".$condition."
+        GROUP BY material_stocks.contractor_id";
 
         $sql['area_id'] = "SELECT
             SUM(material_stocks.volume) AS volume,

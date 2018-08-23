@@ -48,7 +48,7 @@
                         </div>
                     </div>
 
-                    <div class="form-group" :class="formErrors.customer_id ? 'has-error' : ''">
+                    <div v-show="!formData.contractor_id" :class="['form-group', formErrors.customer_id ? 'has-error' : '']">
                         <label class="control-label col-md-4 col-sm-4 col-xs-12" for="customer_id">Customer
                         </label>
                         <div class="col-md-8 col-sm-8 col-xs-12">
@@ -58,7 +58,17 @@
                         </div>
                     </div>
 
-                    <div v-show="formData.customer_id == 0 || formData.customer_id == undefined" class="form-group" :class="formErrors.super_admin ? 'has-error' : ''">
+                    <div v-show="!formData.customer_id" :class="['form-group', formErrors.contractor_id ? 'has-error' : '']">
+                        <label class="control-label col-md-4 col-sm-4 col-xs-12" for="contractor_id">Contractor
+                        </label>
+                        <div class="col-md-8 col-sm-8 col-xs-12">
+                            <select2 data-allow-clear="true" :options="contractors" v-model="formData.contractor_id" data-placeholder="Contractor">
+                            </select2>
+                            <span v-if="formErrors.contractor_id" class="help-block">@{{formErrors.contractor_id[0]}}</span>
+                        </div>
+                    </div>
+
+                    <div v-show="showSuperAdmin" :class="['form-group', formErrors.super_admin ? 'has-error' : '']">
                         <label class="control-label col-md-4 col-sm-4 col-xs-12" for="super_admin">Super Admin
                         </label>
                         <div class="col-md-8 col-sm-8 col-xs-12">

@@ -25,7 +25,7 @@
                             <th data-column-id="buyer">Buyer</th>
                             <th data-column-id="jetty">Jetty</th>
                             <th data-column-id="cargo" data-width="200px">Cargo</th>
-                            <th data-column-id="volume">Volume (Ton)</th>
+                            <th data-column-id="volume">Target Barging (Ton)</th>
                             <th data-column-id="start">Start</th>
                             <th data-column-id="stop">Stop</th>
                             <th data-column-id="duration">Duration</th>
@@ -73,6 +73,7 @@ const app = new Vue({
         tugboats: {!! App\Tugboat::selectRaw('id AS id, name AS text')->orderBy('name', 'ASC')->get() !!},
         barges: {!! App\Barge::selectRaw('id AS id, name AS text')->orderBy('name', 'ASC')->get() !!},
         customers: {!! App\Customer::selectRaw('id AS id, name AS text')->orderBy('name', 'ASC')->get() !!},
+        contractors: {!! App\Contractor::selectRaw('id AS id, name AS text')->orderBy('name', 'ASC')->get() !!},
         seams: {!! App\Seam::selectRaw('id AS id, name AS text')->orderBy('name', 'ASC')->get() !!},
         statuses: {!! json_encode(App\Barging::getStatusList()) !!}
     },
@@ -97,10 +98,12 @@ const app = new Vue({
         },
         addCargo: function() {
             this.formData.barging_material.push({
-                customer_id: 0,
+                contractor_id: 0,
                 material_type: 'h',
                 seam_id: 0,
-                volume: 0
+                volume: 0,
+                volume_progress: 0,
+                volume_by_draught_survey: 0
             });
         },
 
@@ -143,10 +146,12 @@ const app = new Vue({
                 unblock('form');
 
                 if (error.response.status == 422) {
+                    t.error = {};
                     t.formErrors = error.response.data.errors;
                 }
 
                 if (error.response.status == 500) {
+                    t.formErrors = {};
                     t.error = error.response.data;
                 }
             });
@@ -182,10 +187,12 @@ const app = new Vue({
             .catch(function(error) {
                 unblock('form');
                 if (error.response.status == 422) {
+                    t.error = {};
                     t.formErrors = error.response.data.errors;
                 }
 
                 if (error.response.status == 500) {
+                    t.formErrors = {};
                     t.error = error.response.data;
                 }
             });

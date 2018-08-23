@@ -25,12 +25,14 @@ class UserController extends Controller
             $sort = $request->sort ? key($request->sort) : 'users.name';
             $dir = $request->sort ? $request->sort[$sort] : 'asc';
 
-            $users = User::selectRaw('users.*, customers.name AS customer')
+            $users = User::selectRaw('users.*, customers.name AS customer, contractors.name AS contractor')
                 ->join('customers', 'customers.id', '=', 'users.customer_id', 'LEFT')
+                ->join('contractors', 'contractors.id', '=', 'users.contractor_id', 'LEFT')
                 ->when($request->searchPhrase, function($query) use ($request) {
                     return $query->where('users.name', 'LIKE', '%'.$request->searchPhrase.'%')
                         ->orWhere('users.email', 'LIKE', '%'.$request->searchPhrase.'%')
-                        ->orWhere('customers.name', 'LIKE', '%'.$request->searchPhrase.'%');
+                        ->orWhere('customers.name', 'LIKE', '%'.$request->searchPhrase.'%')
+                        ->orWhere('contractors.name', 'LIKE', '%'.$request->searchPhrase.'%');
                 })->orderBy($sort, $dir)->paginate($pageSize);
 
             return [
@@ -63,6 +65,12 @@ class UserController extends Controller
 
         if ($request->customer_id) {
             $input['super_admin'] = 0;
+            $input['contractor_id'] = null;
+        }
+
+        if ($request->contractor_id) {
+            $input['super_admin'] = 0;
+            $input['customer_id'] = null;
         }
 
         $user = User::create($input);

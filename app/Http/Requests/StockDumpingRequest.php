@@ -29,6 +29,7 @@ class StockDumpingRequest extends FormRequest
             'time' => 'required|date_format:"H:i"',
             'subcont_unit_id' => 'required',
             'customer_id' => 'required',
+            'contractor_id' => 'required',
             'material_type' => 'required',
             'volume' => 'required',
             'stock_area_id' => 'required',
@@ -48,7 +49,8 @@ class StockDumpingRequest extends FormRequest
             'volume' => 'Volume',
             'stock_area_id' => 'Stock Area',
             'shift' => 'Shift',
-            'register_number' => 'Register Number'
+            'register_number' => 'Register Number',
+            'contractor_id' => 'Contractor'
         ];
     }
 }

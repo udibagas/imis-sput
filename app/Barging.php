@@ -43,10 +43,10 @@ class Barging extends Model
     public function getCargoAttribute()
     {
         $sql = "SELECT
-            CONCAT(customers.name, ', ', IF(barging_materials.material_type = 'l', 'LOW ', 'HIGH '), ', ', IFNULL(seams.name, '-'), ', ', barging_materials.volume/1000, 'T') AS cargo
+            CONCAT(contractors.name, ', ', IF(barging_materials.material_type = 'l', 'LOW ', 'HIGH '), ', ', IFNULL(seams.name, '-'), ', ', barging_materials.volume/1000, 'T') AS cargo
             FROM barging_materials
             JOIN bargings ON bargings.id = barging_materials.barging_id
-            JOIN customers ON customers.id = barging_materials.customer_id
+            JOIN contractors ON contractors.id = barging_materials.contractor_id
             LEFT JOIN seams ON seams.id = barging_materials.seam_id
             WHERE barging_materials.barging_id = ?
         ";

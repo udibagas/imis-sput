@@ -57,6 +57,7 @@
                         <th data-column-id="material_type" data-formatter="material_type">Material Type</th>
                         <th data-column-id="seam">Seam</th>
                         <th data-column-id="customer">Customer</th>
+                        <th data-column-id="contractor">Contractor</th>
                         <th data-column-id="employee">Employee</th>
                         <th data-column-id="user">User</th>
                         @can('updateOrDelete', App\PortActivity::class)
@@ -213,6 +214,7 @@ const app = new Vue({
                 this.formData.material_type = ms.material_type;
                 this.formData.seam_id = ms.seam_id;
                 this.formData.customer_id = ms.customer_id;
+                this.formData.contractor_id = ms.contractor_id;
             }
         }
     },
@@ -301,10 +303,12 @@ const app = new Vue({
             .catch(function(error) {
                 unblock('form');
                 if (error.response.status == 422) {
+                    t.error = {};
                     t.formErrors = error.response.data.errors;
                 }
 
                 if (error.response.status == 500) {
+                    t.formErrors = {};
                     t.error = error.response.data;
                 }
             });

@@ -34,6 +34,7 @@ class PortActivityExport implements FromQuery, WithHeadings
             'Material Type',
             'Seam',
             'Customer',
+            'Contractor',
             'Employee',
             'User'
         ];
@@ -69,6 +70,7 @@ class PortActivityExport implements FromQuery, WithHeadings
                 IF(material_stocks.material_type = "l", "LOW", "HIGH"),
                 seams.name AS seam,
                 customers.name AS customer,
+                contractors.name AS contractor,
                 employees.name AS employee,
                 users.name AS user
             ')
@@ -79,6 +81,7 @@ class PortActivityExport implements FromQuery, WithHeadings
             ->join('areas', 'areas.id', '=', 'stock_areas.area_id', 'LEFT')
             ->join('employees', 'employees.id', '=', 'port_activities.employee_id')
             ->join('customers', 'customers.id', '=', 'material_stocks.customer_id', 'LEFT')
+            ->join('contractors', 'contractors.id', '=', 'material_stocks.contractor_id', 'LEFT')
             ->join('seams', 'seams.id', '=', 'material_stocks.seam_id', 'LEFT')
             ->join('hoppers', 'hoppers.id', '=', 'port_activities.hopper_id', 'LEFT')
             ->join('jetties', 'jetties.id', '=', 'hoppers.jetty_id', 'LEFT')

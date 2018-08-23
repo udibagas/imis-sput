@@ -26,6 +26,15 @@
             :entity="'Customer'"></stock-dumping-summary>
         @endif
 
+        @if (!auth()->user()->contractor_id)
+        <stock-dumping-summary
+            :from="chartRange.from"
+            :to="chartRange.to"
+            :group="'contractor_id'"
+            :header="'SUMMARY BY CONTRACTOR'"
+            :entity="'Contractor'"></stock-dumping-summary>
+        @endif
+
         <stock-dumping-summary
             :from="chartRange.from"
             :to="chartRange.to"
@@ -92,6 +101,9 @@
                             @if (!auth()->user()->customer_id)
                             <th data-column-id="customer">Customer</th>
                             @endif
+                            @if (!auth()->user()->contractor_id)
+                            <th data-column-id="contractor">Contractor</th>
+                            @endif
                             <th data-column-id="register_number">Register Number</th>
                             <th data-column-id="user">User</th>
                             <th data-column-id="insert_via">Insert Via</th>
@@ -148,10 +160,12 @@ const app = new Vue({
         stock_areas: [],
         subconts: {!! App\Subcont::selectRaw('id AS id, name AS text')->orderBy('name', 'ASC')->get() !!},
         seams: {!! App\Seam::selectRaw('id AS id, name AS text')->orderBy('name', 'ASC')->get() !!},
-        customers: {!! App\Customer::selectRaw('id AS id, name AS text, default_seam_id, default_material_type')->orderBy('name', 'ASC')->get() !!},
+        customers: {!! App\Customer::selectRaw('id AS id, name AS text')->orderBy('name', 'ASC')->get() !!},
+        contractors: {!! App\Contractor::selectRaw('id AS id, name AS text')->orderBy('name', 'ASC')->get() !!},
         areas: {!! App\Area::selectRaw('id AS id, name AS text')->orderBy('name', 'ASC')->get() !!},
         subcont_units: {!! App\SubcontUnit::selectRaw('id AS id, code_number AS text, subcont_id')->orderBy('code_number', 'ASC')->get() !!},
         allStockAreas: {!! App\StockArea::selectRaw('id AS id, name AS text, area_id')->orderBy('name', 'ASC')->get() !!},
+        default_material: {!! App\DefaultMaterial::all() !!},
     },
     watch: {
         'formData.subcont_unit_id': function(v, o) {
@@ -166,11 +180,28 @@ const app = new Vue({
                 this.stock_areas = [];
             }
         },
+        'formData.contractor_id': function(v, o) {
+            if (v && this.formData.customer_id) {
+                var dm = this.default_material.filter(d => d.contractor_id == v && d.customer_id == this.formData.customer_id);
+                if (dm.length > 0) {
+                    this.formData.material_type = dm[0].material_type;
+                    this.formData.seam_id = dm[0].seam_id;
+                } else {
+                    this.formData.material_type = '';
+                    this.formData.seam_id = 0;
+                }
+            }
+        },
         'formData.customer_id': function(v, o) {
-            if (v) {
-                var customer = this.customers.filter(c => c.id == v)[0];
-                this.formData.material_type = customer.default_material_type;
-                this.formData.seam_id = customer.default_seam_id;
+            if (v && this.formData.contractor_id) {
+                var dm = this.default_material.filter(d => d.customer_id == v && d.contractor_id == this.formData.contractor_id);
+                if (dm.length > 0) {
+                    this.formData.material_type = dm[0].material_type;
+                    this.formData.seam_id = dm[0].seam_id;
+                } else {
+                    this.formData.material_type = '';
+                    this.formData.seam_id = 0;
+                }
             }
         }
     },
@@ -205,15 +236,10 @@ const app = new Vue({
             this.formData = {
                 date: moment().format('YYYY-MM-DD'),
                 time: moment().format('HH:mm'),
-                shift: (moment().format('H') >= 7 && moment().format('H') < 19) ? 1 : 2,
-                customer_id: '{{auth()->user()->customer_id}}'
+                shift: (moment().format('H') >= 6 && moment().format('H') < 18) ? 1 : 2,
+                customer_id: '{{auth()->user()->customer_id}}',
+                contractor_id: '{{auth()->user()->contractor_id}}',
             };
-
-            @if (auth()->user()->customer_id)
-            var customer = this.customers.filter(c => c.id == {{auth()->user()->customer_id}})[0];
-            this.formData.material_type = customer.default_material_type;
-            this.formData.seam_id = customer.default_seam_id;
-            @endif
 
             this.formErrors = {};
             this.error = {};
@@ -233,10 +259,12 @@ const app = new Vue({
                 .catch(function(error) {
                     unblock('form');
                     if (error.response.status == 422) {
+                        t.error = {};
                         t.formErrors = error.response.data.errors;
                     }
 
                     if (error.response.status == 500) {
+                        t.formErrors = {};
                         t.error = error.response.data;
                     }
                 });
@@ -272,10 +300,12 @@ const app = new Vue({
             .catch(function(error) {
                 unblock('form');
                 if (error.response.status == 422) {
+                    t.error = {};
                     t.formErrors = error.response.data.errors;
                 }
 
                 if (error.response.status == 500) {
+                    t.formErrors = {};
                     t.error = error.response.data;
                 }
             });

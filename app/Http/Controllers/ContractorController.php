@@ -3,10 +3,10 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Customer;
-use App\Http\Requests\CustomerRequest;
+use App\Contractor;
+use App\Http\Requests\ContractorRequest;
 
-class CustomerController extends Controller
+class ContractorController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -15,7 +15,7 @@ class CustomerController extends Controller
      */
     public function index(Request $request)
     {
-        $this->authorize('view', Customer::class);
+        $this->authorize('view', Contractor::class);
 
         if ($request->ajax())
         {
@@ -24,7 +24,7 @@ class CustomerController extends Controller
             $sort = $request->sort ? key($request->sort) : 'name';
             $dir = $request->sort ? $request->sort[$sort] : 'asc';
 
-            $customer = Customer::when($request->searchPhrase, function($query) use ($request) {
+            $contractor = Contractor::when($request->searchPhrase, function($query) use ($request) {
                     return $query->where('name', 'LIKE', '%'.$request->searchPhrase.'%')
                         ->orWhere('address', 'LIKE', '%'.$request->searchPhrase.'%')
                         ->orWhere('email', 'LIKE', '%'.$request->searchPhrase.'%')
@@ -33,18 +33,18 @@ class CustomerController extends Controller
                 })->orderBy($sort, $dir)->paginate($pageSize);
 
             return [
-                'rowCount' => $customer->perPage(),
-                'total' => $customer->total(),
-                'current' => $customer->currentPage(),
-                'rows' => $customer->items(),
+                'rowCount' => $contractor->perPage(),
+                'total' => $contractor->total(),
+                'current' => $contractor->currentPage(),
+                'rows' => $contractor->items(),
             ];
         }
 
-        return view('customer.index', [
+        return view('contractor.index', [
             'breadcrumbs' => [
                 'operation' => 'Operation',
                 '#' => 'Master Data',
-                'customer' => 'Customer'
+                'contractor' => 'Contractor'
             ]
         ]);
     }
@@ -55,10 +55,10 @@ class CustomerController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(CustomerRequest $request)
+    public function store(ContractorRequest $request)
     {
-        $this->authorize('create', Customer::class);
-        return Customer::create($request->all());
+        $this->authorize('create', Contractor::class);
+        return Contractor::create($request->all());
     }
 
     /**
@@ -67,10 +67,10 @@ class CustomerController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show(Customer $customer)
+    public function show(Contractor $contractor)
     {
-        $this->authorize('view', Customer::class);
-        return $customer;
+        $this->authorize('view', Contractor::class);
+        return $contractor;
     }
 
     /**
@@ -80,11 +80,11 @@ class CustomerController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(CustomerRequest $request, Customer $customer)
+    public function update(ContractorRequest $request, Contractor $contractor)
     {
-        $this->authorize('update', Customer::class);
-        $customer->update($request->all());
-        return $customer;
+        $this->authorize('update', Contractor::class);
+        $contractor->update($request->all());
+        return $contractor;
     }
 
     /**
@@ -93,9 +93,9 @@ class CustomerController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Customer $customer)
+    public function destroy(Contractor $contractor)
     {
-        $this->authorize('delete', Customer::class);
-        return ['success' => $customer->delete()];
+        $this->authorize('delete', Contractor::class);
+        return ['success' => $contractor->delete()];
     }
 }

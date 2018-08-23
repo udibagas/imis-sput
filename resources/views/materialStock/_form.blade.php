@@ -71,6 +71,18 @@
                     </div>
                     @endif
 
+                    @if (!auth()->user()->contractor_id)
+                    <div class="form-group" :class="formErrors.contractor_id ? 'has-error' : ''">
+                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="contractor_id">Contractor
+                        </label>
+                        <div class="col-md-9 col-sm-9 col-xs-12">
+                            <select2 :options="contractors" v-model="formData.contractor_id" data-placeholder="Contractor">
+                            </select2>
+                            <span v-if="formErrors.contractor_id" class="help-block">@{{formErrors.contractor_id[0]}}</span>
+                        </div>
+                    </div>
+                    @endif
+
                     <div class="form-group" :class="formErrors.volume ? 'has-error' : ''">
                         <label class="control-label col-md-3 col-sm-3 col-xs-12" for="volume">Volume (KG)
                         </label>

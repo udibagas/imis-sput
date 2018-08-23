@@ -66,7 +66,7 @@
                     </div>
 
                     <div :class="['form-group', formErrors.volume ? 'has-error' : '']">
-                        <label class="control-label col-md-4 col-sm-4 col-xs-12" for="volume">Volume (Ton)
+                        <label class="control-label col-md-4 col-sm-4 col-xs-12" for="volume">Target Barging (Ton)
                         </label>
                         <div class="col-md-8 col-sm-8 col-xs-12">
                             <input type="number" step="any" v-model="formData.volume" class="form-control" placeholder="Volume (Ton)">
@@ -96,10 +96,10 @@
                     <table class="table table-striped" style="margin: 20px 0 0;border-top:1px solid #ddd;">
                         <thead>
                             <tr>
-                                <th>Customer</th>
+                                <th>Contractor</th>
                                 <th>Material Type</th>
                                 <th>Seam</th>
-                                <th>Volume (Ton)</th>
+                                <th>Target Barging (Ton)</th>
                                 <th>Progress By Bucket Control (Ton)</th>
                                 <th>Volume By Draught Survey (TOn)</th>
                                 <th>
@@ -111,7 +111,7 @@
                             <tr v-for="(c,i) in formData.barging_material">
                                 <td>
                                     <input type="hidden" v-model="formData.barging_material[i].id">
-                                    <select2 :options="customers" v-model="formData.barging_material[i].customer_id" data-placeholder="Customer">
+                                    <select2 :options="contractors" v-model="formData.barging_material[i].contractor_id" data-placeholder="Contractor">
                                     </select2>
                                 </td>
                                 <td>

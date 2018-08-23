@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\PortActivity;
 use App\Barging;
+use App\BargingMaterial;
 use App\Http\Requests\PortActivityRequest;
 use App\Exports\PortActivityExport;
 use Excel;
@@ -35,6 +36,7 @@ class PortActivityController extends Controller
                     stock_areas.name AS stock_area,
                     employees.name AS employee,
                     customers.name AS customer,
+                    contractors.name AS contractor,
                     seams.name AS seam,
                     hoppers.name AS hpr,
                     jetties.name AS jetty,
@@ -48,6 +50,7 @@ class PortActivityController extends Controller
                 ->join('areas', 'areas.id', '=', 'stock_areas.area_id', 'LEFT')
                 ->join('employees', 'employees.id', '=', 'port_activities.employee_id')
                 ->join('customers', 'customers.id', '=', 'material_stocks.customer_id', 'LEFT')
+                ->join('contractors', 'contractors.id', '=', 'material_stocks.contractor_id', 'LEFT')
                 ->join('seams', 'seams.id', '=', 'material_stocks.seam_id', 'LEFT')
                 ->join('hoppers', 'hoppers.id', '=', 'port_activities.hopper_id', 'LEFT')
                 ->join('jetties', 'jetties.id', '=', 'hoppers.jetty_id', 'LEFT')
@@ -98,18 +101,31 @@ class PortActivityController extends Controller
                 ]);
             }
 
-            // TODO: tambah di barging, ambil data jetty
             $barging = Barging::where('jetty_id', $request->jetty_id)
                 ->where('status', '!=', Barging::STATUS_COMPLETE)
                 ->latest()->first();
 
-            foreach ($barging->bargingMaterial as $s)
+            if ($barging)
             {
-                if ($s->material_type == $request->material_type
-                && $s->seam_id == $request->seam_id
-                && $s->customer_id == $request->customer_id)
-                {
-                    $s->update(['volume_progress' => $s->volume_progress + ($request->volume * 1000)]);
+                $bargingMaterial = $barging->bargingMaterial()
+                    ->where('material_type', $request->material_type)
+                    ->where('seam_id', $request->seam_id)
+                    ->where('customer_id', $request->customer_id)
+                    ->first();
+
+                if ($bargingMaterial) {
+                    $bargingMaterial->update([
+                        'volume_progress' => $bargingMaterial->volume_progress + ($request->volume * 1000)
+                    ]);
+                }
+
+                else {
+                    $barging->bargingMaterial()->create([
+                        'customer_id' => $request->customer_id,
+                        'material_type' => $request->material_type,
+                        'seam_id' => $request->seam_id,
+                        'volume_progress' => $request->volume * 1000,
+                    ]);
                 }
             }
         }

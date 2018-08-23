@@ -7,12 +7,11 @@
                     <h4 class="modal-title">@{{formTitle}}</h4>
                 </div>
                 <div class="modal-body">
-
                     <div class="alert alert-danger" v-if="error.message">
                         @{{error.message}}<br>
                         @{{error.file}}:@{{error.line}}
                     </div>
-
+                    
                     <div class="form-group" :class="formErrors.name ? 'has-error' : ''">
                         <label class="control-label col-md-4 col-sm-4 col-xs-12" for="name">Name
                         </label>

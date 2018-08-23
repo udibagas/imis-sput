@@ -62,11 +62,13 @@ Route::group(['middleware' => 'auth'], function() {
     Route::resource('componentCriterias', 'ComponentCriteriaController')->except(['edit', 'create']);
     Route::resource('buyer', 'BuyerController')->except(['edit', 'create']);
     Route::resource('customer', 'CustomerController')->except(['edit', 'create']);
+    Route::resource('contractor', 'ContractorController')->except(['edit', 'create']);
     Route::get('dailyCheckSetting/getData', 'DailyCheckSettingController@getData');
     Route::get('dailyCheckSetting/unScheduled', 'DailyCheckSettingController@unScheduled');
     Route::get('dailyCheckSetting/todayPlan', 'DailyCheckSettingController@todayPlan');
     Route::get('dailyCheckSetting/tomorrowPlan', 'DailyCheckSettingController@tomorrowPlan');
     Route::resource('dailyCheckSetting', 'DailyCheckSettingController')->except(['edit', 'create']);
+    Route::resource('defaultMaterial', 'DefaultMaterialController')->except(['edit', 'create']);
     Route::resource('department', 'DepartmentController')->except(['edit', 'create']);
 
     Route::get('dormitory/getAllData', 'DormitoryController@getAllData');
@@ -243,8 +245,9 @@ View::composer('layouts._sidebar', function($view) {
                     'area' => 'Area',
                     'barge' => 'Barges',
                     'buyer' => 'Buyers',
-                    'buyer' => 'Buyers',
+                    'contractor' => 'Contractors',
                     'customer' => 'Customers',
+                    'defaultMaterial' => 'Default Material',
                     'jetty' => 'Jetties',
                     'productivityPlan' => 'Productivity Plan',
                     'seam' => 'Seam',
@@ -323,7 +326,16 @@ View::composer('layouts._sidebar', function($view) {
             'Barging' => ['url' => 'barging', 'icon' => 'forward'],
             'Dwelling Time' => ['url' => 'dwellingTime', 'icon' => 'list'],
             'Stock Balanced' => ['url' => 'materialStock', 'icon' => 'th-large'],
-            'My Profile' => ['url' => 'profile', 'icon' => 'user'],
+            // 'My Profile' => ['url' => 'profile', 'icon' => 'user'],
+        ];
+    }
+
+    if (auth()->user()->contractor_id) {
+        $menus = [
+            'DASHBOARD' => ['url' => '/', 'icon' => 'dashboard'],
+            'Stock Dumping' => ['url' => 'stockDumping', 'icon' => 'truck'],
+            'Stock Balanced' => ['url' => 'materialStock', 'icon' => 'th-large'],
+            // 'My Profile' => ['url' => 'profile', 'icon' => 'user'],
         ];
     }
 

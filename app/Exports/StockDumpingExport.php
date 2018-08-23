@@ -29,6 +29,7 @@ class StockDumpingExport implements FromQuery, WithHeadings
             'Seam',
             'Volume',
             'Customer',
+            'Contractor',
             'Register Number',
             'User',
             'Insert Via',
@@ -52,6 +53,7 @@ class StockDumpingExport implements FromQuery, WithHeadings
                 seams.name AS seam,
                 stock_dumpings.volume,
                 customers.name AS customer,
+                contractors.name AS contractor,
                 stock_dumpings.register_number AS register_number,
                 users.name AS user,
                 stock_dumpings.insert_via
@@ -61,10 +63,14 @@ class StockDumpingExport implements FromQuery, WithHeadings
             ->join('stock_areas', 'stock_areas.id', '=', 'stock_dumpings.stock_area_id')
             ->join('areas', 'areas.id', '=', 'stock_areas.area_id')
             ->join('customers', 'customers.id', '=', 'stock_dumpings.customer_id')
+            ->join('contractors', 'contractors.id', '=', 'stock_dumpings.contractor_id')
             ->join('users', 'users.id', '=', 'stock_dumpings.user_id')
             ->join('seams', 'seams.id', '=', 'stock_dumpings.seam_id', 'LEFT')
             ->when(auth()->user()->customer_id, function($query) {
                 return $query->where('stock_dumpings.customer_id', auth()->user()->customer_id);
+            })
+            ->when(auth()->user()->contractor_id, function($query) {
+                return $query->where('stock_dumpings.contractor_id', auth()->user()->contractor_id);
             })
             ->when($request, function($query) use ($request) {
                 return $query->whereRaw("`date` BETWEEN '{$request->from}' AND '{$request->to}'");

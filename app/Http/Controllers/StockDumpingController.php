@@ -35,6 +35,7 @@ class StockDumpingController extends Controller
                     subconts.name AS subcont,
                     subcont_units.code_number AS unit,
                     customers.name AS customer,
+                    contractors.name AS contractor,
                     seams.name AS seam,
                     users.name AS user
                 ')
@@ -43,16 +44,21 @@ class StockDumpingController extends Controller
                 ->join('stock_areas', 'stock_areas.id', '=', 'stock_dumpings.stock_area_id')
                 ->join('areas', 'areas.id', '=', 'stock_areas.area_id')
                 ->join('customers', 'customers.id', '=', 'stock_dumpings.customer_id')
+                ->join('contractors', 'contractors.id', '=', 'stock_dumpings.contractor_id')
                 ->join('users', 'users.id', '=', 'stock_dumpings.user_id')
                 ->join('seams', 'seams.id', '=', 'stock_dumpings.seam_id', 'LEFT')
                 ->when(auth()->user()->customer_id, function($query) {
                     return $query->where('stock_dumpings.customer_id', auth()->user()->customer_id);
+                })
+                ->when(auth()->user()->contractor_id, function($query) {
+                    return $query->where('stock_dumpings.contractor_id', auth()->user()->contractor_id);
                 })
                 ->when($request->searchPhrase, function($query) use ($request) {
                     return $query->where('subcont_units.code_number', 'LIKE', '%'.$request->searchPhrase.'%')
                         ->orWhere('stock_dumpings.register_number', 'LIKE', '%'.$request->searchPhrase.'%')
                         ->orWhere('subconts.name', 'LIKE', '%'.$request->searchPhrase.'%')
                         ->orWhere('customers.name', 'LIKE', '%'.$request->searchPhrase.'%')
+                        ->orWhere('contractors.name', 'LIKE', '%'.$request->searchPhrase.'%')
                         ->orWhere('stock_areas.name', 'LIKE', '%'.$request->searchPhrase.'%');
                 })->orderBy($sort, $dir)->paginate($pageSize);
 
@@ -66,7 +72,7 @@ class StockDumpingController extends Controller
 
         return view('stockDumping.index', [
             'breadcrumbs' => [
-                'operation/dashboard' => 'Operation',
+                'operation' => 'Operation',
                 'stockDumping' => 'Stock Dumping'
             ]
         ]);
@@ -85,27 +91,29 @@ class StockDumpingController extends Controller
         $input['user_id'] = auth()->user()->id;
         $stockDumping = StockDumping::create($input);
 
-        $stock = MaterialStock::where('customer_id', $request->customer_id)
-            ->where('stock_area_id', $request->stock_area_id)
-            ->where('seam_id', $request->seam_id)
-            ->where('material_type', $request->material_type)
+        $stock = MaterialStock::where('customer_id', $stockDumping->customer_id)
+            ->where('contractor_id', $stockDumping->contractor_id)
+            ->where('stock_area_id', $stockDumping->stock_area_id)
+            ->where('seam_id', $stockDumping->seam_id)
+            ->where('material_type', $stockDumping->material_type)
             ->first();
 
         if ($stock) {
             $stock->update([
-                'volume' => $stock->volume + $request->volume,
-                'dumping_date' => $request->date
+                'volume' => $stock->volume + $stockDumping->volume,
+                'dumping_date' => $stockDumping->date
             ]);
         }
 
         else {
             MaterialStock::create([
-                'customer_id' => $request->customer_id,
-                'stock_area_id' => $request->stock_area_id,
-                'seam_id' => $request->seam_id,
-                'material_type' => $request->material_type,
-                'volume' => $request->volume,
-                'dumping_date' => $request->date
+                'customer_id' => $stockDumping->customer_id,
+                'contractor_id' => $stockDumping->contractor_id,
+                'stock_area_id' => $stockDumping->stock_area_id,
+                'seam_id' => $stockDumping->seam_id,
+                'material_type' => $stockDumping->material_type,
+                'volume' => $stockDumping->volume,
+                'dumping_date' => $stockDumping->date
             ]);
         }
     }
@@ -135,6 +143,7 @@ class StockDumpingController extends Controller
         $stockDumping->update($request->all());
 
         $stock = MaterialStock::where('customer_id', $request->customer_id)
+            ->where('contractor_id', $request->contractor_id)
             ->where('stock_area_id', $request->stock_area_id)
             ->where('seam_id', $request->seam_id)
             ->where('material_type', $request->material_type)
@@ -150,6 +159,7 @@ class StockDumpingController extends Controller
         else {
             MaterialStock::create([
                 'customer_id' => $request->customer_id,
+                'contractor_id' => $request->contractor_id,
                 'stock_area_id' => $request->stock_area_id,
                 'seam_id' => $request->seam_id,
                 'material_type' => $request->material_type,
@@ -198,6 +208,10 @@ class StockDumpingController extends Controller
             $condition = "stock_dumpings.customer_id = ".auth()->user()->customer_id;
         }
 
+        if (auth()->user()->contractor_id) {
+            $condition = "stock_dumpings.contractor_id = ".auth()->user()->contractor_id;
+        }
+
         $sql['material_type'] = "SELECT
             COUNT(stock_dumpings.id) AS ritase,
             SUM(stock_dumpings.volume) AS tonase,
@@ -218,6 +232,17 @@ class StockDumpingController extends Controller
         WHERE stock_dumpings.date BETWEEN ? AND ?
             AND $condition
         GROUP BY stock_dumpings.customer_id";
+
+        $sql['contractor_id'] = "SELECT
+            COUNT(stock_dumpings.id) AS ritase,
+            SUM(stock_dumpings.volume) AS tonase,
+            COUNT(DISTINCT stock_dumpings.subcont_unit_id) AS unit,
+            contractors.name AS entity
+        FROM stock_dumpings
+        JOIN contractors ON contractors.id = stock_dumpings.contractor_id
+        WHERE stock_dumpings.date BETWEEN ? AND ?
+            AND $condition
+        GROUP BY stock_dumpings.contractor_id";
 
         $sql['seam_id'] = "SELECT
             COUNT(stock_dumpings.id) AS ritase,
@@ -276,6 +301,10 @@ class StockDumpingController extends Controller
             $condition = "stock_dumpings.customer_id = ".auth()->user()->customer_id;
         }
 
+        if (auth()->user()->contractor_id) {
+            $condition = "stock_dumpings.contractor_id = ".auth()->user()->contractor_id;
+        }
+
         $sql = "SELECT COUNT(id) AS ritase, SUM(volume) AS tonase FROM stock_dumpings WHERE `date` BETWEEN ? AND ? AND $condition";
         return DB::select($sql, [
             $request->from ? $request->from : date("Y-m-d"),
@@ -292,6 +321,10 @@ class StockDumpingController extends Controller
 
         if (auth()->user()->customer_id) {
             $condition = "stock_dumpings.customer_id = ".auth()->user()->customer_id;
+        }
+
+        if (auth()->user()->contractor_id) {
+            $condition = "stock_dumpings.contractor_id = ".auth()->user()->contractor_id;
         }
 
         $sql = "SELECT
