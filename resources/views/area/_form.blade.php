@@ -1,5 +1,5 @@
 <div id="modal-form" class="modal fade" role="dialog">
-    <div class="modal-dialog">
+    <div class="modal-dialog" style="width:750px;">
         <div class="modal-content">
             <form class="form-horizontal" role="form" @submit.prevent="formData.id == undefined ? store : update">
                 <div class="modal-header">
@@ -31,16 +31,6 @@
                         </div>
                     </div>
 
-                    <div :class="['form-group', formErrors.jetty_id ? 'has-error' : '']">
-                        <label class="control-label col-md-4 col-sm-4 col-xs-12" for="jetty_id">Jetty
-                        </label>
-                        <div class="col-md-8 col-sm-8 col-xs-12">
-                            <select2 :options="jetties" v-model="formData.jetty_id" data-placeholder="Jetty">
-                            </select2>
-                            <span v-if="formErrors.jetty_id" class="help-block">@{{formErrors.jetty_id[0]}}</span>
-                        </div>
-                    </div>
-
                     <div class="form-group" :class="formErrors.description ? 'has-error' : ''">
                         <label class="control-label col-md-4 col-sm-4 col-xs-12" for="description">Description
                         </label>
@@ -54,7 +44,8 @@
                         <thead>
                             <tr>
                                 <th>Stock Area</th>
-                                <th>Capacity</th>
+                                <th>Capacity (Ton)</th>
+                                <th>Jetty</th>
                                 <th>Position</th>
                                 <th>Order</th>
                                 <th class="text-right">
@@ -70,6 +61,10 @@
                                 </td>
                                 <td>
                                     <input type="number" class="form-control" v-model="formData.stock_area[i].capacity">
+                                </td>
+                                <td>
+                                    <select2 :options="jetties" v-model="formData.stock_area[i].jetty_id" data-placeholder="Jetty">
+                                    </select2>
                                 </td>
                                 <td>
                                     <select class="form-control" v-model="formData.stock_area[i].position" name="">

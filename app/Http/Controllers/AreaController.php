@@ -25,9 +25,7 @@ class AreaController extends Controller
             $sort = $request->sort ? key($request->sort) : 'name';
             $dir = $request->sort ? $request->sort[$sort] : 'asc';
 
-            $area = Area::selectRaw('areas.*, jetties.name AS jetty')
-                ->join('jetties', 'jetties.id', '=', 'areas.jetty_id', 'LEFT')
-                ->when($request->searchPhrase, function($query) use ($request) {
+            $area = Area::when($request->searchPhrase, function($query) use ($request) {
                     return $query->where('name', 'LIKE', '%'.$request->searchPhrase.'%')
                         ->orWhere('description', 'LIKE', '%'.$request->searchPhrase.'%');
                 })->orderBy($sort, $dir)->paginate($pageSize);

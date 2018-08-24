@@ -26,4 +26,8 @@ class Jetty extends Model
         return $this->hasMany(Hopper::class);
     }
 
+    public function stockArea() {
+        return $this->hasMany(StockArea::class);
+    }
+
 }

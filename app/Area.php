@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Area extends Model
 {
-    protected $fillable = ['name', 'capacity', 'description', 'jetty_id'];
+    protected $fillable = ['name', 'capacity', 'description'];
 
     protected $with = ['stockArea'];
 
@@ -14,7 +14,11 @@ class Area extends Model
         return $this->hasMany(StockArea::class);
     }
 
-    // public function jetty() {
-    //     return $this->belongsTo(Jetty::class);
-    // }
+    public function setCapacityAttribute($v) {
+        $this->attributes['capacity'] = $v * 1000;
+    }
+
+    public function getCapacityAttribute($v) {
+        return $v / 1000;
+    }
 }
