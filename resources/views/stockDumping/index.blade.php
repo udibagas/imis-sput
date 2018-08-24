@@ -193,12 +193,15 @@ const app = new Vue({
             }
         },
         'formData.customer_id': function(v, o) {
-            if (v && this.formData.contractor_id) {
-                var dm = this.default_material.filter(d => d.customer_id == v && d.contractor_id == this.formData.contractor_id);
+            if (v) {
+                var dm = this.default_material.filter(d => d.customer_id == v);
+
                 if (dm.length > 0) {
+                    this.formData.contractor_id = dm[0].contractor_id;
                     this.formData.material_type = dm[0].material_type;
                     this.formData.seam_id = dm[0].seam_id;
                 } else {
+                    this.formData.contractor_id = 0;
                     this.formData.material_type = '';
                     this.formData.seam_id = 0;
                 }

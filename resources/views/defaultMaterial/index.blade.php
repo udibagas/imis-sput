@@ -9,9 +9,6 @@
             @can('create', App\DefaultMaterial::class)
             <a href="#" @click="add" class="btn btn-primary"><i class="icon-plus-circled"></i></a>
             @endcan
-            @can('export', App\DefaultMaterial::class)
-            <a href="{{url('defaultMaterial/export')}}" class="btn btn-primary"><i class="icon-download"></i> EXPORT</a>
-            @endcan
         </span>
         <table class="table table-striped table-hover " id="bootgrid" style="border-top:2px solid #ddd">
             <thead>

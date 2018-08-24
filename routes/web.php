@@ -319,7 +319,7 @@ View::composer('layouts._sidebar', function($view) {
         ]
     ];
 
-    if (auth()->user()->customer_id) {
+    if (auth()->check() && auth()->user()->customer_id) {
         $menus = [
             'DASHBOARD' => ['url' => '/', 'icon' => 'dashboard'],
             'Stock Dumping' => ['url' => 'stockDumping', 'icon' => 'truck'],
@@ -330,7 +330,7 @@ View::composer('layouts._sidebar', function($view) {
         ];
     }
 
-    if (auth()->user()->contractor_id) {
+    if (auth()->check() && auth()->user()->contractor_id) {
         $menus = [
             'DASHBOARD' => ['url' => '/', 'icon' => 'dashboard'],
             'Stock Dumping' => ['url' => 'stockDumping', 'icon' => 'truck'],
