@@ -46,6 +46,7 @@
                                 <th>Stock Area</th>
                                 <th>Capacity (Ton)</th>
                                 <th>Jetty</th>
+                                <th>Hopper</th>
                                 <th>Position</th>
                                 <th>Order</th>
                                 <th class="text-right">
@@ -64,6 +65,10 @@
                                 </td>
                                 <td>
                                     <select2 :options="jetties" v-model="formData.stock_area[i].jetty_id" data-placeholder="Jetty">
+                                    </select2>
+                                </td>
+                                <td>
+                                    <select2 :options="hoppers" v-model="formData.stock_area[i].hopper_id" data-placeholder="Hopper">
                                     </select2>
                                 </td>
                                 <td>

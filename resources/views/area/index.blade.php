@@ -49,6 +49,7 @@
             formTitle: '',
             error: {},
             jetties: {!! App\Jetty::selectRaw('id AS id, name AS text') ->orderBy('name', 'ASC')->get() !!},
+            hoppers: {!! App\Hopper::selectRaw('id AS id, name AS text') ->orderBy('name', 'ASC')->get() !!},
         },
         methods: {
             add: function() {

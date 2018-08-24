@@ -8,7 +8,8 @@ use DB;
 class StockArea extends Model
 {
     protected $fillable = [
-        'area_id', 'name', 'capacity', 'position', 'order', 'jetty_id'
+        'area_id', 'name', 'capacity', 'position',
+        'order', 'jetty_id', 'hopper_id'
     ];
 
     protected $appends = ['stock'];
