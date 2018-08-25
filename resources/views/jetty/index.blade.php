@@ -22,7 +22,7 @@
                         data-align="center"
                         data-header-align="center">Order</th>
 
-                    <th data-column-id="status">Status</th>
+                    <th data-column-id="status" data-formatter="status">Status</th>
 
                     @can('updateOrDelete', App\Jetty::class)
                     <th data-column-id="commands"
@@ -191,9 +191,8 @@
 
             var grid = $('#bootgrid').bootgrid({
                 statusMapping: {
-                    0: 'danger',
-                    1: 'success',
-                    2: 'info'
+                    0: 'default',
+                    1: 'default'
                 },
                 rowCount: [10,25,50,100],
                 ajax: true, url: '{{url('jetty')}}',
@@ -211,9 +210,14 @@
                     header: '<div id="@{{ctx.id}}" class="pull-right @{{css.header}}"><div class="actionBar"><p class="@{{css.search}}"></p><p class="@{{css.actions}}"></p></div></div>'
                 },
                 formatters: {
-                    "commands": function(column, row) {
+                    commands: function(column, row) {
                         return '@can("update", App\Jetty::class) <a href="#" class="btn btn-info btn-xs c-edit" data-id="'+row.id+'"><i class="icon-pencil"></i></a> @endcan' +
                             '@can("delete", App\Jetty::class) <a href="#" class="btn btn-danger btn-xs c-delete" data-id="'+row.id+'"><i class="icon-trash"></i></a> @endcan';
+                    },
+                    status: function(c, r) {
+                        return r.status
+                            ? '<span class="label label-success">OK</span>'
+                            : '<span class="label label-danger">B/D</span>';
                     }
                 }
             }).on("loaded.rs.jquery.bootgrid", function(e) {

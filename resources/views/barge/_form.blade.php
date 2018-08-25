@@ -56,16 +56,6 @@
                         </div>
                     </div>
 
-                    <div v-show="formData.anchored" :class="['form-group', formErrors.jetty ? 'has-error' : '']">
-                        <label class="control-label col-md-4 col-sm-4 col-xs-12" for="jetty">Jetty
-                        </label>
-                        <div class="col-md-8 col-sm-8 col-xs-12">
-                            <select2 :options="jetties" v-model="formData.jetty_id" data-placeholder="Jetty" data-allow-clear="true">
-                            </select2>
-                            <span v-if="formErrors.jetty" class="help-block">@{{formErrors.jetty[0]}}</span>
-                        </div>
-                    </div>
-
                 </div>
                 <div class="modal-footer">
                     <button type="submit" v-if="formData.id == undefined" class="btn btn-primary" @click="store"><i class="fa fa-floppy-o"></i> Save</button>

@@ -21,15 +21,12 @@ class BargeController extends Controller
         {
             $pageSize = $request->rowCount > 0 ? $request->rowCount : 1000000;
             $request['page'] = $request->current;
-            $sort = $request->sort ? key($request->sort) : 'barges.name';
+            $sort = $request->sort ? key($request->sort) : 'name';
             $dir = $request->sort ? $request->sort[$sort] : 'asc';
 
-            $barge = Barge::selectRaw('barges.*, jetties.name AS jetty')
-                ->join('jetties', 'jetties.id', '=', 'barges.jetty_id', 'LEFT')
-                ->when($request->searchPhrase, function($query) use ($request) {
-                    return $query->where('barges.name', 'LIKE', '%'.$request->searchPhrase.'%')
-                        ->orWhere('jetties.name', 'LIKE', '%'.$request->searchPhrase.'%')
-                        ->orWhere('barges.description', 'LIKE', '%'.$request->searchPhrase.'%');
+            $barge = Barge::when($request->searchPhrase, function($query) use ($request) {
+                    return $query->where('name', 'LIKE', '%'.$request->searchPhrase.'%')
+                        ->orWhere('description', 'LIKE', '%'.$request->searchPhrase.'%');
                 })->orderBy($sort, $dir)->paginate($pageSize);
 
             return [

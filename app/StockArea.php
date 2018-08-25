@@ -35,4 +35,16 @@ class StockArea extends Model
     public function getCapacityAttribute($v) {
         return $v / 1000;
     }
+
+    public function scopeLeftRight($q) {
+        return $q->whereIn('position', ['l', 'r']);
+    }
+
+    public function scopeCenter($q) {
+        return $q->where('position', 'c');
+    }
+
+    public function scopeOutside($q) {
+        return $q->where('position', 'o');
+    }
 }

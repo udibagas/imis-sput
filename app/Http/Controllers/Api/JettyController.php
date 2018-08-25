@@ -9,6 +9,6 @@ use App\Jetty;
 class JettyController extends Controller
 {
     public function index() {
-        return Jetty::all();
+        return Jetty::orderBy('order', 'ASC')->get();
     }
 }
