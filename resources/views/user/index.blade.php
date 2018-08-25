@@ -60,6 +60,7 @@ const app = new Vue({
         customers: {!! App\Customer::selectRaw('id AS id, name AS text')->orderBy('name', 'ASC')->get() !!},
         contractors: {!! App\Contractor::selectRaw('id AS id, name AS text')->orderBy('name', 'ASC')->get() !!},
         showAuth: true,
+        showSuperAdmin: true,
         formData: {
             active: 0,
             super_admin: 0,
