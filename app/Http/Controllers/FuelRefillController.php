@@ -26,7 +26,7 @@ class FuelRefillController extends Controller
         {
             $pageSize = $request->rowCount > 0 ? $request->rowCount : 1000000;
             $request['page'] = $request->current;
-            $sort = $request->sort ? key($request->sort) : 'fuel_refills.date';
+            $sort = $request->sort ? key($request->sort) : 'fuel_refills.id';
             $dir = $request->sort ? $request->sort[$sort] : 'DESC';
 
             $fuelRefill = FuelRefill::selectRaw('
