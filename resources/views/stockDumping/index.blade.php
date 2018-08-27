@@ -241,8 +241,23 @@ const app = new Vue({
                 time: moment().format('HH:mm'),
                 shift: (moment().format('H') >= 6 && moment().format('H') < 18) ? 1 : 2,
                 customer_id: '{{auth()->user()->customer_id}}',
-                contractor_id: '{{auth()->user()->contractor_id}}',
             };
+
+            var customer_id = '{{auth()->user()->customer_id}}';
+            
+            if (customer_id) {
+                var dm = this.default_material.filter(d => d.customer_id == customer_id);
+
+                if (dm.length > 0) {
+                    this.formData.contractor_id = dm[0].contractor_id;
+                    this.formData.material_type = dm[0].material_type;
+                    this.formData.seam_id = dm[0].seam_id;
+                } else {
+                    this.formData.contractor_id = 0;
+                    this.formData.material_type = '';
+                    this.formData.seam_id = 0;
+                }
+            }
 
             this.formErrors = {};
             this.error = {};

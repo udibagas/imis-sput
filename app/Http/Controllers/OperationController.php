@@ -3,10 +3,21 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Area;
+use App\Jetty;
 
 class OperationController extends Controller
 {
+    public function index()
+    {
+        return view('operation.dashboard', [
+            'jetties' => Jetty::all(),
+            'breadcrumbs' => [
+                'operation' => 'Operation',
+                'dashboard' => 'Dashboard'
+            ]
+        ]);
+    }
+    
     public function waterLevel()
     {
         return view('operation.waterLevel', [
@@ -38,16 +49,4 @@ class OperationController extends Controller
         ]);
     }
 
-    public function index()
-    {
-        return view('operation.dashboard', [
-            'areas' => Area::selectRaw('areas.*, jetties.name AS jetty')
-                ->join('jetties', 'jetties.id', '=', 'areas.jetty_id', 'LEFT')
-                ->orderBy('jetties.order', 'ASC')->get(),
-            'breadcrumbs' => [
-                'operation/dashboard' => 'Operation',
-                'dashboard' => 'Dashboard'
-            ]
-        ]);
-    }
 }

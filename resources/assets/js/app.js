@@ -14,7 +14,7 @@ Vue.filter('formatNumber', function(v) {
     if (!v) {
         return 0;
     }
-    
+
     return parseFloat(v)
         .toFixed(0)
         .toString()
@@ -45,3 +45,4 @@ Vue.component('ritase-tonase', require('./components/RitaseTonase.vue'));
 Vue.component('export-form', require('./components/ExportForm.vue'));
 Vue.component('active-barging', require('./components/ActiveBarging.vue'));
 Vue.component('productivity', require('./components/Productivity.vue'));
+Vue.component('jetty', require('./components/Jetty.vue'));
