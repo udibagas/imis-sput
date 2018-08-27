@@ -13,10 +13,6 @@ class Jetty extends Model
 
     protected $appends = ['stockAreaMap'];
 
-    public function units() {
-        return $this->hasMany(Unit::class);
-    }
-
     public function hoppers() {
         return $this->hasMany(Hopper::class);
     }
