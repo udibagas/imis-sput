@@ -58,7 +58,6 @@
             egis: {!! App\Egi::selectRaw('id AS id, name AS text')->orderBy('name', 'ASC')->get() !!},
             unit_categories: {!! App\UnitCategory::selectRaw('id AS id, name AS text')->orderBy('name', 'ASC')->get() !!},
             owners: {!! App\Owner::selectRaw('id AS id, name AS text')->orderBy('name', 'ASC')->get() !!},
-            jetties: {!! App\Jetty::selectRaw('id AS id, name AS text')->orderBy('name', 'ASC')->get() !!}
         },
         methods: {
             add: function() {
