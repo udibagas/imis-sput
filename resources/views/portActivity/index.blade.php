@@ -126,7 +126,7 @@ const app = new Vue({
     },
     watch: {
         'formData.unit_activity_id': function(v, o) {
-            this.labelRitase = (v == {{App\PortActivity::ACT_HAULING}}) ? 'Rit' : 'Bucket';
+            this.labelRitase = (v == {{App\PortActivity::ACT_HAULING}}) ? 'Ritase' : 'Bucket';
             // dari stock area ke depan hopper
             if (v == {{App\PortActivity::ACT_HAULING}} || v == {{App\PortActivity::ACT_LOAD_AND_CARRY}}) {
                 this.showHopperList = true;
