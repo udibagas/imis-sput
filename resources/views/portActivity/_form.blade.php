@@ -136,10 +136,10 @@
                     </div>
 
                     <div v-show="showBucketInput" class="form-group" :class="formErrors.rit ? 'has-error' : ''">
-                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="rit">Bucket
+                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="rit">@{{labelRitase}}
                         </label>
                         <div class="col-md-9 col-sm-9 col-xs-12">
-                            <input type="number" v-model="formData.rit" class="form-control" placeholder="Bucket">
+                            <input type="number" v-model="formData.rit" class="form-control" :placeholder="labelRitase">
                             <span v-if="formErrors.rit" class="help-block">@{{formErrors.rit[0]}}</span>
                         </div>
                     </div>
