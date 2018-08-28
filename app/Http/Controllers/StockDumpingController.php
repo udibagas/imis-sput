@@ -60,7 +60,7 @@ class StockDumpingController extends Controller
                         ->orWhere('customers.name', 'LIKE', '%'.$request->searchPhrase.'%')
                         ->orWhere('contractors.name', 'LIKE', '%'.$request->searchPhrase.'%')
                         ->orWhere('stock_areas.name', 'LIKE', '%'.$request->searchPhrase.'%');
-                })->orderBy($sort, $dir)->paginate($pageSize);
+                })->orderBy($sort, $dir)->orderBy('stock_dumpings.time', 'DESC')->paginate($pageSize);
 
             return [
                 'rowCount' => $stockDumping->perPage(),

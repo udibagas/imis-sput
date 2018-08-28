@@ -41,7 +41,6 @@ class LoginController extends Controller
     protected function credentials(Request $request)
     {
         $data = $request->only($this->username(), 'password');
-        // hanya user yang aktif aja yang bisa login
         $data['active'] = 1;
         return $data;
     }
