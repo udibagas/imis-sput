@@ -157,13 +157,11 @@
                         <label class="control-label col-md-3 col-sm-3 col-xs-12" for="time_start">Time
                         </label>
                         <div class="col-md-5 col-sm-5 col-xs-12">
-                            <select2 :options="times"  v-model="formData.time_start" class="form-control" data-placeholder="Start">
-                            </select2>
+                            <input type="text" v-model="formData.time_start" class="form-control" placeholder="Start">
                             <span v-if="formErrors.time_start" class="help-block">@{{formErrors.time_start[0]}}</span>
                         </div>
                         <div class="col-md-4 col-sm-4 col-xs-12">
-                            <select2 :options="times"  v-model="formData.time_end" class="form-control" data-placeholder="End">
-                            </select2>
+                            <input type="text" v-model="formData.time_end" class="form-control" placeholder="End">
                             <span v-if="formErrors.time_end" class="help-block">@{{formErrors.time_end[0]}}</span>
                         </div>
                     </div>
