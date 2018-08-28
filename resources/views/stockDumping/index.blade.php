@@ -175,7 +175,11 @@ const app = new Vue({
         },
         'formData.area_id': function(v, o) {
             if (v) {
+                var _this = this;
                 this.stock_areas = this.allStockAreas.filter(u => u.area_id == v);
+                setTimeout(function() {
+                    _this.formData.stock_area_id = _this.stock_areas[0].id;
+                }, 10);
             } else {
                 this.stock_areas = [];
             }
@@ -244,7 +248,7 @@ const app = new Vue({
             };
 
             var customer_id = '{{auth()->user()->customer_id}}';
-            
+
             if (customer_id) {
                 var dm = this.default_material.filter(d => d.customer_id == customer_id);
 

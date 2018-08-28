@@ -91,29 +91,29 @@ class StockDumpingController extends Controller
         $input['user_id'] = auth()->user()->id;
         $stockDumping = StockDumping::create($input);
 
-        $stock = MaterialStock::where('customer_id', $stockDumping->customer_id)
-            ->where('contractor_id', $stockDumping->contractor_id)
-            ->where('stock_area_id', $stockDumping->stock_area_id)
-            ->where('seam_id', $stockDumping->seam_id)
-            ->where('material_type', $stockDumping->material_type)
+        $stock = MaterialStock::where('customer_id', $request->customer_id)
+            ->where('contractor_id', $request->contractor_id)
+            ->where('stock_area_id', $request->stock_area_id)
+            ->where('seam_id', $request->seam_id)
+            ->where('material_type', $request->material_type)
             ->first();
 
         if ($stock) {
             $stock->update([
-                'volume' => $stock->volume + $stockDumping->volume,
+                'volume' => $stock->volume + ($request->volume/1000),
                 'dumping_date' => $stockDumping->date
             ]);
         }
 
         else {
             MaterialStock::create([
-                'customer_id' => $stockDumping->customer_id,
-                'contractor_id' => $stockDumping->contractor_id,
-                'stock_area_id' => $stockDumping->stock_area_id,
-                'seam_id' => $stockDumping->seam_id,
-                'material_type' => $stockDumping->material_type,
-                'volume' => $stockDumping->volume,
-                'dumping_date' => $stockDumping->date
+                'customer_id' => $request->customer_id,
+                'contractor_id' => $request->contractor_id,
+                'stock_area_id' => $request->stock_area_id,
+                'seam_id' => $request->seam_id,
+                'material_type' => $request->material_type,
+                'volume' => $request->volume/1000,
+                'dumping_date' => $request->date
             ]);
         }
     }

@@ -69,6 +69,7 @@ class StockDumpingController extends Controller
             $stockDumping = StockDumping::create($data);
 
             $stock = MaterialStock::where('customer_id', $r->customer_id)
+                ->where('contractor_id', $r->contractor_id)
                 ->where('stock_area_id', $r->stock_area_id)
                 ->where('seam_id', $r->seam_id)
                 ->where('material_type', $r->material_type)
@@ -76,18 +77,19 @@ class StockDumpingController extends Controller
 
             if ($stock) {
                 $stock->update([
-                    'volume' => $stock->volume + $r->volume,
-                    'dumping_date' => $r->date
+                    'volume' => $stock->volume + ($r->volume/1000),
+                    'dumping_date' => $stockDumping->date
                 ]);
             }
 
             else {
                 MaterialStock::create([
                     'customer_id' => $r->customer_id,
+                    'contractor_id' => $r->contractor_id,
                     'stock_area_id' => $r->stock_area_id,
                     'seam_id' => $r->seam_id,
                     'material_type' => $r->material_type,
-                    'volume' => $r->volume,
+                    'volume' => $r->volume/1000,
                     'dumping_date' => $r->date
                 ]);
             }

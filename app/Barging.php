@@ -24,7 +24,7 @@ class Barging extends Model
     protected $appends = ['cargo', 'volume_by_bucket_ctrl'];
 
     public function getVolumeByBucketCtrlAttribute() {
-        $sql = "SELECT (SUM(volume_progress) / 1000) AS v FROM barging_materials WHERE barging_id = ?";
+        $sql = "SELECT (SUM(volume_progress) DIV 1000) AS v FROM barging_materials WHERE barging_id = ?";
         return DB::select($sql, [$this->id])[0]->v;
     }
 
@@ -43,7 +43,7 @@ class Barging extends Model
     public function getCargoAttribute()
     {
         $sql = "SELECT
-            CONCAT(contractors.name, ', ', IF(barging_materials.material_type = 'l', 'LOW ', 'HIGH '), ', ', IFNULL(seams.name, '-'), ', ', barging_materials.volume/1000, 'T') AS cargo
+            CONCAT(contractors.name, ', ', IF(barging_materials.material_type = 'l', 'LOW ', 'HIGH '), ', ', IFNULL(seams.name, '-'), ', ', barging_materials.volume DIV 1000, 'T') AS cargo
             FROM barging_materials
             JOIN bargings ON bargings.id = barging_materials.barging_id
             JOIN contractors ON contractors.id = barging_materials.contractor_id

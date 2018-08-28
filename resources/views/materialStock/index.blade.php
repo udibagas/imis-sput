@@ -95,7 +95,7 @@
                             <th data-column-id="volume"
                                 data-formatter="volume"
                                 data-align="right"
-                                data-header-align="right">Volume (KG)</th>
+                                data-header-align="right">Volume (TON)</th>
 
                             <th data-column-id="age"
                                 data-sortable="false"
