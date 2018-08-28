@@ -110,7 +110,7 @@ class PortActivityController extends Controller
                 $bargingMaterial = $barging->bargingMaterial()
                     ->where('material_type', $request->material_type)
                     ->where('seam_id', $request->seam_id)
-                    ->where('customer_id', $request->customer_id)
+                    ->where('contractor_id', $request->contractor_id)
                     ->first();
 
                 if ($bargingMaterial) {
@@ -121,7 +121,7 @@ class PortActivityController extends Controller
 
                 else {
                     $barging->bargingMaterial()->create([
-                        'customer_id' => $request->customer_id,
+                        'contractor_id' => $request->contractor_id,
                         'material_type' => $request->material_type,
                         'seam_id' => $request->seam_id,
                         'volume_progress' => $request->volume * 1000,
