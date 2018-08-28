@@ -97,7 +97,7 @@ class PortActivityController extends Controller
         {
             if ($portActivity->materialStock) {
                 $portActivity->materialStock()->update([
-                    'volume' => $portActivity->materialStock->volume - ($request->volume * 1000),
+                    'volume' => $portActivity->materialStock->volume - $request->volume,
                 ]);
             }
 
@@ -115,7 +115,7 @@ class PortActivityController extends Controller
 
                 if ($bargingMaterial) {
                     $bargingMaterial->update([
-                        'volume_progress' => $bargingMaterial->volume_progress + ($request->volume * 1000)
+                        'volume_progress' => $bargingMaterial->volume_progress + $request->volume
                     ]);
                 }
 
@@ -124,7 +124,7 @@ class PortActivityController extends Controller
                         'contractor_id' => $request->contractor_id,
                         'material_type' => $request->material_type,
                         'seam_id' => $request->seam_id,
-                        'volume_progress' => $request->volume * 1000,
+                        'volume_progress' => $request->volume,
                     ]);
                 }
             }
