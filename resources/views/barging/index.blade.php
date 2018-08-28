@@ -2,11 +2,11 @@
 
 @section('content')
 
-<div class="row" id="app">
+<div class="row">
     <div class="col-md-3">
-        <active-barging></active-barging>
+        @include('barging.activeBarging')
     </div>
-    <div class="col-md-9">
+    <div class="col-md-9"  id="app">
         <div class="panel panel-primary">
             <div class="panel-body">
                 <h3 class="pull-left text-primary">BARGINGS <small>Manage</small></h3>
