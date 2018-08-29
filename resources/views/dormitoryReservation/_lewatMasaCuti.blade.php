@@ -1,7 +1,7 @@
 <div class="panel panel-default" v-if="lewatMasaCuti.length > 0">
     <div class="panel-heading">
         <div class="pull-right">
-            <input type="text" placeholder="Search" class="form-control">
+            <input type="text" placeholder="Search" class="form-control" v-model="searchLewatMasaCuti">
         </div>
         MENDEKATI/LEWAT MASA CUTI
         <div class="clearfix"> </div>
@@ -25,7 +25,7 @@
                 </tr>
             </thead>
             <tbody>
-                <tr v-for="(r,i) in lewatMasaCuti" :class="statusMapping[r.status]">
+                <tr v-for="(r,i) in lewatMasaCuti.filter(l => l.name.toLowerCase().includes(searchLewatMasaCuti))" :class="statusMapping[r.status]">
                     <td>@{{i+1}}.</td>
                     <td>@{{r.permit_number}}</td>
                     <td>@{{r.nrp}}</td>

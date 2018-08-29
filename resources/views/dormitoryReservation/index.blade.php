@@ -77,8 +77,8 @@
             <div class="panel-body">
                 <form class="form-inline pull-right" style="margin:15px 0 15px 10px;">
                     <select class="form-control" v-model="dataFilter">
-                        <option value="current">Tampilkan Peghuni Saat Ini</option>
                         <option value="all">Tampilkan Semua Data</option>
+                        <option value="current">Tampilkan Peghuni Saat Ini</option>
                     </select>
                     @can('create', App\DormitoryReservation::class)
                     <a href="#" @click="add" class="btn btn-primary"><i class="icon-plus-circled"></i></a>
@@ -141,6 +141,7 @@ const app = new Vue({
         rooms: {!! \App\DormitoryRoom::getSelect(); !!},
         employees: {!! App\Employee::selectRaw('id AS id, CONCAT(nrp, " - ", name) AS text')->orderBy('name', 'ASC')->get() !!},
         lewatMasaCuti: [],
+        searchLewatMasaCuti: '',
         reservations: [],
         formTitle: '',
         roomTitle: '',
@@ -157,9 +158,15 @@ const app = new Vue({
             2: 'success',
             3: 'default'
         },
-        dataFilter: 'current',
+        dataFilter: 'all',
         capacity: 0,
         reserved: 0
+    },
+    watch: {
+        dataFilter: function(v, o) {
+            alert(this.dataFilter);
+            setTimeout($('#bootgrid').bootgrid({url: '{{url("dormitoryReservation")}}?dataFilter=' + v}).bootgrid('reload'), 10);
+        }
     },
     methods: {
         getDormitoryData: function() {
@@ -319,7 +326,7 @@ const app = new Vue({
         var grid = $('#bootgrid').bootgrid({
             statusMapping: t.statusMapping,
             rowCount: [10,25,50,100],
-            ajax: true, url: '{{url('dormitoryReservation')}}',
+            ajax: true, url: '{{url('dormitoryReservation')}}?dataFilter=' + t.dataFilter,
             ajaxSettings: {
                 method: 'GET', cache: false,
                 statusCode: {
