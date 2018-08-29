@@ -6,9 +6,9 @@
                 <div class="box">
                     BARGE X
                 </div>
+                <div class="vertical-line"> </div>
                 <!-- untuk stock area -->
                 <div class="row" v-for="row in j.stockAreaMap">
-                    <div class="vertical-line" v-if="row.filter(r => r.position == 'l' || r.position == 'c' || r.position == 'r').length > 0"> </div>
                     <!-- ini kalau ada 3  -->
                     <div class="col-md-4" v-if="row.length == 3">
                         <div class="box">
@@ -31,7 +31,7 @@
                             {{row.filter(r => r.position == 'l')[0].name}}
                         </div>
                     </div>
-                    <div class="col-md-6" v-if="row.length == 2">
+                    <div class="col-md-6 left-border" v-if="row.length == 2">
                         <div class="box">
                             {{row.filter(r => r.position == 'r')[0].name}}
                         </div>
@@ -105,10 +105,10 @@ export default {
 }
 
 .right-border {
-    border-right: 1px solid red;
+    border-right: 2px solid red;
 }
 
 .left-border {
-    border-left: 1px solid red;
+    border-left: 2px solid red;
 }
 </style>
