@@ -63,7 +63,7 @@ export default {
                     console.log(error);
                 });
 
-            setTimeout(this.requestData, 5000);
+            setTimeout(this.requestData, 3000);
         }
     },
     mounted: function() {

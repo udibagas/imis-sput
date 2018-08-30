@@ -47,7 +47,7 @@ Route::group(['middleware' => 'auth'], function() {
     Route::get('barging/active', 'BargingController@active');
     Route::resource('barging', 'BargingController')->except(['edit', 'create']);
 
-    Route::resource('bargingMaterial', 'BargingMaterialController')->only(['destroy']);
+    Route::resource('bargingMaterial', 'BargingMaterialController')->only(['index', 'destroy']);
     Route::resource('breakdownCategory', 'BreakdownCategoryController')->except(['edit', 'create']);
     Route::resource('breakdownStatus', 'BreakdownStatusController')->except(['edit', 'create']);
 

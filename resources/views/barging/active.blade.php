@@ -9,7 +9,7 @@
         <active-barging :jetty="jetty_id"></active-barging>
     </div>
     <div class="col-md-8">
-        <barging-progress></barging-progress>
+        <barging-progress :jetty="jetty_id"></barging-progress>
     </div>
 </div>
 @endsection

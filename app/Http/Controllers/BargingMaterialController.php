@@ -8,6 +8,22 @@ use App\Barging;
 
 class BargingMaterialController extends Controller
 {
+    public function index(Request $request)
+    {
+        $this->authorize('view', Barging::class);
+
+        return BargingMaterial::selectRaw('
+                barging_materials.*,
+                contractors.name AS contractor,
+                seams.name AS seam
+            ')
+            ->join('bargings', 'bargings.id', '=', 'barging_materials.barging_id')
+            ->join('contractors', 'contractors.id', '=', 'barging_materials.contractor_id')
+            ->join('seams', 'seams.id', '=', 'barging_materials.seam_id', 'LEFT')
+            ->where('bargings.status', '!=', Barging::STATUS_COMPLETE)
+            ->where('bargings.jetty_id', $request->jetty_id)->get();
+    }
+
     /**
      * Remove the specified resource from storage.
      *
