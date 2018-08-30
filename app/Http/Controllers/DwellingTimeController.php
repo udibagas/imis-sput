@@ -67,6 +67,7 @@ class DwellingTimeController extends Controller
 
         $dwellingTime->barging()->update([
             'status' => $request->status,
+            'description' => $request->description,
             'jetty_id' => $request->jetty_id
         ]);
 
@@ -96,6 +97,13 @@ class DwellingTimeController extends Controller
     {
         $this->authorize('update', DwellingTime::class);
         $dwellingTime->update($request->all());
+
+        $dwellingTime->barging()->update([
+            'status' => $request->status,
+            'description' => $request->description,
+            'jetty_id' => $request->jetty_id
+        ]);
+        
         return $dwellingTime;
     }
 
