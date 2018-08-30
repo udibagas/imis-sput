@@ -161,6 +161,10 @@ class BargingController extends Controller
                 return $query->where('bargings.customer_id', auth()->user()->customer_id);
             })->when($request->customer_id, function($query) use ($request) {
                 return $query->where('bargings.customer_id', $request->customer_id);
+            })->when($request->id, function($query) use ($request) {
+                return $query->where('bargings.id', $request->id);
+            })->when($request->jetty_id, function($query) use ($request) {
+                return $query->where('bargings.jetty_id', $request->jetty_id);
             })->where('bargings.status', '!=', Barging::STATUS_COMPLETE)->first();
         }
 

@@ -1,6 +1,6 @@
 <template lang="html">
     <div class="">
-        <div class="panel panel-default">
+        <div class="panel panel-primary">
             <div class="panel-heading">
                 BARGING DETAIL
             </div>
@@ -30,40 +30,12 @@
                 </tbody>
             </table>
         </div>
-
-        <div class="panel panel-default">
-            <div class="panel-heading">
-                PROGRESS BY BUCKET CONTROL
-            </div>
-            <table class="table table-bordered table-hover table-striped">
-                <thead>
-                    <tr>
-                        <th>Material Type</th>
-                        <th>Seam</th>
-                        <th>Target Barging</th>
-                        <th>Progress</th>
-                        <th>%</th>
-                        <th>Draught Survey</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                    </tr>
-                </tbody>
-            </table>
-        </div>
     </div>
 </template>
 
 <script>
 export default {
-    props: ['customer'],
+    props: ['jetty'],
     data: function() {
         return {
             barging: {},
@@ -80,10 +52,10 @@ export default {
         requestData: function() {
             var _this = this;
             var params = {
-                customer_id: this.customer
+                jetty_id: _this.jetty
             };
 
-            axios.get(BASE_URL + '/barging/active', {params:params})
+            axios.get(BASE_URL + '/barging/active/', {params:params})
                 .then(function(r) {
                     _this.barging = r.data;
                 })
@@ -95,7 +67,7 @@ export default {
         }
     },
     mounted: function() {
-        this.requestData();
+        setTimeout(this.requestData, 200);
     }
 }
 </script>

@@ -21,8 +21,8 @@ class DraughtSurveyController extends Controller
         {
             $pageSize = $request->rowCount > 0 ? $request->rowCount : 1000000;
             $request['page'] = $request->current;
-            $sort = $request->sort ? key($request->sort) : 'name';
-            $dir = $request->sort ? $request->sort[$sort] : 'asc';
+            $sort = $request->sort ? key($request->sort) : 'draught_surveys.id';
+            $dir = $request->sort ? $request->sort[$sort] : 'DESC';
 
             $draughtSurvey = DraughtSurvey::when($request->searchPhrase, function($query) use ($request) {
                     return $query->where('name', 'LIKE', '%'.$request->searchPhrase.'%')
@@ -40,8 +40,7 @@ class DraughtSurveyController extends Controller
         return view('draughtSurvey.index', [
             'breadcrumbs' => [
                 'operation' => 'Operation',
-                '#' => 'Master Data',
-                'draughtSurvey' => 'DraughtSurvey'
+                'draughtSurvey' => 'Draught Survey'
             ]
         ]);
     }

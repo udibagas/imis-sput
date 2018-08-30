@@ -2,16 +2,14 @@
 
 @section('content')
 <div class="row" id="app">
-    <div class="col-md-5">
-        @if (!auth()->user()->customer_id)
-        <select2 :options="customers" v-model="customer_id" data-placeholder="Customer">
+    <div class="col-md-4">
+        <select2 :options="jetties" v-model="jetty_id" data-placeholder="Jetty">
         </select2>
         <br><br>
-        @endif
-        <active-barging :customer="customer_id"></active-barging>
+        <active-barging :jetty="jetty_id"></active-barging>
     </div>
-    <div class="col-md-7">
-        Timeline dwelling time will be here...
+    <div class="col-md-8">
+        <barging-progress></barging-progress>
     </div>
 </div>
 @endsection
@@ -22,13 +20,11 @@ $('.page-container').addClass('sidebar-collapsed');
 const app = new Vue({
     el: '#app',
     data: {
-        customer_id: 0,
-        customers: {!! App\Customer::selectRaw('customers.id AS id, customers.name AS text')
-            ->join('bargings', 'bargings.customer_id', '=', 'customers.id')
-            ->orderBy('customers.name', 'ASC')->get() !!},
+        jetty_id: 0,
+        jetties: {!! App\Jetty::selectRaw('id AS id, name AS text') ->orderBy('name', 'ASC')->get() !!},
     },
     mounted: function() {
-        this.customer_id = this.customers[0].id;
+        this.jetty_id = this.jetties[0].id;
     }
 });
 </script>

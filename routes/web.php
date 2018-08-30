@@ -82,6 +82,7 @@ Route::group(['middleware' => 'auth'], function() {
     Route::resource('dormitoryReservation', 'DormitoryReservationController')->except(['edit', 'create']);
 
     Route::resource('dwellingTime', 'DwellingTimeController')->except(['edit', 'create']);
+    Route::resource('draughtSurvey', 'DraughtSurveyController')->except(['edit', 'create']);
 
     Route::resource('egi', 'EgiController')->except(['edit', 'create']);
 
