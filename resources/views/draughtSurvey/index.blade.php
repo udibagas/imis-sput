@@ -4,8 +4,8 @@
 
 <div class="panel panel-primary" id="app">
     <div class="panel-body">
-        <h3 class="pull-left text-primary">DWELLING TIME <small>Manage</small></h3>
-        @can('create', App\DwellingTime::class)
+        <h3 class="pull-left text-primary">TUGBOATS <small>Manage</small></h3>
+        @can('create', App\Tugboat::class)
         <span class="pull-right" style="margin:15px 0 15px 10px;">
             <a href="#" @click="add" class="btn btn-primary"><i class="icon-plus-circled"></i></a>
         </span>
@@ -14,13 +14,11 @@
             <thead>
                 <tr>
                     <th data-column-id="id" data-width="3%">ID</th>
-                    <th data-column-id="time">Time</th>
-                    <th data-column-id="barging_id">Barging ID</th>
-                    <th data-column-id="customer">Customer</th>
-                    <th data-column-id="jetty">Jetty</th>
-                    <th data-column-id="status" data-formatter="status">Status</th>
+                    <th data-column-id="name">Name</th>
                     <th data-column-id="description">Description</th>
-                    @can('updateOrDelete', App\DwellingTime::class)
+                    <th data-column-id="status" data-formatter="status">Status</th>
+                    <th data-column-id="updated_at">Last Update</th>
+                    @can('updateOrDelete', App\Tugboat::class)
                     <th data-column-id="commands"
                         data-formatter="commands"
                         data-sortable="false"
@@ -32,8 +30,8 @@
         </table>
     </div>
 
-    @can('createOrUpdate', App\DwellingTime::class)
-    @include('dwellingTime._form')
+    @can('createOrUpdate', App\Tugboat::class)
+    @include('tugboat._form')
     @endcan
 
 </div>
@@ -51,18 +49,11 @@
             formErrors: {},
             formTitle: '',
             error: {},
-            customers: {!! App\Customer::selectRaw('id AS id, name AS text')->orderBy('name', 'ASC')->get() !!},
-            statuses: {!! json_encode(App\Barging::getStatusList()) !!},
-            jetties: {!! App\Jetty::selectRaw('id AS id, name AS text') ->orderBy('name', 'ASC')->get() !!},
-            bargings: {!! App\Barging::active()
-                    ->join('customers', 'customers.id', '=', 'bargings.customer_id')
-                    ->join('barges', 'barges.id', '=', 'bargings.barge_id')
-                    ->selectRaw('bargings.id AS id, CONCAT("#", bargings.id, " - ", customers.name, ", ", barges.name) AS text')->orderBy('customers.name', 'ASC')->get() !!}
         },
         methods: {
             add: function() {
                 // reset the form
-                this.formTitle = "ADD DWELLING TIME";
+                this.formTitle = "ADD TUGBOAT";
                 this.formData = {};
                 this.formErrors = {};
                 this.error = {};
@@ -73,7 +64,7 @@
                 block('form');
                 var t = this;
 
-                axios.post('{{url("dwellingTime")}}', this.formData).then(function(r) {
+                axios.post('{{url("tugboat")}}', this.formData).then(function(r) {
                     unblock('form');
                     $('#modal-form').modal('hide');
                     toastr["success"]("Data berhasil ditambahkan");
@@ -96,11 +87,11 @@
             },
             edit: function(id) {
                 var t = this;
-                this.formTitle = "EDIT DWELLING TIME";
+                this.formTitle = "EDIT TUGBOAT";
                 this.formErrors = {};
                 this.error = {};
 
-                axios.get('{{url("dwellingTime")}}/' + id).then(function(r) {
+                axios.get('{{url("tugboat")}}/' + id).then(function(r) {
                     t.formData = r.data;
                     $('#modal-form').modal('show');
                 })
@@ -115,7 +106,7 @@
             update: function() {
                 block('form');
                 var t = this;
-                axios.put('{{url("dwellingTime")}}/' + this.formData.id, this.formData).then(function(r) {
+                axios.put('{{url("tugboat")}}/' + this.formData.id, this.formData).then(function(r) {
                     unblock('form');
                     $('#modal-form').modal('hide');
                     toastr["success"]("Data berhasil diupdate");
@@ -141,7 +132,7 @@
                     message: "Anda yakin akan menghapus data ini?",
                     callback: function(r) {
                         if (r == true) {
-                            axios.delete('{{url("dwellingTime")}}/' + id)
+                            axios.delete('{{url("tugboat")}}/' + id)
 
                             .then(function(r) {
                                 if (r.data.success == true) {
@@ -173,7 +164,7 @@
                     1: 'default'
                 },
                 rowCount: [10,25,50,100],
-                ajax: true, url: '{{url('dwellingTime')}}',
+                ajax: true, url: '{{url('tugboat')}}',
                 ajaxSettings: {
                     method: 'GET', cache: false,
                     statusCode: {
@@ -189,13 +180,13 @@
                 },
                 formatters: {
                     commands: function(column, row) {
-                        return '@can("update", App\DwellingTime::class) <a href="#" class="btn btn-info btn-xs c-edit" data-id="'+row.id+'"><i class="icon-pencil"></i></a> @endcan' +
-                            '@can("delete", App\DwellingTime::class) <a href="#" class="btn btn-danger btn-xs c-delete" data-id="'+row.id+'"><i class="icon-trash"></i></a> @endcan';
+                        return '@can("update", App\Tugboat::class) <a href="#" class="btn btn-info btn-xs c-edit" data-id="'+row.id+'"><i class="icon-pencil"></i></a> @endcan' +
+                            '@can("delete", App\Tugboat::class) <a href="#" class="btn btn-danger btn-xs c-delete" data-id="'+row.id+'"><i class="icon-trash"></i></a> @endcan';
                     },
                     status: function(column, row) {
-                        return t.statuses.filter(function(s) {
-                            return s.id == row.status;
-                        })[0].text;
+                        return row.status
+                            ? '<span class="label label-success">Y</span>'
+                            : '<span class="label label-default">N</span>';
                     },
                 }
             }).on("loaded.rs.jquery.bootgrid", function(e) {

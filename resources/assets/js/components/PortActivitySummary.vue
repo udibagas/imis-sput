@@ -56,7 +56,7 @@ export default {
                 from: this.from,
                 to: this.to,
             };
-            axios.get('portActivity/summary', {params: params}).then(function(r) {
+            axios.get(BASE_URL + '/portActivity/summary', {params: params}).then(function(r) {
                 _this.summaries = r.data;
                 _this.totalBucket = 0;
                 _this.totalVolume = 0;

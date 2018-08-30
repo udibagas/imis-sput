@@ -140,9 +140,11 @@ class BargingController extends Controller
         return ['success' => $barging->delete()];
     }
 
-    public function active()
+    public function active(Request $request)
     {
-        return Barging::selectRaw('
+        if ($request->ajax())
+        {
+            return Barging::selectRaw('
                 bargings.*,
                 customers.name AS customer,
                 barges.name AS barge,
@@ -157,9 +159,17 @@ class BargingController extends Controller
             ->join('tugboats', 'tugboats.id', '=', 'bargings.tugboat_id')
             ->when(auth()->user()->customer_id, function($query) {
                 return $query->where('bargings.customer_id', auth()->user()->customer_id);
-            })
-            ->where('bargings.status', '!=', Barging::STATUS_COMPLETE)
-            ->get();
+            })->when($request->customer_id, function($query) use ($request) {
+                return $query->where('bargings.customer_id', $request->customer_id);
+            })->where('bargings.status', '!=', Barging::STATUS_COMPLETE)->first();
+        }
+
+        return view('barging.active', [
+            'breadcrumbs' => [
+                'operation' => 'Operation',
+                'barging/active' => 'Active Barging'
+            ]
+        ]);
     }
 
 }

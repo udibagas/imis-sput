@@ -59,7 +59,7 @@ export default {
                 from: this.from,
                 to: this.to,
             }
-            axios.get('portActivity/productivity', {params: params}).then(function(r) {
+            axios.get(BASE_URL + '/portActivity/productivity', {params: params}).then(function(r) {
                 _this.productivities = r.data
                 _this.totalLoading = 0
                 _this.totalLoadAndCarry = 0

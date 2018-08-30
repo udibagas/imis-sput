@@ -92,6 +92,9 @@
   </div>
 </div>
 
+<script type="text/javascript">
+const BASE_URL = '{{url("/")}}';
+</script>
 <script src="{{ asset('js/app.js') }}"></script>
 <script src="{{ asset('js/theme.js') }}"></script>
 @stack('scripts')

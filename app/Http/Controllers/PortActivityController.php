@@ -73,7 +73,7 @@ class PortActivityController extends Controller
 
         return view('portActivity.index', [
             'breadcrumbs' => [
-                'operation/dashboard' => 'Operation',
+                'operation' => 'Operation',
                 'portActivity' => 'Port Activity'
             ]
         ]);
@@ -171,6 +171,7 @@ class PortActivityController extends Controller
 
     public function summary(Request $request)
     {
+        $this->authorize('view', PortActivity::class);
         $from = $request->from ? $request->from : date('Y-m-01');
         $to = $request->to ? $request->to : date('Y-m-d');
 
@@ -192,24 +193,37 @@ class PortActivityController extends Controller
 
     public function productivity(Request $request)
     {
-        $from = $request->from ? $request->from : date('Y-m-01');
-        $to = $request->to ? $request->to : date('Y-m-d');
+        $this->authorize('view', PortActivity::class);
 
-        $sql = "SELECT
-            units.name AS unit,
-            port_activities.shift,
-            SUM(volume) /1000 AS total,
-            SUM(CASE WHEN port_activities.unit_activity_id = ".PortActivity::ACT_FEEDING." THEN COALESCE(volume, 0) ELSE 0 END) / 1000 AS feeding,
-            SUM(CASE WHEN port_activities.unit_activity_id = ".PortActivity::ACT_LOAD_AND_CARRY." THEN COALESCE(volume, 0) ELSE 0 END) / 1000 AS load_and_carry,
-            SUM(CASE WHEN port_activities.unit_activity_id = ".PortActivity::ACT_LOADING." THEN COALESCE(volume, 0) ELSE 0 END) / 000 AS loading,
-            SUM(CASE WHEN port_activities.unit_activity_id = ".PortActivity::ACT_STOCKPILING." THEN COALESCE(volume, 0) ELSE 0 END) / 1000 AS stock_piling,
-            SUM(CASE WHEN port_activities.unit_activity_id = ".PortActivity::ACT_HAULING." THEN COALESCE(volume, 0) ELSE 0 END) / 1000 hauling
-            FROM port_activities
-            JOIN units ON units.id = port_activities.unit_id
-            GROUP BY port_activities.unit_id, shift
-        ";
+        if ($request->ajax())
+        {
+            $from = $request->from ? $request->from : date('Y-m-01');
+            $to = $request->to ? $request->to : date('Y-m-d');
 
-        return DB::select($sql, [$from, $to]);
+            $sql = "SELECT
+                units.name AS unit,
+                port_activities.shift,
+                SUM(volume) /1000 AS total,
+                SUM(CASE WHEN port_activities.unit_activity_id = ".PortActivity::ACT_FEEDING." THEN COALESCE(volume, 0) ELSE 0 END) / 1000 AS feeding,
+                SUM(CASE WHEN port_activities.unit_activity_id = ".PortActivity::ACT_LOAD_AND_CARRY." THEN COALESCE(volume, 0) ELSE 0 END) / 1000 AS load_and_carry,
+                SUM(CASE WHEN port_activities.unit_activity_id = ".PortActivity::ACT_LOADING." THEN COALESCE(volume, 0) ELSE 0 END) / 000 AS loading,
+                SUM(CASE WHEN port_activities.unit_activity_id = ".PortActivity::ACT_STOCKPILING." THEN COALESCE(volume, 0) ELSE 0 END) / 1000 AS stock_piling,
+                SUM(CASE WHEN port_activities.unit_activity_id = ".PortActivity::ACT_HAULING." THEN COALESCE(volume, 0) ELSE 0 END) / 1000 hauling
+                FROM port_activities
+                JOIN units ON units.id = port_activities.unit_id
+                WHERE `port_activities`.`date` BETWEEN ? AND ?
+                GROUP BY port_activities.unit_id, shift
+            ";
+
+            return DB::select($sql, [$from, $to]);
+        }
+
+        return view('portActivity.productivity', [
+            'breadcrumbs' => [
+                'operation' => 'Operation',
+                'portActivity/productivity' => 'Productivity'
+            ]
+        ]);
     }
 
     public function export(Request $request)

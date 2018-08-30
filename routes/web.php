@@ -233,11 +233,14 @@ View::composer('layouts._sidebar', function($view) {
             'icon' => 'cogs',
             'url' => [
                 'operation' => 'Dahsboard',
+                'portActivity/productivity' => 'Productivity',
+                'barging/active' => 'Active Barging',
                 'breakdown' => 'Breakdown OCR',
                 'stockDumping' => 'Stock Dumping',
                 'portActivity' => 'Port Activity',
                 'barging' => 'Barging',
                 'dwellingTime' => 'Dwelling Time',
+                'draughtSurvey' => 'Draught Survey',
                 'materialStock' => 'Stock Balanced',
                 // 'barge/resume' => 'Resume Barging Daily',
                 // 'jetty/productivity' => 'Productivity Jetty'
@@ -323,6 +326,7 @@ View::composer('layouts._sidebar', function($view) {
         $menus = [
             'DASHBOARD' => ['url' => '/', 'icon' => 'dashboard'],
             'Stock Dumping' => ['url' => 'stockDumping', 'icon' => 'truck'],
+            'Active Barging' => ['url' => 'barging/active', 'icon' => 'forward'],
             'Barging' => ['url' => 'barging', 'icon' => 'forward'],
             'Dwelling Time' => ['url' => 'dwellingTime', 'icon' => 'list'],
             'Stock Balanced' => ['url' => 'materialStock', 'icon' => 'th-large'],

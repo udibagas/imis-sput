@@ -1,30 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
-
 <div id="app">
-    <form class="form-inline pull-right">
-        <div class="input-group">
-            <vue-datepicker placeholder="From" v-model="summary_from"> </vue-datepicker>
-            <div class="input-group-addon">To</div>
-            <vue-datepicker placeholder="To" v-model="summary_to"> </vue-datepicker>
-        </div>
-    </form>
-    <h3>PRODUCTIVITY SUMMARY</h3>
-    <hr>
-    <div class="row">
-        <div class="col-md-6">
-            <div class="panel panel-default">
-                <port-activity-summary :from="summary_from" :to="summary_to"></port-activity-summary>
-            </div>
-        </div>
-        <div class="col-md-6">
-            <div class="panel panel-default">
-                <productivity :from="summary_from" :to="summary_to"></productivity>
-            </div>
-        </div>
-    </div>
-
     <div class="panel panel-primary">
         <div class="panel-body">
             <h3 class="pull-left text-primary">PORT ACTIVITY <small>Manage</small></h3>
@@ -82,7 +59,6 @@
 
     </div>
 </div>
-
 @endsection
 
 @push('scripts')
@@ -107,8 +83,6 @@ const app = new Vue({
         formTitle: '',
         error: {},
         labelRitase: 'Bucket',
-        summary_from: '{{date("Y-m-01")}}',
-        summary_to: '{{date("Y-m-d")}}',
         material_stocks: {!!App\MaterialStock::getList()!!},
         units: {!! App\Unit::selectRaw('units.id AS id, units.name AS text, egis.mt_per_bucket_hi AS mt_per_bucket_hi, egis.mt_per_bucket_lo AS mt_per_bucket_lo')
             ->join('egis', 'egis.id', '=', 'units.egi_id')
@@ -180,13 +154,19 @@ const app = new Vue({
             this.formData.hopper_id = null
         },
         'formData.rit': function(v, o) {
-            var unit = this.units.filter(u => u.id == this.formData.unit_id)[0];
+            var unit = this.units.filter(function(u) {
+                return u.id == this.formData.unit_id;
+            })[0];
+
             var mt_per_bucket = (this.formData.material_type == 'l') ? unit.mt_per_bucket_lo :  unit.mt_per_bucket_hi;
             this.formData.volume = v * mt_per_bucket;
         },
         'formData.material_stock_id': function(v, o) {
             if (v) {
-                var ms = this.material_stocks.filter(m => m.id == v)[0];
+                var ms = this.material_stocks.filter(function(m) {
+                    return m.id == v;
+                })[0];
+
                 this.formData.material_type = ms.material_type;
                 this.formData.seam_id = ms.seam_id;
                 this.formData.customer_id = ms.customer_id;
@@ -357,7 +337,9 @@ const app = new Vue({
                     return "";
                 },
                 activity: function(c, r) {
-                    return t.unit_activities.filter(a => a.id == r.unit_activity_id)[0].text;
+                    return t.unit_activities.filter(function(a) {
+                        return a.id == r.unit_activity_id;
+                    })[0].text;
                 }
             }
         }).on("loaded.rs.jquery.bootgrid", function() {

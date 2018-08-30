@@ -76,4 +76,8 @@ class Barging extends Model
             ['id' => self::STATUS_COMPLETE, 'text' => 'Complete', 'color' => 'primary'],
         ];
     }
+
+    public function scopeActive($q) {
+        return $q->where('status', '!=', self::STATUS_COMPLETE);
+    }
 }

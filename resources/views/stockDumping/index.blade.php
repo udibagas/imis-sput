@@ -170,13 +170,18 @@ const app = new Vue({
     watch: {
         'formData.subcont_unit_id': function(v, o) {
             if (v) {
-                this.formData.subcont_id = this.subcont_units.filter(u => u.id == v)[0].subcont_id;
+                this.formData.subcont_id = this.subcont_units.filter(function(s) {
+                    return s.id == v;
+                })[0].subcont_id;
             }
         },
         'formData.area_id': function(v, o) {
             if (v) {
                 var _this = this;
-                this.stock_areas = this.allStockAreas.filter(u => u.area_id == v);
+                this.stock_areas = this.allStockAreas.filter(function(u) {
+                    return u.area_id == v;
+                });
+
                 setTimeout(function() {
                     _this.formData.stock_area_id = _this.stock_areas[0].id;
                 }, 10);
@@ -186,7 +191,11 @@ const app = new Vue({
         },
         'formData.contractor_id': function(v, o) {
             if (v && this.formData.customer_id) {
-                var dm = this.default_material.filter(d => d.contractor_id == v && d.customer_id == this.formData.customer_id);
+                var _this = this;
+                var dm = this.default_material.filter(function(d) {
+                    return d.contractor_id == v && d.customer_id == _this.formData.customer_id;
+                });
+
                 if (dm.length > 0) {
                     this.formData.material_type = dm[0].material_type;
                     this.formData.seam_id = dm[0].seam_id;
@@ -198,7 +207,9 @@ const app = new Vue({
         },
         'formData.customer_id': function(v, o) {
             if (v) {
-                var dm = this.default_material.filter(d => d.customer_id == v);
+                var dm = this.default_material.filter(function(d) {
+                    return d.customer_id == v;
+                });
 
                 if (dm.length > 0) {
                     this.formData.contractor_id = dm[0].contractor_id;
@@ -250,7 +261,9 @@ const app = new Vue({
             var customer_id = '{{auth()->user()->customer_id}}';
 
             if (customer_id) {
-                var dm = this.default_material.filter(d => d.customer_id == customer_id);
+                var dm = this.default_material.filter(function(d) {
+                    return d.customer_id == customer_id;
+                });
 
                 if (dm.length > 0) {
                     this.formData.contractor_id = dm[0].contractor_id;
