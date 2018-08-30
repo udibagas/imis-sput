@@ -88,9 +88,11 @@ const app = new Vue({
             ->join('egis', 'egis.id', '=', 'units.egi_id')
             ->where('units.name', 'LIKE', 'ld%')
             ->orWhere('units.name', 'LIKE', 'wl%')
+            ->orWhere('units.name', 'LIKE', 'ssp%')
             ->orderBy('units.name', 'ASC')->get() !!},
         haulers: {!! App\Unit::selectRaw('id AS id, name AS text')
             ->where('name', 'LIKE', 'ld%')
+            ->orWhere('name', 'LIKE', 'ssp%')
             ->orderBy('name', 'ASC')->get() !!},
         employees: {!! App\Employee::selectRaw('id AS id, name AS text')->orderBy('name', 'ASC')->get() !!},
         jetties: {!! App\Jetty::selectRaw('id AS id, name AS text') ->orderBy('name', 'ASC')->get() !!},
@@ -203,6 +205,7 @@ const app = new Vue({
         store: function() {
             block('form');
             var t = this;
+            t.formData.hauler_id = $('#hauler').val().join();
             axios.post('{{url("portActivity")}}', this.formData).then(function(r) {
                 unblock('form');
                 $('#modal-form').modal('hide');
@@ -228,6 +231,7 @@ const app = new Vue({
 
             axios.get('{{url("portActivity")}}/' + id).then(function(r) {
                 t.formData = r.data;
+                t.formData.hauler_id = t.formData.hauler_id.split(',');
 
                 if (r.data.hopper) {
                     t.formData.jetty_id = r.data.hopper.jetty_id;

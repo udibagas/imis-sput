@@ -3,6 +3,7 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use DB;
 
 class PortActivity extends Model
 {
@@ -18,6 +19,8 @@ class PortActivity extends Model
 
     protected $with = ['hopper'];
 
+    protected $appends = ['hauler'];
+
     protected $fillable = [
         'date', 'time_start', 'time_end', 'hauler_id',
         'employee_id', 'unit_id', 'unit_activity_id',
@@ -25,6 +28,12 @@ class PortActivity extends Model
         'material_stock_id', 'user_id', 'material_type',
         'customer_id', 'contractor_id'
     ];
+
+    public function getHaulerAttribute()
+    {
+        $hauler_id = $this->hauler_id ? $this->hauler_id : "0";
+        return DB::select("SELECT GROUP_CONCAT(name) AS hauler FROM units WHERE id IN ({$hauler_id})")[0]->hauler;
+    }
 
     public function getTimeStartAttribute($v) {
         return substr($v, 0, 5);

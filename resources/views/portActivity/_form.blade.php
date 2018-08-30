@@ -109,7 +109,7 @@
                         <label class="control-label col-md-3 col-sm-3 col-xs-12" for="hauler_id">Hauler
                         </label>
                         <div class="col-md-9 col-sm-9 col-xs-12">
-                            <select2 :options="haulers" v-model="formData.hauler_id" data-placeholder="Hauler">
+                            <select2 id="hauler" :options="haulers" v-model="formData.hauler_id" data-placeholder="Hauler" multiple="true" allow-clear="true">
                             </select2>
                             <span v-if="formErrors.hauler_id" class="help-block">@{{formErrors.hauler_id[0]}}</span>
                         </div>

@@ -40,11 +40,9 @@ class PortActivityController extends Controller
                     seams.name AS seam,
                     hoppers.name AS hpr,
                     jetties.name AS jetty,
-                    haulers.name AS hauler,
                     users.name AS user
                 ')
                 ->join('units', 'units.id', '=', 'port_activities.unit_id')
-                ->join('units AS haulers', 'haulers.id', '=', 'port_activities.hauler_id', 'LEFT')
                 ->join('material_stocks', 'material_stocks.id', '=', 'port_activities.material_stock_id', 'LEFT')
                 ->join('stock_areas', 'stock_areas.id', '=', 'material_stocks.stock_area_id', 'LEFT')
                 ->join('areas', 'areas.id', '=', 'stock_areas.area_id', 'LEFT')
@@ -221,6 +219,7 @@ class PortActivityController extends Controller
         return view('portActivity.productivity', [
             'breadcrumbs' => [
                 'operation' => 'Operation',
+
                 'portActivity/productivity' => 'Productivity'
             ]
         ]);
