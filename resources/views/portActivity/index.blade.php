@@ -154,8 +154,9 @@ const app = new Vue({
             this.formData.hopper_id = null
         },
         'formData.rit': function(v, o) {
+            var _this = this;
             var unit = this.units.filter(function(u) {
-                return u.id == this.formData.unit_id;
+                return u.id == _this.formData.unit_id;
             })[0];
 
             var mt_per_bucket = (this.formData.material_type == 'l') ? unit.mt_per_bucket_lo :  unit.mt_per_bucket_hi;
