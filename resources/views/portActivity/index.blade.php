@@ -205,7 +205,13 @@ const app = new Vue({
         store: function() {
             block('form');
             var t = this;
-            t.formData.hauler_id = $('#hauler').val().join();
+
+            try {
+                t.formData.hauler_id = $('#hauler').val().join();
+            } catch (e) {
+
+            }
+
             axios.post('{{url("portActivity")}}', this.formData).then(function(r) {
                 unblock('form');
                 $('#modal-form').modal('hide');
@@ -254,6 +260,13 @@ const app = new Vue({
         update: function() {
             block('form');
             var t = this;
+
+            try {
+                t.formData.hauler_id = $('#hauler').val().join();
+            } catch (e) {
+
+            }
+
             axios.put('{{url("portActivity")}}/' + this.formData.id, this.formData).then(function(r) {
                 unblock('form');
                 $('#modal-form').modal('hide');
