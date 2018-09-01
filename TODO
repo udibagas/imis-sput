@@ -1,10 +1,33 @@
-- deskripsi hopper dibikin nullable
+- productivity per operator per activity
+- update stock dumping dibuat seperti update fuel refill
+- bikin halaman untuk customer
+    - dashboard customer
+    - barging
+    - dwelling time
+- tambahin user_id di material_stocks
+- log pake slack (poins.slack.com)
+- selesaikan dwelling time
+- apply logo on app (fuel refill)
+- validasi kalau jam sudah pernah diinput untuk unit terkait di tanggal yg sama
+- benerin tampila di TV. suspect-nya adalah filter atau ( => )
+
+PHASE 2 (atau gak usah phase 2 yang penting bisa termin 2)
+- daily performance TIDAK TERMASUK SCOPE!!! - phase 2 (dan semua jenis report di excel)
+- productivity by EGI & activity
+- bucket control (detail seperti di excel)
+- productivity plan diambil dari rata2 productivity plan high and low (untuk summary port activity by EGI - bikin baru)
+
+- implement daterangepicker http://www.daterangepicker.com/
+- bikin component buat form export
+
+- summary room availability di dormitory management
+- search di catering management
 - bikin component water level (tinggal proses data real)
-- stock dumping  (checker) => harus beres (di dropdown stock area tampilkan jetty mana)
+- stock dumping
     - bikin logic buat nambah stock
-- port_activities ==> benerin skema!!! ==> intinya di sini. bikin form standar dulu (bucket control)
 - egi has many activity through productivity plan !!!
 - jadiin halaman dashboard
+
 
 - manually update via web page
 - beresin absensi (download log & export to imis) ==> setelah deal

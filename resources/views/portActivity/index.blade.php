@@ -16,25 +16,24 @@
             <table class="table table-striped table-hover " id="bootgrid" style="border-top:2px solid #ddd">
                 <thead>
                     <tr>
-                        <th data-column-id="id" data-width="3%">ID</th>
-                        <th data-column-id="date">Date</th>
-                        <th data-column-id="shift">Shift</th>
-                        <th data-column-id="time_start">Time Start</th>
-                        <th data-column-id="time_end">Time End</th>
-                        <th data-column-id="activity" data-formatter="activity" data-sortable="false">Activity</th>
-                        <th data-column-id="unit">Unit</th>
-                        <th data-column-id="hauler">Hauler</th>
-                        <th data-column-id="area">Area</th>
-                        <th data-column-id="stock_area">Stock Area</th>
-                        <th data-column-id="jetty">Jetty</th>
-                        <th data-column-id="hpr">Hopper</th>
-                        <th data-column-id="material_type" data-formatter="material_type">Material Type</th>
-                        <th data-column-id="rit">Bucket</th>
-                        <th data-column-id="volume">Volume (Ton)</th>
-                        <th data-column-id="material_type" data-formatter="material_type">Material Type</th>
-                        <th data-column-id="seam">Seam</th>
-                        <th data-column-id="customer">Customer</th>
-                        <th data-column-id="contractor">Contractor</th>
+                        <th data-column-id="id" data-width="50px">ID</th>
+                        <th data-column-id="date" data-width="90px">Date</th>
+                        <th data-column-id="shift" data-width="50px" data-align="center" data-header-align="center">Shift</th>
+                        <th data-column-id="time_start" data-width="50px" data-formatter="time" data-align="center" data-header-align="center">Time</th>
+                        <!-- <th data-column-id="time_end">Time End</th> -->
+                        <th data-column-id="activity" data-width="80px" data-formatter="activity" data-sortable="false">Activity</th>
+                        <th data-column-id="unit" data-formatter="unit">Unit /Hauler</th>
+                        <!-- <th data-column-id="hauler">Hauler</th> -->
+                        <th data-column-id="area" data-formatter="area">Area</th>
+                        <!-- <th data-column-id="stock_area">Stock Area</th> -->
+                        <th data-column-id="jetty" data-formatter="jetty_hopper">Jetty /Hopper</th>
+                        <!-- <th data-column-id="hpr">Hopper</th> -->
+                        <th data-column-id="rit" data-width="70px" data-header-align="center" data-align="center">Bucket /Rit</th>
+                        <th data-column-id="volume" data-width="100px" data-header-align="center" data-align="center">Volume (Ton)</th>
+                        <th data-column-id="material_type" data-width="100px" data-formatter="material_type">Material</th>
+                        <!-- <th data-column-id="seam">Seam</th> -->
+                        <th data-column-id="customer" data-formatter="customer">Customer /Contractor</th>
+                        <!-- <th data-column-id="contractor">Contractor</th> -->
                         <th data-column-id="employee">Employee</th>
                         <th data-column-id="user">User</th>
                         @can('updateOrDelete', App\PortActivity::class)
@@ -42,6 +41,7 @@
                             data-formatter="commands"
                             data-sortable="false"
                             data-align="right"
+                            data-width="50px"
                             data-header-align="right"></th>
                         @endcan
                     </tr>
@@ -344,20 +344,53 @@ const app = new Vue({
                         '@can("delete", App\PortActivity::class) <a href="#" class="btn btn-danger btn-xs c-delete" data-id="'+row.id+'"><i class="icon-trash"></i></a> @endcan';
                 },
                 material_type: function(c, r) {
+                    var material = ''
+
                     if (r.material_type == 'l') {
-                        return "LOW";
+                        material = "LOW";
                     }
 
                     if (r.material_type == 'h') {
-                        return "HIGH";
+                        material = "HIGH";
                     }
 
-                    return "";
+                    if (r.seam) {
+                        material += ' - '+r.seam+'';
+                    }
+
+                    return material;
                 },
                 activity: function(c, r) {
                     return t.unit_activities.filter(function(a) {
                         return a.id == r.unit_activity_id;
                     })[0].text;
+                },
+                time: function(c, r) {
+                    return r.time_start + '<br>' + r.time_end;
+                },
+                area: function(c, r) {
+                    return r.area + '<br>' + r.stock_area;
+                },
+                jetty_hopper: function(c, r) {
+                    if (r.jetty && r.hpr) {
+                        return r.jetty + '<br>' + r.hpr;
+                    }
+
+                    return '';
+                },
+                unit: function(c, r) {
+                    if (r.hauler) {
+                        return r.unit + '<br>(' +r.hauler+ ')';
+                    }
+
+                    return r.unit;
+                },
+                customer: function(c, r) {
+                    if (r.customer && r.contractor) {
+                        return r.customer + '<br>' + r.contractor;
+                    }
+
+                    return '';
                 }
             }
         }).on("loaded.rs.jquery.bootgrid", function() {

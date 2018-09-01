@@ -176,8 +176,13 @@ const app = new Vue({
             }
         },
         'formData.area_id': function(v, o) {
+            var _this = this;
+
+            if (this.formData.id) {
+                return;
+            }
+
             if (v) {
-                var _this = this;
                 this.stock_areas = this.allStockAreas.filter(function(u) {
                     return u.area_id == v;
                 });
@@ -190,6 +195,10 @@ const app = new Vue({
             }
         },
         'formData.contractor_id': function(v, o) {
+            if (this.formData.id) {
+                return;
+            }
+
             if (v && this.formData.customer_id) {
                 var _this = this;
                 var dm = this.default_material.filter(function(d) {
@@ -206,6 +215,10 @@ const app = new Vue({
             }
         },
         'formData.customer_id': function(v, o) {
+            if (this.formData.id) {
+                return;
+            }
+
             if (v) {
                 var dm = this.default_material.filter(function(d) {
                     return d.customer_id == v;
@@ -309,6 +322,7 @@ const app = new Vue({
             this.formTitle = "EDIT STOCK DUMPING";
             this.formErrors = {};
             this.error = {};
+            this.stock_areas = this.allStockAreas;
 
             axios.get('{{url("stockDumping")}}/' + id).then(function(r) {
                 t.formData = r.data;

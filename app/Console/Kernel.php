@@ -25,7 +25,12 @@ class Kernel extends ConsoleKernel
     protected function schedule(Schedule $schedule)
     {
         // $schedule->command('inspire')
-        //          ->hourly();
+        //          ->everyMinute();
+
+        // $schedule->command('poins:download_log_absensi')
+        //     ->at('08:00');
+        // $schedule->command('poins:download_log_absensi')
+        //     ->at('20:00');
     }
 
     /**

@@ -140,7 +140,9 @@ class StockDumpingController extends Controller
     public function update(StockDumpingRequest $request, StockDumping $stockDumping)
     {
         $this->authorize('update', StockDumping::class);
+        $oldVolume = $stockDumping->volume;
         $stockDumping->update($request->all());
+        $newVolume = $stockDumping->volume;
 
         $stock = MaterialStock::where('customer_id', $request->customer_id)
             ->where('contractor_id', $request->contractor_id)
@@ -151,7 +153,7 @@ class StockDumpingController extends Controller
 
         if ($stock) {
             $stock->update([
-                'volume' => $stock->volume + $request->volume,
+                'volume' => $stock->volume + (($newVolume - $oldVolume) / 1000),
                 'dumping_date' => $request->date
             ]);
         }
@@ -163,7 +165,7 @@ class StockDumpingController extends Controller
                 'stock_area_id' => $request->stock_area_id,
                 'seam_id' => $request->seam_id,
                 'material_type' => $request->material_type,
-                'volume' => $request->volume,
+                'volume' => $request->volume/1000,
                 'dumping_date' => $request->date
             ]);
         }
