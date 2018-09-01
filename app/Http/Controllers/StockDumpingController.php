@@ -198,6 +198,16 @@ class StockDumpingController extends Controller
 
     public function summary(Request $request)
     {
+        if (!$request->ajax())
+        {
+            return view('stockDumping.summary', [
+                'breadcrumbs' => [
+                    'operation' => 'Operation',
+                    'stockDumping/summary' => 'Stock Dumping Summary'
+                ]
+            ]);
+        }
+
         $from = $request->from ? $request->from : date('Y-m-d');
         $to = $request->to ? $request->to : date('Y-m-d');
 
@@ -215,19 +225,31 @@ class StockDumpingController extends Controller
         }
 
         $sql['material_type'] = "SELECT
-            COUNT(stock_dumpings.id) AS ritase,
-            SUM(stock_dumpings.volume) AS tonase,
-            COUNT(DISTINCT stock_dumpings.subcont_unit_id) AS unit,
-            IF(stock_dumpings.material_type = 'l', 'LOW', 'HIGH') AS entity
+            COUNT(id) AS ritase,
+            SUM(shift = 1) AS ritase_1,
+            SUM(shift = 2) AS ritase_2,
+            SUM(CASE WHEN shift = 1 THEN volume ELSE 0 END) AS tonase_1,
+            SUM(CASE WHEN shift = 2 THEN volume ELSE 0 END) AS tonase_2,
+            SUM(volume) AS tonase,
+            COUNT(DISTINCT subcont_unit_id) AS unit,
+            cOUNT(DISTINCT CASE WHEN shift = 1 THEN subcont_unit_id END) AS unit_1,
+            cOUNT(DISTINCT CASE WHEN shift = 2 THEN subcont_unit_id END) AS unit_2,
+            IF(material_type = 'l', 'LOW', 'HIGH') AS entity
         FROM stock_dumpings
-        WHERE stock_dumpings.date BETWEEN ? AND ?
+        WHERE date BETWEEN ? AND ?
             AND $condition
-        GROUP BY stock_dumpings.material_type";
+        GROUP BY material_type";
 
         $sql['customer_id'] = "SELECT
             COUNT(stock_dumpings.id) AS ritase,
+            SUM(stock_dumpings.shift = 1) AS ritase_1,
+            SUM(stock_dumpings.shift = 2) AS ritase_2,
+            SUM(CASE WHEN stock_dumpings.shift = 1 THEN stock_dumpings.volume ELSE 0 END) AS tonase_1,
+            SUM(CASE WHEN stock_dumpings.shift = 2 THEN stock_dumpings.volume ELSE 0 END) AS tonase_2,
             SUM(stock_dumpings.volume) AS tonase,
             COUNT(DISTINCT stock_dumpings.subcont_unit_id) AS unit,
+            cOUNT(DISTINCT CASE WHEN stock_dumpings.shift = 1 THEN stock_dumpings.subcont_unit_id END) AS unit_1,
+            cOUNT(DISTINCT CASE WHEN stock_dumpings.shift = 2 THEN stock_dumpings.subcont_unit_id END) AS unit_2,
             customers.name AS entity
         FROM stock_dumpings
         JOIN customers ON customers.id = stock_dumpings.customer_id
@@ -237,8 +259,14 @@ class StockDumpingController extends Controller
 
         $sql['contractor_id'] = "SELECT
             COUNT(stock_dumpings.id) AS ritase,
+            SUM(stock_dumpings.shift = 1) AS ritase_1,
+            SUM(stock_dumpings.shift = 2) AS ritase_2,
             SUM(stock_dumpings.volume) AS tonase,
+            SUM(CASE WHEN stock_dumpings.shift = 1 THEN stock_dumpings.volume ELSE 0 END) AS tonase_1,
+            SUM(CASE WHEN stock_dumpings.shift = 2 THEN stock_dumpings.volume ELSE 0 END) AS tonase_2,
             COUNT(DISTINCT stock_dumpings.subcont_unit_id) AS unit,
+            cOUNT(DISTINCT CASE WHEN stock_dumpings.shift = 1 THEN stock_dumpings.subcont_unit_id END) AS unit_1,
+            cOUNT(DISTINCT CASE WHEN stock_dumpings.shift = 2 THEN stock_dumpings.subcont_unit_id END) AS unit_2,
             contractors.name AS entity
         FROM stock_dumpings
         JOIN contractors ON contractors.id = stock_dumpings.contractor_id
@@ -248,8 +276,14 @@ class StockDumpingController extends Controller
 
         $sql['seam_id'] = "SELECT
             COUNT(stock_dumpings.id) AS ritase,
+            SUM(stock_dumpings.shift = 1) AS ritase_1,
+            SUM(stock_dumpings.shift = 2) AS ritase_2,
             SUM(stock_dumpings.volume) AS tonase,
+            SUM(CASE WHEN stock_dumpings.shift = 1 THEN stock_dumpings.volume ELSE 0 END) AS tonase_1,
+            SUM(CASE WHEN stock_dumpings.shift = 2 THEN stock_dumpings.volume ELSE 0 END) AS tonase_2,
             COUNT(DISTINCT stock_dumpings.subcont_unit_id) AS unit,
+            cOUNT(DISTINCT CASE WHEN stock_dumpings.shift = 1 THEN stock_dumpings.subcont_unit_id END) AS unit_1,
+            cOUNT(DISTINCT CASE WHEN stock_dumpings.shift = 2 THEN stock_dumpings.subcont_unit_id END) AS unit_2,
             seams.name AS entity
         FROM stock_dumpings
         LEFT JOIN seams ON seams.id = stock_dumpings.seam_id
@@ -259,8 +293,14 @@ class StockDumpingController extends Controller
 
         $sql['area_id'] = "SELECT
             COUNT(stock_dumpings.id) AS ritase,
+            SUM(stock_dumpings.shift = 1) AS ritase_1,
+            SUM(stock_dumpings.shift = 2) AS ritase_2,
             SUM(stock_dumpings.volume) AS tonase,
+            SUM(CASE WHEN stock_dumpings.shift = 1 THEN stock_dumpings.volume ELSE 0 END) AS tonase_1,
+            SUM(CASE WHEN stock_dumpings.shift = 2 THEN stock_dumpings.volume ELSE 0 END) AS tonase_2,
             COUNT(DISTINCT stock_dumpings.subcont_unit_id) AS unit,
+            cOUNT(DISTINCT CASE WHEN stock_dumpings.shift = 1 THEN stock_dumpings.subcont_unit_id END) AS unit_1,
+            cOUNT(DISTINCT CASE WHEN stock_dumpings.shift = 2 THEN stock_dumpings.subcont_unit_id END) AS unit_2,
             areas.name AS entity
         FROM stock_dumpings
         JOIN stock_areas ON stock_areas.id = stock_dumpings.stock_area_id
@@ -271,8 +311,14 @@ class StockDumpingController extends Controller
 
         $sql['stock_area_id'] = "SELECT
             COUNT(stock_dumpings.id) AS ritase,
+            SUM(stock_dumpings.shift = 1) AS ritase_1,
+            SUM(stock_dumpings.shift = 2) AS ritase_2,
             SUM(stock_dumpings.volume) AS tonase,
+            SUM(CASE WHEN stock_dumpings.shift = 1 THEN stock_dumpings.volume ELSE 0 END) AS tonase_1,
+            SUM(CASE WHEN stock_dumpings.shift = 2 THEN stock_dumpings.volume ELSE 0 END) AS tonase_2,
             COUNT(DISTINCT stock_dumpings.subcont_unit_id) AS unit,
+            cOUNT(DISTINCT CASE WHEN stock_dumpings.shift = 1 THEN stock_dumpings.subcont_unit_id END) AS unit_1,
+            cOUNT(DISTINCT CASE WHEN stock_dumpings.shift = 2 THEN stock_dumpings.subcont_unit_id END) AS unit_2,
             stock_areas.name AS entity
         FROM stock_dumpings
         JOIN stock_areas ON stock_areas.id = stock_dumpings.stock_area_id
@@ -282,8 +328,14 @@ class StockDumpingController extends Controller
 
         $sql['subcont_id'] = "SELECT
             COUNT(stock_dumpings.id) AS ritase,
+            SUM(stock_dumpings.shift = 1) AS ritase_1,
+            SUM(stock_dumpings.shift = 2) AS ritase_2,
             SUM(stock_dumpings.volume) AS tonase,
+            SUM(CASE WHEN stock_dumpings.shift = 1 THEN stock_dumpings.volume ELSE 0 END) AS tonase_1,
+            SUM(CASE WHEN stock_dumpings.shift = 2 THEN stock_dumpings.volume ELSE 0 END) AS tonase_2,
             COUNT(DISTINCT stock_dumpings.subcont_unit_id) AS unit,
+            cOUNT(DISTINCT CASE WHEN stock_dumpings.shift = 1 THEN stock_dumpings.subcont_unit_id END) AS unit_1,
+            cOUNT(DISTINCT CASE WHEN stock_dumpings.shift = 2 THEN stock_dumpings.subcont_unit_id END) AS unit_2,
             subconts.name AS entity
         FROM stock_dumpings
         JOIN subcont_units ON subcont_units.id = stock_dumpings.subcont_unit_id
@@ -307,7 +359,19 @@ class StockDumpingController extends Controller
             $condition = "stock_dumpings.contractor_id = ".auth()->user()->contractor_id;
         }
 
-        $sql = "SELECT COUNT(id) AS ritase, SUM(volume) AS tonase FROM stock_dumpings WHERE `date` BETWEEN ? AND ? AND $condition";
+        $sql = "SELECT
+                COUNT(id) AS ritase,
+                SUM(shift = 1) AS ritase_1,
+                SUM(shift = 2) AS ritase_2,
+                SUM(volume) AS tonase,
+                SUM(CASE WHEN shift = 1 THEN volume ELSE 0 END) AS tonase_1,
+                SUM(CASE WHEN shift = 2 THEN volume ELSE 0 END) AS tonase_2,
+                COUNT(DISTINCT subcont_unit_id) AS unit,
+                cOUNT(DISTINCT CASE WHEN shift = 1 THEN subcont_unit_id END) AS unit_1,
+                cOUNT(DISTINCT CASE WHEN shift = 2 THEN subcont_unit_id END) AS unit_2
+            FROM stock_dumpings
+            WHERE `date` BETWEEN ? AND ? AND $condition";
+
         return DB::select($sql, [
             $request->from ? $request->from : date("Y-m-d"),
             $request->to ? $request->to : date("Y-m-d")

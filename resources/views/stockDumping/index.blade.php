@@ -3,121 +3,51 @@
 @section('content')
 
 <div class="row" id="app">
-    <div class="col-md-12">
-        <stock-dumping-chart :range="[chartRange.from, chartRange.to]"></stock-dumping-chart>
-    </div>
-
-    <div class="col-md-3">
-        <div class="form-group">
-            <div class="input-group">
-                <vue-datepicker placeholder="From" v-model="chartRange.from"> </vue-datepicker>
-                <div class="input-group-addon">To</div>
-                <vue-datepicker placeholder="To" v-model="chartRange.to"> </vue-datepicker>
-            </div>
-        </div>
-        <ritase-tonase :from="chartRange.from" :to="chartRange.to"></ritase-tonase>
-
-        @if (!auth()->user()->customer_id)
-        <stock-dumping-summary
-            :from="chartRange.from"
-            :to="chartRange.to"
-            :group="'customer_id'"
-            :header="'SUMMARY BY CUSTOMER'"
-            :entity="'Customer'"></stock-dumping-summary>
-        @endif
-
-        @if (!auth()->user()->contractor_id)
-        <stock-dumping-summary
-            :from="chartRange.from"
-            :to="chartRange.to"
-            :group="'contractor_id'"
-            :header="'SUMMARY BY CONTRACTOR'"
-            :entity="'Contractor'"></stock-dumping-summary>
-        @endif
-
-        <stock-dumping-summary
-            :from="chartRange.from"
-            :to="chartRange.to"
-            :group="'material_type'"
-            :header="'SUMMARY BY MATERIAL TYPE'"
-            :entity="'Material Type'"></stock-dumping-summary>
-
-        <stock-dumping-summary
-            :from="chartRange.from"
-            :to="chartRange.to"
-            :group="'seam_id'"
-            :header="'SUMMARY BY SEAM'"
-            :entity="'Seam'"></stock-dumping-summary>
-
-        <stock-dumping-summary
-            :from="chartRange.from"
-            :to="chartRange.to"
-            :group="'subcont_id'"
-            :header="'SUMMARY BY SUBCONT'"
-            :entity="'Subcont'"></stock-dumping-summary>
-
-        <stock-dumping-summary
-            :from="chartRange.from"
-            :to="chartRange.to"
-            :group="'area_id'"
-            :header="'SUMMARY BY BLOCK AREA'"
-            :entity="'Block Area'"></stock-dumping-summary>
-
-        <stock-dumping-summary
-            :from="chartRange.from"
-            :to="chartRange.to"
-            :group="'stock_area_id'"
-            :header="'SUMMARY BY STOCK AREA'"
-            :entity="'Stock Area'"></stock-dumping-summary>
-
-    </div>
-    <div class="col-md-9">
-        <div class="panel panel-default">
-            <div class="panel-body">
-                <h3 class="pull-left text-primary">STOCK DUMPING <small>Manage</small></h3>
-                <span class="pull-right" style="margin:15px 0 15px 10px;">
-                    @can('create', App\StockDumping::class)
-                    <a href="#" @click="add" class="btn btn-primary"><i class="icon-plus-circled"></i></a>
-                    @endcan
-                    <a href="{{url('stockDumping/downloadApp')}}" class="btn btn-primary"><i class="fa fa-android"></i> DOWNLOAD APLIKASI CHECKER</a>
-                    @can('export', App\StockDumping::class)
-                    <a href="#" @click="openExportForm" class="btn btn-primary"><i class="fa fa-file-excel-o"></i> EXPORT</a>
-                    @endcan
-                </span>
-                <table class="table table-striped table-hover " id="bootgrid" style="border-top:2px solid #ddd">
-                    <thead>
-                        <tr>
-                            <th data-column-id="id" data-width="3%">ID</th>
-                            <th data-column-id="date">Date</th>
-                            <th data-column-id="shift">Shift</th>
-                            <th data-column-id="time">Time</th>
-                            <th data-column-id="subcont">Subcont</th>
-                            <th data-column-id="unit">Unit</th>
-                            <th data-column-id="material_type" data-formatter="material_type">Material Type</th>
-                            <th data-column-id="seam">Seam</th>
-                            <th data-column-id="block_area">Block Area</th>
-                            <th data-column-id="sa">Stock Area</th>
-                            <th data-column-id="volume">Volume (KG)</th>
-                            @if (!auth()->user()->customer_id)
-                            <th data-column-id="customer">Customer</th>
-                            @endif
-                            @if (!auth()->user()->contractor_id)
-                            <th data-column-id="contractor">Contractor</th>
-                            @endif
-                            <th data-column-id="register_number">Register Number</th>
-                            <th data-column-id="user">User</th>
-                            <th data-column-id="insert_via">Insert Via</th>
-                            @can('updateOrDelete', App\StockDumping::class)
-                            <th data-column-id="commands"
-                                data-formatter="commands"
-                                data-sortable="false"
-                                data-align="right"
-                                data-header-align="right"></th>
-                            @endcan
-                        </tr>
-                    </thead>
-                </table>
-            </div>
+    <div class="panel panel-default">
+        <div class="panel-body">
+            <h3 class="pull-left text-primary">STOCK DUMPING <small>Manage</small></h3>
+            <span class="pull-right" style="margin:15px 0 15px 10px;">
+                @can('create', App\StockDumping::class)
+                <a href="#" @click="add" class="btn btn-primary"><i class="icon-plus-circled"></i></a>
+                @endcan
+                <a href="{{url('stockDumping/downloadApp')}}" class="btn btn-primary"><i class="fa fa-android"></i> DOWNLOAD APLIKASI CHECKER</a>
+                @can('export', App\StockDumping::class)
+                <a href="#" @click="openExportForm" class="btn btn-primary"><i class="fa fa-file-excel-o"></i> EXPORT</a>
+                @endcan
+            </span>
+            <table class="table table-striped table-hover " id="bootgrid" style="border-top:2px solid #ddd">
+                <thead>
+                    <tr>
+                        <th data-column-id="id" data-width="3%">ID</th>
+                        <th data-column-id="date">Date</th>
+                        <th data-column-id="shift">Shift</th>
+                        <th data-column-id="time">Time</th>
+                        <th data-column-id="subcont">Subcont</th>
+                        <th data-column-id="unit">Unit</th>
+                        <th data-column-id="material_type" data-formatter="material_type">Material Type</th>
+                        <th data-column-id="seam">Seam</th>
+                        <th data-column-id="block_area">Block Area</th>
+                        <th data-column-id="sa">Stock Area</th>
+                        <th data-column-id="volume">Volume (KG)</th>
+                        @if (!auth()->user()->customer_id)
+                        <th data-column-id="customer">Customer</th>
+                        @endif
+                        @if (!auth()->user()->contractor_id)
+                        <th data-column-id="contractor">Contractor</th>
+                        @endif
+                        <th data-column-id="register_number">Register Number</th>
+                        <th data-column-id="user">User</th>
+                        <th data-column-id="insert_via">Insert Via</th>
+                        @can('updateOrDelete', App\StockDumping::class)
+                        <th data-column-id="commands"
+                            data-formatter="commands"
+                            data-sortable="false"
+                            data-align="right"
+                            data-header-align="right"></th>
+                        @endcan
+                    </tr>
+                </thead>
+            </table>
         </div>
     </div>
 
@@ -136,7 +66,6 @@
 @push('scripts')
 
 <script type="text/javascript">
-
 $('.page-container').addClass('sidebar-collapsed');
 
 const app = new Vue({
@@ -149,10 +78,6 @@ const app = new Vue({
         date: '{{date("Y-m-d")}}',
         exportRange: {
             from: '{{date("Y-m-d")}}',
-            to: '{{date("Y-m-d")}}'
-        },
-        chartRange: {
-            from: '{{date("Y-m-01")}}',
             to: '{{date("Y-m-d")}}'
         },
         ritase: 0,

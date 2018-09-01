@@ -1,17 +1,38 @@
 <template lang="html">
     <div class="panel minimal panel-default">
-        <div class="panel-body">
-            <div class="row col-with-divider">
-                <div class="col-xs-6 text-center stack-order">
-                    RITASE
-                    <h1 class="no-margins text-success">{{ritase | formatNumber}}</h1>
-                </div>
-                <div class="col-xs-6 text-center stack-order">
-                    VOLUME (KG)
-                    <h1 class="no-margins text-success">{{tonase | formatNumber}}</h1>
-                </div>
-            </div>
-        </div>
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                    <th class="text-center" colspan="3">UNIT</th>
+                    <th class="text-center" colspan="3">RITASE</th>
+                    <th class="text-center" colspan="3">VOLUME (KG)</th>
+                </tr>
+                <tr>
+                    <th class="text-center">SHIFT 1</th>
+                    <th class="text-center">SHIFT 2</th>
+                    <th class="text-center">TOTAL</th>
+                    <th class="text-center">SHIFT 1</th>
+                    <th class="text-center">SHIFT 2</th>
+                    <th class="text-center">TOTAL</th>
+                    <th class="text-center">SHIFT 1</th>
+                    <th class="text-center">SHIFT 2</th>
+                    <th class="text-center">TOTAL</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td class="text-center text-primary"><h1 style="margin-top:10px;">{{unit_1 | formatNumber}}</h1></td>
+                    <td class="text-center text-primary"><h1 style="margin-top:10px;">{{unit_2 | formatNumber}}</h1></td>
+                    <td class="text-center text-primary"><h1 style="margin-top:10px;">{{unit | formatNumber}}</h1></td>
+                    <td class="text-center text-primary"><h1 style="margin-top:10px;">{{ritase_1 | formatNumber}}</h1></td>
+                    <td class="text-center text-primary"><h1 style="margin-top:10px;">{{ritase_2 | formatNumber}}</h1></td>
+                    <td class="text-center text-primary"><h1 style="margin-top:10px;">{{ritase | formatNumber}}</h1></td>
+                    <td class="text-center text-primary"><h1 style="margin-top:10px;">{{tonase_1 | formatNumber}}</h1></td>
+                    <td class="text-center text-primary"><h1 style="margin-top:10px;">{{tonase_2 | formatNumber}}</h1></td>
+                    <td class="text-center text-primary"><h1 style="margin-top:10px;">{{tonase | formatNumber}}</h1></td>
+                </tr>
+            </tbody>
+        </table>
     </div>
 </template>
 
@@ -21,7 +42,14 @@ export default {
     data: function() {
         return {
             ritase: 0,
-            tonase: 0
+            ritase_1: 0,
+            ritase_2: 0,
+            tonase: 0,
+            tonase_1: 0,
+            tonase_2: 0,
+            unit: 0,
+            unit_1: 0,
+            unit_2: 0,
         }
     },
     methods: {
@@ -31,10 +59,17 @@ export default {
                 from: _this.from,
                 to: _this.to
             };
-            axios.get('stockDumping/tonase', {params: params})
+            axios.get(BASE_URL + '/stockDumping/tonase', {params: params})
                 .then(function(r) {
                     _this.tonase = r.data[0].tonase ? r.data[0].tonase : 0;
+                    _this.tonase_1 = r.data[0].tonase_1 ? r.data[0].tonase_1 : 0;
+                    _this.tonase_2 = r.data[0].tonase_2 ? r.data[0].tonase_2 : 0;
                     _this.ritase = r.data[0].ritase ? r.data[0].ritase : 0;
+                    _this.ritase_1 = r.data[0].ritase_1 ? r.data[0].ritase_1 : 0;
+                    _this.ritase_2 = r.data[0].ritase_2 ? r.data[0].ritase_2 : 0;
+                    _this.unit = r.data[0].unit ? r.data[0].unit : 0;
+                    _this.unit_1 = r.data[0].unit_1 ? r.data[0].unit_1 : 0;
+                    _this.unit_2 = r.data[0].unit_2 ? r.data[0].unit_2 : 0;
                 })
                 .catch(function(error) {
                     console.log(JSON.stringify(error));

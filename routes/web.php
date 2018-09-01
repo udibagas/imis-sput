@@ -237,6 +237,7 @@ View::composer('layouts._sidebar', function($view) {
                 'portActivity/productivity' => 'Productivity',
                 'barging/active' => 'Active Barging',
                 'breakdown' => 'Breakdown OCR',
+                'stockDumping/summary' => 'Stock Dumping Summary',
                 'stockDumping' => 'Stock Dumping',
                 'portActivity' => 'Port Activity',
                 'barging' => 'Barging',
@@ -326,6 +327,7 @@ View::composer('layouts._sidebar', function($view) {
     if (auth()->check() && auth()->user()->customer_id) {
         $menus = [
             'DASHBOARD' => ['url' => '/', 'icon' => 'dashboard'],
+            'stockDumping/summary' => ['url' => 'stockDumping/summay', 'icon' => 'bar-chart'],
             'Stock Dumping' => ['url' => 'stockDumping', 'icon' => 'truck'],
             'Active Barging' => ['url' => 'barging/active', 'icon' => 'forward'],
             'Barging' => ['url' => 'barging', 'icon' => 'forward'],
@@ -337,7 +339,7 @@ View::composer('layouts._sidebar', function($view) {
 
     if (auth()->check() && auth()->user()->contractor_id) {
         $menus = [
-            'DASHBOARD' => ['url' => '/', 'icon' => 'dashboard'],
+            'DASHBOARD' => ['url' => 'stockDumping/summary', 'icon' => 'dashboard'],
             'Stock Dumping' => ['url' => 'stockDumping', 'icon' => 'truck'],
             'Stock Balanced' => ['url' => 'materialStock', 'icon' => 'th-large'],
             // 'My Profile' => ['url' => 'profile', 'icon' => 'user'],

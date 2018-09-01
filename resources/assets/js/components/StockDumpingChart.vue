@@ -21,7 +21,7 @@ export default {
                 to: _this.range[1],
             };
 
-            axios.get('stockDumping/chart', {params: params}).then(function(r) {
+            axios.get(BASE_URL + '/stockDumping/chart', {params: params}).then(function(r) {
                 let xAxis = [];
                 let dataRitase = [];
                 let dataTonase = [];

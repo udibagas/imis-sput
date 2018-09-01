@@ -29,7 +29,6 @@ PHASE 2 (atau gak usah phase 2 yang penting bisa termin 2)
 - jadiin halaman dashboard
 
 
-- manually update via web page
 - beresin absensi (download log & export to imis) ==> setelah deal
 - halaman demo buat quitioner ==> ini fitur HSE. tidak wajib
 - module operation
@@ -86,22 +85,9 @@ add last_login on login (tinggal implementasi di action login)
 form class diganti ala vue
 cari lib table vue yg bagus
 
-Customer (owner) => pemilik batu / shipper
-    - Long term
-        - BRE (owner) : KPP (kontraktor/tukang gali) => perlu dipisahkan?
-        - BRE : HRS
-    - Sale / short term
-
-Checker : menghitung yang masuk ke area stock pile
-
-Berapa volume in
-
 
 PR!!!
     - redirect halaman setelah register
-    - delete record lihat dulu kalau dia dipakai table lain (pake foreign key)
-        BELUM:
-        - terminal absensi (location_id)
     - import from excel
     - auth
         - form untuk update policy
