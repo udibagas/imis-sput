@@ -1,44 +1,52 @@
 <template lang="html">
-    <div class="">
-        <div class="panel panel-primary">
-            <div class="panel-heading">
-                BARGING DETAIL
+    <div>
+        <div class="row" v-for="b in bargings">
+            <div class="col-md-4">
+                <div class="panel panel-primary">
+                    <div class="panel-heading">
+                        BARGING DETAIL - JETTY {{b.jetty}}
+                    </div>
+                    <table class="table table-striped table-bordered">
+                        <tbody>
+                            <tr><td>Customer</td><td>{{b.customer}}</td></tr>
+                            <tr><td>Buyer</td><td>{{b.buyer}}</td></tr>
+                            <tr><td>Jetty</td><td>{{b.jetty}}</td></tr>
+                            <tr><td>Barge</td><td>{{b.barge}}</td></tr>
+                            <tr><td>Tugboat</td><td>{{b.tugboat}}</td></tr>
+                            <tr><td>Target Barging</td><td>{{b.volume | formatNumber}} TON</td></tr>
+                            <tr>
+                                <td>Progress</td>
+                                <td>
+                                    {{b.volume_by_bucket_ctrl | formatNumber}} TON ({{(b.volume_by_bucket_ctrl/b.volume*100).toFixed(2)}}%)
+                                </td>
+                            </tr>
+                            <tr><td>Status</td>
+                                <td>
+                                    <span :class="['label', 'label-' + colors[b.status]]">
+                                        {{statuses[b.status]}}
+                                    </span>
+                                </td>
+                            </tr>
+                            <tr><td>Description</td><td>{{b.description}}</td></tr>
+                        </tbody>
+                    </table>
+                </div>
             </div>
-            <table class="table table-striped table-bordered">
-                <tbody>
-                    <tr><td>Customer</td><td>{{barging.customer}}</td></tr>
-                    <tr><td>Buyer</td><td>{{barging.buyer}}</td></tr>
-                    <tr><td>Jetty</td><td>{{barging.jetty}}</td></tr>
-                    <tr><td>Barge</td><td>{{barging.barge}}</td></tr>
-                    <tr><td>Tugboat</td><td>{{barging.tugboat}}</td></tr>
-                    <tr><td>Cargo</td><td v-html="barging.cargo"></td></tr>
-                    <tr><td>Target Barging</td><td>{{barging.volume | formatNumber}} TON</td></tr>
-                    <tr>
-                        <td>Progress</td>
-                        <td>
-                            {{barging.volume_by_bucket_ctrl | formatNumber}} TON ({{barging | getPercentage}}%)
-                        </td>
-                    </tr>
-                    <tr><td>Status</td>
-                        <td>
-                            <span :class="['label', 'label-' + colors[barging.status]]">
-                                {{statuses[barging.status]}}
-                            </span>
-                        </td>
-                    </tr>
-                    <tr><td>Description</td><td>{{barging.description}}</td></tr>
-                </tbody>
-            </table>
+            <div class="col-md-8">
+                <barging-progress :jetty="b.jetty_id" :title="'BARGING PROGRESS - JETTY ' + b.jetty"> </barging-progress>
+            </div>
         </div>
     </div>
 </template>
 
 <script>
+import BargingProgress from './BargingProgress';
+
 export default {
-    props: ['jetty'],
+    components: { BargingProgress },
     data: function() {
         return {
-            barging: {},
+            bargings: [],
             statuses: ["Initiate", "Loading", "Breakdown", "Delay", "Idle", "Complete"],
             colors: ["info", "success", "danger", "warning", "default", "primary"],
         }
@@ -51,23 +59,19 @@ export default {
     methods: {
         requestData: function() {
             var _this = this;
-            var params = {
-                jetty_id: _this.jetty
-            };
-
-            axios.get(BASE_URL + '/barging/active/', {params:params})
+            axios.get(BASE_URL + '/barging/active')
                 .then(function(r) {
-                    _this.barging = r.data;
+                    _this.bargings = r.data;
                 })
                 .catch(function(error){
                     console.log(error);
                 });
 
-            setTimeout(this.requestData, 3000);
+            setTimeout(this.requestData, 5000);
         }
     },
     mounted: function() {
-        setTimeout(this.requestData, 200);
+        this.requestData();
     }
 }
 </script>

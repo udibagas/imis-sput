@@ -41,6 +41,5 @@ Vue.component('stock-dumping-chart', require('./components/StockDumpingChart.vue
 Vue.component('ritase-tonase', require('./components/RitaseTonase.vue'));
 Vue.component('export-form', require('./components/ExportForm.vue'));
 Vue.component('active-barging', require('./components/ActiveBarging.vue'));
-Vue.component('barging-progress', require('./components/BargingProgress.vue'));
 Vue.component('productivity', require('./components/Productivity.vue'));
 Vue.component('jetty', require('./components/Jetty.vue'));

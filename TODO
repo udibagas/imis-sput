@@ -1,5 +1,5 @@
+- halaman dashboard barging tampilkan semua yg aktif
 - productivity per operator per activity
-- update stock dumping dibuat seperti update fuel refill
 - bikin halaman untuk customer
     - dashboard customer
     - barging
@@ -7,7 +7,7 @@
 - tambahin user_id di material_stocks
 - log pake slack (poins.slack.com)
 - selesaikan dwelling time
-- apply logo on app (fuel refill)
+    - tinggal halaman dashboard
 - validasi kalau jam sudah pernah diinput untuk unit terkait di tanggal yg sama
 - benerin tampila di TV. suspect-nya adalah filter atau ( => )
 

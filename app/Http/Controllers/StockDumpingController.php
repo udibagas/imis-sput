@@ -232,8 +232,8 @@ class StockDumpingController extends Controller
             SUM(CASE WHEN shift = 2 THEN volume ELSE 0 END) AS tonase_2,
             SUM(volume) AS tonase,
             COUNT(DISTINCT subcont_unit_id) AS unit,
-            cOUNT(DISTINCT CASE WHEN shift = 1 THEN subcont_unit_id END) AS unit_1,
-            cOUNT(DISTINCT CASE WHEN shift = 2 THEN subcont_unit_id END) AS unit_2,
+            COUNT(DISTINCT CASE WHEN shift = 1 THEN subcont_unit_id END) AS unit_1,
+            COUNT(DISTINCT CASE WHEN shift = 2 THEN subcont_unit_id END) AS unit_2,
             IF(material_type = 'l', 'LOW', 'HIGH') AS entity
         FROM stock_dumpings
         WHERE date BETWEEN ? AND ?
@@ -248,8 +248,8 @@ class StockDumpingController extends Controller
             SUM(CASE WHEN stock_dumpings.shift = 2 THEN stock_dumpings.volume ELSE 0 END) AS tonase_2,
             SUM(stock_dumpings.volume) AS tonase,
             COUNT(DISTINCT stock_dumpings.subcont_unit_id) AS unit,
-            cOUNT(DISTINCT CASE WHEN stock_dumpings.shift = 1 THEN stock_dumpings.subcont_unit_id END) AS unit_1,
-            cOUNT(DISTINCT CASE WHEN stock_dumpings.shift = 2 THEN stock_dumpings.subcont_unit_id END) AS unit_2,
+            COUNT(DISTINCT CASE WHEN stock_dumpings.shift = 1 THEN stock_dumpings.subcont_unit_id END) AS unit_1,
+            COUNT(DISTINCT CASE WHEN stock_dumpings.shift = 2 THEN stock_dumpings.subcont_unit_id END) AS unit_2,
             customers.name AS entity
         FROM stock_dumpings
         JOIN customers ON customers.id = stock_dumpings.customer_id
@@ -265,8 +265,8 @@ class StockDumpingController extends Controller
             SUM(CASE WHEN stock_dumpings.shift = 1 THEN stock_dumpings.volume ELSE 0 END) AS tonase_1,
             SUM(CASE WHEN stock_dumpings.shift = 2 THEN stock_dumpings.volume ELSE 0 END) AS tonase_2,
             COUNT(DISTINCT stock_dumpings.subcont_unit_id) AS unit,
-            cOUNT(DISTINCT CASE WHEN stock_dumpings.shift = 1 THEN stock_dumpings.subcont_unit_id END) AS unit_1,
-            cOUNT(DISTINCT CASE WHEN stock_dumpings.shift = 2 THEN stock_dumpings.subcont_unit_id END) AS unit_2,
+            COUNT(DISTINCT CASE WHEN stock_dumpings.shift = 1 THEN stock_dumpings.subcont_unit_id END) AS unit_1,
+            COUNT(DISTINCT CASE WHEN stock_dumpings.shift = 2 THEN stock_dumpings.subcont_unit_id END) AS unit_2,
             contractors.name AS entity
         FROM stock_dumpings
         JOIN contractors ON contractors.id = stock_dumpings.contractor_id
@@ -282,8 +282,8 @@ class StockDumpingController extends Controller
             SUM(CASE WHEN stock_dumpings.shift = 1 THEN stock_dumpings.volume ELSE 0 END) AS tonase_1,
             SUM(CASE WHEN stock_dumpings.shift = 2 THEN stock_dumpings.volume ELSE 0 END) AS tonase_2,
             COUNT(DISTINCT stock_dumpings.subcont_unit_id) AS unit,
-            cOUNT(DISTINCT CASE WHEN stock_dumpings.shift = 1 THEN stock_dumpings.subcont_unit_id END) AS unit_1,
-            cOUNT(DISTINCT CASE WHEN stock_dumpings.shift = 2 THEN stock_dumpings.subcont_unit_id END) AS unit_2,
+            COUNT(DISTINCT CASE WHEN stock_dumpings.shift = 1 THEN stock_dumpings.subcont_unit_id END) AS unit_1,
+            COUNT(DISTINCT CASE WHEN stock_dumpings.shift = 2 THEN stock_dumpings.subcont_unit_id END) AS unit_2,
             seams.name AS entity
         FROM stock_dumpings
         LEFT JOIN seams ON seams.id = stock_dumpings.seam_id
@@ -299,8 +299,8 @@ class StockDumpingController extends Controller
             SUM(CASE WHEN stock_dumpings.shift = 1 THEN stock_dumpings.volume ELSE 0 END) AS tonase_1,
             SUM(CASE WHEN stock_dumpings.shift = 2 THEN stock_dumpings.volume ELSE 0 END) AS tonase_2,
             COUNT(DISTINCT stock_dumpings.subcont_unit_id) AS unit,
-            cOUNT(DISTINCT CASE WHEN stock_dumpings.shift = 1 THEN stock_dumpings.subcont_unit_id END) AS unit_1,
-            cOUNT(DISTINCT CASE WHEN stock_dumpings.shift = 2 THEN stock_dumpings.subcont_unit_id END) AS unit_2,
+            COUNT(DISTINCT CASE WHEN stock_dumpings.shift = 1 THEN stock_dumpings.subcont_unit_id END) AS unit_1,
+            COUNT(DISTINCT CASE WHEN stock_dumpings.shift = 2 THEN stock_dumpings.subcont_unit_id END) AS unit_2,
             areas.name AS entity
         FROM stock_dumpings
         JOIN stock_areas ON stock_areas.id = stock_dumpings.stock_area_id
@@ -317,8 +317,8 @@ class StockDumpingController extends Controller
             SUM(CASE WHEN stock_dumpings.shift = 1 THEN stock_dumpings.volume ELSE 0 END) AS tonase_1,
             SUM(CASE WHEN stock_dumpings.shift = 2 THEN stock_dumpings.volume ELSE 0 END) AS tonase_2,
             COUNT(DISTINCT stock_dumpings.subcont_unit_id) AS unit,
-            cOUNT(DISTINCT CASE WHEN stock_dumpings.shift = 1 THEN stock_dumpings.subcont_unit_id END) AS unit_1,
-            cOUNT(DISTINCT CASE WHEN stock_dumpings.shift = 2 THEN stock_dumpings.subcont_unit_id END) AS unit_2,
+            COUNT(DISTINCT CASE WHEN stock_dumpings.shift = 1 THEN stock_dumpings.subcont_unit_id END) AS unit_1,
+            COUNT(DISTINCT CASE WHEN stock_dumpings.shift = 2 THEN stock_dumpings.subcont_unit_id END) AS unit_2,
             stock_areas.name AS entity
         FROM stock_dumpings
         JOIN stock_areas ON stock_areas.id = stock_dumpings.stock_area_id
@@ -334,8 +334,8 @@ class StockDumpingController extends Controller
             SUM(CASE WHEN stock_dumpings.shift = 1 THEN stock_dumpings.volume ELSE 0 END) AS tonase_1,
             SUM(CASE WHEN stock_dumpings.shift = 2 THEN stock_dumpings.volume ELSE 0 END) AS tonase_2,
             COUNT(DISTINCT stock_dumpings.subcont_unit_id) AS unit,
-            cOUNT(DISTINCT CASE WHEN stock_dumpings.shift = 1 THEN stock_dumpings.subcont_unit_id END) AS unit_1,
-            cOUNT(DISTINCT CASE WHEN stock_dumpings.shift = 2 THEN stock_dumpings.subcont_unit_id END) AS unit_2,
+            COUNT(DISTINCT CASE WHEN stock_dumpings.shift = 1 THEN stock_dumpings.subcont_unit_id END) AS unit_1,
+            COUNT(DISTINCT CASE WHEN stock_dumpings.shift = 2 THEN stock_dumpings.subcont_unit_id END) AS unit_2,
             subconts.name AS entity
         FROM stock_dumpings
         JOIN subcont_units ON subcont_units.id = stock_dumpings.subcont_unit_id
@@ -367,8 +367,8 @@ class StockDumpingController extends Controller
                 SUM(CASE WHEN shift = 1 THEN volume ELSE 0 END) AS tonase_1,
                 SUM(CASE WHEN shift = 2 THEN volume ELSE 0 END) AS tonase_2,
                 COUNT(DISTINCT subcont_unit_id) AS unit,
-                cOUNT(DISTINCT CASE WHEN shift = 1 THEN subcont_unit_id END) AS unit_1,
-                cOUNT(DISTINCT CASE WHEN shift = 2 THEN subcont_unit_id END) AS unit_2
+                COUNT(DISTINCT CASE WHEN shift = 1 THEN subcont_unit_id END) AS unit_1,
+                COUNT(DISTINCT CASE WHEN shift = 2 THEN subcont_unit_id END) AS unit_2
             FROM stock_dumpings
             WHERE `date` BETWEEN ? AND ? AND $condition";
 
