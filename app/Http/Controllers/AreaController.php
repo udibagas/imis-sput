@@ -27,6 +27,7 @@ class AreaController extends Controller
 
             $area = Area::when($request->searchPhrase, function($query) use ($request) {
                     return $query->where('name', 'LIKE', '%'.$request->searchPhrase.'%')
+                        ->orWhere('group', 'LIKE', '%'.$request->searchPhrase.'%')
                         ->orWhere('description', 'LIKE', '%'.$request->searchPhrase.'%');
                 })->orderBy($sort, $dir)->paginate($pageSize);
 

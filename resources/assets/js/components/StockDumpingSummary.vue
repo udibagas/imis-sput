@@ -1,7 +1,7 @@
 <template>
-    <div class="panel panel-default">
-        <div class="panel-heading">
-            <span class="text-primary">{{header}}</span>
+    <div class="panel panel-primary">
+        <div class="panel-heading text-center">
+            {{header}}
         </div>
         <table class="table table-striped table-hover table-bordered">
             <thead>
@@ -57,7 +57,7 @@
 
 <script>
 export default {
-    props: ['header', 'entity', 'group', 'from', 'to'],
+    props: ['header', 'entity', 'group', 'from', 'to', 'area'],
     data: function() {
         return {
             summaries: [],
@@ -78,7 +78,8 @@ export default {
             var params = {
                 group_by: this.group,
                 from: this.from,
-                to: this.to
+                to: this.to,
+                group_area: this.area
             };
             axios.get(BASE_URL + '/stockDumping/summary', {params: params})
 

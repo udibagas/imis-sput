@@ -33,7 +33,8 @@
                 </div>
             </div>
             <div class="col-md-8">
-                <barging-progress :jetty="b.jetty_id" :title="'BARGING PROGRESS - JETTY ' + b.jetty"> </barging-progress>
+                <barging-progress :barging="b.id" :title="'BARGING PROGRESS - JETTY ' + b.jetty"> </barging-progress>
+                <dwelling-time :barging="b.id" :title="'DWELLING TIME - JETTY ' + b.jetty"> </dwelling-time>
             </div>
         </div>
     </div>
@@ -41,19 +42,15 @@
 
 <script>
 import BargingProgress from './BargingProgress';
+import DwellingTime from './DwellingTime';
 
 export default {
-    components: { BargingProgress },
+    components: { BargingProgress, DwellingTime },
     data: function() {
         return {
             bargings: [],
             statuses: ["Initiate", "Loading", "Breakdown", "Delay", "Idle", "Complete"],
             colors: ["info", "success", "danger", "warning", "default", "primary"],
-        }
-    },
-    filters: {
-        getPercentage: function(v) {
-            return (parseInt(v.volume_by_bucket_ctrl) / parseInt(v.volume) * 100).toFixed(2);
         }
     },
     methods: {

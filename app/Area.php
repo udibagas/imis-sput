@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Area extends Model
 {
-    protected $fillable = ['name', 'capacity', 'description'];
+    protected $fillable = ['name', 'capacity', 'description', 'group'];
 
     protected $with = ['stockArea'];
 

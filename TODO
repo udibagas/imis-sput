@@ -1,15 +1,14 @@
-- halaman dashboard barging tampilkan semua yg aktif
 - productivity per operator per activity
 - bikin halaman untuk customer
-    - dashboard customer
-    - barging
-    - dwelling time
+    - dashboard customer (sementara stock dumping summary)
 - tambahin user_id di material_stocks
 - log pake slack (poins.slack.com)
-- selesaikan dwelling time
-    - tinggal halaman dashboard
 - validasi kalau jam sudah pernah diinput untuk unit terkait di tanggal yg sama
 - benerin tampila di TV. suspect-nya adalah filter atau ( => )
+- stock dumping :
+    - unit_id dan time_start jadi key
+    - import dari excel (input manual) kalau jaringan down
+- draught survey !!!
 
 PHASE 2 (atau gak usah phase 2 yang penting bisa termin 2)
 - daily performance TIDAK TERMASUK SCOPE!!! - phase 2 (dan semua jenis report di excel)

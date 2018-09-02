@@ -31,6 +31,15 @@
                         </div>
                     </div>
 
+                    <div class="form-group" :class="formErrors.group ? 'has-error' : ''">
+                        <label class="control-label col-md-4 col-sm-4 col-xs-12" for="group">Group
+                        </label>
+                        <div class="col-md-8 col-sm-8 col-xs-12">
+                            <input type="text" v-model="formData.group" class="form-control" placeholder="Group">
+                            <span v-if="formErrors.group" class="help-block">@{{formErrors.group[0]}}</span>
+                        </div>
+                    </div>
+
                     <div class="form-group" :class="formErrors.description ? 'has-error' : ''">
                         <label class="control-label col-md-4 col-sm-4 col-xs-12" for="description">Description
                         </label>

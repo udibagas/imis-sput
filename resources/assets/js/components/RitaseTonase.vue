@@ -1,5 +1,8 @@
 <template lang="html">
-    <div class="panel minimal panel-default">
+    <div class="panel panel-primary">
+        <div class="panel-heading text-center">
+            TOTAL SUMMARY
+        </div>
         <table class="table table-bordered">
             <thead>
                 <tr>
@@ -21,15 +24,15 @@
             </thead>
             <tbody>
                 <tr>
-                    <td class="text-center text-primary"><h1 style="margin-top:10px;">{{unit_1 | formatNumber}}</h1></td>
-                    <td class="text-center text-primary"><h1 style="margin-top:10px;">{{unit_2 | formatNumber}}</h1></td>
-                    <td class="text-center text-primary"><h1 style="margin-top:10px;">{{unit | formatNumber}}</h1></td>
-                    <td class="text-center text-primary"><h1 style="margin-top:10px;">{{ritase_1 | formatNumber}}</h1></td>
-                    <td class="text-center text-primary"><h1 style="margin-top:10px;">{{ritase_2 | formatNumber}}</h1></td>
-                    <td class="text-center text-primary"><h1 style="margin-top:10px;">{{ritase | formatNumber}}</h1></td>
-                    <td class="text-center text-primary"><h1 style="margin-top:10px;">{{tonase_1 | formatNumber}}</h1></td>
-                    <td class="text-center text-primary"><h1 style="margin-top:10px;">{{tonase_2 | formatNumber}}</h1></td>
-                    <td class="text-center text-primary"><h1 style="margin-top:10px;">{{tonase | formatNumber}}</h1></td>
+                    <td class="text-center text-primary"><h2>{{unit_1 | formatNumber}}</h2></td>
+                    <td class="text-center text-primary"><h2>{{unit_2 | formatNumber}}</h2></td>
+                    <td class="text-center text-primary"><h2>{{unit | formatNumber}}</h2></td>
+                    <td class="text-center text-primary"><h2>{{ritase_1 | formatNumber}}</h2></td>
+                    <td class="text-center text-primary"><h2>{{ritase_2 | formatNumber}}</h2></td>
+                    <td class="text-center text-primary"><h2>{{ritase | formatNumber}}</h2></td>
+                    <td class="text-center text-primary"><h2>{{tonase_1 | formatNumber}}</h2></td>
+                    <td class="text-center text-primary"><h2>{{tonase_2 | formatNumber}}</h2></td>
+                    <td class="text-center text-primary"><h2>{{tonase | formatNumber}}</h2></td>
                 </tr>
             </tbody>
         </table>
@@ -84,5 +87,8 @@ export default {
 }
 </script>
 
-<style lang="css">
+<style lang="css" scoped>
+    h2 {
+        margin-top: 10px;
+    }
 </style>

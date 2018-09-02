@@ -55,6 +55,16 @@
         :header="'SUMMARY BY SUBCONT'"
         :entity="'Subcont'"></stock-dumping-summary>
 
+    @foreach (App\Area::selectRaw('DISTINCT(`group`) AS g')->get() as $a)
+    <stock-dumping-summary
+        :from="chartRange.from"
+        :to="chartRange.to"
+        :group="'subcont_id'"
+        :area="'{{$a->g}}'"
+        :header="'SUMMARY BY SUBCONT AREA {{$a->g}}'"
+        :entity="'Subcont'"></stock-dumping-summary>
+    @endforeach
+
     <stock-dumping-summary
         :from="chartRange.from"
         :to="chartRange.to"

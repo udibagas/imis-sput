@@ -30,7 +30,8 @@ class AreaRequest extends FormRequest
             'name' => [
                 'required',
                 Rule::unique('areas')->ignore($area ? $area->id : 0)
-            ]
+            ],
+            'group' => 'required'
         ];
     }
 }

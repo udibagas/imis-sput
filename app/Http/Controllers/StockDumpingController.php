@@ -326,6 +326,11 @@ class StockDumpingController extends Controller
             AND $condition
         GROUP BY stock_dumpings.stock_area_id";
 
+        // ini yg butuh grouping
+        if ($request->group_area && $request->group_by == 'subcont_id') {
+            $condition .= " AND areas.group = '{$request->group_area}'";
+        }
+
         $sql['subcont_id'] = "SELECT
             COUNT(stock_dumpings.id) AS ritase,
             SUM(stock_dumpings.shift = 1) AS ritase_1,
@@ -340,6 +345,8 @@ class StockDumpingController extends Controller
         FROM stock_dumpings
         JOIN subcont_units ON subcont_units.id = stock_dumpings.subcont_unit_id
         JOIN subconts ON subconts.id = subcont_units.subcont_id
+        JOIN stock_areas ON stock_areas.id = stock_dumpings.stock_area_id
+        JOIN areas ON areas.id = stock_areas.area_id
         WHERE stock_dumpings.date BETWEEN ? AND ?
             AND $condition
         GROUP BY subcont_units.subcont_id";

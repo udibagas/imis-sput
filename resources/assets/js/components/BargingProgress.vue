@@ -49,7 +49,7 @@
 <script>
 export default {
     name: 'BargingProgress',
-    props: ['jetty', 'title'],
+    props: ['barging', 'title'],
     data: function() {
         return {
             progress: [],
@@ -62,7 +62,7 @@ export default {
         requestData: function() {
             var _this = this;
             var params = {
-                jetty_id: _this.jetty
+                barging_id: _this.barging
             };
 
             axios.get(BASE_URL + '/bargingMaterial', {params:params})
@@ -83,7 +83,7 @@ export default {
                 });
 
             setTimeout(this.requestData, 5000);
-        }
+        },
     },
     mounted: function() {
         this.requestData();

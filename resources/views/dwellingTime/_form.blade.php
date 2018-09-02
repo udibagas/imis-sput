@@ -17,7 +17,7 @@
                         <label class="control-label col-md-3 col-sm-3 col-xs-12" for="time">Time
                         </label>
                         <div class="col-md-9 col-sm-9 col-xs-12">
-                            <vue-datetimepicker data-date-format="YYYY-MM-DD HH:mm" placeholder="Time In" v-model="formData.time">
+                            <vue-datetimepicker data-date-format="YYYY-MM-DD HH:mm" placeholder="Time" v-model="formData.time">
                             </vue-datetimepicker>
                             <span v-if="formErrors.time" class="help-block">@{{formErrors.time[0]}}</span>
                         </div>

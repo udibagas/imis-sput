@@ -78,6 +78,6 @@ class Barging extends Model
     }
 
     public function scopeActive($q) {
-        return $q->where('status', '!=', self::STATUS_COMPLETE);
+        return $q->where('bargings.status', '!=', self::STATUS_COMPLETE);
     }
 }

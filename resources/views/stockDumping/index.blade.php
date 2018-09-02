@@ -10,6 +10,9 @@
                 @can('create', App\StockDumping::class)
                 <a href="#" @click="add" class="btn btn-primary"><i class="icon-plus-circled"></i></a>
                 @endcan
+                @can('create', App\StockDumping::class)
+                <a href="#" class="btn btn-primary"><i class="fa fa-upload"></i> IMPORT</a>
+                @endcan
                 <a href="{{url('stockDumping/downloadApp')}}" class="btn btn-primary"><i class="fa fa-android"></i> DOWNLOAD APLIKASI CHECKER</a>
                 @can('export', App\StockDumping::class)
                 <a href="#" @click="openExportForm" class="btn btn-primary"><i class="fa fa-file-excel-o"></i> EXPORT</a>
