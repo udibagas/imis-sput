@@ -204,7 +204,7 @@ class PortActivityController extends Controller
                 SUM(volume) /1000 AS total,
                 SUM(CASE WHEN port_activities.unit_activity_id = ".PortActivity::ACT_FEEDING." THEN COALESCE(volume, 0) ELSE 0 END) / 1000 AS feeding,
                 SUM(CASE WHEN port_activities.unit_activity_id = ".PortActivity::ACT_LOAD_AND_CARRY." THEN COALESCE(volume, 0) ELSE 0 END) / 1000 AS load_and_carry,
-                SUM(CASE WHEN port_activities.unit_activity_id = ".PortActivity::ACT_LOADING." THEN COALESCE(volume, 0) ELSE 0 END) / 000 AS loading,
+                SUM(CASE WHEN port_activities.unit_activity_id = ".PortActivity::ACT_LOADING." THEN COALESCE(volume, 0) ELSE 0 END) / 1000 AS loading,
                 SUM(CASE WHEN port_activities.unit_activity_id = ".PortActivity::ACT_STOCKPILING." THEN COALESCE(volume, 0) ELSE 0 END) / 1000 AS stock_piling,
                 SUM(CASE WHEN port_activities.unit_activity_id = ".PortActivity::ACT_HAULING." THEN COALESCE(volume, 0) ELSE 0 END) / 1000 hauling
                 FROM port_activities
@@ -219,7 +219,6 @@ class PortActivityController extends Controller
         return view('portActivity.productivity', [
             'breadcrumbs' => [
                 'operation' => 'Operation',
-
                 'portActivity/productivity' => 'Productivity'
             ]
         ]);
