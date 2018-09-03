@@ -327,7 +327,7 @@ View::composer('layouts._sidebar', function($view) {
     if (auth()->check() && auth()->user()->customer_id) {
         $menus = [
             'DASHBOARD' => ['url' => '/', 'icon' => 'dashboard'],
-            'stockDumping/summary' => ['url' => 'stockDumping/summary', 'icon' => 'bar-chart'],
+            'Stock Dumping Summary' => ['url' => 'stockDumping/summary', 'icon' => 'bar-chart'],
             'Stock Dumping' => ['url' => 'stockDumping', 'icon' => 'truck'],
             'Active Barging' => ['url' => 'barging/active', 'icon' => 'forward'],
             'Stock Balanced' => ['url' => 'materialStock', 'icon' => 'th-large'],
