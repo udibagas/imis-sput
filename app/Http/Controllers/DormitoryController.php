@@ -117,9 +117,23 @@ class DormitoryController extends Controller
         return Dormitory::all();
     }
 
-    // public function getAvailability()
-    // {
-    //     return DB::select('SELECT COUNT(id) FROM dormitory_rooms')
-    // }
+    public function availability()
+    {
+        $totalCapacity = 0;
+        $totalReserved = 0;
+
+        foreach (Dormitory::all() as $d) {
+            foreach ($d->rooms as $r) {
+                $totalCapacity += $r->capacity;
+                $totalReserved += $r->reserved;
+            }
+        }
+
+        return [
+            'c' => $totalCapacity,
+            'r' => $totalReserved,
+            'a' =>  $totalCapacity - $totalReserved,
+        ];
+    }
 
 }

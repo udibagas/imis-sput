@@ -1,74 +1,55 @@
 @extends('layouts.app')
 
 @section('content')
-
-<div class="row" id="app">
-    <div class="col-md-3">
-        <div class="panel panel-default">
-            <div class="panel-heading">
-                EMPLOYEE ON LEAVE
-            </div>
-            <div class="panel-body">
-
-            </div>
-        </div>
-    </div>
-    <div class="col-md-9">
-        <div class="panel panel-primary">
-            <div class="panel-body">
-                <h3 class="pull-left text-primary">EMPLOYEE <small>Manage</small></h3>
-                <span class="pull-right" style="margin:15px 0 15px 10px;">
-                    @can('create', App\Employee::class)
-                    <a href="#" @click="add" class="btn btn-primary"><i class="icon-plus-circled"></i></a>
-                    @endcan
-                    @can('export', App\Employee::class)
-                    <a href="{{url('employee/export')}}" class="btn btn-primary"><i class="fa fa-file-excel-o"></i> EXPORT</a>
-                    @endcan
-                    @can('export', App\Employee::class)
-                    <a href="{{url('employee/generateNameTag')}}" class="btn btn-primary" target="_blank"><i class="icon-credit-card"></i> Generate Name Tag</a>
-                    @endcan
-                </span>
-                <table class="table table-striped table-hover " id="bootgrid" style="border-top:2px solid #ddd">
-                    <thead>
-                        <tr>
-                            <th data-column-id="id" data-width="3%">ID</th>
-                            <th data-column-id="name">Name</th>
-                            <th data-column-id="nrp">NRP</th>
-                            <th data-column-id="department">Department</th>
-                            <th data-column-id="position">Position</th>
-                            <th data-column-id="employer">Employer</th>
-                            <th data-column-id="office">Office</th>
-                            <th data-column-id="dormitory">Dormitory</th>
-                            <th data-column-id="room">Room</th>
-                            <!-- <th data-column-id="status">Status</th> -->
-                            @can('updateOrDelete', App\Employee::class)
-                            <th data-column-id="commands"
-                                data-formatter="commands"
-                                data-sortable="false"
-                                data-align="right"
-                                data-header-align="right"></th>
-                            @endcan
-                        </tr>
-                    </thead>
-                </table>
-            </div>
-
-            @can('createOrUpdate', App\Employee::class)
-            @include('employee._form')
+<div class="panel panel-primary" id="app">
+    <div class="panel-body">
+        <h3 class="pull-left text-primary">EMPLOYEE <small>Manage</small></h3>
+        <span class="pull-right" style="margin:15px 0 15px 10px;">
+            @can('create', App\Employee::class)
+            <a href="#" @click="add" class="btn btn-primary"><i class="icon-plus-circled"></i></a>
             @endcan
-
-        </div>
+            @can('export', App\Employee::class)
+            <a href="{{url('employee/export')}}" class="btn btn-primary"><i class="fa fa-file-excel-o"></i> EXPORT</a>
+            @endcan
+            @can('export', App\Employee::class)
+            <a href="{{url('employee/generateNameTag')}}" class="btn btn-primary" target="_blank"><i class="icon-credit-card"></i> Generate Name Tag</a>
+            @endcan
+        </span>
+        <table class="table table-striped table-hover " id="bootgrid" style="border-top:2px solid #ddd">
+            <thead>
+                <tr>
+                    <th data-column-id="id" data-width="3%">ID</th>
+                    <th data-column-id="name">Name</th>
+                    <th data-column-id="nrp">NRP</th>
+                    <th data-column-id="department">Department</th>
+                    <th data-column-id="position">Position</th>
+                    <th data-column-id="employer">Employer</th>
+                    <th data-column-id="office">Office</th>
+                    <th data-column-id="dormitory">Dormitory</th>
+                    <th data-column-id="room">Room</th>
+                    <!-- <th data-column-id="status">Status</th> -->
+                    @can('updateOrDelete', App\Employee::class)
+                    <th data-column-id="commands"
+                        data-formatter="commands"
+                        data-sortable="false"
+                        data-align="right"
+                        data-header-align="right"></th>
+                    @endcan
+                </tr>
+            </thead>
+        </table>
     </div>
-</div>
 
+    @can('createOrUpdate', App\Employee::class)
+    @include('employee._form')
+    @endcan
+
+</div>
 @endsection
 
 @push('scripts')
-
 <script type="text/javascript">
-
 $('.page-container').addClass('sidebar-collapsed');
-
 const app = new Vue({
     el: '#app',
     data: {
@@ -228,7 +209,5 @@ const app = new Vue({
 
     }
 });
-
 </script>
-
 @endpush

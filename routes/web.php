@@ -71,6 +71,7 @@ Route::group(['middleware' => 'auth'], function() {
     Route::resource('defaultMaterial', 'DefaultMaterialController')->except(['edit', 'create']);
     Route::resource('department', 'DepartmentController')->except(['edit', 'create']);
 
+    Route::get('dormitory/availability', 'DormitoryController@availability');
     Route::get('dormitory/getAllData', 'DormitoryController@getAllData');
     Route::resource('dormitory', 'DormitoryController')->except(['edit', 'create']);
 

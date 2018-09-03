@@ -11,15 +11,15 @@
             <div class="panel-body">
                 <div class="row col-with-divider">
                     <div class="col-xs-4 text-center stack-order text-primary">
-                        <h1 class="no-margins">@{{capacity}}</h1>
+                        <h1 class="no-margins">@{{availability.c}}</h1>
                         CAPACITY
                     </div>
                     <div class="col-xs-4 text-center stack-order text-danger">
-                        <h1 class="no-margins">@{{reserved}}</h1>
+                        <h1 class="no-margins">@{{availability.r}}</h1>
                         RESERVED
                     </div>
                     <div class="col-xs-4 text-center stack-order text-success">
-                        <h1 class="no-margins">@{{capacity - reserved}}</h1>
+                        <h1 class="no-margins">@{{availability.a}}</h1>
                         AVAILABLE
                     </div>
                 </div>
@@ -159,8 +159,7 @@ const app = new Vue({
             3: 'default'
         },
         dataFilter: 'all',
-        capacity: 0,
-        reserved: 0
+        availability: {c: 0, r: 0, a: 0}
     },
     watch: {
         dataFilter: function(v, o) {
@@ -186,6 +185,18 @@ const app = new Vue({
 
             axios.get('{{url("dormitoryReservation/lewatMasaCuti")}}').then(function(r) {
                 _this.lewatMasaCuti = r.data;
+            })
+
+            .catch(function(error) {
+                var error = error.response.data;
+                toastr["error"](error.message + ". " + error.file + ":" + error.line)
+            });
+        },
+        getAvailability: function() {
+            var _this = this;
+
+            axios.get('{{url("dormitory/availability")}}').then(function(r) {
+                _this.availability = r.data;
             })
 
             .catch(function(error) {
@@ -322,6 +333,7 @@ const app = new Vue({
         var t = this;
         t.getDormitoryData();
         t.getLewatMasaCuti();
+        t.getAvailability();
 
         var grid = $('#bootgrid').bootgrid({
             statusMapping: t.statusMapping,
