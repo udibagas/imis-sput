@@ -27,29 +27,47 @@
                         <label class="control-label col-md-4 col-sm-4 col-xs-12" for="asset_id">Asset
                         </label>
                         <div class="col-md-8 col-sm-8 col-xs-12">
-                            <select2 :options="assets" v-model="formData.asset_id" data-placeholder="Asset">
+                            <select2 :options="assets" v-model="formData.asset_id" data-placeholder="Asset" :readonly="formData.id">
                             </select2>
                             <span v-if="formErrors.asset_id" class="help-block">@{{formErrors.asset_id[0]}}</span>
                         </div>
                     </div>
 
-                    <div :class="['form-group', formErrors.asset_location_id ? 'has-error' : '']">
-                        <label class="control-label col-md-4 col-sm-4 col-xs-12" for="asset_location_id">Location
+                    <div class="form-group">
+                        <label class="control-label col-md-4 col-sm-4 col-xs-12" for="old_asset_location_id">Current Location
                         </label>
                         <div class="col-md-8 col-sm-8 col-xs-12">
-                            <select2 :options="locations" v-model="formData.asset_location_id" data-placeholder="Location">
+                            <select2 :options="locations" v-model="formData.old_asset_location_id" data-placeholder="Current Location" readonly>
                             </select2>
-                            <span v-if="formErrors.asset_location_id" class="help-block">@{{formErrors.asset_location_id[0]}}</span>
                         </div>
                     </div>
 
-                    <div :class="['form-group', formErrors.asset_status_id ? 'has-error' : '']">
-                        <label class="control-label col-md-4 col-sm-4 col-xs-12" for="asset_status_id">Status
+                    <div :class="['form-group', formErrors.new_asset_location_id ? 'has-error' : '']">
+                        <label class="control-label col-md-4 col-sm-4 col-xs-12" for="new_asset_location_id">New Location
                         </label>
                         <div class="col-md-8 col-sm-8 col-xs-12">
-                            <select2 :options="statuses" v-model="formData.asset_status_id" data-placeholder="Status">
+                            <select2 :options="locations" v-model="formData.new_asset_location_id" data-placeholder="New Location">
                             </select2>
-                            <span v-if="formErrors.asset_status_id" class="help-block">@{{formErrors.asset_status_id[0]}}</span>
+                            <span v-if="formErrors.new_asset_location_id" class="help-block">@{{formErrors.new_asset_location_id[0]}}</span>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="control-label col-md-4 col-sm-4 col-xs-12" for="old_asset_status_id">Current Status
+                        </label>
+                        <div class="col-md-8 col-sm-8 col-xs-12">
+                            <select2 :options="statuses" v-model="formData.old_asset_status_id" data-placeholder="Current Status" readonly>
+                            </select2>
+                        </div>
+                    </div>
+
+                    <div :class="['form-group', formErrors.new_asset_status_id ? 'has-error' : '']">
+                        <label class="control-label col-md-4 col-sm-4 col-xs-12" for="new_asset_status_id">New Status
+                        </label>
+                        <div class="col-md-8 col-sm-8 col-xs-12">
+                            <select2 :options="statuses" v-model="formData.new_asset_status_id" data-placeholder="New Status">
+                            </select2>
+                            <span v-if="formErrors.new_asset_status_id" class="help-block">@{{formErrors.new_asset_status_id[0]}}</span>
                         </div>
                     </div>
 

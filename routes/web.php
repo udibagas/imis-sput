@@ -270,7 +270,7 @@ View::composer('layouts._sidebar', function($view) {
                 'hcgs' => 'Dashboard',
                 'absensi' => 'Absensi',
                 'asset' => 'Asset Management',
-                // 'assetTaking' => 'Asset Taking',
+                'assetTaking' => 'Asset Taking',
                 'meal' => 'Catering Management',
                 'dormitoryReservation' => 'Dormitory Management',
                 'employee' => 'Employee Managemet',

@@ -29,16 +29,22 @@ class AssetTakingRequest extends FormRequest
         return [
             'date' => 'required|date',
             'asset_id' => 'required',
-            'asset_location_id' => 'required',
-            'asset_status_id' => 'required'
+            'old_asset_location_id' => 'required',
+            'old_asset_status_id' => 'required',
+            'new_asset_location_id' => 'required',
+            'new_asset_status_id' => 'required',
         ];
     }
 
     public function attributes()
     {
         return [
-            'name' => 'Name',
-            'pic' => 'PIC'
+            'date' => 'Date',
+            'asset_id' => 'Asset',
+            'old_asset_location_id' => 'Current Location',
+            'old_asset_status_id' => 'Current Status',
+            'new_asset_location_id' => 'New Location',
+            'new_asset_status_id' => 'New Status',
         ];
     }
 }

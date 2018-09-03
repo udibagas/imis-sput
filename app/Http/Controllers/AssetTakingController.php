@@ -29,13 +29,17 @@ class AssetTakingController extends Controller
             $assetTaking = AssetTaking::selectRaw('
                     asset_takings.*,
                     assets.*,
-                    asset_locations.name AS location,
-                    asset_statuses.code AS status,
+                    al_old.name AS old_location,
+                    as_old.code AS old_status,
+                    al_new.name AS new_location,
+                    as_new.code AS new_status,
                     users.name AS user
                 ')
                 ->join('assets', 'assets.id', '=', 'asset_takings.asset_id')
-                ->join('asset_locations', 'asset_locations.id', '=', 'assets.asset_location_id')
-                ->join('asset_statuses', 'asset_statuses.id', '=', 'assets.asset_status_id')
+                ->join('asset_locations AS al_old', 'al_old.id', '=', 'asset_takings.old_asset_location_id')
+                ->join('asset_statuses AS as_old', 'as_old.id', '=', 'asset_takings.old_asset_status_id')
+                ->join('asset_locations AS al_new', 'al_new.id', '=', 'asset_takings.new_asset_location_id')
+                ->join('asset_statuses AS as_new', 'as_new.id', '=', 'asset_takings.new_asset_status_id')
                 ->join('users', 'users.id', '=', 'asset_takings.user_id')
                 ->when($request->searchPhrase, function($query) use ($request) {
                     return $query->where('assets.name', 'LIKE', '%'.$request->searchPhrase.'%')
@@ -44,12 +48,7 @@ class AssetTakingController extends Controller
                         ->orWhere('assets.reg_no', 'LIKE', '%'.$request->searchPhrase.'%')
                         ->orWhere('assets.trademark', 'LIKE', '%'.$request->searchPhrase.'%')
                         ->orWhere('assets.version', 'LIKE', '%'.$request->searchPhrase.'%')
-                        ->orWhere('assets.sn', 'LIKE', '%'.$request->searchPhrase.'%')
-                        ->orWhere('assets.lifetime', 'LIKE', '%'.$request->searchPhrase.'%')
-                        ->orWhere('assets.price', 'LIKE', '%'.$request->searchPhrase.'%')
-                        ->orWhere('assets.year', 'LIKE', '%'.$request->searchPhrase.'%')
-                        ->orWhere('asset_statuses.code', 'LIKE', '%'.$request->searchPhrase.'%')
-                        ->orWhere('asset_locations.name', 'LIKE', '%'.$request->searchPhrase.'%');
+                        ->orWhere('assets.sn', 'LIKE', '%'.$request->searchPhrase.'%');
                 })->orderBy($sort, $dir)->paginate($pageSize);
 
             return [
@@ -82,8 +81,8 @@ class AssetTakingController extends Controller
         $assetTaking = AssetTaking::create($input);
 
         $assetTaking->asset()->update([
-            'asset_location_id' => $request->asset_location_id,
-            'asset_status_id' => $request->asset_status_id,
+            'asset_location_id' => $request->new_asset_location_id,
+            'asset_status_id' => $request->new_asset_status_id,
         ]);
 
         return $assetTaking;
@@ -114,8 +113,8 @@ class AssetTakingController extends Controller
         $assetTaking->update($request->all());
 
         $assetTaking->asset()->update([
-            'asset_location_id' => $request->asset_location_id,
-            'asset_status_id' => $request->asset_status_id,
+            'asset_location_id' => $request->new_asset_location_id,
+            'asset_status_id' => $request->new_asset_status_id,
         ]);
 
         return $assetTaking;
