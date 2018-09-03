@@ -248,7 +248,7 @@ const app = new Vue({
                 $('#modal-form').modal('hide');
                 toastr["success"]("Data berhasil ditambahkan");
                 $('#bootgrid').bootgrid('reload');
-                _this.getDormitoryData();
+                _this.refreshData();
             })
 
             .catch(function(error) {
@@ -286,7 +286,7 @@ const app = new Vue({
                 $('#modal-form').modal('hide');
                 toastr["success"]("Data berhasil diupdate");
                 $('#bootgrid').bootgrid('reload');
-                _this.getDormitoryData();
+                _this.refreshData();
             })
 
             .catch(function(error) {
@@ -314,7 +314,7 @@ const app = new Vue({
                             if (r.data.success == true) {
                                 toastr["success"]("Data berhasil dihapus");
                                 $('#bootgrid').bootgrid('reload');
-                                _this.getDormitoryData();
+                                _this.refreshData();
                             } else {
                                 toastr["error"]("Data gagal dihapus. " + r.data.message);
                             }
@@ -328,12 +328,15 @@ const app = new Vue({
                 }
             });
         },
+        refreshData: function() {
+            this.getDormitoryData();
+            this.getLewatMasaCuti();
+            this.getAvailability();
+        }
     },
     mounted: function() {
         var t = this;
-        t.getDormitoryData();
-        t.getLewatMasaCuti();
-        t.getAvailability();
+        t.refreshData();
 
         var grid = $('#bootgrid').bootgrid({
             statusMapping: t.statusMapping,
