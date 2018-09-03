@@ -33,22 +33,10 @@
         <div class="panel minimal panel-default">
             <div class="panel-body">
                 <div class="row col-with-divider">
-                    <div class="col-xs-3 text-center stack-order text-success">
-                        <h1 class="no-margins">1</h1>
-						BAIK
+                    <div class="col-xs-3 text-center stack-order" v-for="s in summaries">
+                        <h1 class="no-margins">@{{s.total}}</h1>
+                        [@{{s.code}}] @{{s.description}}
 					</div>
-                    <div class="col-xs-3 text-center stack-order text-muted">
-                        <h1 class="no-margins">2</h1>
-						HILANG/TIDAK ADA/MUTASI
-                    </div>
-                    <div class="col-xs-3 text-center stack-order text-warning">
-                        <h1 class="no-margins">3</h1>
-						RUSAK BISA DIPERBAIKI
-                    </div>
-                    <div class="col-xs-3 text-center stack-order text-danger">
-                        <h1 class="no-margins">3</h1>
-						RUSAK/DISPOSAL
-                    </div>
                 </div>
             </div>
         </div>
@@ -131,6 +119,7 @@ const app = new Vue({
         formData: {},
         formErrors: {},
         formTitle: '',
+        summaries: [],
         error: {},
         statuses: {!! App\AssetStatus::selectRaw('id AS id, CONCAT(code, " - ", description) AS text')->orderBy('code', 'ASC')->get() !!},
         locations: {!! App\AssetLocation::selectRaw('id AS id, name AS text')->orderBy('name', 'ASC')->get() !!},
@@ -235,10 +224,20 @@ const app = new Vue({
                 .toString()
                 .replace(/\B(?=(\d{3})+(?!\d))/g, ",");
         },
+        getSummary: function() {
+            var _this = this;
+            axios.get('{{url("asset/summary")}}')
+                .then(function(r) {
+                    return _this.summaries = r.data;
+                })
+                .catch(function(e) {
+                    console.log(e);
+                });
+        }
     },
     mounted: function() {
-
         var t = this;
+        t.getSummary();
 
         var grid = $('#bootgrid').bootgrid({
             statusMapping: {

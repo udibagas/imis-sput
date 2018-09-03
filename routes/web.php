@@ -32,6 +32,7 @@ Route::group(['middleware' => 'auth'], function() {
     Route::get('asset/generateQrCode/{asset}', 'AssetController@generateQrCode');
     Route::get('asset/generateQrCode', 'AssetController@generateQrCode');
     Route::get('asset/export', 'AssetController@export');
+    Route::get('asset/summary', 'AssetController@summary');
     Route::resource('asset', 'AssetController')->except(['edit', 'create']);
 
     Route::resource('assetLocation', 'AssetLocationController')->except(['edit', 'create']);

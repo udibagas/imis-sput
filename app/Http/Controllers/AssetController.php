@@ -7,6 +7,7 @@ use App\Asset;
 use App\Http\Requests\AssetRequest;
 use App\Exports\AssetExport;
 use Excel;
+use DB;
 
 class AssetController extends Controller
 {
@@ -123,5 +124,16 @@ class AssetController extends Controller
             : Asset::orderBy('reg_no', 'ASC')->get();
 
         return view('asset.qrcode', ['assets' => $assets]);
+    }
+
+    public function summary()
+    {
+        $sql = "SELECT
+                s.code AS code,
+                s.description AS description,
+                (SELECT COUNT(id) FROM assets WHERE asset_status_id = s.id) AS total
+            FROM asset_statuses s";
+
+        return DB::select($sql);
     }
 }
