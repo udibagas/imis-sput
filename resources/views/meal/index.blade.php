@@ -162,6 +162,9 @@
                     @endcan
                 </form>
                 <hr>
+                <div class="pull-right">
+                    <input type="text" v-model="search" class="form-control" placeholder="Search Employee">
+                </div>
                 <h3 class="text-danger">Date: @{{date}}</h3>
                 <table class="table table-striped table-hover " id="bootgrid" style="border-top:2px solid #ddd">
                     <thead>
@@ -184,7 +187,7 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <tr v-for="(d,i) in mealData">
+                        <tr v-for="(d,i) in mealData.filter(d => d.name.toLowerCase().includes(search))">
                             <!-- <td> @{{d.nrp}} </td> -->
                             <td>
                                 <input type="hidden" v-model="formData.employee_id[i]">
@@ -251,6 +254,7 @@ $('.page-container').addClass('sidebar-collapsed');
 const app = new Vue({
     el: '#app',
     data: {
+        search: '',
         summary: {
             total: 0,
             confirmed: 0,
