@@ -21,7 +21,18 @@ class Barging extends Model
     ];
 
     protected $with = ['bargingMaterial'];
-    protected $appends = ['cargo', 'volume_by_bucket_ctrl'];
+    protected $appends = ['cargo', 'volume_by_bucket_ctrl', 'duration'];
+
+    public function getDurationAttribute()
+    {
+        if ($this->stop) {
+            $start = date_create($this->start);
+            $stop = date_create($this->stop);
+            return date_diff($start, $stop)->format('%dd:%hh:%im');
+        }
+
+        return '';
+    }
 
     public function getVolumeByBucketCtrlAttribute() {
         $sql = "SELECT (SUM(volume_progress) DIV 1000) AS v FROM barging_materials WHERE barging_id = ?";
