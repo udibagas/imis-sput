@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\DwellingTime;
 use App\Http\Requests\DwellingTimeRequest;
+use App\Barging;
 
 class DwellingTimeController extends Controller
 {
@@ -65,12 +66,17 @@ class DwellingTimeController extends Controller
         $input['user_id'] = auth()->user()->id;
         $dwellingTime = DwellingTime::create($input);
 
-        $dwellingTime->barging()->update([
+        $bargingData = [
             'status' => $request->status,
             'description' => $request->description,
             'jetty_id' => $request->jetty_id
-        ]);
+        ];
 
+        if ($request->status == Barging::STATUS_COMPLETE) {
+            $bargingData['stop'] = $request->time;
+        }
+
+        $dwellingTime->barging()->update($bargingData);
         return $dwellingTime;
     }
 
@@ -98,12 +104,17 @@ class DwellingTimeController extends Controller
         $this->authorize('update', DwellingTime::class);
         $dwellingTime->update($request->all());
 
-        $dwellingTime->barging()->update([
+        $bargingData = [
             'status' => $request->status,
             'description' => $request->description,
             'jetty_id' => $request->jetty_id
-        ]);
-        
+        ];
+
+        if ($request->status == Barging::STATUS_COMPLETE) {
+            $bargingData['stop'] = $request->time;
+        }
+
+        $dwellingTime->barging()->update($bargingData);
         return $dwellingTime;
     }
 

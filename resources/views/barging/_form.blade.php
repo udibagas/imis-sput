@@ -101,6 +101,7 @@
                                 <th>Seam</th>
                                 <th>Target Barging (Ton)</th>
                                 <th>Progress By Bucket Control (Ton)</th>
+                                <th>Volume By Draught Survey (Ton)</th>
                                 <th>
                                     <button type="button" class="btn btn-info" @click="addCargo"><i class="icon-plus"></i></button>
                                 </th>
@@ -128,6 +129,9 @@
                                 </td>
                                 <td>
                                     <input type="number" step="any" v-model="formData.barging_material[i].volume_progress" class="form-control">
+                                </td>
+                                <td>
+                                    <input type="number" step="any" v-model="formData.barging_material[i].volume_by_draught_survey" class="form-control">
                                 </td>
                                 <td>
                                     <button type="button" @click="delCargo(i)" class="btn btn-danger"><i class="icon-trash"></i></button>
