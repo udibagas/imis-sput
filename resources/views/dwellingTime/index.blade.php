@@ -75,7 +75,9 @@ const app = new Vue({
         add: function() {
             // reset the form
             this.formTitle = "ADD DWELLING TIME";
-            this.formData = {};
+            this.formData = {
+                time: '{{date("Y-m-d H:i")}}'
+            };
             this.formErrors = {};
             this.error = {};
             // open form
