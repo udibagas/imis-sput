@@ -2,7 +2,7 @@
     <table class="table table-bordered table-striped">
         <thead>
             <tr>
-                <th>UNIT</th>
+                <th>{{group.toUpperCase()}}</th>
                 <th>SHIFT</th>
                 <th>FEEDING</th>
                 <th>LOAD AND CARRY</th>
@@ -14,7 +14,7 @@
         </thead>
         <tbody>
             <tr v-for="p in productivities">
-                <td>{{p.unit}}</td>
+                <td style="text-align:left;">{{p.entity}}</td>
                 <td>{{p.shift}}</td>
                 <td>{{p.feeding | formatNumber}}</td>
                 <td>{{p.load_and_carry | formatNumber}}</td>
@@ -40,7 +40,7 @@
 
 <script>
 export default {
-    props: ['from', 'to'],
+    props: ['from', 'to', 'group'],
     data: function() {
         return {
             productivities: [],
@@ -58,6 +58,7 @@ export default {
             let params = {
                 from: this.from,
                 to: this.to,
+                group: this.group,
             }
             axios.get(BASE_URL + '/portActivity/productivity', {params: params}).then(function(r) {
                 _this.productivities = r.data

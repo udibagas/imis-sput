@@ -55,10 +55,9 @@ class PortActivityController extends Controller
                 ->join('users', 'users.id', '=', 'port_activities.user_id', 'LEFT')
                 ->when($request->searchPhrase, function($query) use ($request) {
                     return $query->where('units.name', 'LIKE', '%'.$request->searchPhrase.'%')
-                        ->where('employees.name', 'LIKE', '%'.$request->searchPhrase.'%')
-                        ->where('customers.name', 'LIKE', '%'.$request->searchPhrase.'%')
-                        ->where('unit_activities.name', 'LIKE', '%'.$request->searchPhrase.'%')
-                        ->where('stock_areas.name', 'LIKE', '%'.$request->searchPhrase.'%');
+                        ->orWhere('employees.name', 'LIKE', '%'.$request->searchPhrase.'%')
+                        ->orWhere('customers.name', 'LIKE', '%'.$request->searchPhrase.'%')
+                        ->orWhere('stock_areas.name', 'LIKE', '%'.$request->searchPhrase.'%');
                 })->orderBy($sort, $dir)->paginate($pageSize);
 
             return [
@@ -198,22 +197,48 @@ class PortActivityController extends Controller
             $from = $request->from ? $request->from : date('Y-m-01');
             $to = $request->to ? $request->to : date('Y-m-d');
 
-            $sql = "SELECT
-                units.name AS unit,
-                port_activities.shift,
+            $feeding = PortActivity::ACT_FEEDING;
+            $loadAndCarry = PortActivity::ACT_LOAD_AND_CARRY;
+            $loading = PortActivity::ACT_LOADING;
+            $stockPiling = PortActivity::ACT_STOCKPILING;
+            $hauling = PortActivity::ACT_HAULING;
+
+            $sql_unit = "SELECT
+                units.name AS entity,
+                pa.shift,
                 SUM(volume) /1000 AS total,
-                SUM(CASE WHEN port_activities.unit_activity_id = ".PortActivity::ACT_FEEDING." THEN COALESCE(volume, 0) ELSE 0 END) / 1000 AS feeding,
-                SUM(CASE WHEN port_activities.unit_activity_id = ".PortActivity::ACT_LOAD_AND_CARRY." THEN COALESCE(volume, 0) ELSE 0 END) / 1000 AS load_and_carry,
-                SUM(CASE WHEN port_activities.unit_activity_id = ".PortActivity::ACT_LOADING." THEN COALESCE(volume, 0) ELSE 0 END) / 1000 AS loading,
-                SUM(CASE WHEN port_activities.unit_activity_id = ".PortActivity::ACT_STOCKPILING." THEN COALESCE(volume, 0) ELSE 0 END) / 1000 AS stock_piling,
-                SUM(CASE WHEN port_activities.unit_activity_id = ".PortActivity::ACT_HAULING." THEN COALESCE(volume, 0) ELSE 0 END) / 1000 hauling
-                FROM port_activities
-                JOIN units ON units.id = port_activities.unit_id
-                WHERE `port_activities`.`date` BETWEEN ? AND ?
-                GROUP BY port_activities.unit_id, shift
+                SUM(CASE WHEN pa.unit_activity_id = ".$feeding." THEN COALESCE(volume, 0) ELSE 0 END) / 1000 AS feeding,
+                SUM(CASE WHEN pa.unit_activity_id = ".$loadAndCarry." THEN COALESCE(volume, 0) ELSE 0 END) / 1000 AS load_and_carry,
+                SUM(CASE WHEN pa.unit_activity_id = ".$loading." THEN COALESCE(volume, 0) ELSE 0 END) / 1000 AS loading,
+                SUM(CASE WHEN pa.unit_activity_id = ".$stockPiling." THEN COALESCE(volume, 0) ELSE 0 END) / 1000 AS stock_piling,
+                SUM(CASE WHEN pa.unit_activity_id = ".$hauling." THEN COALESCE(volume, 0) ELSE 0 END) / 1000 hauling
+                FROM port_activities pa
+                JOIN units ON units.id = pa.unit_id
+                WHERE `pa`.`date` BETWEEN ? AND ?
+                GROUP BY pa.unit_id, shift
             ";
 
-            return DB::select($sql, [$from, $to]);
+            $sql_operator = "SELECT
+                employees.name AS entity,
+                pa.shift,
+                SUM(volume) / 1000 / SUM(TIME_TO_SEC(TIMEDIFF(pa.time_end, pa.time_start)) / 3600) AS total,
+                SUM(CASE WHEN pa.unit_activity_id = ".$feeding." THEN COALESCE(volume, 0) ELSE 0 END) / 1000 /
+                    SUM(CASE WHEN pa.unit_activity_id = ".$feeding." THEN TIME_TO_SEC(TIMEDIFF(pa.time_end, pa.time_start)) / 3600 ELSE 1 END) AS feeding,
+                SUM(CASE WHEN pa.unit_activity_id = ".$loadAndCarry." THEN COALESCE(volume, 0) ELSE 0 END) / 1000 /
+                    SUM(CASE WHEN pa.unit_activity_id = ".$loadAndCarry." THEN TIME_TO_SEC(TIMEDIFF(pa.time_end, pa.time_start)) / 3600 ELSE 0 END) AS load_and_carry,
+                SUM(CASE WHEN pa.unit_activity_id = ".$loading." THEN COALESCE(volume, 0) ELSE 0 END) / 1000 /
+                    SUM(CASE WHEN pa.unit_activity_id = ".$loading." THEN TIME_TO_SEC(TIMEDIFF(pa.time_end, pa.time_start)) / 3600 ELSE 1 END) AS loading,
+                SUM(CASE WHEN pa.unit_activity_id = ".$stockPiling." THEN COALESCE(volume, 0) ELSE 0 END) / 1000 /
+                    SUM(CASE WHEN pa.unit_activity_id = ".$stockPiling." THEN TIME_TO_SEC(TIMEDIFF(pa.time_end, pa.time_start)) / 3600 ELSE 1 END) AS stock_piling,
+                SUM(CASE WHEN pa.unit_activity_id = ".$hauling." THEN COALESCE(volume, 0) ELSE 0 END) / 1000 /
+                    SUM(CASE WHEN pa.unit_activity_id = ".$hauling." THEN TIME_TO_SEC(TIMEDIFF(pa.time_end, pa.time_start)) / 3600 ELSE 1 END) hauling
+                FROM port_activities pa
+                JOIN employees ON employees.id = pa.employee_id
+                WHERE `pa`.`date` BETWEEN ? AND ?
+                GROUP BY pa.employee_id, shift
+            ";
+
+            return DB::select($request->group == 'operator' ? $sql_operator : $sql_unit, [$from, $to]);
         }
 
         return view('portActivity.productivity', [

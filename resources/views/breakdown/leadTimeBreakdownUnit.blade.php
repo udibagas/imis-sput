@@ -11,17 +11,24 @@
 			    <thead>
 			        <tr>
 			            <th>TYPE</th>
-			            <th style="text-align:center;">READY</th>
-			            <th style="text-align:center;">B/D</th>
+			            <th class="text-center">READY</th>
+			            <th class="text-center">B/D</th>
 			        </tr>
 			    </thead>
                 <tbody>
                     <tr v-for="i in remarkUnitByType">
                         <td>@{{i.category}}</td>
-                        <td style="text-align:center;">@{{i.ready}}</td>
-                        <td style="text-align:center;">@{{i.breakdown}}</td>
+                        <td class="text-center">@{{i.ready}}</td>
+                        <td class="text-center">@{{i.breakdown}}</td>
                     </tr>
                 </tbody>
+                <tfoot>
+                    <tr>
+                        <th>TOTAL</th>
+                        <th class="text-center">@{{totalReady}}</th>
+                        <th class="text-center">@{{totalBreakdown}}</th>
+                    </tr>
+                </tfoot>
 			</table>
 		</div>
 
@@ -123,6 +130,8 @@ const app = new Vue({
     el: '#app',
     data: {
         breakdowns: [],
+        totalReady: 0,
+        totalBreakdown: 0,
         remarkUnitByType: [],
         todayPlan: [],
         tomorrowPlan: [],
@@ -140,6 +149,7 @@ const app = new Vue({
             var _this = this;
             axios.get('{{url("leadTimeBreakdownUnit")}}?searchPhrase=' + _this.searchPhrase).then(function(r) {
                 _this.breakdowns = r.data;
+
             })
 
             .catch(function(error) {
@@ -175,6 +185,13 @@ const app = new Vue({
             var _this = this;
             axios.get('{{url("unit/remarkUnitByType")}}').then(function(r) {
                 _this.remarkUnitByType = r.data;
+                _this.totalReady = 0;
+                _this.totalBreakdown = 0;
+
+                r.data.forEach(function(b) {
+                    _this.totalReady += b.ready;
+                    _this.totalBreakdown += b.breakdown;
+                });
             })
 
             .catch(function(error) {

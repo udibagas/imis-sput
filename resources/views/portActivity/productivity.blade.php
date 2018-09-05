@@ -14,13 +14,20 @@
     </div>
     <div class="row">
         <div class="col-md-6">
-            <div class="panel panel-default">
-                <port-activity-summary :from="summary_from" :to="summary_to"></port-activity-summary>
+            <div class="panel panel-primary">
+                <div class="panel-heading">
+                    PRODUCTIVITY PER OPERATOR (TPH)
+                </div>
+                <productivity :from="summary_from" :to="summary_to" :group="'operator'"></productivity>
+                <!-- <port-activity-summary :from="summary_from" :to="summary_to"></port-activity-summary> -->
             </div>
         </div>
         <div class="col-md-6">
-            <div class="panel panel-default">
-                <productivity :from="summary_from" :to="summary_to"></productivity>
+            <div class="panel panel-primary">
+                <div class="panel-heading">
+                    PRODUCTIVITY PER UNIT (TON)
+                </div>
+                <productivity :from="summary_from" :to="summary_to" :group="'unit'"></productivity>
             </div>
         </div>
     </div>

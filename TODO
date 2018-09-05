@@ -1,3 +1,6 @@
+- asset taking export
+- dashboard HCGS (asset status, summary dormitory, summary meal) => bikin component
+- pisahin inputan sama dashboard
 - productivity per operator per activity
 - bikin halaman untuk customer
     - dashboard customer (sementara stock dumping summary)
@@ -9,6 +12,7 @@
     - unit_id dan time_start jadi key
     - import dari excel (input manual) kalau jaringan down
 - draught survey !!!
+- di dashboard volume draught survey masih banyak angka di belakang koma
 
 PHASE 2 (atau gak usah phase 2 yang penting bisa termin 2)
 - daily performance TIDAK TERMASUK SCOPE!!! - phase 2 (dan semua jenis report di excel)
@@ -19,11 +23,7 @@ PHASE 2 (atau gak usah phase 2 yang penting bisa termin 2)
 - implement daterangepicker http://www.daterangepicker.com/
 - bikin component buat form export
 
-- summary room availability di dormitory management
-- search di catering management
 - bikin component water level (tinggal proses data real)
-- stock dumping
-    - bikin logic buat nambah stock
 - egi has many activity through productivity plan !!!
 - jadiin halaman dashboard
 
@@ -32,7 +32,6 @@ PHASE 2 (atau gak usah phase 2 yang penting bisa termin 2)
 - halaman demo buat quitioner ==> ini fitur HSE. tidak wajib
 - module operation
 - asset discrepancy?
-- tampilkan summary untuk employee management & asset management => belum fixed contentnya
 - asset taking jadi 1 halaman dengan asset manegement
 
 
