@@ -26,7 +26,7 @@
                         <label class="control-label col-md-3 col-sm-3 col-xs-12" for="unit_id">Unit
                         </label>
                         <div class="col-md-9 col-sm-9 col-xs-12">
-                            <select2 :options="units" v-model="formData.unit_id" data-placeholder="Unit">
+                            <select2 :options="units" v-model="formData.unit_id" data-placeholder="Unit" :disabled="formData.id">
                             </select2>
                             <span v-if="formErrors.unit_id" class="help-block">@{{formErrors.unit_id[0]}}</span>
                         </div>
