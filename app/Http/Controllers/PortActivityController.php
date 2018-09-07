@@ -202,11 +202,13 @@ class PortActivityController extends Controller
             $loading = PortActivity::ACT_LOADING;
             $stockPiling = PortActivity::ACT_STOCKPILING;
             $hauling = PortActivity::ACT_HAULING;
+            $standby = PortActivity::ACT_STANDBY;
+            $breakdown = PortActivity::ACT_BREAKDOWN;
 
             $sql_unit = "SELECT
                 units.name AS entity,
-                pa.shift,
-                SUM(volume) /1000 AS total,
+                pa.shift AS shift,
+                SUM(COALESCE(volume, 0)) /1000 AS total,
                 SUM(CASE WHEN pa.unit_activity_id = ".$feeding." THEN COALESCE(volume, 0) ELSE 0 END) / 1000 AS feeding,
                 SUM(CASE WHEN pa.unit_activity_id = ".$loadAndCarry." THEN COALESCE(volume, 0) ELSE 0 END) / 1000 AS load_and_carry,
                 SUM(CASE WHEN pa.unit_activity_id = ".$loading." THEN COALESCE(volume, 0) ELSE 0 END) / 1000 AS loading,
@@ -214,31 +216,93 @@ class PortActivityController extends Controller
                 SUM(CASE WHEN pa.unit_activity_id = ".$hauling." THEN COALESCE(volume, 0) ELSE 0 END) / 1000 hauling
                 FROM port_activities pa
                 JOIN units ON units.id = pa.unit_id
-                WHERE `pa`.`date` BETWEEN ? AND ?
-                GROUP BY pa.unit_id, shift
+                WHERE pa.date BETWEEN '".$from."' AND '".$to."'
+                GROUP BY pa.unit_id, pa.shift
             ";
 
             $sql_operator = "SELECT
                 employees.name AS entity,
-                pa.shift,
-                SUM(volume) / 1000 / SUM(TIME_TO_SEC(TIMEDIFF(pa.time_end, pa.time_start)) / 3600) AS total,
+                pa.shift AS shift,
+
+                SUM(COALESCE(volume, 0)) / 1000 / SUM(
+                    CASE
+                        WHEN pa.unit_activity_id != ".$standby." AND pa.unit_activity_id != ".$breakdown." AND pa.date BETWEEN '".$from."' AND '".$to."'
+                            THEN IF(pa.time_end > pa.time_start,
+                                TIME_TO_SEC(TIMEDIFF(pa.time_end, pa.time_start)) / 3600,
+                                TIME_TO_SEC(TIMEDIFF(pa.time_end, pa.time_start)) / 3600 + (3600 * 24)
+                            )
+                        ELSE 0
+                    END
+                ) AS total,
+
                 SUM(CASE WHEN pa.unit_activity_id = ".$feeding." THEN COALESCE(volume, 0) ELSE 0 END) / 1000 /
-                    SUM(CASE WHEN pa.unit_activity_id = ".$feeding." THEN TIME_TO_SEC(TIMEDIFF(pa.time_end, pa.time_start)) / 3600 ELSE 1 END) AS feeding,
+                    SUM(
+                        CASE
+                            WHEN pa.unit_activity_id = ".$feeding." AND pa.date BETWEEN '".$from."' AND '".$to."'
+                                THEN IF(pa.time_end > pa.time_start,
+                                    TIME_TO_SEC(TIMEDIFF(pa.time_end, pa.time_start)) / 3600,
+                                    TIME_TO_SEC(TIMEDIFF(pa.time_end, pa.time_start)) / 3600 + (3600 * 24)
+                                )
+                            ELSE 0
+                        END
+                    ) AS feeding,
+
                 SUM(CASE WHEN pa.unit_activity_id = ".$loadAndCarry." THEN COALESCE(volume, 0) ELSE 0 END) / 1000 /
-                    SUM(CASE WHEN pa.unit_activity_id = ".$loadAndCarry." THEN TIME_TO_SEC(TIMEDIFF(pa.time_end, pa.time_start)) / 3600 ELSE 0 END) AS load_and_carry,
+                    SUM(
+                        CASE
+                            WHEN pa.unit_activity_id = ".$loadAndCarry." AND pa.date BETWEEN '".$from."' AND '".$to."'
+                                THEN IF(pa.time_end > pa.time_start,
+                                    TIME_TO_SEC(TIMEDIFF(pa.time_end, pa.time_start)) / 3600,
+                                    TIME_TO_SEC(TIMEDIFF(pa.time_end, pa.time_start)) / 3600 + (3600 * 24)
+                                )
+                            ELSE 0
+                        END
+                    ) AS load_and_carry,
+
                 SUM(CASE WHEN pa.unit_activity_id = ".$loading." THEN COALESCE(volume, 0) ELSE 0 END) / 1000 /
-                    SUM(CASE WHEN pa.unit_activity_id = ".$loading." THEN TIME_TO_SEC(TIMEDIFF(pa.time_end, pa.time_start)) / 3600 ELSE 1 END) AS loading,
+                    SUM(
+                        CASE
+                            WHEN pa.unit_activity_id = ".$loading." AND pa.date BETWEEN '".$from."' AND '".$to."'
+                                THEN IF(pa.time_end > pa.time_start,
+                                    TIME_TO_SEC(TIMEDIFF(pa.time_end, pa.time_start)) / 3600,
+                                    TIME_TO_SEC(TIMEDIFF(pa.time_end, pa.time_start)) / 3600 + (3600 * 24)
+                                )
+                            ELSE 0
+                        END
+                    ) AS loading,
+
                 SUM(CASE WHEN pa.unit_activity_id = ".$stockPiling." THEN COALESCE(volume, 0) ELSE 0 END) / 1000 /
-                    SUM(CASE WHEN pa.unit_activity_id = ".$stockPiling." THEN TIME_TO_SEC(TIMEDIFF(pa.time_end, pa.time_start)) / 3600 ELSE 1 END) AS stock_piling,
+                    SUM(
+                        CASE
+                            WHEN pa.unit_activity_id = ".$stockPiling." AND pa.date BETWEEN '".$from."' AND '".$to."'
+                                THEN IF(pa.time_end > pa.time_start,
+                                    TIME_TO_SEC(TIMEDIFF(pa.time_end, pa.time_start)) / 3600,
+                                    TIME_TO_SEC(TIMEDIFF(pa.time_end, pa.time_start)) / 3600 + (3600 * 24)
+                                )
+                            ELSE 0
+                        END
+                    ) AS stock_piling,
+
+
                 SUM(CASE WHEN pa.unit_activity_id = ".$hauling." THEN COALESCE(volume, 0) ELSE 0 END) / 1000 /
-                    SUM(CASE WHEN pa.unit_activity_id = ".$hauling." THEN TIME_TO_SEC(TIMEDIFF(pa.time_end, pa.time_start)) / 3600 ELSE 1 END) hauling
+                    SUM(
+                        CASE
+                            WHEN pa.unit_activity_id = ".$hauling." AND pa.date BETWEEN '".$from."' AND '".$to."'
+                                THEN IF(pa.time_end > pa.time_start,
+                                    TIME_TO_SEC(TIMEDIFF(pa.time_end, pa.time_start)) / 3600,
+                                    TIME_TO_SEC(TIMEDIFF(pa.time_end, pa.time_start)) / 3600 + (3600 * 24)
+                                )
+                            ELSE 0
+                        END
+                    ) AS hauling
+
                 FROM port_activities pa
                 JOIN employees ON employees.id = pa.employee_id
-                WHERE `pa`.`date` BETWEEN ? AND ?
-                GROUP BY pa.employee_id, shift
+                WHERE pa.date BETWEEN '".$from."' AND '".$to."'
+                GROUP BY pa.employee_id, pa.shift
             ";
 
-            return DB::select($request->group == 'operator' ? $sql_operator : $sql_unit, [$from, $to]);
+            return DB::select($request->group == 'operator' ? $sql_operator : $sql_unit);
         }
 
         return view('portActivity.productivity', [
