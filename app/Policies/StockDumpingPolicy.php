@@ -93,6 +93,17 @@ class StockDumpingPolicy
                 ->where('delete', 1)->count();
     }
 
+    public function axport(User $user)
+    {
+        if ($user->super_admin  || $user->customer_id || $user->contractor_id) {
+            return true;
+        }
+
+        return Authorization::where('controller', 'StockDumping')
+                ->where('user_id', $user->id)
+                ->where('export', 1)->count();
+    }
+
     public function createOrUpdate(User $user)
     {
         return $this->create($user) || $this->update($user);

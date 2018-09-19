@@ -45,6 +45,7 @@ Route::group(['middleware' => 'auth'], function() {
     Route::get('barge/resume', 'BargeController@resume');
     Route::resource('barge', 'BargeController')->except(['edit', 'create']);
 
+    Route::get('barging/export', 'BargingController@export');
     Route::get('barging/active', 'BargingController@active');
     Route::resource('barging', 'BargingController')->except(['edit', 'create']);
 
@@ -244,7 +245,7 @@ View::composer('layouts._sidebar', function($view) {
                 'portActivity' => 'Port Activity',
                 'barging' => 'Barging',
                 'dwellingTime' => 'Dwelling Time',
-                'draughtSurvey' => 'Draught Survey',
+                // 'draughtSurvey' => 'Draught Survey',
                 'materialStock' => 'Stock Balanced',
                 // 'barge/resume' => 'Resume Barging Daily',
                 // 'jetty/productivity' => 'Productivity Jetty'

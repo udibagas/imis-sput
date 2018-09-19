@@ -4,11 +4,14 @@
 <div class="panel panel-primary" id="app">
     <div class="panel-body">
         <h3 class="pull-left text-primary">BARGINGS <small>Manage</small></h3>
-        @can('create', App\Barging::class)
         <span class="pull-right" style="margin:15px 0 15px 10px;">
+            @can('create', App\Barging::class)
             <a href="#" @click="add" class="btn btn-primary"><i class="icon-plus-circled"></i></a>
+            @endcan
+            @can('export', App\Barging::class)
+            <a href="#" @click="openExportForm" class="btn btn-primary"><i class="fa fa-file-excel-o"></i> EXPORT</a>
+            @endcan
         </span>
-        @endcan
         <table class="table table-striped table-hover " id="bootgrid" style="border-top:2px solid #ddd">
             <thead>
                 <tr>
@@ -41,6 +44,10 @@
     @include('barging._form')
     @endcan
 
+    @can('export', App\Barging::class)
+    @include('stockDumping._form_export')
+    @endcan
+
 </div>
 @endsection
 
@@ -50,6 +57,10 @@ $('.page-container').addClass('sidebar-collapsed');
 const app = new Vue({
     el: '#app',
     data: {
+        exportRange: {
+            from: '{{date("Y-m-d")}}',
+            to: '{{date("Y-m-d")}}'
+        },
         formData: {},
         formErrors: {},
         formTitle: '',
@@ -65,6 +76,14 @@ const app = new Vue({
         colors: ["info", "success", "danger", "warning", "default", "primary"],
     },
     methods: {
+        openExportForm: function() {
+            $('#modal-form-export').modal('show');
+        },
+        doExport: function() {
+            // TODO: validate input first
+            $('#modal-form-export').modal('hide');
+            window.location = '{{url("barging/export")}}?from=' + this.exportRange.from + '&to=' + this.exportRange.to;
+        },
         add: function() {
             // reset the form
             this.formTitle = "ADD BARGING";

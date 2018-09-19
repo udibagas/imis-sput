@@ -20,6 +20,14 @@
                                     {{b.volume_by_bucket_ctrl | formatNumber}} TON ({{(b.volume_by_bucket_ctrl/b.volume*100).toFixed(2)}}%)
                                 </td>
                             </tr>
+                            <tr>
+                                <td>Progress By Beltscale</td>
+                                <td></td>
+                            </tr>
+                            <tr>
+                                <td>Productivity</td>
+                                <td></td>
+                            </tr>
                             <tr><td>Status</td>
                                 <td>
                                     <span :class="['label', 'label-' + colors[b.status]]">

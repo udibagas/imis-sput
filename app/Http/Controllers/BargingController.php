@@ -7,6 +7,8 @@ use App\Barging;
 use App\BargingMaterial;
 use App\DwellingTime;
 use App\Http\Requests\BargingRequest;
+use App\Exports\BargingExport;
+use Excel;
 
 class BargingController extends Controller
 {
@@ -168,6 +170,12 @@ class BargingController extends Controller
                 'barging/active' => 'Active Barging'
             ]
         ]);
+    }
+
+    public function export(Request $request)
+    {
+        $this->authorize('export', Barging::class);
+        return Excel::download(new BargingExport($request), "barging-{$request->from}-to-{$request->to}.xlsx");
     }
 
 }

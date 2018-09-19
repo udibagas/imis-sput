@@ -57,7 +57,9 @@
                         <label class="control-label col-md-3 col-sm-3 col-xs-12" for="description">Description
                         </label>
                         <div class="col-md-9 col-sm-9 col-xs-12">
-                            <input type="text" v-model="formData.description" class="form-control" placeholder="Description">
+                            <select2 v-if="formData.status == 3 || formData.status == 4" :options="descriptions" v-model="formData.description" data-placeholder="Description">
+                            </select2>
+                            <input v-if="formData.status != 3 && formData.status != 4" type="text" v-model="formData.description" class="form-control" placeholder="Description">
                             <span v-if="formErrors.description" class="help-block">@{{formErrors.description[0]}}</span>
                         </div>
                     </div>

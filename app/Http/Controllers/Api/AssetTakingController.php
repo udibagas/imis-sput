@@ -13,8 +13,15 @@ class AssetTakingController extends Controller
         return AssetTaking::orderBy('date', 'desc')->get();
     }
 
-    public function store(AssetTakingRequest $request) {
-        return AssetTaking::create($request->all());
+    public function store(AssetTakingRequest $request)
+    {
+        $assetTaking = AssetTaking::create($request->all());
+        $assetTaking->asset()->update([
+            'asset_location_id' => $request->new_asset_location_id,
+            'asset_status_id' => $request->new_asset_status_id,
+        ]);
+
+        return $assetTaking;
     }
 
 }

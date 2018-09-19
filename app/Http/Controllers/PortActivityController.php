@@ -178,10 +178,11 @@ class PortActivityController extends Controller
             unit_activity_id,
             units.name AS unit,
             shift,
-            egis.name AS egi
+            e.name AS egi,
+            0 AS plan
         FROM port_activities
         JOIN units ON units.id = port_activities.unit_id
-        JOIN egis ON egis.id = units.egi_id
+        JOIN egis e ON e.id = units.egi_id
         WHERE `date` BETWEEN ? AND ?
         GROUP BY unit_id, unit_activity_id, shift";
 

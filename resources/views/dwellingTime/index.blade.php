@@ -52,6 +52,7 @@ const app = new Vue({
         formErrors: {},
         formTitle: '',
         error: {},
+        descriptions: [],
         customers: {!! App\Customer::selectRaw('id AS id, name AS text')->orderBy('name', 'ASC')->get() !!},
         statuses: {!! json_encode(App\Barging::getStatusList()) !!},
         jetties: {!! App\Jetty::selectRaw('id AS id, name AS text') ->orderBy('name', 'ASC')->get() !!},
@@ -60,14 +61,63 @@ const app = new Vue({
                 ->join('customers', 'customers.id', '=', 'bargings.customer_id')
                 ->join('barges', 'barges.id', '=', 'bargings.barge_id')
                 ->join('jetties', 'jetties.id', '=', 'bargings.jetty_id')
-                ->orderBy('customers.name', 'ASC')->get() !!}
+                ->orderBy('customers.name', 'ASC')->get() !!},
+        delayDescriptions: [
+            '',
+            'P2H',
+            'MOVING EQ.',
+            'WAITING EQ.',
+            'WAITING ENG.',
+            'CLEANING EQ.',
+            'MEAL & REST',
+            'SAFETY CHECK',
+            'STANBY BY REQUEST',
+            'WAITING OPERATOR',
+            'CHANGE SHIFT',
+            'PRAYING',
+            'IN & OUT JETTY',
+            'DUSTY',
+            'SHIFTING BARGE',
+            'GESER BARGE',
+            'STOCK CARGO',
+            'UNSHIFTING BARGE'
+        ],
+        idleDescriptions: [
+            '',
+            'BARGE KANDAS',
+            'RAIN',
+            'FORCE MAJEURE',
+            'STRIKE (DEMO)',
+            'CUSTOMER PROBLEM',
+            'BAD WEATHER',
+        ]
     },
     watch: {
         'formData.barging_id': function(v, o) {
             if (!this.formData.id) {
-                this.formData.jetty_id = this.bargings.filter(function(b) {
+                var barging = this.bargings.filter(function(b) {
                     return b.id == v;
-                })[0].jetty_id;
+                });
+
+                if (barging.length > 0) {
+                    this.formData.jetty_id = barging[0].jetty_id;
+                }
+            }
+        },
+        'formData.status': function(v, o) {
+            var _this = this
+            // delay : 3, idle : 4
+            if (v == 3) {
+                this.descriptions = []
+                this.delayDescriptions.forEach(function(d) {
+                    _this.descriptions.push({id: d, text: d})
+                })
+            }
+            if (v == 4) {
+                this.descriptions = []
+                this.idleDescriptions.forEach(function(d) {
+                    _this.descriptions.push({id: d, text: d})
+                })
             }
         }
     },
