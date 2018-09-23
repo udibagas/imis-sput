@@ -2,106 +2,78 @@
 
 @section('content')
 
-<div class="row" id="app">
-    <div class="col-md-3">
-        <div class="panel panel-default">
-            <div class="panel-heading">
-                ASSET HABIS LIFETIME
-            </div>
-            <div class="panel-body">
-
-            </div>
-        </div>
-        <div class="panel panel-default">
-            <div class="panel-heading">
-                ASSET DISCREPANCY
-            </div>
-            <div class="panel-body">
-
-            </div>
-        </div>
-        <div class="panel panel-default">
-            <div class="panel-heading">
-                ASSET TAKING HISTORY
-            </div>
-            <div class="panel-body">
-
-            </div>
-        </div>
-    </div>
-    <div class="col-md-9">
-        <div class="panel minimal panel-default">
-            <div class="panel-body">
-                <div class="row col-with-divider">
-                    <div class="col-xs-3 text-center stack-order" v-for="s in summaries">
-                        <h1 class="no-margins">@{{s.total}}</h1>
-                        [@{{s.code}}] @{{s.description}}
-					</div>
+<div id="app">
+    <div class="panel minimal panel-default">
+        <div class="panel-body">
+            <div class="row col-with-divider">
+                <div class="col-xs-3 text-center stack-order" v-for="s in summaries">
+                    <h1 class="no-margins">@{{s.total}}</h1>
+                    [@{{s.code}}] @{{s.description}}
                 </div>
             </div>
         </div>
+    </div>
 
-        <div class="panel panel-primary">
-            <div class="panel-body">
-                <h3 class="pull-left text-primary">ASSET <small>Manage</small></h3>
-                <span class="pull-right" style="margin:15px 0 15px 10px;">
-                    @can('create', App\Asset::class)
-                    <a href="#" @click="add" class="btn btn-primary"><i class="icon-plus-circled"></i></a>
-                    @endcan
-                    @can('export', App\Asset::class)
-                    <a href="{{url('asset/export')}}" target="_blank" class="btn btn-primary"><i class="fa fa-file-excel-o"></i> EXPORT</a>
-                    @endcan
-                    @can('export', App\Asset::class)
-                    <a href="{{url('asset/generateQrCode')}}" class="btn btn-primary" target="_blank"><i class="fa fa-qrcode"></i> Generate QR Code</a>
-                    @endcan
-                </span>
-                <table class="table table-striped table-hover " id="bootgrid" style="border-top:2px solid #ddd">
-                    <thead>
-                        <tr>
-                            <th data-column-id="id" data-width="3%">ID</th>
-                            <th data-column-id="reg_no">Registration Number</th>
-                            <th data-column-id="name">Name</th>
-                            <th data-column-id="trademark">Trademark</th>
-                            <th data-column-id="version">Version</th>
-                            <th data-column-id="sn">SN</th>
+    <div class="panel panel-primary">
+        <div class="panel-body">
+            <h3 class="pull-left text-primary">ASSET <small>Manage</small></h3>
+            <span class="pull-right" style="margin:15px 0 15px 10px;">
+                @can('create', App\Asset::class)
+                <a href="#" @click="add" class="btn btn-primary"><i class="icon-plus-circled"></i></a>
+                @endcan
+                @can('export', App\Asset::class)
+                <a href="{{url('asset/export')}}" target="_blank" class="btn btn-primary"><i class="fa fa-file-excel-o"></i> EXPORT</a>
+                @endcan
+                @can('export', App\Asset::class)
+                <a href="{{url('asset/generateQrCode')}}" class="btn btn-primary" target="_blank"><i class="fa fa-qrcode"></i> Generate QR Code</a>
+                @endcan
+            </span>
+            <table class="table table-striped table-hover " id="bootgrid" style="border-top:2px solid #ddd">
+                <thead>
+                    <tr>
+                        <th data-column-id="id" data-width="3%">ID</th>
+                        <th data-column-id="reg_no">Registration Number</th>
+                        <th data-column-id="name">Name</th>
+                        <th data-column-id="trademark">Trademark</th>
+                        <th data-column-id="version">Version</th>
+                        <th data-column-id="sn">SN</th>
 
-                            <th data-column-id="lifetime"
-                                data-formatter="lifetime"
-                                data-align="center"
-                                data-header-align="center">Lifetime</th>
+                        <th data-column-id="lifetime"
+                            data-formatter="lifetime"
+                            data-align="center"
+                            data-header-align="center">Lifetime</th>
 
-                            <th data-column-id="price"
-                                data-formatter="price"
-                                data-header-align="right"
-                                data-align="right">Price</th>
+                        <th data-column-id="price"
+                            data-formatter="price"
+                            data-header-align="right"
+                            data-align="right">Price</th>
 
-                            <th data-column-id="year"
-                                data-align="center"
-                                data-header-align="center">Year</th>
+                        <th data-column-id="year"
+                            data-align="center"
+                            data-header-align="center">Year</th>
 
-                            <th data-column-id="location">Location</th>
+                        <th data-column-id="location">Location</th>
 
-                            <th data-column-id="status"
-                                data-align="center"
-                                data-header-align="center">Status</th>
+                        <th data-column-id="status"
+                            data-align="center"
+                            data-header-align="center">Status</th>
 
-                            @can('updateOrDelete', App\Asset::class)
-                            <th data-column-id="commands"
-                                data-formatter="commands"
-                                data-sortable="false"
-                                data-align="right"
-                                data-header-align="right"></th>
-                            @endcan
-                        </tr>
-                    </thead>
-                </table>
-            </div>
-
-            @can('createOrUpdate', App\Asset::class)
-            @include('asset._form')
-            @endcan
-
+                        @can('updateOrDelete', App\Asset::class)
+                        <th data-column-id="commands"
+                            data-formatter="commands"
+                            data-sortable="false"
+                            data-align="right"
+                            data-header-align="right"></th>
+                        @endcan
+                    </tr>
+                </thead>
+            </table>
         </div>
+
+        @can('createOrUpdate', App\Asset::class)
+        @include('asset._form')
+        @endcan
+
     </div>
 </div>
 

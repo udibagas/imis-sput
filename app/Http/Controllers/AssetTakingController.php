@@ -28,7 +28,11 @@ class AssetTakingController extends Controller
 
             $assetTaking = AssetTaking::selectRaw('
                     asset_takings.*,
-                    assets.*,
+                    assets.reg_no,
+                    assets.name,
+                    assets.trademark,
+                    assets.version,
+                    assets.sn,
                     al_old.name AS old_location,
                     as_old.code AS old_status,
                     al_new.name AS new_location,
