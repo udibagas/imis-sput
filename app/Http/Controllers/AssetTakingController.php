@@ -137,4 +137,9 @@ class AssetTakingController extends Controller
     //     $this->authorize('export', AssetTaking::class);
     //     return Excel::download(new AssetTakingExport($request), 'assets.xlsx');
     // }
+
+    public function downloadApp()
+    {
+        return response()->download('poins-asset-taking.apk');
+    }
 }

@@ -37,6 +37,7 @@ Route::group(['middleware' => 'auth'], function() {
 
     Route::resource('assetLocation', 'AssetLocationController')->except(['edit', 'create']);
     Route::resource('assetStatus', 'AssetStatusController')->except(['edit', 'create']);
+    Route::get('assetTaking/downloadApp', 'AssetTakingController@downloadApp');
     Route::resource('assetTaking', 'AssetTakingController')->except(['edit', 'create']);
     Route::resource('stockArea', 'StockAreaController')->only(['destroy']);
     Route::resource('hopper', 'HopperController')->only(['destroy']);
