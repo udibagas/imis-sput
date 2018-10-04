@@ -80,7 +80,7 @@ return [
 
         'beltscale' => [
             'driver' => 'sqlsrv',
-            'host' => '10.13.20.77',
+            'host' => '10.13.20.77\sqlexpress',
             'port' => '1433',
             'database' => 'BeltProHost',
             'username' => 'bagas',
@@ -91,7 +91,7 @@ return [
 
         'water_surface' => [
             'driver' => 'sqlsrv',
-            'host' => '10.13.20.77',
+            'host' => '10.13.20.77\sqlexpress',
             'port' => '1433',
             'database' => 'Senselog',
             'username' => 'bagas',
