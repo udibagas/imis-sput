@@ -22,11 +22,11 @@
                             </tr>
                             <tr>
                                 <td>Progress By Beltscale</td>
-                                <td>{{getBeltscaleData(b.node_id).Weight | formatNumber}}</td>
+                                <td>{{getBeltscaleData(b.node_id).Weight | formatNumber}} TON</td>
                             </tr>
                             <tr>
                                 <td>Productivity</td>
-                                <td>{{getBeltscaleData(b.node_id).TPH | formatNumber}}</td>
+                                <td>{{getBeltscaleData(b.node_id).TPH | formatNumber}} TPH</td>
                             </tr>
                             <tr><td>Status</td>
                                 <td>

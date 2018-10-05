@@ -123,6 +123,13 @@ class JettyController extends Controller
         // 247	: JETTY-K
 
         return DB::connection('beltscale')->select("SELECT * FROM DataLive");
+
+        // return [
+        //     ['NodeId' => 244, 'Weight' => 2000, 'TPH' => 220],
+        //     ['NodeId' => 245, 'Weight' => 9000, 'TPH' => 290],
+        //     ['NodeId' => 246, 'Weight' => 1000, 'TPH' => 220],
+        //     ['NodeId' => 247, 'Weight' => 5000, 'TPH' => 270]
+        // ];
     }
 
     public function dwellingTime(Request $request)
