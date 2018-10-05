@@ -7,7 +7,7 @@ use DB;
 
 class Jetty extends Model
 {
-    protected $fillable = ['name', 'description', 'capacity', 'order', 'status'];
+    protected $fillable = ['name', 'description', 'capacity', 'order', 'status', 'node_id'];
 
     protected $with = ['hoppers', 'stockArea'];
 

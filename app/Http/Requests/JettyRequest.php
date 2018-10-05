@@ -28,6 +28,7 @@ class JettyRequest extends FormRequest
 
         return [
             'order' => 'required|numeric',
+            'node_id' => 'required',
             'name' => [
                 'required',
                 Rule::unique('jetties')->ignore($jetty ? $jetty->id : 0)

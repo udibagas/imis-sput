@@ -22,11 +22,11 @@
                             </tr>
                             <tr>
                                 <td>Progress By Beltscale</td>
-                                <td></td>
+                                <td>{{getBeltscaleData(b.node_id).Weight | formatNumber}}</td>
                             </tr>
                             <tr>
                                 <td>Productivity</td>
-                                <td></td>
+                                <td>{{getBeltscaleData(b.node_id).TPH | formatNumber}}</td>
                             </tr>
                             <tr><td>Status</td>
                                 <td>
@@ -51,9 +51,16 @@
 <script>
 import BargingProgress from './BargingProgress';
 import DwellingTime from './DwellingTime';
+import store from '../store'
 
 export default {
+    store,
     components: { BargingProgress, DwellingTime },
+    computed: {
+        dataLiveBarging() {
+            return this.$store.state.dataLiveBarging
+        }
+    },
     data: function() {
         return {
             bargings: [],
@@ -64,6 +71,7 @@ export default {
     methods: {
         requestData: function() {
             var _this = this;
+            _this.$store.commit('getLiveBargingData');
             axios.get(BASE_URL + '/barging/active')
                 .then(function(r) {
                     _this.bargings = r.data;
@@ -73,7 +81,12 @@ export default {
                 });
 
             setTimeout(this.requestData, 5000);
-        }
+        },
+        getBeltscaleData: function(nodeId) {
+            return this.dataLiveBarging.find(function(d) {
+                return d.NodeId === parseInt(nodeId)
+            })
+        },
     },
     mounted: function() {
         this.requestData();

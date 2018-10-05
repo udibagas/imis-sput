@@ -15,6 +15,7 @@
                 <tr>
                     <th data-column-id="id" data-width="3%">ID</th>
                     <th data-column-id="name">Name</th>
+                    <th data-column-id="node_id">Node ID</th>
                     <th data-column-id="capacity">Capacity (TON)</th>
                     <th data-column-id="description">Description</th>
 

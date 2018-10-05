@@ -21,6 +21,15 @@
                         </div>
                     </div>
 
+                    <div class="form-group" :class="formErrors.node_id ? 'has-error' : ''">
+                        <label class="control-label col-md-4 col-sm-4 col-xs-12" for="node_id">Node ID
+                        </label>
+                        <div class="col-md-8 col-sm-8 col-xs-12">
+                            <input type="text" v-model="formData.node_id" class="form-control" placeholder="Node ID">
+                            <span v-if="formErrors.node_id" class="help-block">@{{formErrors.node_id[0]}}</span>
+                        </div>
+                    </div>
+
                     <div class="form-group" :class="formErrors.capacity ? 'has-error' : ''">
                         <label class="control-label col-md-4 col-sm-4 col-xs-12" for="capacity">Capacity (Ton)
                         </label>

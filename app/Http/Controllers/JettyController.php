@@ -117,48 +117,12 @@ class JettyController extends Controller
 
     public function productivity(Request $request)
     {
-        return DB::connection('beltscale')->select("SELECT * FROM ClientTrans LIMIT 100");
-
         // 244	: JETTY-H
         // 245	: JETTY-J
         // 246	: JETTY-U
         // 247	: JETTY-K
 
-        if ($request->ajax())
-        {
-
-            // $jetties = Jetty::orderBy('name', 'ASC')->get();
-            $series = [];
-
-            $data = [];
-            for ($i = 0; $i < 24; $i++) {
-                $data[] = rand(3000,5000);
-            }
-
-            $series[] = [
-                // 'name' => 'JETTY '.$j->name,
-                'data' => $data,
-                'type' => 'line',
-                'label' => [
-                    'show' => true,
-                    'position' => 'top'
-                ]
-            ];
-
-            return $series;
-        }
-
-        else {
-            return view('jetty.productivity', [
-                'jetties' => Jetty::orderBy('order', 'ASC')->get(),
-                'breadcrumbs' => [
-                    'operation/dashboard' => 'Operation',
-                    '#' => 'Status Jetty',
-                    'jetty/productivity' => 'Productivity'
-                ]
-            ]);
-        }
-
+        return DB::connection('beltscale')->select("SELECT * FROM DataLive");
     }
 
     public function dwellingTime(Request $request)

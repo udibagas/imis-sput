@@ -152,6 +152,7 @@ class BargingController extends Controller
                 barges.name AS barge,
                 tugboats.name AS tugboat,
                 jetties.name AS jetty,
+                jetties.node_id AS node_id,
                 buyers.name AS buyer
             ')
             ->join('jetties', 'jetties.id', '=', 'bargings.jetty_id')
