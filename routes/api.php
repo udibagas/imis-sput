@@ -46,3 +46,4 @@ Route::get('tugboat', 'Api\CustomerController@index');
 Route::get('unit', 'Api\UnitController@index');
 Route::get('user', 'Api\UserController@index');
 Route::post('login', 'Api\UserController@login');
+Route::post('absensi', 'Api\AbsensiController@store');

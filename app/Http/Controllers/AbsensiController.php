@@ -28,8 +28,6 @@ class AbsensiController extends Controller
 
             $absensi = Absensi::selectRaw('
                     absensis.*,
-                    DATE(absensis.in) AS date,
-                    IF(HOUR(absensis.in) >= 7 AND HOUR(absensis.in) < 19, 1, 2) AS shift,
                     employees.name AS name,
                     employees.nrp AS nrp,
                     departments.name AS department,

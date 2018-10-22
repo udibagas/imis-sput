@@ -6,7 +6,10 @@ use Illuminate\Database\Eloquent\Model;
 
 class Absensi extends Model
 {
-    protected $fillable = ['employee_id', 'in', 'out'];
+    protected $fillable = [
+        'employee_id', 'date', 'shift',
+        'zona_no', 'terminal_no', 'in', 'out'
+    ];
 
     public function getDateAttribute()
     {
