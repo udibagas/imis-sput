@@ -71,6 +71,11 @@ class FuelRefillController extends Controller
                 'stock' => $fuelRefill->fuelTank->stock - $fuelRefill->total_real,
                 'last_stock_time' => Carbon::now()
             ]);
+
+            $fuelRefill->unit->update([
+                'last_hm' => $fuelRefill->hm,
+                'last_km' => $fuelRefill->km
+            ]);
         }
 
         $ret = (count($ids) > 0)

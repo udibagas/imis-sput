@@ -91,6 +91,11 @@ class FuelRefillController extends Controller
             'last_stock_time' => Carbon::now()
         ]);
 
+        $fuelRefill->unit->update([
+            'last_hm' => $request->hm,
+            'last_km' => $request->km,
+        ]);
+
         return $fuelRefill;
     }
 
@@ -143,6 +148,12 @@ class FuelRefillController extends Controller
         }
 
         $fuelRefill->update($request->all());
+
+        $fuelRefill->unit->update([
+            'last_hm' => $request->hm,
+            'last_km' => $request->km,
+        ]);
+
         return $fuelRefill;
     }
 
@@ -177,6 +188,6 @@ class FuelRefillController extends Controller
 
     public function downloadApp()
     {
-        return response()->download('imis-fuel.apk');
+        return response()->download('poins-fuel.apk');
     }
 }

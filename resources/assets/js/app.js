@@ -21,6 +21,107 @@ Vue.filter('formatNumber', function(v) {
         .replace(/\B(?=(\d{3})+(?!\d))/g, ",");
 });
 
+Vue.component('select2', {
+    props: ['options', 'value'],
+    template: '<select class="form-control"><slot></slot></select>',
+    mounted: function () {
+        var vm = this
+
+        $(this.$el)
+        .css('width', '100%')
+        .select2({ data: this.options })
+        .val(this.value)
+        .trigger('change')
+        .on('change', function () {
+            vm.$emit('input', this.value)
+        })
+    },
+    watch: {
+        value: function (value) {
+            $(this.$el).val(value).trigger('change');
+        },
+        options: function (options) {
+            $(this.$el).empty().select2({ data: options });
+        }
+    },
+    destroyed: function () {
+        $(this.$el).off().select2('destroy')
+    }
+});
+
+Vue.component('vue-datetimepicker', {
+    props: ['value'],
+    watch: {
+        value: function (value) {
+            $(this.$el).val(value).trigger('change');
+        },
+    },
+    template: '<input type="text" class="form-control">',
+    mounted: function () {
+        var vm = this;
+
+        $(this.$el).datetimepicker()
+        .val(this.value)
+        .trigger('change')
+        .on('dp.change', function (e) {
+            vm.$emit('input', this.value);
+        });
+    },
+    destroyed: function () {
+        $(this.$el).off().datetimepicker('destroy');
+    }
+});
+
+Vue.component('vue-datepicker', {
+    props: ['value'],
+    watch: {
+        value: function (value) {
+            $(this.$el).val(value).trigger('change');
+        },
+    },
+    template: '<input type="text" class="form-control">',
+    mounted: function () {
+        var vm = this;
+
+        $(this.$el).datepicker({
+            format:'yyyy-mm-dd',
+            autoclose:true,
+            todayHighlight: true
+        })
+        .val(this.value)
+        .trigger('change')
+        .on('change', function (e) {
+            vm.$emit('input', this.value);
+        });
+    },
+    destroyed: function () {
+        $(this.$el).off().datepicker('destroy');
+    }
+});
+
+Vue.component('colorpicker', {
+    props: ['value'],
+    watch: {
+        value: function (value) {
+            $(this.$el).val(value).trigger('change');
+        },
+    },
+    template: '<input type="text" class="form-control" data-format="hex">',
+    mounted: function () {
+        var vm = this;
+
+        $(this.$el).colorpicker()
+        .val(this.value)
+        .trigger('change')
+        .on('changeColor', function (e) {
+            vm.$emit('input', this.value);
+        });
+    },
+    destroyed: function () {
+        $(this.$el).off().colorpicker('destroy');
+    }
+});
+
 /**
  * Next, we will create a fresh Vue application instance and attach it to
  * the page. Then, you may begin adding components to this application

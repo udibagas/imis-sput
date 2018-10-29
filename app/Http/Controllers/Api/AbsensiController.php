@@ -31,17 +31,17 @@ class AbsensiController extends Controller
             ->first();
         }
 
-        // berarti sudah absen masuk, tinggal absen keluar aja
+        // berarti sudah absen, update in atau out
         if ($absensi)
         {
-            if ($request->in_out_code == '2' && !$absensi->out) {
-                $absensi->update(['out' => $request->tgl. ' '.$request->time]);
-                return ['status' => true, 'message' => 'Absen pulang untuk '. $employee->name. ' berhasil'];
-            }
-
             if ($request->in_out_code == '1' && !$absensi->in) {
                 $absensi->update(['in' => $request->tgl. ' '.$request->time]);
                 return ['status' => true, 'message' => 'Absen masuk untuk '. $employee->name. ' berhasil'];
+            }
+
+            if ($request->in_out_code == '2' && !$absensi->out) {
+                $absensi->update(['out' => $request->tgl. ' '.$request->time]);
+                return ['status' => true, 'message' => 'Absen pulang untuk '. $employee->name. ' berhasil'];
             }
 
             return ['status' => true, 'message' => $employee->name .' sudah absen'];

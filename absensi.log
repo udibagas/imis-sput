@@ -1,0 +1,121 @@
+2018-10-23 10:13:15,792 - DEBUG - accepted connection from ('127.0.0.1', 53844)
+2018-10-23 10:13:15,792 - INFO - Mengirim data ke server...
+2018-10-23 10:13:15,792 - INFO - {'nrp': 'KC11122', 'tgl': '2018-10-20', 'time': '9:36:03', 'in_out_code': '1', 'shift': '1', 'zona_no': '001', 'terminal_no': '001', 'bpm': '0', 'spo': '0', 'jam_tidur': '19:30:00', 'jam_bangun': '6:30:00', 'minum_obat': 'Y', 'ada_masalah': 'T', 'siap_bekerja': 'Y'}
+2018-10-23 10:13:15,819 - ERROR - GAGAL mengirim data ke server HTTPConnectionPool(host='127.0.0.1', port=8000): Max retries exceeded with url: /api/absensi (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x7f6ec9f64710>: Failed to establish a new connection: [Errno 111] Connection refused',))
+2018-10-23 10:13:15,820 - DEBUG - closing connection to ('127.0.0.1', 53844)
+2018-10-23 10:13:20,825 - DEBUG - accepted connection from ('127.0.0.1', 54048)
+2018-10-23 10:13:20,826 - INFO - Mengirim data ke server...
+2018-10-23 10:13:20,827 - INFO - {'nrp': 'KC11122', 'tgl': '2018-10-20', 'time': '9:36:03', 'in_out_code': '1', 'shift': '1', 'zona_no': '001', 'terminal_no': '001', 'bpm': '0', 'spo': '0', 'jam_tidur': '19:30:00', 'jam_bangun': '6:30:00', 'minum_obat': 'Y', 'ada_masalah': 'T', 'siap_bekerja': 'Y'}
+2018-10-23 10:13:20,837 - ERROR - GAGAL mengirim data ke server HTTPConnectionPool(host='127.0.0.1', port=8000): Max retries exceeded with url: /api/absensi (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x7f6ec9f64f98>: Failed to establish a new connection: [Errno 111] Connection refused',))
+2018-10-23 10:13:20,838 - DEBUG - closing connection to ('127.0.0.1', 54048)
+2018-10-23 10:13:25,844 - DEBUG - accepted connection from ('127.0.0.1', 54252)
+2018-10-23 10:13:25,845 - INFO - Mengirim data ke server...
+2018-10-23 10:13:25,845 - INFO - {'nrp': 'KC11122', 'tgl': '2018-10-20', 'time': '9:36:03', 'in_out_code': '1', 'shift': '1', 'zona_no': '001', 'terminal_no': '001', 'bpm': '0', 'spo': '0', 'jam_tidur': '19:30:00', 'jam_bangun': '6:30:00', 'minum_obat': 'Y', 'ada_masalah': 'T', 'siap_bekerja': 'Y'}
+2018-10-23 10:13:25,855 - ERROR - GAGAL mengirim data ke server HTTPConnectionPool(host='127.0.0.1', port=8000): Max retries exceeded with url: /api/absensi (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x7f6ec9f7d7f0>: Failed to establish a new connection: [Errno 111] Connection refused',))
+2018-10-23 10:13:25,856 - DEBUG - closing connection to ('127.0.0.1', 54252)
+2018-10-23 10:13:30,862 - DEBUG - accepted connection from ('127.0.0.1', 54458)
+2018-10-23 10:13:30,863 - INFO - Mengirim data ke server...
+2018-10-23 10:13:30,863 - INFO - {'nrp': 'KC11122', 'tgl': '2018-10-20', 'time': '9:36:03', 'in_out_code': '1', 'shift': '1', 'zona_no': '001', 'terminal_no': '001', 'bpm': '0', 'spo': '0', 'jam_tidur': '19:30:00', 'jam_bangun': '6:30:00', 'minum_obat': 'Y', 'ada_masalah': 'T', 'siap_bekerja': 'Y'}
+2018-10-23 10:13:30,872 - ERROR - GAGAL mengirim data ke server HTTPConnectionPool(host='127.0.0.1', port=8000): Max retries exceeded with url: /api/absensi (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x7f6ec9f8c048>: Failed to establish a new connection: [Errno 111] Connection refused',))
+2018-10-23 10:13:30,872 - DEBUG - closing connection to ('127.0.0.1', 54458)
+2018-10-23 10:13:35,878 - DEBUG - accepted connection from ('127.0.0.1', 54666)
+2018-10-23 10:13:35,878 - INFO - Mengirim data ke server...
+2018-10-23 10:13:35,879 - INFO - {'nrp': 'KC11122', 'tgl': '2018-10-20', 'time': '9:36:03', 'in_out_code': '1', 'shift': '1', 'zona_no': '001', 'terminal_no': '001', 'bpm': '0', 'spo': '0', 'jam_tidur': '19:30:00', 'jam_bangun': '6:30:00', 'minum_obat': 'Y', 'ada_masalah': 'T', 'siap_bekerja': 'Y'}
+2018-10-23 10:13:35,891 - ERROR - GAGAL mengirim data ke server HTTPConnectionPool(host='127.0.0.1', port=8000): Max retries exceeded with url: /api/absensi (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x7f6ec9f8c860>: Failed to establish a new connection: [Errno 111] Connection refused',))
+2018-10-23 10:13:35,892 - DEBUG - closing connection to ('127.0.0.1', 54666)
+2018-10-23 10:13:40,897 - DEBUG - accepted connection from ('127.0.0.1', 54874)
+2018-10-23 10:13:40,898 - INFO - Mengirim data ke server...
+2018-10-23 10:13:40,898 - INFO - {'nrp': 'KC11122', 'tgl': '2018-10-20', 'time': '9:36:03', 'in_out_code': '1', 'shift': '1', 'zona_no': '001', 'terminal_no': '001', 'bpm': '0', 'spo': '0', 'jam_tidur': '19:30:00', 'jam_bangun': '6:30:00', 'minum_obat': 'Y', 'ada_masalah': 'T', 'siap_bekerja': 'Y'}
+2018-10-23 10:13:40,903 - ERROR - GAGAL mengirim data ke server HTTPConnectionPool(host='127.0.0.1', port=8000): Max retries exceeded with url: /api/absensi (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x7f6ec9f7d518>: Failed to establish a new connection: [Errno 111] Connection refused',))
+2018-10-23 10:13:40,905 - DEBUG - closing connection to ('127.0.0.1', 54874)
+2018-10-23 10:13:45,911 - DEBUG - accepted connection from ('127.0.0.1', 55078)
+2018-10-23 10:13:45,911 - INFO - Mengirim data ke server...
+2018-10-23 10:13:45,912 - INFO - {'nrp': 'KC11122', 'tgl': '2018-10-20', 'time': '9:36:03', 'in_out_code': '1', 'shift': '1', 'zona_no': '001', 'terminal_no': '001', 'bpm': '0', 'spo': '0', 'jam_tidur': '19:30:00', 'jam_bangun': '6:30:00', 'minum_obat': 'Y', 'ada_masalah': 'T', 'siap_bekerja': 'Y'}
+2018-10-23 10:13:45,922 - ERROR - GAGAL mengirim data ke server HTTPConnectionPool(host='127.0.0.1', port=8000): Max retries exceeded with url: /api/absensi (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x7f6ec9f64cf8>: Failed to establish a new connection: [Errno 111] Connection refused',))
+2018-10-23 10:13:45,923 - DEBUG - closing connection to ('127.0.0.1', 55078)
+2018-10-23 10:13:50,927 - DEBUG - accepted connection from ('127.0.0.1', 55282)
+2018-10-23 10:13:50,928 - INFO - Mengirim data ke server...
+2018-10-23 10:13:50,928 - INFO - {'nrp': 'KC11122', 'tgl': '2018-10-20', 'time': '9:36:03', 'in_out_code': '1', 'shift': '1', 'zona_no': '001', 'terminal_no': '001', 'bpm': '0', 'spo': '0', 'jam_tidur': '19:30:00', 'jam_bangun': '6:30:00', 'minum_obat': 'Y', 'ada_masalah': 'T', 'siap_bekerja': 'Y'}
+2018-10-23 10:13:50,935 - ERROR - GAGAL mengirim data ke server HTTPConnectionPool(host='127.0.0.1', port=8000): Max retries exceeded with url: /api/absensi (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x7f6ec9f8c668>: Failed to establish a new connection: [Errno 111] Connection refused',))
+2018-10-23 10:13:50,936 - DEBUG - closing connection to ('127.0.0.1', 55282)
+2018-10-23 10:13:55,941 - DEBUG - accepted connection from ('127.0.0.1', 55486)
+2018-10-23 10:13:55,942 - INFO - Mengirim data ke server...
+2018-10-23 10:13:55,942 - INFO - {'nrp': 'KC11122', 'tgl': '2018-10-20', 'time': '9:36:03', 'in_out_code': '1', 'shift': '1', 'zona_no': '001', 'terminal_no': '001', 'bpm': '0', 'spo': '0', 'jam_tidur': '19:30:00', 'jam_bangun': '6:30:00', 'minum_obat': 'Y', 'ada_masalah': 'T', 'siap_bekerja': 'Y'}
+2018-10-23 10:13:55,950 - ERROR - GAGAL mengirim data ke server HTTPConnectionPool(host='127.0.0.1', port=8000): Max retries exceeded with url: /api/absensi (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x7f6ec9f170b8>: Failed to establish a new connection: [Errno 111] Connection refused',))
+2018-10-23 10:13:55,951 - DEBUG - closing connection to ('127.0.0.1', 55486)
+2018-10-23 10:14:00,956 - DEBUG - accepted connection from ('127.0.0.1', 55690)
+2018-10-23 10:14:00,957 - INFO - Mengirim data ke server...
+2018-10-23 10:14:00,958 - INFO - {'nrp': 'KC11122', 'tgl': '2018-10-20', 'time': '9:36:03', 'in_out_code': '1', 'shift': '1', 'zona_no': '001', 'terminal_no': '001', 'bpm': '0', 'spo': '0', 'jam_tidur': '19:30:00', 'jam_bangun': '6:30:00', 'minum_obat': 'Y', 'ada_masalah': 'T', 'siap_bekerja': 'Y'}
+2018-10-23 10:14:00,970 - ERROR - GAGAL mengirim data ke server HTTPConnectionPool(host='127.0.0.1', port=8000): Max retries exceeded with url: /api/absensi (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x7f6ec9f178d0>: Failed to establish a new connection: [Errno 111] Connection refused',))
+2018-10-23 10:14:00,971 - DEBUG - closing connection to ('127.0.0.1', 55690)
+2018-10-23 10:14:05,973 - DEBUG - accepted connection from ('127.0.0.1', 55898)
+2018-10-23 10:14:05,974 - INFO - Mengirim data ke server...
+2018-10-23 10:14:05,975 - INFO - {'nrp': 'KC11122', 'tgl': '2018-10-20', 'time': '9:36:03', 'in_out_code': '1', 'shift': '1', 'zona_no': '001', 'terminal_no': '001', 'bpm': '0', 'spo': '0', 'jam_tidur': '19:30:00', 'jam_bangun': '6:30:00', 'minum_obat': 'Y', 'ada_masalah': 'T', 'siap_bekerja': 'Y'}
+2018-10-23 10:14:05,988 - ERROR - GAGAL mengirim data ke server HTTPConnectionPool(host='127.0.0.1', port=8000): Max retries exceeded with url: /api/absensi (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x7f6ec9f24128>: Failed to establish a new connection: [Errno 111] Connection refused',))
+2018-10-23 10:14:05,989 - DEBUG - closing connection to ('127.0.0.1', 55898)
+2018-10-23 10:14:10,992 - DEBUG - accepted connection from ('127.0.0.1', 56102)
+2018-10-23 10:14:10,992 - INFO - Mengirim data ke server...
+2018-10-23 10:14:10,993 - INFO - {'nrp': 'KC11122', 'tgl': '2018-10-20', 'time': '9:36:03', 'in_out_code': '1', 'shift': '1', 'zona_no': '001', 'terminal_no': '001', 'bpm': '0', 'spo': '0', 'jam_tidur': '19:30:00', 'jam_bangun': '6:30:00', 'minum_obat': 'Y', 'ada_masalah': 'T', 'siap_bekerja': 'Y'}
+2018-10-23 10:14:11,000 - ERROR - GAGAL mengirim data ke server HTTPConnectionPool(host='127.0.0.1', port=8000): Max retries exceeded with url: /api/absensi (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x7f6ec9f8ce48>: Failed to establish a new connection: [Errno 111] Connection refused',))
+2018-10-23 10:14:11,001 - DEBUG - closing connection to ('127.0.0.1', 56102)
+2018-10-23 12:49:55,269 - DEBUG - listening on 127.0.0.1:9998
+2018-10-23 12:49:59,788 - DEBUG - accepted connection from ('127.0.0.1', 37824)
+2018-10-23 12:49:59,788 - INFO - Mengirim data ke server...
+2018-10-23 12:49:59,788 - INFO - {'nrp': 'KC11122', 'tgl': '2018-10-20', 'time': '9:36:03', 'in_out_code': '1', 'shift': '1', 'zona_no': '001', 'terminal_no': '001', 'bpm': '0', 'spo': '0', 'jam_tidur': '19:30:00', 'jam_bangun': '6:30:00', 'minum_obat': 'Y', 'ada_masalah': 'T', 'siap_bekerja': 'Y'}
+2018-10-23 12:49:59,830 - ERROR - GAGAL mengirim data ke server HTTPConnectionPool(host='127.0.0.1', port=8000): Max retries exceeded with url: /api/absensi (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x7f2b8e77f780>: Failed to establish a new connection: [Errno 111] Connection refused',))
+2018-10-23 12:49:59,831 - DEBUG - closing connection to ('127.0.0.1', 37824)
+2018-10-23 12:50:04,836 - DEBUG - accepted connection from ('127.0.0.1', 38028)
+2018-10-23 12:50:04,836 - INFO - Mengirim data ke server...
+2018-10-23 12:50:04,837 - INFO - {'nrp': 'KC11122', 'tgl': '2018-10-20', 'time': '9:36:03', 'in_out_code': '1', 'shift': '1', 'zona_no': '001', 'terminal_no': '001', 'bpm': '0', 'spo': '0', 'jam_tidur': '19:30:00', 'jam_bangun': '6:30:00', 'minum_obat': 'Y', 'ada_masalah': 'T', 'siap_bekerja': 'Y'}
+2018-10-23 12:50:04,846 - ERROR - GAGAL mengirim data ke server HTTPConnectionPool(host='127.0.0.1', port=8000): Max retries exceeded with url: /api/absensi (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x7f2b8e79a048>: Failed to establish a new connection: [Errno 111] Connection refused',))
+2018-10-23 12:50:04,846 - DEBUG - closing connection to ('127.0.0.1', 38028)
+2018-10-23 12:50:09,848 - DEBUG - accepted connection from ('127.0.0.1', 38232)
+2018-10-23 12:50:09,849 - INFO - Mengirim data ke server...
+2018-10-23 12:50:09,849 - INFO - {'nrp': 'KC11122', 'tgl': '2018-10-20', 'time': '9:36:03', 'in_out_code': '1', 'shift': '1', 'zona_no': '001', 'terminal_no': '001', 'bpm': '0', 'spo': '0', 'jam_tidur': '19:30:00', 'jam_bangun': '6:30:00', 'minum_obat': 'Y', 'ada_masalah': 'T', 'siap_bekerja': 'Y'}
+2018-10-23 12:50:09,854 - ERROR - GAGAL mengirim data ke server HTTPConnectionPool(host='127.0.0.1', port=8000): Max retries exceeded with url: /api/absensi (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x7f2b8e79a860>: Failed to establish a new connection: [Errno 111] Connection refused',))
+2018-10-23 12:50:09,855 - DEBUG - closing connection to ('127.0.0.1', 38232)
+2018-10-23 12:50:14,859 - DEBUG - accepted connection from ('127.0.0.1', 38436)
+2018-10-23 12:50:14,860 - INFO - Mengirim data ke server...
+2018-10-23 12:50:14,860 - INFO - {'nrp': 'KC11122', 'tgl': '2018-10-20', 'time': '9:36:03', 'in_out_code': '1', 'shift': '1', 'zona_no': '001', 'terminal_no': '001', 'bpm': '0', 'spo': '0', 'jam_tidur': '19:30:00', 'jam_bangun': '6:30:00', 'minum_obat': 'Y', 'ada_masalah': 'T', 'siap_bekerja': 'Y'}
+2018-10-23 12:50:14,865 - ERROR - GAGAL mengirim data ke server HTTPConnectionPool(host='127.0.0.1', port=8000): Max retries exceeded with url: /api/absensi (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x7f2b8e7a90b8>: Failed to establish a new connection: [Errno 111] Connection refused',))
+2018-10-23 12:50:14,866 - DEBUG - closing connection to ('127.0.0.1', 38436)
+2018-10-23 12:50:19,867 - DEBUG - accepted connection from ('127.0.0.1', 38640)
+2018-10-23 12:50:19,867 - INFO - Mengirim data ke server...
+2018-10-23 12:50:19,867 - INFO - {'nrp': 'KC11122', 'tgl': '2018-10-20', 'time': '9:36:03', 'in_out_code': '1', 'shift': '1', 'zona_no': '001', 'terminal_no': '001', 'bpm': '0', 'spo': '0', 'jam_tidur': '19:30:00', 'jam_bangun': '6:30:00', 'minum_obat': 'Y', 'ada_masalah': 'T', 'siap_bekerja': 'Y'}
+2018-10-23 12:50:19,869 - ERROR - GAGAL mengirim data ke server HTTPConnectionPool(host='127.0.0.1', port=8000): Max retries exceeded with url: /api/absensi (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x7f2b8e7a98d0>: Failed to establish a new connection: [Errno 111] Connection refused',))
+2018-10-23 12:50:19,869 - DEBUG - closing connection to ('127.0.0.1', 38640)
+2018-10-23 12:50:24,874 - DEBUG - accepted connection from ('127.0.0.1', 38844)
+2018-10-23 12:50:24,874 - INFO - Mengirim data ke server...
+2018-10-23 12:50:24,874 - INFO - {'nrp': 'KC11122', 'tgl': '2018-10-20', 'time': '9:36:03', 'in_out_code': '1', 'shift': '1', 'zona_no': '001', 'terminal_no': '001', 'bpm': '0', 'spo': '0', 'jam_tidur': '19:30:00', 'jam_bangun': '6:30:00', 'minum_obat': 'Y', 'ada_masalah': 'T', 'siap_bekerja': 'Y'}
+2018-10-23 12:50:24,876 - ERROR - GAGAL mengirim data ke server HTTPConnectionPool(host='127.0.0.1', port=8000): Max retries exceeded with url: /api/absensi (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x7f2b8e79a7f0>: Failed to establish a new connection: [Errno 111] Connection refused',))
+2018-10-23 12:50:24,876 - DEBUG - closing connection to ('127.0.0.1', 38844)
+2018-10-23 12:50:29,881 - DEBUG - accepted connection from ('127.0.0.1', 39052)
+2018-10-23 12:50:29,881 - INFO - Mengirim data ke server...
+2018-10-23 12:50:29,881 - INFO - {'nrp': 'KC11122', 'tgl': '2018-10-20', 'time': '9:36:03', 'in_out_code': '1', 'shift': '1', 'zona_no': '001', 'terminal_no': '001', 'bpm': '0', 'spo': '0', 'jam_tidur': '19:30:00', 'jam_bangun': '6:30:00', 'minum_obat': 'Y', 'ada_masalah': 'T', 'siap_bekerja': 'Y'}
+2018-10-23 12:50:29,883 - ERROR - GAGAL mengirim data ke server HTTPConnectionPool(host='127.0.0.1', port=8000): Max retries exceeded with url: /api/absensi (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x7f2b8e77ffd0>: Failed to establish a new connection: [Errno 111] Connection refused',))
+2018-10-23 12:50:29,883 - DEBUG - closing connection to ('127.0.0.1', 39052)
+2018-10-23 12:50:34,887 - DEBUG - accepted connection from ('127.0.0.1', 39256)
+2018-10-23 12:50:34,887 - INFO - Mengirim data ke server...
+2018-10-23 12:50:34,887 - INFO - {'nrp': 'KC11122', 'tgl': '2018-10-20', 'time': '9:36:03', 'in_out_code': '1', 'shift': '1', 'zona_no': '001', 'terminal_no': '001', 'bpm': '0', 'spo': '0', 'jam_tidur': '19:30:00', 'jam_bangun': '6:30:00', 'minum_obat': 'Y', 'ada_masalah': 'T', 'siap_bekerja': 'Y'}
+2018-10-23 12:50:34,890 - ERROR - GAGAL mengirim data ke server HTTPConnectionPool(host='127.0.0.1', port=8000): Max retries exceeded with url: /api/absensi (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x7f2b8e7a9128>: Failed to establish a new connection: [Errno 111] Connection refused',))
+2018-10-23 12:50:34,890 - DEBUG - closing connection to ('127.0.0.1', 39256)
+2018-10-23 12:50:39,896 - DEBUG - accepted connection from ('127.0.0.1', 39460)
+2018-10-23 12:50:39,897 - INFO - Mengirim data ke server...
+2018-10-23 12:50:39,898 - INFO - {'nrp': 'KC11122', 'tgl': '2018-10-20', 'time': '9:36:03', 'in_out_code': '1', 'shift': '1', 'zona_no': '001', 'terminal_no': '001', 'bpm': '0', 'spo': '0', 'jam_tidur': '19:30:00', 'jam_bangun': '6:30:00', 'minum_obat': 'Y', 'ada_masalah': 'T', 'siap_bekerja': 'Y'}
+2018-10-23 12:50:39,908 - ERROR - GAGAL mengirim data ke server HTTPConnectionPool(host='127.0.0.1', port=8000): Max retries exceeded with url: /api/absensi (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x7f2b8e735128>: Failed to establish a new connection: [Errno 111] Connection refused',))
+2018-10-23 12:50:39,909 - DEBUG - closing connection to ('127.0.0.1', 39460)
+2018-10-23 12:50:44,914 - DEBUG - accepted connection from ('127.0.0.1', 39682)
+2018-10-23 12:50:44,915 - INFO - Mengirim data ke server...
+2018-10-23 12:50:44,915 - INFO - {'nrp': 'KC11122', 'tgl': '2018-10-20', 'time': '9:36:03', 'in_out_code': '1', 'shift': '1', 'zona_no': '001', 'terminal_no': '001', 'bpm': '0', 'spo': '0', 'jam_tidur': '19:30:00', 'jam_bangun': '6:30:00', 'minum_obat': 'Y', 'ada_masalah': 'T', 'siap_bekerja': 'Y'}
+2018-10-23 12:50:44,920 - ERROR - GAGAL mengirim data ke server HTTPConnectionPool(host='127.0.0.1', port=8000): Max retries exceeded with url: /api/absensi (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x7f2b8e735940>: Failed to establish a new connection: [Errno 111] Connection refused',))
+2018-10-23 12:50:44,921 - DEBUG - closing connection to ('127.0.0.1', 39682)
+2018-10-23 12:50:49,923 - DEBUG - accepted connection from ('127.0.0.1', 39892)
+2018-10-23 12:50:49,924 - INFO - Mengirim data ke server...
+2018-10-23 12:50:49,924 - INFO - {'nrp': 'KC11122', 'tgl': '2018-10-20', 'time': '9:36:03', 'in_out_code': '1', 'shift': '1', 'zona_no': '001', 'terminal_no': '001', 'bpm': '0', 'spo': '0', 'jam_tidur': '19:30:00', 'jam_bangun': '6:30:00', 'minum_obat': 'Y', 'ada_masalah': 'T', 'siap_bekerja': 'Y'}
+2018-10-23 12:50:49,932 - ERROR - GAGAL mengirim data ke server HTTPConnectionPool(host='127.0.0.1', port=8000): Max retries exceeded with url: /api/absensi (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x7f2b8e742198>: Failed to establish a new connection: [Errno 111] Connection refused',))
+2018-10-23 12:50:49,933 - DEBUG - closing connection to ('127.0.0.1', 39892)
+2018-10-23 12:50:54,939 - DEBUG - accepted connection from ('127.0.0.1', 40098)
+2018-10-23 12:50:54,939 - INFO - Mengirim data ke server...
+2018-10-23 12:50:54,940 - INFO - {'nrp': 'KC11122', 'tgl': '2018-10-20', 'time': '9:36:03', 'in_out_code': '1', 'shift': '1', 'zona_no': '001', 'terminal_no': '001', 'bpm': '0', 'spo': '0', 'jam_tidur': '19:30:00', 'jam_bangun': '6:30:00', 'minum_obat': 'Y', 'ada_masalah': 'T', 'siap_bekerja': 'Y'}
+2018-10-23 12:50:54,944 - ERROR - GAGAL mengirim data ke server HTTPConnectionPool(host='127.0.0.1', port=8000): Max retries exceeded with url: /api/absensi (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x7f2b8e7a9f98>: Failed to establish a new connection: [Errno 111] Connection refused',))
+2018-10-23 12:50:54,945 - DEBUG - closing connection to ('127.0.0.1', 40098)

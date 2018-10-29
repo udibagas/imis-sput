@@ -28,7 +28,7 @@
 </head>
 <body>
 
-<div class="page-container">
+<div class="page-container" id="main-app">
   <div class="page-sidebar">
 		<header class="site-header">
 		  <div class="site-logo"><a href="{{url('/')}}"><img src="{{ asset('img/KPP2.png') }}" alt="IMIS" title="IMIS" style="width:100%;"></a></div>

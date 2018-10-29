@@ -17,6 +17,10 @@ class FuelRefill extends Model
         return $this->belongsTo(FuelTank::class);
     }
 
+    public function unit() {
+        return $this->belongsTo(Unit::class);
+    }
+
     public function getStartTimeAttribute($value) {
         return date('H:i', strtotime($value));
     }

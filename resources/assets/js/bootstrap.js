@@ -14,6 +14,29 @@ try {
     window.bootbox = require('bootbox');
 } catch (e) {}
 
+window.moment = require('moment');
+
+window.toastr = require('toastr');
+toastr.options = {
+    "closeButton": true,
+    "debug": false,
+    "newestOnTop": false,
+    "progressBar": false,
+    "positionClass": "toast-top-right",
+    "preventDuplicates": false,
+    "onclick": null,
+    "showDuration": "300",
+    "hideDuration": "1000",
+    "timeOut": "5000",
+    "extendedTimeOut": "1000",
+    "showEasing": "swing",
+    "hideEasing": "linear",
+    "showMethod": "fadeIn",
+    "hideMethod": "fadeOut"
+}
+
+require('jquery-bootgrid/dist/jquery.bootgrid.min.js')
+
 /**
  * We'll load the axios HTTP library which allows us to easily issue requests
  * to our Laravel back-end. This library automatically handles sending the
