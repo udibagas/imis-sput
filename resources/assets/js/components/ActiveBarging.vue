@@ -80,7 +80,7 @@ export default {
                     console.log(error);
                 });
 
-            setTimeout(this.requestData, 5000);
+            setTimeout(this.requestData, 10000);
         },
         getBeltscaleData: function(nodeId) {
             return this.dataLiveBarging.find(function(d) {
