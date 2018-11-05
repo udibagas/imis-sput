@@ -61,6 +61,24 @@
                         </div>
                     </div>
 
+                    <div class="form-group" :class="formErrors.last_hm ? 'has-error' : ''">
+                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="last_hm">Last HM
+                        </label>
+                        <div class="col-md-9 col-sm-9 col-xs-12">
+                            <input type="number" v-model="formData.last_hm" class="form-control" placeholder="Last HM">
+                            <span v-if="formErrors.last_hm" class="help-block">@{{formErrors.last_hm[0]}}</span>
+                        </div>
+                    </div>
+
+                    <div class="form-group" :class="formErrors.last_km ? 'has-error' : ''">
+                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="last_km">Last KM
+                        </label>
+                        <div class="col-md-9 col-sm-9 col-xs-12">
+                            <input type="number" v-model="formData.last_km" class="form-control" placeholder="Last KM">
+                            <span v-if="formErrors.last_km" class="help-block">@{{formErrors.last_km[0]}}</span>
+                        </div>
+                    </div>
+
                     <div :class="['form-group', formErrors.status ? 'has-error' : '']">
                         <label class="control-label col-md-3 col-sm-3 col-xs-12" for="status">Status
                         </label>
