@@ -100,7 +100,23 @@ const app = new Vue({
                     title: {
                         subtext: 'Periode: ' + _this.date,
                     },
-                    series: r.data
+                    series: [
+                        {
+                            type: 'bar',
+                            name: 'Fuel Ratio',
+                            label: {
+                                show: true,
+                                position: 'top',
+                                formatter: function(v) {
+                                    return parseFloat(v.value)
+                                        .toFixed(2)
+                                        .toString()
+                                        .replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+                                }
+                            },
+                            data: r.data
+                        }
+                    ]
                 });
             })
 
@@ -210,11 +226,11 @@ const app = new Vue({
                     bottom: '10%',
                     containLabel: true
                 },
-                legend: {
-                    enabled: true,
-                    data:['Fuel Ratio', 'Duration'],
-                    bottom: 'bottom',
-                },
+                // legend: {
+                //     enabled: false,
+                //     data:['Fuel Ratio'],
+                //     bottom: 'bottom',
+                // },
                 tooltip: {
                     trigger: 'axis',
                     axisPointer: {
@@ -227,26 +243,17 @@ const app = new Vue({
                 xAxis: {
                     type: 'category',
                     data: [
-                        '05.00','06.00','07.00','08.00','09.00','10.00','11.00','12.00',
+                        '07.00','08.00','09.00','10.00','11.00','12.00',
                         '13.00','14.00','15.00','16.00','17.00','18.00','19.00','20.00',
-                        '21.00','22.00','23.00','00.00','01.00','02.00','03.00','04.00'
+                        '21.00','22.00','23.00','00.00','01.00','02.00','03.00','04.00', '05.00','06.00'
                     ],
                 },
                 yAxis: [{
                     type: 'value',
-                    name: 'DURATION',
-                    min: 0,
-                    max: 10,
-                    interval: 2,
-                    axisLabel: {
-                        formatter: '{value}'
-                    }
-                }, {
-                    type: 'value',
                     name: 'LITER/TONASE',
-                    min: 0,
-                    max: 5,
-                    interval: 1,
+                    // min: 0,
+                    // max: 5,
+                    // interval: 1,
                 }],
                 series: []
             });

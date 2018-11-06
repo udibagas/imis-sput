@@ -132,9 +132,6 @@ class JettyController extends Controller
                 ['NodeId' => 247, 'Weight' => 0, 'TPH' => 0]
             ];
         }
-
-
-
     }
 
     public function dwellingTime(Request $request)

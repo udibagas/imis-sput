@@ -6,6 +6,8 @@ use Illuminate\Http\Request;
 use App\Egi;
 use App\FuelTank;
 use App\FuelRefill;
+use DB;
+use Carbon\Carbon;
 
 class SmController extends Controller
 {
@@ -48,7 +50,7 @@ class SmController extends Controller
         return json_encode($data);
     }
 
-    public function fuelRatio(Request $request)
+    public function fuelRatio1(Request $request)
     {
         if ($request->ajax())
         {
@@ -77,6 +79,33 @@ class SmController extends Controller
                 'yAxisIndex' => 1,
                 'data' => $rand2
             ]];
+        }
+    }
+
+    public function fuelRatio(Request $request)
+    {
+        if ($request->ajax())
+        {
+            $jam = [7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,0,1,2,3,4,5,6];
+            $date = $request->date ? $request->date : date('Y-m-d');
+            $literPerTon = [];
+
+            foreach ($jam as $j)
+            {
+                // $date = ($j < 7) ? $nextDay : $today;
+
+                $liter = DB::select('SELECT SUM(total_real) AS liter FROM fuel_refills WHERE HOUR(finish_time) = :hour AND `date` = :dt', [':hour' => $j, ':dt' => $date])[0]->liter;
+
+                $ton = DB::select('SELECT SUM(volume)/1000 AS ton FROM port_activities WHERE HOUR(time_end) = :hour AND `date` = :dt', [':hour' => $j, ':dt' => $date])[0]->ton;
+
+                try {
+                    $literPerTon[] = $liter/$ton;
+                } catch (\Exception $e) {
+                    $literPerTon[] = null;
+                }
+            }
+
+            return $literPerTon;
         }
     }
 }
