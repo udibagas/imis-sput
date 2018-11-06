@@ -169,6 +169,8 @@ Route::group(['middleware' => 'auth'], function() {
 
     Route::resource('tugboat', 'TugboatController')->except(['edit', 'create']);
 
+    Route::get('unit/generateNameTag/{unit}', 'UnitController@generateNameTag');
+    Route::get('unit/generateNameTag', 'UnitController@generateNameTag');
     Route::get('unit/remarkUnitByType', 'UnitController@remarkUnitByType');
     Route::get('unit/export', 'UnitController@export');
     Route::resource('unit', 'UnitController')->except(['edit', 'create']);

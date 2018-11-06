@@ -3,6 +3,7 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use QRCode;
 
 class Unit extends Model
 {
@@ -13,5 +14,13 @@ class Unit extends Model
 
     public function egi() {
         return $this->belongsTo(Egi::class);
+    }
+
+    public function getQrCodeAttribute()
+    {
+        return QRCode::text($this->name)
+            ->setMargin(2)
+            ->setSize(7)
+            ->svg();
     }
 }

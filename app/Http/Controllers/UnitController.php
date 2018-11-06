@@ -128,4 +128,15 @@ class UnitController extends Controller
         $this->authorize('export', Unit::class);
         return Excel::download(new UnitExport($request), 'units.xlsx');
     }
+
+    public function generateNameTag(Unit $unit = null)
+    {
+        $this->authorize('export', Unit::class);
+
+        $units = $unit
+            ? [$unit]
+            : Unit::orderBy('name', 'ASC')->get();
+
+        return view('unit.name_tag', ['units' => $units]);
+    }
 }
