@@ -90,13 +90,19 @@ class SmController extends Controller
             $date = $request->date ? $request->date : date('Y-m-d');
             $literPerTon = [];
 
-            foreach ($jam as $j)
+            $liter = 0;
+            $ton = 0;
+
+            foreach ($jam as $i => $j)
             {
-                // $date = ($j < 7) ? $nextDay : $today;
+                $liter += DB::select('SELECT SUM(total_real) AS liter FROM fuel_refills WHERE HOUR(finish_time) = :hour AND `date` = :dt', [':hour' => $j, ':dt' => $date])[0]->liter;
 
-                $liter = DB::select('SELECT SUM(total_real) AS liter FROM fuel_refills WHERE HOUR(finish_time) = :hour AND `date` = :dt', [':hour' => $j, ':dt' => $date])[0]->liter;
-
-                $ton = DB::select('SELECT SUM(volume)/1000 AS ton FROM port_activities WHERE HOUR(time_end) = :hour AND `date` = :dt', [':hour' => $j, ':dt' => $date])[0]->ton;
+                $ton += DB::select('SELECT SUM(volume)/1000 AS ton FROM port_activities WHERE HOUR(time_end) = :hour AND `date` = :dt AND (unit_activity_id = :load_and_carry OR unit_activity_id = :feeding)', [
+                    ':hour' => $j,
+                    ':dt' => $date,
+                    ':load_and_carry' => \App\PortActivity::ACT_LOAD_AND_CARRY,
+                    ':feeding' => \App\PortActivity::ACT_FEEDING,
+                ])[0]->ton;
 
                 try {
                     $literPerTon[] = $liter/$ton;
