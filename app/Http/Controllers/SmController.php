@@ -95,7 +95,14 @@ class SmController extends Controller
 
             foreach ($jam as $i => $j)
             {
-                $liter += DB::select('SELECT SUM(total_real) AS liter FROM fuel_refills WHERE HOUR(finish_time) = :hour AND `date` = :dt', [':hour' => $j, ':dt' => $date])[0]->liter;
+                $sql = "SELECT
+                    SUM(total_real) AS liter
+                    FROM fuel_refills
+                    JOIN units ON units.id = fuel_refills.unit_id
+                    WHERE HOUR(finish_time) = :hour AND `date` = :dt
+                        AND unit_category_id != 6";
+
+                $liter += DB::select($sql, [':hour' => $j, ':dt' => $date])[0]->liter;
 
                 $ton += DB::select('SELECT SUM(volume)/1000 AS ton FROM port_activities WHERE HOUR(time_end) = :hour AND `date` = :dt AND (unit_activity_id = :load_and_carry OR unit_activity_id = :feeding)', [
                     ':hour' => $j,
