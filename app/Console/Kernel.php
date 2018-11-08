@@ -27,10 +27,8 @@ class Kernel extends ConsoleKernel
         // $schedule->command('inspire')
         //          ->everyMinute();
 
-        // $schedule->command('poins:download_log_absensi')
-        //     ->at('08:00');
-        // $schedule->command('poins:download_log_absensi')
-        //     ->at('20:00');
+        $schedule->command('absensi:upload')->at('09:30');
+        $schedule->command('absensi:upload')->at('23:45');
     }
 
     /**
