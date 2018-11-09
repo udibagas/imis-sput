@@ -89,14 +89,16 @@ class UploadAbsensiCommand extends Command
 
         fclose($file);
 
-        $ftpCon = ftp_connect(env('FTP_HOST', '10.13.20.124'), env('FTP_PORT', '25'));
-        $ftpLogin = ftp_login($ftpCon, env('FTP_USER', 'anonymous'), env('FTP_PASS', ''));
-        $upload = ftp_put($ftpCon, $fileName, $fileName, FTP_BINARY);
+        if ($line != '') {
+            $ftpCon = ftp_connect(env('FTP_HOST', '10.13.20.124'), env('FTP_PORT', '25'));
+            $ftpLogin = ftp_login($ftpCon, env('FTP_USER', 'anonymous'), env('FTP_PASS', ''));
+            $upload = ftp_put($ftpCon, $fileName, $fileName, FTP_BINARY);
 
-        if ($upload) {
-            unlink($fileName);
+            if ($upload) {
+                unlink($fileName);
+            }
+
+            ftp_close($ftpCon);
         }
-
-        ftp_close($ftpCon);
     }
 }

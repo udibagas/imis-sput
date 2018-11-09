@@ -89,7 +89,10 @@
             add: function() {
                 // reset the form
                 this.formTitle = "ADD ABSENSI";
-                this.formData = {};
+                this.formData = {
+                    date: moment().format('YYYY-MM-DD'),
+                    shift: moment().format('H') >= 6 && moment().format('H') <= 18 ? 1 : 2
+                };
                 this.formErrors = {};
                 this.error = {};
                 // open form

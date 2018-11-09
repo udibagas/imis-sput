@@ -23,6 +23,32 @@
                         </div>
                     </div>
 
+                    <div class="form-group" :class="formErrors.date ? 'has-error' : ''">
+                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="date">Date
+                        </label>
+                        <div class="col-md-9 col-sm-9 col-xs-12">
+                            <vue-datepicker v-model="formData.date" placeholder="Date">
+                            </vue-datepicker>
+                            <span v-if="formErrors.date" class="help-block">@{{formErrors.date[0]}}</span>
+                        </div>
+                    </div>
+
+                    <div class="form-group" :class="formErrors.shift ? 'has-error' : ''">
+                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="shift">Shift
+                        </label>
+                        <div class="col-md-9 col-sm-9 col-xs-12">
+                            <div class="radio radio-inline radio-replace radio-success">
+								<input type="radio" v-model="formData.shift" id="shift_1" value="1">
+								<label for="shift_1">1</label>
+							</div>
+                            <div class="radio radio-inline radio-replace radio-success">
+								<input type="radio" v-model="formData.shift" id="shift_2" value="2">
+								<label for="shift_2">2</label>
+							</div>
+                            <span v-if="formErrors.shift" class="help-block">@{{formErrors.shift[0]}}</span>
+                        </div>
+                    </div>
+
                     <div class="form-group" :class="formErrors.in ? 'has-error' : ''">
                         <label class="control-label col-md-3 col-sm-3 col-xs-12" for="in">Time In
                         </label>
@@ -40,6 +66,24 @@
                             <vue-datetimepicker data-date-format="YYYY-MM-DD HH:mm" placeholder="Time Out" v-model="formData.out">
                             </vue-datetimepicker>
                             <span v-if="formErrors.out" class="help-block">@{{formErrors.out[0]}}</span>
+                        </div>
+                    </div>
+
+                    <div class="form-group" :class="formErrors.zona_no ? 'has-error' : ''">
+                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="zona_no">Zona No.
+                        </label>
+                        <div class="col-md-9 col-sm-9 col-xs-12">
+                            <input type="text" v-model="formData.zona_no" class="form-control" placeholder="Zona No.">
+                            <span v-if="formErrors.zona_no" class="help-block">@{{formErrors.zona_no[0]}}</span>
+                        </div>
+                    </div>
+
+                    <div class="form-group" :class="formErrors.terminal_no ? 'has-error' : ''">
+                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="terminal_no">Terminal No.
+                        </label>
+                        <div class="col-md-9 col-sm-9 col-xs-12">
+                            <input type="text" v-model="formData.terminal_no" class="form-control" placeholder="Terminal No.">
+                            <span v-if="formErrors.terminal_no" class="help-block">@{{formErrors.terminal_no[0]}}</span>
                         </div>
                     </div>
 
