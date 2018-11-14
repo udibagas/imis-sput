@@ -31,7 +31,8 @@
             <table class="table table-striped table-hover " id="bootgrid" style="border-top:2px solid #ddd">
                 <thead>
                     <tr>
-                        <th data-column-id="id" data-width="3%">ID</th>
+                        <!-- <th data-column-id="id" data-width="3%">ID</th> -->
+                        <th data-column-id="picture" data-formatter="picture">Picture</th>
                         <th data-column-id="reg_no">Registration Number</th>
                         <th data-column-id="name">Name</th>
                         <th data-column-id="trademark">Trademark</th>
@@ -46,12 +47,28 @@
                         <th data-column-id="price"
                             data-formatter="price"
                             data-header-align="right"
-                            data-align="right">Price</th>
+                            data-align="right">Price (IDR)</th>
+
+                        <th data-column-id="value"
+                            data-formatter="value"
+                            data-header-align="right"
+                            data-align="right">Value (IDR)</th>
 
                         <th data-column-id="year"
                             data-align="center"
                             data-header-align="center">Year</th>
 
+                        <th data-column-id="uselife"
+                            data-align="center"
+                            data-header-align="center">Uselife</th>
+
+                        <th data-column-id="type"
+                            data-align="center"
+                            data-formatter="type"
+                            data-header-align="center">Type</th>
+
+                        <th data-column-id="category">Category</th>
+                        <th data-column-id="vendor">Vendor</th>
                         <th data-column-id="location">Location</th>
 
                         <th data-column-id="status"
@@ -95,6 +112,8 @@ const app = new Vue({
         error: {},
         statuses: {!! App\AssetStatus::selectRaw('id AS id, CONCAT(code, " - ", description) AS text')->orderBy('code', 'ASC')->get() !!},
         locations: {!! App\AssetLocation::selectRaw('id AS id, name AS text')->orderBy('name', 'ASC')->get() !!},
+        categories: {!! App\AssetCategory::selectRaw('id AS id, name AS text')->orderBy('name', 'ASC')->get() !!},
+        vendors: {!! App\AssetVendor::selectRaw('id AS id, name AS text')->orderBy('name', 'ASC')->get() !!},
     },
     methods: {
         add: function() {
@@ -205,6 +224,29 @@ const app = new Vue({
                 .catch(function(e) {
                     console.log(e);
                 });
+        },
+        handleFileUpload() {
+            // https://serversideup.net/uploading-files-vuejs-axios/
+            let _this = this
+            let file = this.$refs.file.files[0];
+            let formData = new FormData();
+            formData.append('file', file)
+
+            axios.post( '/asset/uploadPicture', formData, {
+                    headers: { 'Content-Type': 'multipart/form-data' }
+                }).then(function(r) {
+                    if (r.data.success) {
+                        _this.formData.picture = r.data.file
+                        _this.formErrors.picture = false;
+                        _this.$forceUpdate();
+                    }
+                    else {
+                        _this.formErrors.picture = [r.data.message];
+                        _this.$forceUpdate();
+                    }
+                }).catch(function(error) {
+                    _this.error = error.response
+                });
         }
     },
     mounted: function() {
@@ -242,8 +284,17 @@ const app = new Vue({
                 price: function(column, row) {
                     return t.formatNumber(row.price);
                 },
+                value: function(column, row) {
+                    return t.formatNumber(row.value);
+                },
                 lifetime: function(column, row) {
                     return row.lifetime + ' tahun';
+                },
+                type: function(column, row) {
+                    return row.type ? 'OWN' : 'RENT';
+                },
+                picture: function(column, row) {
+                    return row.picture ? '<img src="'+ row.picture +'" />' : '';
                 }
             }
         }).on("loaded.rs.jquery.bootgrid", function() {

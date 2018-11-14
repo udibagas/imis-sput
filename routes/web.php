@@ -11,6 +11,9 @@
 |
 */
 
+Route::get('cetak-tiket', 'IsengController@cetakTiket');
+Route::get('cetak-poin', 'IsengController@cetakPoin');
+
 Auth::routes();
 
 Route::group(['middleware' => 'auth'], function() {
@@ -29,14 +32,17 @@ Route::group(['middleware' => 'auth'], function() {
     // Master data
     Route::resource('area', 'AreaController')->except(['edit', 'create']);
 
+    Route::post('asset/uploadPicture', 'AssetController@uploadPicture');
     Route::get('asset/generateQrCode/{asset}', 'AssetController@generateQrCode');
     Route::get('asset/generateQrCode', 'AssetController@generateQrCode');
     Route::get('asset/export', 'AssetController@export');
     Route::get('asset/summary', 'AssetController@summary');
     Route::resource('asset', 'AssetController')->except(['edit', 'create']);
 
+    Route::resource('assetCategory', 'AssetCategoryController')->except(['edit', 'create']);
     Route::resource('assetLocation', 'AssetLocationController')->except(['edit', 'create']);
     Route::resource('assetStatus', 'AssetStatusController')->except(['edit', 'create']);
+    Route::resource('assetVendor', 'AssetVendorController')->except(['edit', 'create']);
     Route::get('assetTaking/downloadApp', 'AssetTakingController@downloadApp');
     Route::resource('assetTaking', 'AssetTakingController')->except(['edit', 'create']);
     Route::resource('stockArea', 'StockAreaController')->only(['destroy']);
@@ -196,6 +202,35 @@ Route::group(['middleware' => 'auth'], function() {
     Route::get('transSurface', 'TransSurfaceController@index');
 });
 
+// UNTUK DEMO
+View::composer('layouts._sidebar-asset', function($view) {
+    $menus = [
+        'ASSET MANAGEMENT' => [
+            'icon' => 'qrcode',
+            'url' => 'asset'
+        ],
+        'ASSET MOVEMENT' => [
+            'icon' => 'exchange',
+            'url' => 'assetTaking'
+        ],
+        'MASTER DATA' => [
+            'icon' => 'database',
+            'url' => [
+                // 'employee' => 'Employee Managemet',
+                'assetCategory' => 'Asset Category',
+                'assetLocation' => 'Asset Location',
+                'assetStatus' => 'Asset Status',
+                'assetVendor' => 'Asset Vendor',
+                'user' => 'Users',
+            ]
+        ]
+    ];
+
+    $view->with('menus', $menus);
+});
+
+// END UNTUK DEMO
+
 View::composer('layouts._sidebar', function($view) {
     $menus = [
         'DASHBOARD' => [
@@ -281,8 +316,10 @@ View::composer('layouts._sidebar', function($view) {
                 'fuelManagement' => 'Fuel Management',
                 'p2h' => 'P2H',
                 '<i class="fa fa-database"></i> Master Data' => [
+                    'assetCategory' => 'Asset Category',
                     'assetLocation' => 'Asset Location',
                     'assetStatus' => 'Asset Status',
+                    'assetVendor' => 'Asset Vendor',
                     'dormitory' => 'Dormitory',
                     'department' => 'Departments',
                     // 'jabatan' => 'Jabatan',

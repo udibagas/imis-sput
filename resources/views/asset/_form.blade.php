@@ -68,11 +68,20 @@
                     </div>
 
                     <div :class="['form-group', formErrors.price ? 'has-error' : '']">
-                        <label class="control-label col-md-4 col-sm-4 col-xs-12" for="price">Price
+                        <label class="control-label col-md-4 col-sm-4 col-xs-12" for="price">Price (IDR)
                         </label>
                         <div class="col-md-8 col-sm-8 col-xs-12">
-                            <input type="number" v-model="formData.price" class="form-control" placeholder="Price">
+                            <input type="number" v-model="formData.price" class="form-control" placeholder="Price (IDR)">
                             <span v-if="formErrors.price" class="help-block">@{{formErrors.price[0]}}</span>
+                        </div>
+                    </div>
+
+                    <div :class="['form-group', formErrors.value ? 'has-error' : '']">
+                        <label class="control-label col-md-4 col-sm-4 col-xs-12" for="value">Value (IDR)
+                        </label>
+                        <div class="col-md-8 col-sm-8 col-xs-12">
+                            <input type="number" v-model="formData.value" class="form-control" placeholder="Value (IDR)">
+                            <span v-if="formErrors.value" class="help-block">@{{formErrors.value[0]}}</span>
                         </div>
                     </div>
 
@@ -82,6 +91,52 @@
                         <div class="col-md-8 col-sm-8 col-xs-12">
                             <input type="number" v-model="formData.year" class="form-control" placeholder="Year">
                             <span v-if="formErrors.year" class="help-block">@{{formErrors.year[0]}}</span>
+                        </div>
+                    </div>
+
+                    <div class="form-group" :class="formErrors.uselife ? 'has-error' : ''">
+                        <label class="control-label col-md-4 col-sm-4 col-xs-12" for="uselife">Uselife
+                        </label>
+                        <div class="col-md-8 col-sm-8 col-xs-12">
+                            <vue-datepicker v-model="formData.uselife" placeholder="Uselife">
+                            </vue-datepicker>
+                            <span v-if="formErrors.uselife" class="help-block">@{{formErrors.uselife[0]}}</span>
+                        </div>
+                    </div>
+
+                    <div class="form-group" :class="formErrors.type ? 'has-error' : ''">
+                        <label class="control-label col-md-4 col-sm-4 col-xs-12" for="type">Type
+                        </label>
+                        <div class="col-md-8 col-sm-8 col-xs-12">
+                            <div class="radio radio-inline radio-replace radio-success">
+								<input type="radio" v-model="formData.type" id="type_1" value="1">
+								<label for="type_1">OWN</label>
+							</div>
+                            <div class="radio radio-inline radio-replace radio-success">
+								<input type="radio" v-model="formData.type" id="type_2" value="0">
+								<label for="type_2">RENT</label>
+							</div>
+                            <span v-if="formErrors.type" class="help-block">@{{formErrors.type[0]}}</span>
+                        </div>
+                    </div>
+
+                    <div :class="['form-group', formErrors.asset_category_id ? 'has-error' : '']">
+                        <label class="control-label col-md-4 col-sm-4 col-xs-12" for="asset_category_id">Category
+                        </label>
+                        <div class="col-md-8 col-sm-8 col-xs-12">
+                            <select2 :options="categories" v-model="formData.asset_category_id" data-placeholder="Category">
+                            </select2>
+                            <span v-if="formErrors.asset_category_id" class="help-block">@{{formErrors.asset_category_id[0]}}</span>
+                        </div>
+                    </div>
+
+                    <div :class="['form-group', formErrors.asset_vendor_id ? 'has-error' : '']">
+                        <label class="control-label col-md-4 col-sm-4 col-xs-12" for="asset_vendor_id">Vendor
+                        </label>
+                        <div class="col-md-8 col-sm-8 col-xs-12">
+                            <select2 :options="vendors" v-model="formData.asset_vendor_id" data-placeholder="Vendor">
+                            </select2>
+                            <span v-if="formErrors.asset_vendor_id" class="help-block">@{{formErrors.asset_vendor_id[0]}}</span>
                         </div>
                     </div>
 
@@ -102,6 +157,15 @@
                             <select2 :options="statuses" v-model="formData.asset_status_id" data-placeholder="Status">
                             </select2>
                             <span v-if="formErrors.asset_status_id" class="help-block">@{{formErrors.asset_status_id[0]}}</span>
+                        </div>
+                    </div>
+
+                    <div :class="['form-group', formErrors.picture ? 'has-error' : '']">
+                        <label class="control-label col-md-4 col-sm-4 col-xs-12" for="picture">Picture
+                        </label>
+                        <div class="col-md-8 col-sm-8 col-xs-12">
+                            <input type="file" id="file" ref="file" class="form-control" @change="handleFileUpload">
+                            <span v-if="formErrors.picture" class="help-block">@{{formErrors.picture[0]}}</span>
                         </div>
                     </div>
 

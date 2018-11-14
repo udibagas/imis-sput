@@ -27,9 +27,17 @@ class AssetController extends Controller
             $sort = $request->sort ? key($request->sort) : 'assets.name';
             $dir = $request->sort ? $request->sort[$sort] : 'asc';
 
-            $asset = Asset::selectRaw('assets.*, asset_locations.name AS location, asset_statuses.code AS status')
+            $asset = Asset::selectRaw('
+                    assets.*,
+                    asset_locations.name AS location,
+                    asset_statuses.code AS status,
+                    asset_categories.name AS category,
+                    asset_vendors.name AS vendor
+                ')
                 ->join('asset_locations', 'asset_locations.id', '=', 'assets.asset_location_id')
                 ->join('asset_statuses', 'asset_statuses.id', '=', 'assets.asset_status_id')
+                ->join('asset_categories', 'asset_categories.id', '=', 'assets.asset_category_id', 'LEFT')
+                ->join('asset_vendors', 'asset_vendors.id', '=', 'assets.asset_vendor_id', 'LEFT')
                 ->when($request->searchPhrase, function($query) use ($request) {
                     return $query->where('assets.name', 'LIKE', '%'.$request->searchPhrase.'%')
                         ->orWhere('assets.reg_no', 'LIKE', '%'.$request->searchPhrase.'%')
@@ -135,5 +143,40 @@ class AssetController extends Controller
             FROM asset_statuses s";
 
         return DB::select($sql);
+    }
+
+    public function uploadPicture(Request $request)
+    {
+        if ($request->hasFile('file'))
+        {
+            $file = $request->file('file');
+            $fileName = time().$file->getClientOriginalName();
+            $extension = $file->getClientOriginalExtension();
+
+            if (!in_array(strtolower($extension), ['png', 'jpg', 'jpeg', 'bmp']))
+            {
+                return [
+                    'success' => false,
+                    'message' => 'File extension not permitted'
+                ];
+            }
+
+            try {
+                $file->move('images/', $fileName);
+            } catch (\Exception $e) {
+                return [
+                    'success' => false,
+                    'message' => 'Failed to move file'
+                ];
+            }
+
+            return [
+                'success' => true,
+                'file' => 'images/'.$fileName,
+                'message' => 'Picture has been uploaded!'
+            ];
+        }
+
+        return ['success' => false, 'message' => 'No file uploaded'];
     }
 }
