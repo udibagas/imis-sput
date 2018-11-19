@@ -27,6 +27,8 @@ Route::get('area', 'Api\AreaController@index');
 Route::resource('asset', 'Api\AssetController');
 Route::get('assetLocation', 'Api\AssetLocationController@index');
 Route::get('assetStatus', 'Api\AssetStatusController@index');
+Route::get('assetCategory', 'Api\AssetCategoryController@index');
+Route::get('assetVendor', 'Api\AssetVendorController@index');
 Route::resource('assetTaking', 'Api\AssetTakingController');
 Route::get('barge', 'Api\BargeController@index');
 Route::get('customer', 'Api\CustomerController@index');

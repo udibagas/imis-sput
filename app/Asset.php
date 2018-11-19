@@ -40,4 +40,12 @@ class Asset extends Model
     public function assetStatus() {
         return $this->belongsTo(AssetStatus::class);
     }
+
+    public function assetCategory() {
+        return $this->belongsTo(AssetCategory::class);
+    }
+
+    public function assetVendor() {
+        return $this->belongsTo(AssetVendor::class);
+    }
 }
