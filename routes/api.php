@@ -31,6 +31,7 @@ Route::get('assetCategory', 'Api\AssetCategoryController@index');
 Route::get('assetVendor', 'Api\AssetVendorController@index');
 Route::resource('assetTaking', 'Api\AssetTakingController');
 Route::get('barge', 'Api\BargeController@index');
+Route::get('buyer', 'Api\BuyerController@index');
 Route::get('customer', 'Api\CustomerController@index');
 Route::get('contractor', 'Api\ContractorController@index');
 Route::get('defaultMaterial', 'Api\DefaultMaterialController@index');

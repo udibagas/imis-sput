@@ -83,11 +83,6 @@
 			    @yield('content')
 			</div>
 		</div>
-
-		<!-- <footer class="animatedParent animateOnce z-index-10">
-			<div class="footer-main animated fadeInUp slow">&copy; {{ date('Y') }} <strong>KPP - SPUT</strong></div>
-		</footer> -->
-
 	  </div>
   </div>
 </div>
