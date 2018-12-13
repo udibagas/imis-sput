@@ -83,6 +83,17 @@ const app = new Vue({
             // TODO: validate input first
             $('#modal-form-export').modal('hide');
             window.location = '{{url("barging/export")}}?from=' + this.exportRange.from + '&to=' + this.exportRange.to;
+            // var _this = this;
+            // var params = { from: this.exportRange.from, to: this.exportRange.to }
+            // axios.get(BASE_URL + '/barging/export', { params : params }).then(function(r) {
+            //     var data = r.data
+            //     var fileName = `barging-${_this.exportRange.from}-to-${_this.exportRange.from}.xls`
+            //     var exportType = 'xls'
+            //     exportFromJSON.exportFromJSON({data, fileName, exportType})
+            // }).catch(function(e) {
+            //     console.log(e);
+            // });
+
         },
         add: function() {
             // reset the form

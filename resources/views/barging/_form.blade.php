@@ -1,5 +1,5 @@
 <div id="modal-form" class="modal fade" role="dialog">
-    <div class="modal-dialog" style="width:750px;">
+    <div class="modal-dialog" style="width:850px;">
         <div class="modal-content">
             <form class="form-horizontal" role="form" @submit.prevent="formData.id == undefined ? store : update">
                 <div class="modal-header">
@@ -96,6 +96,7 @@
                     <table class="table table-striped" style="margin: 20px 0 0;border-top:1px solid #ddd;">
                         <thead>
                             <tr>
+                                <th>Draft</th>
                                 <th>Contractor</th>
                                 <th>Material Type</th>
                                 <th>Seam</th>
@@ -109,6 +110,9 @@
                         </thead>
                         <tbody>
                             <tr v-for="(c,i) in formData.barging_material">
+                                <td>
+                                    <input v-model="formData.barging_material[i].draft" class="form-control">
+                                </td>
                                 <td>
                                     <input type="hidden" v-model="formData.barging_material[i].id">
                                     <select2 :options="contractors" v-model="formData.barging_material[i].contractor_id" data-placeholder="Contractor">
