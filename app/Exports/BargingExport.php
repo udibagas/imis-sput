@@ -31,10 +31,7 @@ class BargingExport implements FromQuery, WithHeadings
             'Total Cargo',
             'Persentase',
             'Jetty',
-            'Surveyor Code',
-            'Surveyor Name',
-            'Tujuan',
-            'Code'
+            'Tujuan'
         ];
     }
 
@@ -56,10 +53,7 @@ class BargingExport implements FromQuery, WithHeadings
                 barging_materials.volume,
                 CONCAT(ROUND((barging_materials.volume_progress / barging_materials.volume * 100), 2), "%"),
                 jetties.name AS jetty,
-                null AS surveyor_code,
-                null AS surveyor_name,
-                buyers.name AS buyer,
-                null AS buyer_code
+                buyers.name AS buyer
             ')
             ->join('bargings', 'bargings.id', '=', 'barging_materials.barging_id')
             ->join('contractors', 'contractors.id', '=', 'barging_materials.contractor_id')
