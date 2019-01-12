@@ -49,7 +49,7 @@ class BargingExport implements FromQuery, WithHeadings
                 TIME(bargings.stop) AS td_time,
                 customers.name AS customer,
                 seams.name AS seam,
-                barging_materials.volume_progress,
+                barging_materials.volume_by_draught_survey,
                 barging_materials.volume,
                 CONCAT(ROUND((barging_materials.volume_progress / barging_materials.volume * 100), 2), "%"),
                 jetties.name AS jetty,
