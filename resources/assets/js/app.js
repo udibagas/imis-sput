@@ -144,3 +144,4 @@ Vue.component('export-form', require('./components/ExportForm.vue'));
 Vue.component('active-barging', require('./components/ActiveBarging.vue'));
 Vue.component('productivity', require('./components/Productivity.vue'));
 Vue.component('jetty', require('./components/Jetty.vue'));
+Vue.component('barging-plan', require('./components/BargingPlan.vue'));

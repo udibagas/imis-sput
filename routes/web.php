@@ -31,6 +31,7 @@ Route::group(['middleware' => 'auth'], function() {
 
     // Master data
     Route::resource('area', 'AreaController')->except(['edit', 'create']);
+    Route::resource('bargingPlan', 'BargingPlanController')->except(['edit', 'create']);
 
     Route::post('asset/uploadPicture', 'AssetController@uploadPicture');
     Route::get('asset/generateQrCode/{asset}', 'AssetController@generateQrCode');
@@ -290,6 +291,7 @@ View::composer('layouts._sidebar', function($view) {
                 '<i class="fa fa-database"></i> Master Data' => [
                     'area' => 'Area',
                     'barge' => 'Barges',
+                    'bargingPlan' => 'Barging Plan',
                     'buyer' => 'Buyers',
                     'contractor' => 'Contractors',
                     'customer' => 'Customers',
