@@ -31,6 +31,7 @@ Route::group(['middleware' => 'auth'], function() {
 
     // Master data
     Route::resource('area', 'AreaController')->except(['edit', 'create']);
+    Route::get('bargingPlan/achievement', 'BargingPlanController@achievement');
     Route::resource('bargingPlan', 'BargingPlanController')->except(['edit', 'create']);
 
     Route::post('asset/uploadPicture', 'AssetController@uploadPicture');

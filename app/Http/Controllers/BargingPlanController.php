@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\BargingPlan;
 use App\Http\Requests\BargingPlanRequest;
 use App\Barge;
+use DB;
 
 class BargingPlanController extends Controller
 {
@@ -33,13 +34,13 @@ class BargingPlanController extends Controller
     public function store(Request $request)
     {
         foreach ($request->plans as $p) {
-            foreach ($p['plans'] as $customer_id => $volume) {
+            foreach ($p['plans'] as $contractor_id => $volume) {
                 if ($volume == null) {
                     continue;
                 }
                 
                 $plan = BargingPlan::where('date', $p['date'])
-                    ->where('customer_id', $customer_id)
+                    ->where('contractor_id', $contractor_id)
                     ->first();
                 
                 if ($plan) {
@@ -47,7 +48,7 @@ class BargingPlanController extends Controller
                 } else {
                     BargingPlan::create([
                         'date' => $p['date'],
-                        'customer_id' => $customer_id,
+                        'contractor_id' => $contractor_id,
                         'volume' => $volume
                     ]);
                 }
@@ -80,5 +81,20 @@ class BargingPlanController extends Controller
     public function destroy(BargingPlan $bargingPlan)
     {
         return ['status' => $bargingPlan->delete()];
+    }
+
+    public function achievement(Request $request)
+    {
+        $sql = "SELECT 
+            DATE(b.stop) AS date,
+            SUM(bm.volume_by_draught_survey) AS volume
+        FROM bargings b 
+        JOIN barging_materials bm 
+            ON bm.barging_id = b.id 
+        WHERE b.stop BETWEEN :start AND :end
+            AND b.status = 5
+        GROUP BY DATE(b.stop)";
+
+        return DB::select($sql, [':start' => $request->start, ':end' => $request->end]);
     }
 }

@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class BargingPlan extends Model
 {
-    protected $fillable = ['date', 'customer_id', 'volume'];
+    protected $fillable = ['date', 'contractor_id', 'volume'];
 
     public static function getPeriod($year)
     {
