@@ -145,3 +145,4 @@ Vue.component('active-barging', require('./components/ActiveBarging.vue'));
 Vue.component('productivity', require('./components/Productivity.vue'));
 Vue.component('jetty', require('./components/Jetty.vue'));
 Vue.component('barging-plan', require('./components/BargingPlan.vue'));
+Vue.component('barging-report', require('./components/BargingReport.vue'));

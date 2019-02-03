@@ -2,13 +2,19 @@
 
 @section('content')
 <div id="app">
-    <jetty></jetty>
+    <barging-report></barging-report>
 </div>
 @endsection
 
 @push('scripts')
 <script type="text/javascript">
 $('.page-container').addClass('sidebar-collapsed');
-const app = new Vue({el: '#app'});
+const app = new Vue({
+    el: '#app',
+    data() {
+        return {
+        }
+    }
+});
 </script>
 @endpush
