@@ -12,14 +12,14 @@
             <thead>
                 <tr>
                     <th style="width:100px;">Tanggal</th>
-                    <th v-for="c in customers" :key="c.id">{{c.name}}</th>
+                    <th v-for="c in contractors" :key="c.id">{{c.name}}</th>
                     <th>Total</th>
                 </tr>
             </thead>
             <tbody>
                 <tr v-for="(d, i) in dates" :key="i">
                     <td>{{d | readableDate}}</td>
-                    <td v-for="c in customers" :key="c.id">
+                    <td v-for="c in contractors" :key="c.id">
                         <input v-model="formPlans[d][c.id]" class="form-control">
                     </td>
                     <td class="text-center">
@@ -30,8 +30,8 @@
             <tfoot>
                 <tr>
                     <td>TOTAL</td>
-                    <td class="text-center" v-for="c in customers" :key="c.id">
-                        <strong>{{ plans.filter(p => p.customer_id == c.id).reduce((t, c) => { return t + c.volume }, 0) }}</strong>
+                    <td class="text-center" v-for="c in contractors" :key="c.id">
+                        <strong>{{ plans.filter(p => p.contractor_id == c.id).reduce((t, c) => { return t + c.volume }, 0) }}</strong>
                     </td>
                     <td class="text-center">
                         <strong>{{ plans.reduce((t, c) => { return t + c.volume }, 0) }}</strong>
@@ -68,8 +68,8 @@ export default {
             let formPlans = []
             this.dates.forEach(d => {
                 formPlans[d] = []
-                this.customers.forEach(c => {
-                    let plan = this.plans.find(p => p.customer_id === c.id && p.date === d)
+                this.contractors.forEach(c => {
+                    let plan = this.plans.find(p => p.contractor_id === c.id && p.date === d)
                     formPlans[d][c.id] = plan ? plan.volume : 0
                 });
             })
@@ -85,7 +85,7 @@ export default {
     data() {
         return {
             plans: [],
-            customers: [],
+            contractors: [],
             year: moment().format('YYYY'),
             selectedPeriod: 0
         }
@@ -114,9 +114,9 @@ export default {
                 this.plans = r.data
             }).catch(e => console.log(e))
         },
-        getCustomer() { 
-            axios.get(BASE_URL + '/api/customer')
-                .then(r => this.customers = r.data)
+        getContractor() { 
+            axios.get(BASE_URL + '/api/contractor')
+                .then(r => this.contractors = r.data)
                 .catch(e => console.log(e))
         },
         requestData() {
@@ -147,7 +147,7 @@ export default {
         }
     },
     mounted() {
-        this.getCustomer()
+        this.getContractor()
         this.requestData()
     }
 }
