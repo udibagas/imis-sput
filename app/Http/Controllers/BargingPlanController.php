@@ -87,7 +87,7 @@ class BargingPlanController extends Controller
     {
         $sql = "SELECT 
             DATE(b.stop) AS date,
-            SUM(bm.volume_by_draught_survey) AS volume
+            SUM(bm.volume_by_draught_survey / 1000) AS volume
         FROM bargings b 
         JOIN barging_materials bm 
             ON bm.barging_id = b.id 
