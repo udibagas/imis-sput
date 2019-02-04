@@ -91,7 +91,7 @@ class BargingPlanController extends Controller
         FROM bargings b 
         JOIN barging_materials bm 
             ON bm.barging_id = b.id 
-        WHERE b.stop BETWEEN :start AND :end
+        WHERE DATE(b.stop) BETWEEN :start AND :end
             AND b.status = 5
         GROUP BY DATE(b.stop)";
 
