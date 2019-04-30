@@ -195,7 +195,7 @@ const app = new Vue({
             this.formData = {
                 date: moment().format('YYYY-MM-DD'),
                 time: moment().format('HH:mm'),
-                shift: (moment().format('H') >= 6 && moment().format('H') < 18) ? 1 : 2,
+                shift: (moment().format('H') >= 5 && moment().format('H') < 17) ? 1 : 2,
                 customer_id: '{{auth()->user()->customer_id}}',
             };
 
