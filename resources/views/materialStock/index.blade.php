@@ -36,12 +36,12 @@
             :entity="'Contractor'"></material-stock-summary>
         @endif
 
-        <material-stock-summary
+        {{-- <material-stock-summary
             :customer="customer_id"
             :contractor="contractor_id"
             :group="'material_type'"
             :header="'SUMMARY BY MATERIAL TYPE'"
-            :entity="'Material Type'"></material-stock-summary>
+            :entity="'Material Type'"></material-stock-summary> --}}
 
         <material-stock-summary
             :customer="customer_id"
@@ -50,19 +50,19 @@
             :header="'SUMMARY BY SEAM'"
             :entity="'Seam'"></material-stock-summary>
 
-        <material-stock-summary
+        {{-- <material-stock-summary
             :customer="customer_id"
             :contractor="contractor_id"
             :group="'area_id'"
             :header="'SUMMARY BY BLOCK AREA'"
-            :entity="'Block Area'"></material-stock-summary>
+            :entity="'Block Area'"></material-stock-summary> --}}
 
-        <material-stock-summary
+        {{-- <material-stock-summary
             :customer="customer_id"
             :contractor="contractor_id"
             :group="'stock_area_id'"
             :header="'SUMMARY BY STOCK AREA'"
-            :entity="'Stock Area'"></material-stock-summary>
+            :entity="'Stock Area'"></material-stock-summary> --}}
     </div>
     <div class="col-md-9">
         <div class="panel panel-primary">
