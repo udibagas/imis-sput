@@ -11,7 +11,7 @@
     },
     "devDependencies": {
         "axios": "^0.18",
-        "bootstrap": "3.3.6",
+        "bootstrap": "3.4.1",
         "cross-env": "^5.2.0",
         "jquery": "1.11.3",
         "laravel-mix": "^2.0",
