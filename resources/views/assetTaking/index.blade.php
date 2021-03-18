@@ -3,7 +3,7 @@
 @section('content')
 <div class="panel panel-primary" id="app">
     <div class="panel-body">
-        <h3 class="pull-left text-primary">ASSET TAKING <small>Manage</small></h3>
+        <h3 class="pull-left text-primary">ASSET MOVEMENT <small>Manage</small></h3>
         <span class="pull-right" style="margin:15px 0 15px 10px;">
             @can('create', App\AssetTaking::class)
             <a href="#" @click="add" class="btn btn-primary"><i class="icon-plus-circled"></i></a>
@@ -78,7 +78,7 @@ const app = new Vue({
     },
     methods: {
         add: function() {
-            this.formTitle = "ADD ASSET TAKING";
+            this.formTitle = "ADD ASSET MOVEMENT";
             this.formData = {
                 date: '{{date("Y-m-d")}}'
             };
@@ -109,7 +109,7 @@ const app = new Vue({
         },
         edit: function(id) {
             var t = this;
-            this.formTitle = "EDIT ASSET TAKING";
+            this.formTitle = "EDIT ASSET MOVEMENT";
             this.formErrors = {};
             this.error = {};
 

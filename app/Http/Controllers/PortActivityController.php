@@ -22,7 +22,7 @@ class PortActivityController extends Controller
     {
         $this->authorize('view', PortActivity::class);
 
-        if ($request->ajax())
+        if (!$request->ajax())
         {
             $pageSize = $request->rowCount > 0 ? $request->rowCount : 1000000;
             $request['page'] = $request->current;

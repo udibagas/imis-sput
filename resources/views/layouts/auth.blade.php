@@ -28,7 +28,7 @@
 		<div class="login-container animated growIn slower">
 		    <div class="login-content">
 				<div class="text-center">
-				    <img src="{{asset('img/logo.png')}}">
+				    <img src="{{asset('img/lamjaya-white.png')}}">
 					<hr>
 					<h1>POINS<br>
 						<small>Port Operation Integrated System</small>

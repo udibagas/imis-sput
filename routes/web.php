@@ -16,7 +16,7 @@ Route::get('cetak-poin', 'IsengController@cetakPoin');
 
 Auth::routes();
 
-Route::group(['middleware' => 'auth'], function() {
+Route::group(['middleware' => 'auth'], function () {
     Route::get('/', 'HomeController@index')->name('home');
     Route::get('/home', 'HomeController@index')->name('home');
 
@@ -205,35 +205,35 @@ Route::group(['middleware' => 'auth'], function() {
 });
 
 // UNTUK DEMO
-View::composer('layouts._sidebar-asset', function($view) {
-    $menus = [
-        'ASSET MANAGEMENT' => [
-            'icon' => 'qrcode',
-            'url' => 'asset'
-        ],
-        'ASSET MOVEMENT' => [
-            'icon' => 'exchange',
-            'url' => 'assetTaking'
-        ],
-        'MASTER DATA' => [
-            'icon' => 'database',
-            'url' => [
-                // 'employee' => 'Employee Managemet',
-                'assetCategory' => 'Asset Category',
-                'assetLocation' => 'Asset Location',
-                'assetStatus' => 'Asset Status',
-                'assetVendor' => 'Asset Vendor',
-                'user' => 'Users',
-            ]
-        ]
-    ];
+// View::composer('layouts._sidebar', function ($view) {
+//     $menus = [
+//         'ASSET MANAGEMENT' => [
+//             'icon' => 'qrcode',
+//             'url' => 'asset'
+//         ],
+//         'ASSET MOVEMENT' => [
+//             'icon' => 'exchange',
+//             'url' => 'assetTaking'
+//         ],
+//         'MASTER DATA' => [
+//             'icon' => 'database',
+//             'url' => [
+//                 // 'employee' => 'Employee Managemet',
+//                 'assetCategory' => 'Asset Category',
+//                 'assetLocation' => 'Asset Location',
+//                 'assetStatus' => 'Asset Status',
+//                 'assetVendor' => 'Asset Vendor',
+//                 'user' => 'Users',
+//             ]
+//         ]
+//     ];
 
-    $view->with('menus', $menus);
-});
+//     $view->with('menus', $menus);
+// });
 
 // END UNTUK DEMO
 
-View::composer('layouts._sidebar', function($view) {
+View::composer('layouts._sidebar', function ($view) {
     $menus = [
         'DASHBOARD' => [
             'icon' => 'dashboard',
@@ -350,13 +350,12 @@ View::composer('layouts._sidebar', function($view) {
             'icon' => 'dollar',
             'url' => [
                 'fat' => 'Dashboard',
-                '<i class="fa fa-database"></i> Master Data' => [
-                ]
+                '<i class="fa fa-database"></i> Master Data' => []
             ]
         ],
         'ADMINISTRATION' => [
             'icon' => 'sliders',
-            'url'=> [
+            'url' => [
                 'user' => 'Users',
                 'user/log' => 'User Logs',
                 // 'authorization' => 'Authorization',

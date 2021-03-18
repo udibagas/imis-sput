@@ -61,7 +61,7 @@ class AssetController extends Controller
 
         return view('asset.index', [
             'breadcrumbs' => [
-                'hcgs' => 'HCGS',
+                // 'hcgs' => 'HCGS',
                 'asset' => 'Asset Management'
             ]
         ]);

@@ -31,7 +31,7 @@
 <div class="page-container" id="main-app">
   <div class="page-sidebar">
 		<header class="site-header">
-		  <div class="site-logo"><a href="{{url('/')}}"><img src="{{ asset('img/KPP2.png') }}" alt="IMIS" title="IMIS" style="width:100%;"></a></div>
+		  <div class="site-logo"><a href="{{url('/')}}"><img src="{{ asset('img/lamjaya-white.png') }}" alt="IMIS" title="IMIS" style="width:100%;"></a></div>
 		  <div class="sidebar-collapse hidden-xs"><a class="sidebar-collapse-icon" href="#"><i class="icon-menu"></i></a></div>
 		  <div class="sidebar-mobile-menu visible-xs"><a data-target="#side-nav" data-toggle="collapse" class="mobile-menu-icon" href="#"><i class="icon-menu"></i></a></div>
 		</header>
@@ -92,6 +92,7 @@ const BASE_URL = '{{url("/")}}';
 </script>
 <script src="{{ asset('js/app.js') }}"></script>
 <script src="{{ asset('js/theme.js') }}"></script>
+<script src="{{ asset('js/xlsx.full.min.js') }}"></script>
 @stack('scripts')
 <script src="{{ asset('js/functions.js') }}"></script>
 

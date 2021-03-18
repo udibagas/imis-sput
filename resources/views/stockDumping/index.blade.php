@@ -11,7 +11,7 @@
                 <a href="#" @click="add" class="btn btn-primary"><i class="icon-plus-circled"></i></a>
                 @endcan
                 @can('create', App\StockDumping::class)
-                <a href="#" class="btn btn-primary"><i class="fa fa-upload"></i> IMPORT</a>
+                <a href="#" @click="importFromExcel" class="btn btn-primary"><i class="fa fa-upload"></i> IMPORT</a>
                 @endcan
                 <a href="{{url('stockDumping/downloadApp')}}" class="btn btn-primary"><i class="fa fa-android"></i> DOWNLOAD APLIKASI CHECKER</a>
                 @can('export', App\StockDumping::class)
@@ -56,6 +56,7 @@
 
     @can('createOrUpdate', App\StockDumping::class)
     @include('stockDumping._form')
+    @include('stockDumping._form_import')
     @endcan
 
     @can('export', App\StockDumping::class)
@@ -74,6 +75,7 @@ $('.page-container').addClass('sidebar-collapsed');
 const app = new Vue({
     el: '#app',
     data: {
+        logs: ['Silakan pilih file ... <br>'], // untuk log upload file
         formData: {},
         formErrors: {},
         formTitle: '',
@@ -165,6 +167,34 @@ const app = new Vue({
         }
     },
     methods: {
+        importFromExcel: function() {
+            $('#file-upload').val('');
+            this.logs = ['Silakan pilih file...<br>']
+            $('#modal-form-import').modal('show');
+        },
+        readFile(oEvent) {
+            this.logs.push('File selected. Reading file. Please wait..<br>')
+
+            var _this = this
+            var oFile = oEvent.target.files[0];
+            var sFilename = oFile.name;
+
+            var reader = new FileReader();
+            var result = {};
+
+            reader.onload = function (e) {
+                var data = e.target.result;
+                data = new Uint8Array(data);
+                var workbook = XLSX.read(data, {type: 'array'});
+                console.log(workbook);
+                var result = {};
+                var res = XLSX.utils.sheet_to_json(workbook.Sheets[workbook.SheetNames[0]], {header: 1});
+                _this.logs.push('Reading file completed. Found ' + (res.length - 1) + ' rows <br>')
+                console.log(res)
+            };
+
+            reader.readAsArrayBuffer(oFile);
+        },
         getTonase: function() {
             var _this = this;
 
@@ -318,6 +348,10 @@ const app = new Vue({
     mounted: function() {
         var t = this;
         t.getTonase();
+
+        $('body').on('change', '#file-upload', function(ev) {
+            t.readFile(ev);
+        });
 
         var grid = $('#bootgrid').bootgrid({
             statusMapping: {
