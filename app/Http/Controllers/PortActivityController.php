@@ -22,8 +22,7 @@ class PortActivityController extends Controller
     {
         $this->authorize('view', PortActivity::class);
 
-        if (!$request->ajax())
-        {
+        if ($request->ajax()) {
             $pageSize = $request->rowCount > 0 ? $request->rowCount : 1000000;
             $request['page'] = $request->current;
             $sort = $request->sort ? key($request->sort) : 'port_activities.id';
@@ -53,11 +52,11 @@ class PortActivityController extends Controller
                 ->join('hoppers', 'hoppers.id', '=', 'port_activities.hopper_id', 'LEFT')
                 ->join('jetties', 'jetties.id', '=', 'hoppers.jetty_id', 'LEFT')
                 ->join('users', 'users.id', '=', 'port_activities.user_id', 'LEFT')
-                ->when($request->searchPhrase, function($query) use ($request) {
-                    return $query->where('units.name', 'LIKE', '%'.$request->searchPhrase.'%')
-                        ->orWhere('employees.name', 'LIKE', '%'.$request->searchPhrase.'%')
-                        ->orWhere('customers.name', 'LIKE', '%'.$request->searchPhrase.'%')
-                        ->orWhere('stock_areas.name', 'LIKE', '%'.$request->searchPhrase.'%');
+                ->when($request->searchPhrase, function ($query) use ($request) {
+                    return $query->where('units.name', 'LIKE', '%' . $request->searchPhrase . '%')
+                        ->orWhere('employees.name', 'LIKE', '%' . $request->searchPhrase . '%')
+                        ->orWhere('customers.name', 'LIKE', '%' . $request->searchPhrase . '%')
+                        ->orWhere('stock_areas.name', 'LIKE', '%' . $request->searchPhrase . '%');
                 })->orderBy($sort, $dir)->paginate($pageSize);
 
             return [
@@ -89,9 +88,10 @@ class PortActivityController extends Controller
         $input['user_id'] = auth()->user()->id;
         $portActivity = PortActivity::create($input);
 
-        if ($request->unit_activity_id == PortActivity::ACT_LOAD_AND_CARRY
-        || $request->unit_activity_id == PortActivity::ACT_FEEDING)
-        {
+        if (
+            $request->unit_activity_id == PortActivity::ACT_LOAD_AND_CARRY
+            || $request->unit_activity_id == PortActivity::ACT_FEEDING
+        ) {
             if ($portActivity->materialStock) {
                 $portActivity->materialStock()->update([
                     'volume' => $portActivity->materialStock->volume - $request->volume,
@@ -102,8 +102,7 @@ class PortActivityController extends Controller
                 ->where('status', '!=', Barging::STATUS_COMPLETE)
                 ->latest()->first();
 
-            if ($barging)
-            {
+            if ($barging) {
                 $bargingMaterial = $barging->bargingMaterial()
                     ->where('material_type', $request->material_type)
                     ->where('seam_id', $request->seam_id)
@@ -114,9 +113,7 @@ class PortActivityController extends Controller
                     $bargingMaterial->update([
                         'volume_progress' => $bargingMaterial->volume_progress + $request->volume
                     ]);
-                }
-
-                else {
+                } else {
                     $barging->bargingMaterial()->create([
                         'contractor_id' => $request->contractor_id,
                         'material_type' => $request->material_type,
@@ -193,8 +190,7 @@ class PortActivityController extends Controller
     {
         $this->authorize('view', PortActivity::class);
 
-        if ($request->ajax())
-        {
+        if ($request->ajax()) {
             $from = $request->from ? $request->from : date('Y-m-01');
             $to = $request->to ? $request->to : date('Y-m-d');
 
@@ -210,14 +206,14 @@ class PortActivityController extends Controller
                 units.name AS entity,
                 pa.shift AS shift,
                 SUM(COALESCE(volume, 0)) /1000 AS total,
-                SUM(CASE WHEN pa.unit_activity_id = ".$feeding." THEN COALESCE(volume, 0) ELSE 0 END) / 1000 AS feeding,
-                SUM(CASE WHEN pa.unit_activity_id = ".$loadAndCarry." THEN COALESCE(volume, 0) ELSE 0 END) / 1000 AS load_and_carry,
-                SUM(CASE WHEN pa.unit_activity_id = ".$loading." THEN COALESCE(volume, 0) ELSE 0 END) / 1000 AS loading,
-                SUM(CASE WHEN pa.unit_activity_id = ".$stockPiling." THEN COALESCE(volume, 0) ELSE 0 END) / 1000 AS stock_piling,
-                SUM(CASE WHEN pa.unit_activity_id = ".$hauling." THEN COALESCE(volume, 0) ELSE 0 END) / 1000 hauling
+                SUM(CASE WHEN pa.unit_activity_id = " . $feeding . " THEN COALESCE(volume, 0) ELSE 0 END) / 1000 AS feeding,
+                SUM(CASE WHEN pa.unit_activity_id = " . $loadAndCarry . " THEN COALESCE(volume, 0) ELSE 0 END) / 1000 AS load_and_carry,
+                SUM(CASE WHEN pa.unit_activity_id = " . $loading . " THEN COALESCE(volume, 0) ELSE 0 END) / 1000 AS loading,
+                SUM(CASE WHEN pa.unit_activity_id = " . $stockPiling . " THEN COALESCE(volume, 0) ELSE 0 END) / 1000 AS stock_piling,
+                SUM(CASE WHEN pa.unit_activity_id = " . $hauling . " THEN COALESCE(volume, 0) ELSE 0 END) / 1000 hauling
                 FROM port_activities pa
                 JOIN units ON units.id = pa.unit_id
-                WHERE pa.date BETWEEN '".$from."' AND '".$to."'
+                WHERE pa.date BETWEEN '" . $from . "' AND '" . $to . "'
                 GROUP BY pa.unit_id, pa.shift
             ";
 
@@ -227,7 +223,7 @@ class PortActivityController extends Controller
 
                 SUM(COALESCE(volume, 0)) / 1000 / SUM(
                     CASE
-                        WHEN pa.unit_activity_id != ".$standby." AND pa.unit_activity_id != ".$breakdown." AND pa.date BETWEEN '".$from."' AND '".$to."'
+                        WHEN pa.unit_activity_id != " . $standby . " AND pa.unit_activity_id != " . $breakdown . " AND pa.date BETWEEN '" . $from . "' AND '" . $to . "'
                             THEN IF(pa.time_end > pa.time_start,
                                 TIME_TO_SEC(TIMEDIFF(pa.time_end, pa.time_start)) / 3600,
                                 TIME_TO_SEC(TIMEDIFF(pa.time_end, pa.time_start)) / 3600 + (3600 * 24)
@@ -236,10 +232,10 @@ class PortActivityController extends Controller
                     END
                 ) AS total,
 
-                SUM(CASE WHEN pa.unit_activity_id = ".$feeding." THEN COALESCE(volume, 0) ELSE 0 END) / 1000 /
+                SUM(CASE WHEN pa.unit_activity_id = " . $feeding . " THEN COALESCE(volume, 0) ELSE 0 END) / 1000 /
                     SUM(
                         CASE
-                            WHEN pa.unit_activity_id = ".$feeding." AND pa.date BETWEEN '".$from."' AND '".$to."'
+                            WHEN pa.unit_activity_id = " . $feeding . " AND pa.date BETWEEN '" . $from . "' AND '" . $to . "'
                                 THEN IF(pa.time_end > pa.time_start,
                                     TIME_TO_SEC(TIMEDIFF(pa.time_end, pa.time_start)) / 3600,
                                     TIME_TO_SEC(TIMEDIFF(pa.time_end, pa.time_start)) / 3600 + (3600 * 24)
@@ -248,10 +244,10 @@ class PortActivityController extends Controller
                         END
                     ) AS feeding,
 
-                SUM(CASE WHEN pa.unit_activity_id = ".$loadAndCarry." THEN COALESCE(volume, 0) ELSE 0 END) / 1000 /
+                SUM(CASE WHEN pa.unit_activity_id = " . $loadAndCarry . " THEN COALESCE(volume, 0) ELSE 0 END) / 1000 /
                     SUM(
                         CASE
-                            WHEN pa.unit_activity_id = ".$loadAndCarry." AND pa.date BETWEEN '".$from."' AND '".$to."'
+                            WHEN pa.unit_activity_id = " . $loadAndCarry . " AND pa.date BETWEEN '" . $from . "' AND '" . $to . "'
                                 THEN IF(pa.time_end > pa.time_start,
                                     TIME_TO_SEC(TIMEDIFF(pa.time_end, pa.time_start)) / 3600,
                                     TIME_TO_SEC(TIMEDIFF(pa.time_end, pa.time_start)) / 3600 + (3600 * 24)
@@ -260,10 +256,10 @@ class PortActivityController extends Controller
                         END
                     ) AS load_and_carry,
 
-                SUM(CASE WHEN pa.unit_activity_id = ".$loading." THEN COALESCE(volume, 0) ELSE 0 END) / 1000 /
+                SUM(CASE WHEN pa.unit_activity_id = " . $loading . " THEN COALESCE(volume, 0) ELSE 0 END) / 1000 /
                     SUM(
                         CASE
-                            WHEN pa.unit_activity_id = ".$loading." AND pa.date BETWEEN '".$from."' AND '".$to."'
+                            WHEN pa.unit_activity_id = " . $loading . " AND pa.date BETWEEN '" . $from . "' AND '" . $to . "'
                                 THEN IF(pa.time_end > pa.time_start,
                                     TIME_TO_SEC(TIMEDIFF(pa.time_end, pa.time_start)) / 3600,
                                     TIME_TO_SEC(TIMEDIFF(pa.time_end, pa.time_start)) / 3600 + (3600 * 24)
@@ -272,10 +268,10 @@ class PortActivityController extends Controller
                         END
                     ) AS loading,
 
-                SUM(CASE WHEN pa.unit_activity_id = ".$stockPiling." THEN COALESCE(volume, 0) ELSE 0 END) / 1000 /
+                SUM(CASE WHEN pa.unit_activity_id = " . $stockPiling . " THEN COALESCE(volume, 0) ELSE 0 END) / 1000 /
                     SUM(
                         CASE
-                            WHEN pa.unit_activity_id = ".$stockPiling." AND pa.date BETWEEN '".$from."' AND '".$to."'
+                            WHEN pa.unit_activity_id = " . $stockPiling . " AND pa.date BETWEEN '" . $from . "' AND '" . $to . "'
                                 THEN IF(pa.time_end > pa.time_start,
                                     TIME_TO_SEC(TIMEDIFF(pa.time_end, pa.time_start)) / 3600,
                                     TIME_TO_SEC(TIMEDIFF(pa.time_end, pa.time_start)) / 3600 + (3600 * 24)
@@ -285,10 +281,10 @@ class PortActivityController extends Controller
                     ) AS stock_piling,
 
 
-                SUM(CASE WHEN pa.unit_activity_id = ".$hauling." THEN COALESCE(volume, 0) ELSE 0 END) / 1000 /
+                SUM(CASE WHEN pa.unit_activity_id = " . $hauling . " THEN COALESCE(volume, 0) ELSE 0 END) / 1000 /
                     SUM(
                         CASE
-                            WHEN pa.unit_activity_id = ".$hauling." AND pa.date BETWEEN '".$from."' AND '".$to."'
+                            WHEN pa.unit_activity_id = " . $hauling . " AND pa.date BETWEEN '" . $from . "' AND '" . $to . "'
                                 THEN IF(pa.time_end > pa.time_start,
                                     TIME_TO_SEC(TIMEDIFF(pa.time_end, pa.time_start)) / 3600,
                                     TIME_TO_SEC(TIMEDIFF(pa.time_end, pa.time_start)) / 3600 + (3600 * 24)
@@ -299,7 +295,7 @@ class PortActivityController extends Controller
 
                 FROM port_activities pa
                 JOIN employees ON employees.id = pa.employee_id
-                WHERE pa.date BETWEEN '".$from."' AND '".$to."'
+                WHERE pa.date BETWEEN '" . $from . "' AND '" . $to . "'
                 GROUP BY pa.employee_id, pa.shift
             ";
 
@@ -319,5 +315,4 @@ class PortActivityController extends Controller
         $this->authorize('export', PortActivity::class);
         return Excel::download(new PortActivityExport($request), "port-activity-{$request->from}-to-{$request->to}.xlsx");
     }
-
 }
