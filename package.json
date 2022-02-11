@@ -22,7 +22,7 @@
         "vue": "^2.5.7"
     },
     "dependencies": {
-        "ajv": "^6.5.0",
+        "ajv": "^6.12.3",
         "ajv-keywords": "^3.2.0",
         "bootbox": "^4.4.0",
         "echarts": "^4.1.0",
