@@ -1,0 +1,17 @@
+version: '3.7'
+
+services:
+  app:
+    image: poins
+    container_name: poins
+    hostname: poins
+    build:
+      context: .
+    ports:
+      - 8001:8001
+    volumes:
+      - .:/app
+      - /app/vendor
+    stdin_open: true
+    tty: true
+    command: php artisan serve --host 0.0.0.0 --port 8001
