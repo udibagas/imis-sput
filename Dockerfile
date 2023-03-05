@@ -26,8 +26,8 @@ RUN docker-php-ext-install gd
 # Install composer
 RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
 
-COPY . /app
 WORKDIR /app
+COPY . .
 
 RUN composer update
 CMD php artisan key:generate && php artisan storage:link
